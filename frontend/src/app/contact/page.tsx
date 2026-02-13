@@ -8,13 +8,13 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 export default function ContactPage() {
   const [state, setState] = useState({ loading: false, message: '' });
 
-  async function onSubmit(event) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
 
     setState({ loading: true, message: '' });
     try {
-      const res = await fetch('http://localhost:4000/api/leads', {
+      const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

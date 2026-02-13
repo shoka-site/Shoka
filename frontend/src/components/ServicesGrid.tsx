@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import { Layers, Zap, Database, Globe, Cpu } from 'lucide-react';
 
-const icons = {
+import { ReactNode } from 'react';
+
+const icons: Record<string, ReactNode> = {
     'AI Solutions': <Cpu size={32} />,
     'Automation': <Zap size={32} />,
     'Product Engineering': <Layers size={32} />,
@@ -11,7 +13,13 @@ const icons = {
     'Cloud Infrastructure': <Globe size={32} />
 };
 
-export default function ServicesGrid({ services }) {
+import { Service } from '@/types';
+
+interface ServicesGridProps {
+    services: Service[];
+}
+
+export default function ServicesGrid({ services }: ServicesGridProps) {
     const container = {
         hidden: { opacity: 0 },
         show: {

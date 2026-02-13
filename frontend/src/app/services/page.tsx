@@ -1,11 +1,17 @@
 import PageHeader from '@/components/PageHeader';
 import ServicesGrid from '@/components/ServicesGrid';
 
-async function getServices() {
+import { createDatabase } from '@/lib/db';
+
+import { Service } from '@/types';
+
+export const dynamic = 'force-dynamic';
+
+async function getServices(): Promise<Service[]> {
   try {
-    const res = await fetch('http://localhost:4000/api/services', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch data');
-    return res.json();
+    const db = await createDatabase();
+    const services = await db.all('SELECT * FROM services ORDER BY created_at DESC');
+    return services.map((s) => ({ ...s, features: JSON.parse(s.features) }));
   } catch (error) {
     console.error('Error fetching services:', error);
     return [];

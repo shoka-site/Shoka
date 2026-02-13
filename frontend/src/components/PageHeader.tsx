@@ -2,7 +2,13 @@
 
 import { motion } from 'framer-motion';
 
-export default function PageHeader({ title, description, children }) {
+interface PageHeaderProps {
+    title: string;
+    description?: string;
+    children?: React.ReactNode;
+}
+
+export default function PageHeader({ title, description, children }: PageHeaderProps) {
     return (
         <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16">
             <div className="relative z-10 text-center">

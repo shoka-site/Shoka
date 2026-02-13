@@ -1,12 +1,21 @@
 import PageHeader from '@/components/PageHeader';
 import ProjectsGrid from '@/components/ProjectsGrid';
 
-async function getProjects() {
+import { createDatabase } from '@/lib/db';
+
+import { Project } from '@/types';
+
+export const dynamic = 'force-dynamic';
+
+async function getProjects(): Promise<Project[]> {
   try {
-    const res = await fetch('http://localhost:4000/api/projects', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch data');
-    const data = await res.json();
-    return data;
+    const db = await createDatabase();
+    const projects = await db.all('SELECT * FROM projects ORDER BY created_at DESC');
+    return projects.map((p) => ({
+      ...p,
+      technologies: JSON.parse(p.technologies),
+      images: p.images ? JSON.parse(p.images) : []
+    }));
   } catch (error) {
     console.error('Error fetching projects:', error);
     return [];

@@ -34,7 +34,7 @@ const packages = [
 ];
 
 export default function Features() {
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     const container = {

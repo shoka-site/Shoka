@@ -7,7 +7,7 @@ export const metadata = {
   description: 'AI, software, data, and cloud services with modern consultation booking.'
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
       <body>

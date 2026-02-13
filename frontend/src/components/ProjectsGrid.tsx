@@ -4,7 +4,13 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowRight, Box } from 'lucide-react';
 
-export default function ProjectsGrid({ projects }) {
+import { Project } from '@/types';
+
+interface ProjectsGridProps {
+    projects: Project[];
+}
+
+export default function ProjectsGrid({ projects }: ProjectsGridProps) {
     if (!projects.length) {
         return (
             <div className="text-center text-slate-400 py-12">

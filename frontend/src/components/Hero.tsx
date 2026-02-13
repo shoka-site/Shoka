@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, Code2, Cpu, Database, Cloud } from 'lucide-react';
 
 export default function Hero() {
-    const ref = useRef(null);
+    const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start start", "end start"]
