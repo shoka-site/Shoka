@@ -1,20 +1,59 @@
+'use client';
+
+import PageHeader from '@/components/PageHeader';
+import { motion } from 'framer-motion';
+
 export default function AboutPage() {
   return (
-    <section className="space-y-6">
-      <h1 className="text-3xl font-bold text-brand-900">من نحن</h1>
-      <div className="card space-y-4 text-slate-700">
-        <p>
-          نحن منصة تجمع بين حلول التكنولوجيا الذكية والتعليم التقني المتقدم. نركز على الشركات، المؤسسات، والأفراد.
-        </p>
-        <p>
-          استراتيجيتنا تعتمد على القيادة السوقية عبر الدراسات، الورش، الجلسات الجامعية، والأدلة التقنية لخلق الثقة والمصداقية.
-        </p>
-        <ul className="list-disc space-y-2 pr-6">
-          <li>استجابة سريعة ونمذجة أولية سريعة</li>
-          <li>تسليم Agile قائم على نتائج قابلة للقياس</li>
-          <li>رسائل تواصل تركز على ROI والكفاءة والنمو</li>
-        </ul>
-      </div>
-    </section>
+    <div className="space-y-12">
+      <PageHeader
+        title="من نحن"
+        description="نحن منصة رائدة تجمع بين حلول التكنولوجيا الذكية والتعليم التقني المتقدم."
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="glass-panel relative overflow-hidden rounded-3xl p-8 lg:p-12"
+      >
+        <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-lg leading-relaxed text-slate-300">
+          <p>
+            نحن نؤمن بأن المستقبل يُبنى بالابتكار والمعرفة. رؤيتنا هي تمكين الشركات والأفراد من خلال أحدث تقنيات الذكاء الاصطناعي وهندسة البرمجيات.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 my-12">
+            <div className="p-6 rounded-2xl bg-brand-500/5 border border-brand-500/10">
+              <h3 className="text-xl font-bold text-white mb-4">ماذا نقدم؟</h3>
+              <p className="text-sm">
+                نقدم استشارات تقنية، حلول برمجية مخصصة، وتدريب احترافي يركز على التطبيق العملي وبناء المهارات المطلوبة في السوق.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-accent/5 border border-accent/10">
+              <h3 className="text-xl font-bold text-white mb-4">لمن نتوجه؟</h3>
+              <p className="text-sm">
+                نركز على الشركات الناشئة، المؤسسات الكبيرة التي تسعى للتحول الرقمي، والأفراد الطموحين الراغبين في دخول عالم التقنية.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-white mb-4">ركائز استراتيجيتنا:</h3>
+            <ul className="grid gap-4 md:grid-cols-3">
+              {[
+                'استجابة سريعة ونمذجة أولية',
+                'تسليم Agile ونتائج قابلة للقياس',
+                'تركيز على ROI والكفاءة'
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 bg-slate-800/50 p-4 rounded-xl border border-white/5">
+                  <div className="h-2 w-2 rounded-full bg-brand-400" />
+                  <span className="text-sm font-medium">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }

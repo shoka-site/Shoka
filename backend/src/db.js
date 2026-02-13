@@ -2,7 +2,7 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import path from 'path';
 
-const dbPath = path.resolve(process.cwd(), 'backend', 'database.sqlite');
+const dbPath = path.resolve(process.cwd(), 'database.sqlite');
 
 export async function createDatabase() {
   const db = await open({

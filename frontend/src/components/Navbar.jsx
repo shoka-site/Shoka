@@ -11,20 +11,24 @@ const links = [
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-dark-bg/80 backdrop-blur-lg">
       <nav className="container-shell flex items-center justify-between py-4">
-        <Link href="/" className="text-lg font-bold text-brand-900">
-          Software Service Platform
+        <Link href="/" className="text-xl font-black tracking-tight text-white">
+          <span className="text-brand-400">SSP</span>latform
         </Link>
-        <ul className="hidden gap-5 text-sm font-medium text-slate-700 md:flex">
+        <ul className="hidden gap-8 text-sm font-medium text-slate-300 md:flex">
           {links.map(([label, href]) => (
             <li key={href}>
-              <Link href={href} className="hover:text-brand-700">
+              <Link href={href} className="transition-colors hover:text-brand-400">
                 {label}
               </Link>
             </li>
           ))}
         </ul>
+        <div className="md:hidden">
+          {/* Mobile menu button could go here */}
+          <button className="text-white">☰</button>
+        </div>
       </nav>
     </header>
   );
