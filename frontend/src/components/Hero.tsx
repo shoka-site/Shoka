@@ -1,118 +1,118 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function Hero() {
-    const ref = useRef<HTMLElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"]
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-    const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
     return (
-        <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-dark-bg px-8">
-            {/* Abstract Fluid Background (DataArt Style) */}
-            <div className="absolute inset-0 overflow-hidden">
-                <motion.div
-                    animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, -5, 0],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                    className="absolute -top-1/2 -right-1/4 w-[150vh] h-[150vh] bg-gradient-to-br from-brand-600/30 via-accent/20 to-transparent rounded-full blur-[100px] opacity-60"
-                />
-                <motion.div
-                    animate={{
-                        scale: [1.1, 1, 1.1],
-                        x: [0, -50, 0],
-                    }}
-                    transition={{
-                        duration: 25,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                    className="absolute -bottom-1/2 -left-1/4 w-[120vh] h-[120vh] bg-gradient-to-tr from-purple-600/20 via-blue-600/20 to-transparent rounded-full blur-[120px] opacity-50"
-                />
-            </div>
+        <section className="relative min-h-[90vh] flex items-center bg-shoka-ivory overflow-hidden">
 
-            <div className="container-shell relative z-10 w-full max-w-[1920px] mx-auto grid lg:grid-cols-12 gap-12 items-center h-full">
+            {/* Background Texture & Patterns */}
+            <div className="absolute inset-0 opacity-40 bg-heritage-pattern" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-shoka-sand/20 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-shoka-clay/5 rounded-full blur-[120px] -translate-x-1/4 translate-y-1/4" />
 
-                {/* Text Content */}
+            <div className="container-shell relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+
+                {/* Content Side */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="lg:col-span-7 lg:pr-12 text-right"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="text-right order-2 lg:order-1"
                 >
-                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.1] mb-8">
-                        نصمم <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-brand-400 to-white">
-                            المستقبل التقني
-                        </span>
+                    {/* Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-shoka-sand/20 border border-shoka-sand/30 text-shoka-clay text-sm font-medium mb-8"
+                    >
+                        <span className="w-2 h-2 rounded-full bg-shoka-clay animate-pulse" />
+                        منصة الحلول التقنية المتقدمة
+                    </motion.div>
+
+                    {/* Headline */}
+                    <h1 className="heading-premium text-5xl md:text-7xl mb-8">
+                        بناء الأنظمة <br />
+                        <span className="text-shoka-clay">الرقمية الذكية</span>
                     </h1>
 
-                    <p className="text-xl text-slate-300 leading-relaxed max-w-2xl ml-auto mb-12 font-light">
-                        منصة شاملة تجمع بين هندسة البرمجيات المتقدمة وحلول الذكاء الاصطناعي لتمكين المؤسسات من بناء غدٍ أفضل.
+                    {/* Subtext */}
+                    <p className="text-body-premium mb-10 max-w-lg ml-auto">
+                        نجمع بين عمق التراث العراقي وحداثة التكنولوجيا الرقمية. نقدم حلول الذكاء الاصطناعي، البرمجيات، والبيانات للمؤسسات الطموحة.
                     </p>
 
-                    <div className="flex flex-wrap gap-6 justify-end">
-                        <Link
-                            href="/services"
-                            className="bg-brand-600 hover:bg-brand-500 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all duration-300 flex items-center gap-2 group"
-                        >
-                            <span>اكتشف خدماتنا</span>
-                            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                    {/* CTA Buttons */}
+                    <div className="flex flex-wrap gap-4 justify-end">
+                        <Link href="/contact" className="btn-secondary group">
+                            <span>احجز استشارة</span>
                         </Link>
-
-                        <Link
-                            href="/portfolio"
-                            className="border border-white/20 hover:bg-white/10 text-white px-10 py-4 rounded-lg text-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                        >
-                            معرض الأعمال
+                        <Link href="/services" className="btn-primary group">
+                            <span>استكشف خدماتنا</span>
+                            <ArrowLeft className="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1" />
                         </Link>
                     </div>
                 </motion.div>
 
-                {/* Empty Space / Visual Balance (DataArt keeps one side open for the graphic) */}
-                <div className="lg:col-span-5 h-full min-h-[400px]"></div>
-            </div>
+                {/* Visual Side - Abstract Heritage/Future Geometry */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1 }}
+                    className="relative order-1 lg:order-2 h-[500px] flex items-center justify-center"
+                >
+                    {/* Abstract Composition */}
+                    <div className="relative w-full max-w-md aspect-square">
+                        {/* Main Image Frame (Placeholder for Architectural/Tech Visual) */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-shoka-sand to-shoka-ivory rounded-2xl overflow-hidden shadow-premium border border-white/50">
+                            {/* Simulate 'Architecture' or 'System' via CSS shapes or placeholder image */}
+                            <div className="absolute inset-0 bg-[url('/architectural-pattern.svg')] opacity-20 mix-blend-multiply" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-3/4 h-3/4 border border-shoka-dark/10 rounded-xl" />
+                                <div className="absolute w-1/2 h-1/2 bg-shoka-clay/10 backdrop-blur-sm rounded-lg border border-shoka-clay/20 shadow-lg" />
+                            </div>
+                        </div>
 
-            {/* Bottom Controls / Pagination (DataArt Style) */}
-            <div className="absolute bottom-12 left-12 right-12 flex items-center justify-between pointer-events-none">
-                {/* Pagination Controls */}
-                <div className="flex items-center gap-2 pointer-events-auto">
-                    <button className="w-12 h-12 flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 rounded-lg text-white transition-colors">
-                        <ChevronRight className="w-6 h-6" />
-                    </button>
-                    <button className="w-12 h-12 flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 rounded-lg text-white transition-colors">
-                        <ChevronLeft className="w-6 h-6" />
-                    </button>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="hidden md:flex items-center gap-4">
-                    <span className="text-white/50 text-sm font-mono">01</span>
-                    <div className="w-32 h-px bg-white/20 overflow-hidden">
+                        {/* Floating Elements */}
                         <motion.div
-                            initial={{ x: '-100%' }}
-                            animate={{ x: '0%' }}
-                            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-                            className="w-full h-full bg-brand-400"
-                        />
+                            animate={{ y: [0, -15, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -top-8 -right-8 w-24 h-24 bg-white rounded-xl shadow-soft flex items-center justify-center p-4 border border-shoka-sand/20"
+                        >
+                            <div className="text-center">
+                                <div className="text-2xl font-bold text-shoka-dark">98%</div>
+                                <div className="text-[10px] text-text-muted">دقة النظام</div>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            animate={{ y: [0, 20, 0] }}
+                            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                            className="absolute -bottom-6 -left-6 bg-shoka-dark text-shoka-ivory rounded-xl shadow-premium p-5 max-w-[180px]"
+                        >
+                            <div className="text-xs text-shoka-sand mb-1">الحالة</div>
+                            <div className="text-sm font-medium">أنظمة ذكية قيد العمل</div>
+                            <div className="w-full h-1 bg-white/10 mt-3 rounded-full overflow-hidden">
+                                <div className="w-2/3 h-full bg-shoka-gold" />
+                            </div>
+                        </motion.div>
                     </div>
-                    <span className="text-white/50 text-sm font-mono">04</span>
-                </div>
+                </motion.div>
+
             </div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-shoka-clay/50"
+            >
+                <span className="text-xs tracking-widest uppercase">تصفح</span>
+                <div className="w-px h-12 bg-gradient-to-b from-shoka-clay/50 to-transparent" />
+            </motion.div>
         </section>
     );
 }

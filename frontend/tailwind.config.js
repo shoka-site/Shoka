@@ -8,52 +8,50 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        tajawal: ['Tajawal', 'sans-serif'],
+        tajawal: ['Tajawal', 'sans-serif'], // Arabic Primary
+        manrope: ['Manrope', 'sans-serif'], // English Primary
       },
       colors: {
-        brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985', // primary dark blue
-          900: '#0c4a6e',
-          950: '#082f49',
+        shoka: {
+          sand: '#D6C6A5',      // Heritage Sand - Primary Brand
+          clay: '#8C6239',      // Deep Clay/Bronze - Secondary Brand
+          dark: '#2A2A2A',      // Charcoal Black - Text/Dark BG
+          ivory: '#F7F3EB',     // Ivory White - Light BG
+          gold: '#C2A45C',      // Muted Gold - Accent
         },
-        accent: {
-          DEFAULT: '#8b5cf6', // violet-500
-          hover: '#7c3aed', // violet-600
+        // Semantic aliases
+        bg: {
+          light: '#F7F3EB',     // Ivory for main backgrounds
+          warm: '#EFEBE0',      // Slightly darker warm bg for sections
+          dark: '#2A2A2A',      // Charcoal for footers/dark sections
         },
-        dark: {
-          bg: '#0f172a', // slate-900 (main bg)
-          card: '#1e293b', // slate-800
-          border: '#334155', // slate-700
+        text: {
+          primary: '#2A2A2A',   // Charcoal Black
+          secondary: '#5C5C5C', // Soft Grey
+          muted: '#8A8A8A',     // Muted text
+          light: '#F7F3EB',     // Light text on dark backgrounds
         }
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-gradient': 'linear-gradient(to bottom right, #0f172a, #1e293b)',
-        'card-gradient': 'linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.7))',
+        'grain-texture': "url('/grain.png')", // Placeholder for texture
+        'hero-heritage': 'radial-gradient(circle at 10% 20%, rgba(214, 198, 165, 0.4) 0%, rgba(247, 243, 235, 0) 60%)',
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(14, 165, 233, 0.3)',
-        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+        'soft': '0 4px 20px rgba(42, 42, 42, 0.05)',
+        'premium': '0 10px 40px rgba(42, 42, 42, 0.08)',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'shine': 'shine 1s',
+        'fade-in': 'fadeIn 0.8s ease-out forwards',
+        'slide-up': 'slideUp 0.8s ease-out forwards',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        shine: {
-          '100%': { left: '125%' },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       }
     },

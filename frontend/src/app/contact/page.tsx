@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import PageHeader from '@/components/PageHeader';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 export default function ContactPage() {
@@ -39,102 +37,106 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="section-alt min-h-screen">
-      <div className="container-shell">
-        <PageHeader
-          title="تواصل معنا"
-          description="نحن هنا لمساعدتك. سواء كان لديك استفسار أو يرغب في بدء مشروع جديد، يسعدنا سماع صوتك."
-        />
+    <section className="min-h-screen bg-shoka-ivory">
+      <div className="pt-32 pb-16 bg-shoka-ivory relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-shoka-sand/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="container-shell relative z-10 text-center max-w-4xl mx-auto">
+          <h1 className="heading-premium text-5xl md:text-6xl mb-6">
+            تواصل <span className="text-shoka-clay">معنا</span>
+          </h1>
+          <p className="text-body-premium max-w-2xl mx-auto">
+            نحن هنا لمساعدتك. سواء كان لديك استفسار أو ترغب في بدء رحلة تحول رقمي، فريقنا جاهز للاستماع.
+          </p>
+        </div>
+      </div>
+
+      <div className="section-wrapper bg-white">
+        <div className="container-shell grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <div className="glass-panel p-8 rounded-2xl space-y-6">
-              <h3 className="text-2xl font-bold text-white">معلومات الاتصال</h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 text-slate-300">
-                  <div className="h-12 w-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
-                    <Mail size={20} />
+          <div className="space-y-8">
+            <div className="bg-shoka-sand/5 p-8 rounded-3xl border border-shoka-sand/20">
+              <h3 className="heading-premium text-2xl mb-8">معلومات الاتصال</h3>
+              <div className="space-y-8">
+                {[
+                  { icon: Mail, label: 'البريد الإلكتروني', value: 'hello@shoka.iq' },
+                  { icon: Phone, label: 'الهاتف', value: '+964 780 000 0000' },
+                  { icon: MapPin, label: 'الموقع', value: 'بغداد، المنصور - شارع 14 رمضان' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-soft flex items-center justify-center text-shoka-clay group-hover:bg-shoka-clay group-hover:text-white transition-colors duration-300">
+                      <item.icon size={20} />
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-shoka-clay uppercase tracking-wider mb-1">{item.label}</div>
+                      <div className="text-lg font-medium text-shoka-dark">{item.value}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xs text-slate-500">البريد الإلكتروني</div>
-                    <div className="font-medium">info@ssplatform.com</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 text-slate-300">
-                  <div className="h-12 w-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
-                    <Phone size={20} />
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500">الهاتف</div>
-                    <div className="font-medium">+964 780 000 0000</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 text-slate-300">
-                  <div className="h-12 w-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500">الموقع</div>
-                    <div className="font-medium">بغداد، العراق - شارع الكندي</div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-          </motion.div>
+
+            <div className="bg-shoka-dark p-8 rounded-3xl text-shoka-ivory relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-shoka-clay/20 rounded-full blur-2xl" />
+              <h3 className="heading-premium text-white text-xl mb-4 relative z-10">هل تبحث عن استشارة فورية؟</h3>
+              <p className="text-shoka-ivory/70 mb-6 relative z-10">يمكنك حجز موعد استشارة مجانية مع خبرائنا لمناقشة احتياجاتك.</p>
+              <a href="/book-consultation" className="btn-secondary w-full text-center relative z-10">حجز استشارة الآن</a>
+            </div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <form className="glass-panel p-8 rounded-2xl space-y-4" onSubmit={onSubmit}>
-              <h3 className="text-2xl font-bold text-white mb-6">أرسل لنا رسالة</h3>
+          <div className="bg-white p-8 lg:p-10 rounded-3xl shadow-premium border border-shoka-dark/5">
+            <h3 className="heading-premium text-2xl mb-8">أرسل لنا رسالة</h3>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <input className="input" name="name" placeholder="الاسم الكامل" required />
-                <input className="input" name="email" type="email" placeholder="البريد الإلكتروني" required />
+            <form className="space-y-6" onSubmit={onSubmit}>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-shoka-dark">الاسم الكامل</label>
+                  <input className="input-premium w-full" name="name" placeholder="مثال: أحمد علي" required />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-shoka-dark">البريد الإلكتروني</label>
+                  <input className="input-premium w-full" name="email" type="email" placeholder="ahmed@example.com" required />
+                </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <input className="input" name="phone" placeholder="رقم الجوال" />
-                <select className="input text-slate-400" name="inquiry_type" required>
-                  <option value="" className="bg-slate-800">نوع الطلب</option>
-                  <option value="Service Request" className="bg-slate-800">طلب خدمة</option>
-                  <option value="Proposal Request" className="bg-slate-800">طلب عرض سعر</option>
-                  <option value="General Contact" className="bg-slate-800">استفسار عام</option>
-                </select>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-shoka-dark">رقم الهاتف</label>
+                  <input className="input-premium w-full" name="phone" placeholder="07XX XXX XXXX" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-shoka-dark">نوع الاستفسار</label>
+                  <select className="input-premium w-full appearance-none" name="inquiry_type" required>
+                    <option value="">اختر نوع الطلب</option>
+                    <option value="Service Request">طلب خدمة</option>
+                    <option value="Partnership">شراكة</option>
+                    <option value="General">استفسار عام</option>
+                  </select>
+                </div>
               </div>
 
-              <input className="input" name="selected_service" placeholder="اسم الخدمة (اختياري)" />
-              <textarea className="input min-h-[150px]" name="message" placeholder="اكتب تفاصيل طلبك هنا..." required />
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-shoka-dark">الرسالة</label>
+                <textarea className="input-premium w-full min-h-[150px]" name="message" placeholder="كيف يمكننا مساعدتك؟" required />
+              </div>
 
-              <button className="btn-primary w-full group" disabled={state.loading} type="submit">
+              <button className="btn-primary w-full group flex items-center justify-center gap-2" disabled={state.loading} type="submit">
                 {state.loading ? 'جارٍ الإرسال...' : (
-                  <span className="flex items-center gap-2">
+                  <>
                     إرسال الرسالة
                     <Send size={18} className="group-hover:-translate-x-1 transition-transform" />
-                  </span>
+                  </>
                 )}
               </button>
 
               {state.message && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-xl text-sm ${state.message.includes('نجاح') ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}
-                >
+                <div className={`p-4 rounded-xl text-sm ${state.message.includes('نجاح') ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}`}>
                   {state.message}
-                </motion.div>
+                </div>
               )}
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

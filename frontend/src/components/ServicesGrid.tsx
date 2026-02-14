@@ -1,91 +1,91 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Layers, Zap, Database, Globe, Cpu } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Cpu, Zap, Layers, Database, Globe, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-import { ReactNode } from 'react';
-
-const icons: Record<string, ReactNode> = {
-    'حلول الذكاء الاصطناعي': <Cpu size={32} />,
-    'الأتمتة': <Zap size={32} />,
-    'هندسة المنتجات': <Layers size={32} />,
-    'البيانات والتحليلات': <Database size={32} />,
-    'البنية التحتية السحابية': <Globe size={32} />
+// Icon mapping
+const icons: Record<string, React.ReactNode> = {
+    'حلول الذكاء الاصطناعي': <Cpu size={28} />,
+    'الأتمتة': <Zap size={28} />,
+    'هندسة المنتجات': <Layers size={28} />,
+    'البيانات والتحليلات': <Database size={28} />,
+    'البنية التحتية السحابية': <Globe size={28} />
 };
 
 import { Service } from '@/types';
 
-interface ServicesGridProps {
-    services: Service[];
-}
+export default function ServicesGrid() {
+    const [services, setServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(true);
 
-export default function ServicesGrid({ services }: ServicesGridProps) {
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
+    useEffect(() => {
+        async function fetchServices() {
+            try {
+                const res = await fetch('/api/services');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const data = await res.json();
+                setServices(data);
+            } catch (error) {
+                console.error('Failed to fetch services:', error);
+            } finally {
+                setLoading(false);
             }
         }
-    };
+        fetchServices();
+    }, []);
 
-    const item = {
-        hidden: { opacity: 0, scale: 0.95 },
-        show: { opacity: 1, scale: 1 }
-    };
+    if (loading) {
+        return (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[...Array(6)].map((_, i) => (
+                    <div key={i} className="h-64 bg-shoka-sand/10 rounded-2xl animate-pulse" />
+                ))}
+            </div>
+        );
+    }
 
     return (
-        <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-            {services.map((service, idx) => (
-                <motion.div
-                    key={service.id || idx}
-                    variants={item}
-                    className="glass-panel group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:bg-white/10 hover:-translate-y-1 hover:shadow-glow"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
+                <div
+                    key={service.id}
+                    className="card-premium group flex flex-col justify-between"
                 >
-                    <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 group-hover:bg-brand-500/20 group-hover:text-brand-300 transition-colors shadow-inner border border-white/5">
-                        {icons[service.category] || <Layers size={32} />}
-                    </div>
-
-                    <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-500">
-                        {service.category}
-                    </div>
-
-                    <h2 className="mb-3 text-2xl font-bold text-white group-hover:text-brand-300 transition-colors">
-                        {service.title}
-                    </h2>
-
-                    <p className="mb-6 text-sm leading-relaxed text-slate-400">
-                        {service.description}
-                    </p>
-
-                    <ul className="space-y-2 mb-6">
-                        {service.features.map((feature, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-brand-500 flex-shrink-0" />
-                                {feature}
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className="mt-auto border-t border-white/5 pt-4">
-                        <div className="flex items-center justify-between text-xs">
-                            <span className="text-slate-500">التسعير</span>
-                            <span className="font-medium text-brand-300 bg-brand-500/10 px-2 py-1 rounded">
-                                {service.pricing_model || 'حسب الطلب'}
+                    <div>
+                        {/* Icon & Category */}
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="p-3 bg-shoka-sand/20 rounded-xl text-shoka-clay group-hover:bg-shoka-clay group-hover:text-shoka-ivory transition-colors duration-300">
+                                {icons[service.category] || <Layers size={28} />}
+                            </div>
+                            <span className="text-xs font-semibold tracking-wide text-shoka-clay/80 uppercase bg-shoka-sand/10 px-3 py-1 rounded-full">
+                                {service.category}
                             </span>
                         </div>
+
+                        {/* Content */}
+                        <h3 className="heading-premium text-2xl mb-3 group-hover:text-shoka-clay transition-colors">
+                            {service.title}
+                        </h3>
+                        <p className="text-body-premium text-base mb-6 line-clamp-3">
+                            {service.description}
+                        </p>
                     </div>
 
-                    {/* Hover Shine Effect */}
-                    <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-0 group-hover:animate-shine" />
-                </motion.div>
+                    {/* Footer / CTA */}
+                    <div className="mt-4 pt-4 border-t border-shoka-dark/5 flex items-center justify-between">
+                        <span className="text-sm font-medium text-text-muted">
+                            {service.pricing_model}
+                        </span>
+                        <Link
+                            href={`/services/${service.id}`}
+                            className="inline-flex items-center gap-2 text-shoka-clay font-bold text-sm hover:gap-3 transition-all"
+                        >
+                            تفاصيل الخدمة <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </div>
+                </div>
             ))}
-        </motion.div>
+        </div>
     );
 }
