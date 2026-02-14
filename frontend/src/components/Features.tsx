@@ -7,28 +7,28 @@ import { Bot, Settings2, Rocket, BarChart3, CloudCog } from 'lucide-react';
 
 const packages = [
     {
-        title: 'AI Starter Package',
-        desc: 'Rapid AI opportunity assessment and first implementation.',
+        title: 'باقة الذكاء الاصطناعي',
+        desc: 'تقييم سريع للفرص وتنفيذ أولي.',
         icon: <Bot />
     },
     {
-        title: 'Business Automation',
-        desc: 'Automate repetitive workflows across operations and sales.',
+        title: 'أتمتة الأعمال',
+        desc: 'أتمتة سير العمل المتكرر عبر العمليات والمبيعات.',
         icon: <Settings2 />
     },
     {
-        title: 'Startup MVP Package',
-        desc: 'Design and launch investor-ready MVP solutions.',
+        title: 'باقة MVP للشركات الناشئة',
+        desc: 'تصميم وإطلاق حلول MVP جاهزة للمستثمرين.',
         icon: <Rocket />
     },
     {
-        title: 'Data Intelligence',
-        desc: 'Executive dashboards with actionable KPI visibility.',
+        title: 'ذكاء البيانات',
+        desc: 'لوحات معلومات تنفيذية مع رؤية قابلة للتنفيذ.',
         icon: <BarChart3 />
     },
     {
-        title: 'Cloud Scaling',
-        desc: 'Secure cloud foundation and scalable architecture.',
+        title: 'توسيع السحابة',
+        desc: 'أساس سحابي آمن وهندسة قابلة للتطوير.',
         icon: <CloudCog />
     }
 ];
@@ -63,7 +63,7 @@ export default function Features() {
                     className="mb-12 text-center"
                 >
                     <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-brand-400 uppercase bg-brand-400/10 rounded-full">
-                        Our Services
+                        خدماتنا
                     </div>
                     <h2 className="text-3xl font-bold md:text-5xl text-white">خدماتنا المتميزة</h2>
                     <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
