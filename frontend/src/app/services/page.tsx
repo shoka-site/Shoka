@@ -22,13 +22,15 @@ export default async function ServicesPage() {
   const services = await getServices();
 
   return (
-    <div className="space-y-12">
-      <PageHeader
-        title="الخدمات والحلول"
-        description="استكشف مجموعتنا المتكاملة من الخدمات التقنية المصممة لتعزيز أعمالك."
-      />
+    <section className="section-alt min-h-screen">
+      <div className="container-shell">
+        <PageHeader
+          title="الخدمات والحلول"
+          description="استكشف مجموعتنا المتكاملة من الخدمات التقنية المصممة لتعزيز أعمالك."
+        />
 
-      <ServicesGrid services={services} />
-    </div>
+        <ServicesGrid services={services} />
+      </div>
+    </section>
   );
 }

@@ -38,18 +38,19 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="space-y-12">
-      <PageHeader
-        title="احجز استشارة"
-        description="خطوة واحدة تفصلك عن تحقيق رؤيتك الرقمية. حدد موعداً للتحدث مع خبرائنا."
-      />
+    <section className="section-alt min-h-screen">
+      <div className="container-shell">
+        <PageHeader
+          title="احجز استشارة"
+          description="خطوة واحدة تفصلك عن تحقيق رؤيتك الرقمية. حدد موعداً للتحدث مع خبرائنا."
+        />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="glass-panel mx-auto max-w-2xl p-8 rounded-2xl relative overflow-hidden"
-      >
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="glass-panel mx-auto max-w-2xl p-8 rounded-2xl relative overflow-hidden"
+        >
         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 blur-[50px] rounded-bl-full" />
 
         <form className="relative z-10 space-y-6" onSubmit={onSubmit}>
@@ -113,6 +114,7 @@ export default function BookingPage() {
           )}
         </form>
       </motion.div>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -10,7 +10,7 @@ interface PageHeaderProps {
 
 export default function PageHeader({ title, description, children }: PageHeaderProps) {
     return (
-        <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16">
+        <section className="relative overflow-hidden pt-10 pb-8">
             <div className="relative z-10 text-center">
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,7 @@ export default function PageHeader({ title, description, children }: PageHeaderP
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="mx-auto mt-6 max-w-2xl text-lg text-slate-400 md:text-xl"
+                        className="mx-auto mt-4 max-w-2xl text-lg text-slate-400"
                     >
                         {description}
                     </motion.p>
@@ -37,7 +37,7 @@ export default function PageHeader({ title, description, children }: PageHeaderP
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="mt-8"
+                        className="mt-6"
                     >
                         {children}
                     </motion.div>

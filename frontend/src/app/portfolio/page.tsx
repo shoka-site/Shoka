@@ -26,13 +26,15 @@ export default async function PortfolioPage() {
   const projects = await getProjects();
 
   return (
-    <div className="space-y-12">
-      <PageHeader
-        title="معرض الأعمال"
-        description="نماذج من المشاريع التي قمنا بتنفيذها والنتائج التي حققناها لعملائنا."
-      />
+    <section className="section-alt min-h-screen">
+      <div className="container-shell">
+        <PageHeader
+          title="معرض الأعمال"
+          description="نماذج من المشاريع التي قمنا بتنفيذها والنتائج التي حققناها لعملائنا."
+        />
 
-      <ProjectsGrid projects={projects} />
-    </div>
+        <ProjectsGrid projects={projects} />
+      </div>
+    </section>
   );
 }

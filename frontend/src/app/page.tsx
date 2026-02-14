@@ -4,10 +4,18 @@ import CTA from '@/components/CTA';
 
 export default function HomePage() {
   return (
-    <div className="space-y-24">
+    <div>
       <Hero />
-      <Features />
-      <CTA />
+      <section className="section-alt">
+        <div className="container-shell">
+          <Features />
+        </div>
+      </section>
+      <section className="section">
+        <div className="container-shell">
+          <CTA />
+        </div>
+      </section>
     </div>
   );
 }
