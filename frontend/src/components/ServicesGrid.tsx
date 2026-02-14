@@ -6,11 +6,11 @@ import { Layers, Zap, Database, Globe, Cpu } from 'lucide-react';
 import { ReactNode } from 'react';
 
 const icons: Record<string, ReactNode> = {
-    'AI Solutions': <Cpu size={32} />,
-    'Automation': <Zap size={32} />,
-    'Product Engineering': <Layers size={32} />,
-    'Data & Analytics': <Database size={32} />,
-    'Cloud Infrastructure': <Globe size={32} />
+    'حلول الذكاء الاصطناعي': <Cpu size={32} />,
+    'الأتمتة': <Zap size={32} />,
+    'هندسة المنتجات': <Layers size={32} />,
+    'البيانات والتحليلات': <Database size={32} />,
+    'البنية التحتية السحابية': <Globe size={32} />
 };
 
 import { Service } from '@/types';

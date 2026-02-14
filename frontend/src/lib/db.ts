@@ -89,11 +89,11 @@ export async function createDatabase(): Promise<Database> {
 
 async function seedData(db: Database) {
   const services = [
-    ['AI Starter Package', 'AI Solutions', 'Rapid AI opportunity assessment and first implementation.', JSON.stringify(['Use-case discovery', 'Prototype model', 'Deployment plan']), 'Project-based'],
-    ['Business Automation Package', 'Automation', 'Automate repetitive workflows across operations and sales.', JSON.stringify(['Process mapping', 'Workflow automation', 'Reporting dashboard']), 'Subscription'],
-    ['Startup MVP Package', 'Product Engineering', 'Design and launch investor-ready MVP solutions.', JSON.stringify(['Technical architecture', 'MVP development', 'Launch support']), 'Milestone-based'],
-    ['Data Intelligence Dashboard', 'Data & Analytics', 'Executive dashboards with actionable KPI visibility.', JSON.stringify(['Data integration', 'KPI framework', 'Interactive dashboards']), 'Project-based'],
-    ['Cloud Setup & Scaling Package', 'Cloud Infrastructure', 'Secure cloud foundation and scalable architecture.', JSON.stringify(['Cloud setup', 'CI/CD pipeline', 'Monitoring & security']), 'Monthly retainer']
+    ['باقة الذكاء الاصطناعي للمبتدئين', 'حلول الذكاء الاصطناعي', 'تقييم سريع لفرص الذكاء الاصطناعي وتنفيذ أولي.', JSON.stringify(['اكتشاف حالات الاستخدام', 'نموذج أولي', 'خطة نشر']), 'حسب المشروع'],
+    ['باقة أتمتة الأعمال', 'الأتمتة', 'أتمتة سير العمل المتكرر عبر العمليات والمبيعات.', JSON.stringify(['رسم خرائط العمليات', 'أتمتة سير العمل', 'لوحة تحكم التقارير']), 'اشتراك'],
+    ['باقة MVP للشركات الناشئة', 'هندسة المنتجات', 'تصميم وإطلاق حلول MVP جاهزة للمستثمرين.', JSON.stringify(['الهندسة التقنية', 'تطوير MVP', 'دعم الإطلاق']), 'حسب الإنجاز'],
+    ['لوحة ذكاء البيانات', 'البيانات والتحليلات', 'لوحات معلومات تنفيذية مع رؤية قابلة للتنفيذ لمؤشرات الأداء.', JSON.stringify(['تكامل البيانات', 'إطار عمل المؤشرات', 'لوحات تفاعلية']), 'حسب المشروع'],
+    ['باقة إعداد وتوسيع السحابة', 'البنية التحتية السحابية', 'أساس سحابي آمن وهندسة قابلة للتطوير.', JSON.stringify(['إعداد السحابة', 'خط أنابيب CI/CD', 'المراقبة والأمان']), 'عقد شهري']
   ];
 
   const stmtServices = await db.prepare('INSERT INTO services (title, category, description, features, pricing_model) VALUES (?, ?, ?, ?, ?)');
@@ -103,8 +103,8 @@ async function seedData(db: Database) {
   await stmtServices.finalize();
 
   const projects = [
-    ['Smart Admissions Automation', 'AI-assisted admissions triage and communication automation for education sector.', JSON.stringify(['Node.js', 'OpenAI API', 'PostgreSQL']), 'Education', 'Reduced response time by 68%.', JSON.stringify(['https://placehold.co/800x500'])],
-    ['Retail Analytics Command Center', 'Unified dashboard for inventory, sales, and campaign performance.', JSON.stringify(['Next.js', 'Python', 'Power BI']), 'Retail', 'Improved forecasting accuracy by 34%.', JSON.stringify(['https://placehold.co/800x500'])]
+    ['أتمتة القبول الذكي', 'فرز القبول المدعوم بالذكاء الاصطناعي وأتمتة الاتصالات لقطاع التعليم.', JSON.stringify(['Node.js', 'OpenAI API', 'PostgreSQL']), 'التعليم', 'خفض وقت الاستجابة بنسبة 68%.', JSON.stringify(['https://placehold.co/800x500'])],
+    ['مركز قيادة تحليلات التجزئة', 'لوحة تحكم موحدة للمخزون والمبيعات وأداء الحملات.', JSON.stringify(['Next.js', 'Python', 'Power BI']), 'التجزئة', 'تحسين دقة التنبؤ بنسبة 34%.', JSON.stringify(['https://placehold.co/800x500'])]
   ];
 
   const stmtProjects = await db.prepare('INSERT INTO projects (title, description, technologies, industry, results, images) VALUES (?, ?, ?, ?, ?, ?)');
@@ -114,8 +114,8 @@ async function seedData(db: Database) {
   await stmtProjects.finalize();
 
   const team = [
-    ['Amina Al-Salem', 'amina@platform.com', '+966500000001', 'AI Solutions Lead'],
-    ['Omar Hassan', 'omar@platform.com', '+966500000002', 'Cloud Architect']
+    ['أمينة السالم', 'amina@platform.com', '+966500000001', 'رائدة حلول الذكاء الاصطناعي'],
+    ['عمر حسن', 'omar@platform.com', '+966500000002', 'مهندس سحابي']
   ];
 
   const stmtTeam = await db.prepare('INSERT INTO team_members (name, email, phone, role) VALUES (?, ?, ?, ?)');

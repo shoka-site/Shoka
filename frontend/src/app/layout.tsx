@@ -3,8 +3,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Hybrid Technology Solutions Platform',
-  description: 'AI, software, data, and cloud services with modern consultation booking.'
+  title: 'منصة الحلول التقنية الهجينة',
+  description: 'خدمات الذكاء الاصطناعي والبرمجيات والبيانات والسحابة مع حجز استشارات حديث.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
