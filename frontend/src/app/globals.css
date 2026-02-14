@@ -54,3 +54,122 @@ body {
 .heading-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-brand-200 to-brand-400;
 }
+.welcome-scene {
+  box-shadow: inset 0 0 120px rgba(2, 6, 23, 0.8);
+}
+
+.black-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 210px;
+  height: 210px;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.black-hole-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #0f172a 0%, #020617 65%, #000 100%);
+  box-shadow: 0 0 28px rgba(59, 130, 246, 0.35), 0 0 95px rgba(168, 85, 247, 0.22);
+}
+
+.black-hole-ring {
+  position: absolute;
+  inset: -16px;
+  border-radius: 999px;
+  border: 2px solid rgba(125, 211, 252, 0.35);
+  animation: pulse-ring 2.4s ease-in-out infinite;
+}
+
+.tech-icon-chip,
+.user-chip {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  backdrop-filter: blur(6px);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  animation: pull-into-hole 3.4s cubic-bezier(0.35, 0.03, 0.44, 1) forwards;
+}
+
+.user-chip {
+  left: 50%;
+  top: 92%;
+  z-index: 6;
+  padding-inline: 1rem;
+}
+
+.portal-reveal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.26), transparent 45%),
+    radial-gradient(circle at bottom, rgba(99, 102, 241, 0.32), rgba(2, 6, 23, 0.92) 70%);
+  animation: fade-in 1s ease-out;
+}
+
+.portal-card {
+  animation: lift-in 1s ease-out;
+}
+
+@keyframes pull-into-hole {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  70% {
+    opacity: 0.95;
+    transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(0.75);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(0.08);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.14);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lift-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
