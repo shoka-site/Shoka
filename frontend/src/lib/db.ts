@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
 import path from 'path';
+import bcrypt from 'bcryptjs';
 
 // For Next.js in development, prevent multiple connections
 let cachedDb: Database | null = null;
@@ -83,8 +84,23 @@ export async function createDatabase(): Promise<Database> {
     await seedData(db);
   }
 
+  // Seed admin if not exists
+  const adminCount = await db.get('SELECT COUNT(*) as total FROM admin');
+  if (adminCount.total === 0) {
+    await seedAdmin(db);
+  }
+
   cachedDb = db;
   return db;
+}
+
+async function seedAdmin(db: Database) {
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    await db.run(
+        'INSERT INTO admin (name, email, password, phone) VALUES (?, ?, ?, ?)',
+        ['Admin User', 'admin@shoka.iq', hashedPassword, '+9647800000000']
+    );
+    console.log('Admin user seeded.');
 }
 
 async function seedData(db: Database) {

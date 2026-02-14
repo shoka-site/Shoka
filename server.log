@@ -1,0 +1,29 @@
+
+> ssp-frontend@1.0.0 dev
+> next dev -p 3000
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.8s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 590ms (73 modules)
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 3.9s (463 modules)
+ ✓ Compiled in 560ms (238 modules)
+ GET /admin/login 200 in 4484ms
+ ○ Compiling /api/auth/login ...
+ ✓ Compiled /api/auth/login in 4.2s (346 modules)
+ POST /api/auth/login 200 in 4501ms
+ ○ Compiling /admin/dashboard ...
+ ✓ Compiled /admin/dashboard in 911ms (638 modules)
+ ✓ Compiled /admin/leads in 215ms (640 modules)
+ ✓ Compiled /admin/bookings in 223ms (642 modules)
+ ✓ Compiled /admin/services in 220ms (644 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 3.1s (1516 modules)
+ GET / 200 in 3365ms
+ ✓ Compiled /_not-found in 420ms (1520 modules)
+ GET /architectural-pattern.svg 404 in 564ms
+[?25h
