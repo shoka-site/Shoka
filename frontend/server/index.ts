@@ -60,6 +60,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize in-memory storage with data
+  const { initializeStorage } = await import("./init-storage");
+  await initializeStorage();
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {

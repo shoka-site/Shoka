@@ -97,9 +97,9 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         <Link href="/home">
-          <a className={`text-2xl font-display font-bold text-foreground hover:opacity-80 transition-opacity ${isRtl ? 'tracking-normal' : 'tracking-tighter'}`}>
+          <span className={`text-2xl font-display font-bold text-foreground hover:opacity-80 transition-opacity cursor-pointer ${isRtl ? 'tracking-normal' : 'tracking-tighter'}`}>
             {t("navbar.brand")}
-          </a>
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -176,9 +176,9 @@ export default function Navbar() {
           </NavigationMenu>
 
           <Link href="/contact">
-            <a className="bg-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors">
+            <span className="bg-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors cursor-pointer inline-block">
               {t("navbar.book_consultation")}
-            </a>
+            </span>
           </Link>
 
           <button
@@ -210,21 +210,21 @@ export default function Navbar() {
             <nav className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link key={link.name} href={link.href}>
-                  <a
-                    className="text-lg font-medium text-foreground hover:text-accent"
+                  <span
+                    className="text-lg font-medium text-foreground hover:text-accent cursor-pointer"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
-                  </a>
+                  </span>
                 </Link>
               ))}
               <Link href="/contact">
-                <a
-                  className="bg-primary text-primary-foreground px-5 py-3 rounded-md text-center font-medium hover:bg-primary/90 transition-colors"
+                <span
+                  className="bg-primary text-primary-foreground px-5 py-3 rounded-md text-center font-medium hover:bg-primary/90 transition-colors cursor-pointer inline-block"
                   onClick={() => setIsOpen(false)}
                 >
                   {t("navbar.book_consultation")}
-                </a>
+                </span>
               </Link>
             </nav>
           </motion.div>

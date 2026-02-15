@@ -12,10 +12,22 @@
         "recent_work": "Recent Work",
         "recent_work_desc": "Explore how we help organizations transform their digital landscape.",
         "menu_services": {
-            "ai": { "title": "AI & Machine Learning", "desc": "Custom algorithms that optimize operations and predict market trends." },
-            "data": { "title": "Data Systems", "desc": "Scalable architecture for processing and securing mission-critical data." },
-            "cloud": { "title": "Cloud Infrastructure", "desc": "Resilient, high-availability deployments on AWS, Azure, and GCP." },
-            "security": { "title": "Enterprise Security", "desc": "Military-grade protection for your most valuable digital assets." }
+            "ai": {
+                "title": "AI & Machine Learning",
+                "desc": "Custom algorithms that optimize operations and predict market trends."
+            },
+            "data": {
+                "title": "Data Systems",
+                "desc": "Scalable architecture for processing and securing mission-critical data."
+            },
+            "cloud": {
+                "title": "Cloud Infrastructure",
+                "desc": "Resilient, high-availability deployments on AWS, Azure, and GCP."
+            },
+            "security": {
+                "title": "Enterprise Security",
+                "desc": "Military-grade protection for your most valuable digital assets."
+            }
         }
     },
     "welcome": {
@@ -30,15 +42,11 @@
         "est": "EST. 2026 // BABYLON_PRIME"
     },
     "hero": {
-        "learn_more": "Learn More",
-        "view_projects": "View Projects",
         "slides": {
             "1": {
                 "badge": "Intelligent Digital Systems",
-                "title_prefix": "Designing the",
-                "title_highlight": "Heritage",
-                "title_suffix": "of Tomorrow.",
-                "description": "Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots."
+                "title": "Designing Intelligent Digital Systems",
+                "description": "AI, Software, Data & Cloud Solutions for Modern Organizations"
             },
             "2": {
                 "badge": "Infrastructure & Cloud",
@@ -56,28 +64,154 @@
             }
         }
     },
+    "stats": {
+        "experience": {
+            "number": "15+",
+            "label": "Years Combined Experience"
+        },
+        "projects": {
+            "number": "100+",
+            "label": "Projects Delivered"
+        },
+        "clients": {
+            "number": "50+",
+            "label": "Enterprise Clients"
+        },
+        "satisfaction": {
+            "number": "99.8%",
+            "label": "Client Satisfaction"
+        }
+    },
+    "value_proposition": "We help businesses build, automate, and scale through intelligent technology solutions.",
     "book_consultation": "Book Consultation",
     "explore_services": "Explore Services",
     "core_capabilities": "Core Capabilities",
     "view_all_services": "View All Services",
     "home": {
-       "capabilities_desc": "We build systems that are robust, scalable, and intelligent by design.",
-       "case_study": {
-         "badge": "Case Study",
-         "title": "National Data Archive modernization",
-         "desc": "Digitizing 50 years of historical records into a secure, searchable cloud database powered by AI-driven optical character recognition.",
-         "features": {
-           "cloud": "Cloud Migration",
-           "ai": "AI/OCR",
-           "security": "Secure Access Control"
-         },
-         "view_project": "View Project Details"
-       },
-       "cta": {
-         "title": "Ready to build something lasting?",
-         "desc": "Schedule a consultation with our engineering team to discuss your digital transformation.",
-         "button": "Start a Conversation"
-       }
+        "services": {
+            "ai": {
+                "title": "AI Solutions",
+                "desc": "Intelligent automation, AI integration, and smart systems."
+            },
+            "fullstack": {
+                "title": "Full Stack Development",
+                "desc": "Scalable, high-performance web & system development."
+            },
+            "data": {
+                "title": "Data & Analytics",
+                "desc": "Transforming data into strategic decisions."
+            },
+            "cloud": {
+                "title": "Cloud Services",
+                "desc": "Secure, scalable cloud infrastructure & deployment."
+            },
+            "learn_more": "Learn More"
+        },
+        "trust": {
+            "title": "Trusted by forward-thinking teams",
+            "clients": "Enterprise Clients",
+            "testimonials": {
+                "1": {
+                    "quote": "Shoka transformed our legacy infrastructure into a modern, scalable cloud platform. Their expertise in AI integration was exceptional.",
+                    "author": "Amira Hassan",
+                    "role": "CTO, National Data Systems",
+                    "rating": 5
+                },
+                "2": {
+                    "quote": "Working with Shoka was a game-changer. They delivered a complex full-stack solution ahead of schedule with remarkable precision.",
+                    "author": "Omar Al-Rashid",
+                    "role": "VP Engineering, Modern Banking Corp",
+                    "rating": 5
+                },
+                "3": {
+                    "quote": "Their AI-driven approach to solving our data challenges exceeded all expectations. True engineering excellence.",
+                    "author": "Layla Ibrahim",
+                    "role": "Director of Innovation, Smart City Initiative",
+                    "rating": 5
+                }
+            }
+        },
+        "projects": {
+            "title": "Featured Projects",
+            "subtitle": "Proof of Capability"
+        },
+        "why_shoka": {
+            "title": "Why Work With Shoka",
+            "points": {
+                "business_first": {
+                    "title": "Business-First Solutions",
+                    "desc": "Technology serves your goals, not the other way around."
+                },
+                "rapid_prototyping": {
+                    "title": "Rapid Prototyping",
+                    "desc": "Fast iteration cycles to validate ideas before full-scale development."
+                },
+                "modern_stack": {
+                    "title": "Modern Technology Stack",
+                    "desc": "Latest tools and frameworks that ensure longevity and performance."
+                },
+                "ai_driven": {
+                    "title": "AI-Driven Mindset",
+                    "desc": "Intelligence embedded in every solution we architect."
+                },
+                "engineering_precision": {
+                    "title": "Engineering Precision",
+                    "desc": "Meticulous attention to detail in every line of code."
+                }
+            }
+        },
+        "process": {
+            "title": "How We Work",
+            "steps": {
+                "discover": {
+                    "title": "Discover",
+                    "desc": "Understanding your business, challenges, and objectives."
+                },
+                "design": {
+                    "title": "Design",
+                    "desc": "Architecting solutions that align with your vision."
+                },
+                "build": {
+                    "title": "Build",
+                    "desc": "Engineering robust, scalable systems with precision."
+                },
+                "launch": {
+                    "title": "Launch",
+                    "desc": "Deploying and validating in production environments."
+                },
+                "scale": {
+                    "title": "Scale",
+                    "desc": "Continuous optimization and growth enablement."
+                }
+            }
+        },
+        "insights": {
+            "title": "Insights & Perspectives",
+            "subtitle": "Thought Leadership",
+            "topics": {
+                "1": {
+                    "title": "The Future of AI in Modern Infrastructure",
+                    "desc": "Exploring how artificial intelligence is reshaping enterprise systems and cloud architecture.",
+                    "readTime": "5 min read"
+                },
+                "2": {
+                    "title": "Building Resilient Cloud Systems",
+                    "desc": "Best practices for designing fault-tolerant, scalable cloud infrastructure that grows with your business.",
+                    "readTime": "7 min read"
+                },
+                "3": {
+                    "title": "Data-Driven Decision Making",
+                    "desc": "Transforming raw data into actionable insights through advanced analytics and machine learning.",
+                    "readTime": "6 min read"
+                }
+            }
+        },
+        "cta": {
+            "title": "Let's Build Something Intelligent",
+            "desc": "Tell us about your project or schedule a consultation.",
+            "button": "Book Consultation",
+            "button_secondary": "Contact Us"
+        }
     },
     "services": {
         "title": "Our Services",
@@ -184,14 +318,14 @@
             "success_title": "Message Sent",
             "success_desc": "We've received your inquiry and will respond within 24 hours.",
             "validation": {
-               "name": "Name is required",
-               "email": "Invalid email address",
-               "message": "Please provide more detail about your inquiry"
+                "name": "Name is required",
+                "email": "Invalid email address",
+                "message": "Please provide more detail about your inquiry"
             },
             "placeholders": {
-               "name": "John Doe",
-               "email": "john@company.com",
-               "company": "Acme Inc."
+                "name": "John Doe",
+                "email": "john@company.com",
+                "company": "Acme Inc."
             }
         }
     },
