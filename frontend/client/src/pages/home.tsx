@@ -1,10 +1,14 @@
+import { useState, useEffect } from "react";
 import Section from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Database, Cloud, Brain, Lock } from "lucide-react";
 import { Link } from "wouter";
 import heroPattern from "@/assets/hero-pattern.png";
 import projectImage from "@/assets/project-1.png";
+import heroMeso1 from "@/assets/hero-meso-1.png";
+import heroMeso2 from "@/assets/hero-meso-2.png";
+import heroMeso3 from "@/assets/hero-meso-3.png";
 
 const services = [
   {
@@ -29,69 +33,112 @@ const services = [
   }
 ];
 
+const heroSlides = [
+  {
+    id: 1,
+    badge: "Intelligent Digital Systems",
+    title: <>Designing the <br /><span className="text-primary italic">Heritage</span> of <br />Tomorrow.</>,
+    description: "Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots.",
+    image: heroMeso1
+  },
+  {
+    id: 2,
+    badge: "Future-Proof Architecture",
+    title: <>Building <span className="text-primary italic">Resilient</span> Systems <br />for Growth.</>,
+    description: "Scalable infrastructure designed to adapt and evolve with your business needs.",
+    image: heroMeso2
+  },
+  {
+    id: 3,
+    badge: "AI-Driven Innovation",
+    title: <>Empowering <span className="text-primary italic">Decisions</span> with <br />Data Intelligence.</>,
+    description: "Transforming raw data into actionable insights through advanced machine learning models.",
+    image: heroMeso3
+  }
+];
+
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
-      
+
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-background overflow-hidden">
         {/* Abstract Background */}
         <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 pointer-events-none">
-          <img 
-            src={heroPattern} 
-            alt="Heritage Pattern" 
-            className="w-full h-full object-cover mix-blend-multiply filter sepia-[.2] contrast-125"
-          />
+          <AnimatePresence>
+            <motion.img
+              key={heroSlides[currentSlide].image}
+              src={heroSlides[currentSlide].image}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7 }}
+              alt="Background Pattern"
+              className="absolute inset-0 w-full h-full object-cover mix-blend-multiply filter sepia-[.2] contrast-125"
+            />
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background"></div>
         </div>
 
         <div className="container mx-auto px-6 md:px-12 relative z-10 pt-20">
-          <div className="max-w-3xl">
-            <motion.span 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium tracking-widest uppercase mb-6"
-            >
-              Intelligent Digital Systems
-            </motion.span>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-5xl md:text-7xl font-display font-bold text-foreground leading-[1.1] mb-8"
-            >
-              Designing the <br />
-              <span className="text-primary italic">Heritage</span> of <br />
-              Tomorrow.
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-xl leading-relaxed font-light"
-            >
-              Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <Link href="/contact">
-                <Button size="lg" className="rounded-full text-lg h-14 px-8">
-                  Book Consultation
-                </Button>
-              </Link>
-              <Link href="/services">
-                <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
-                  Explore Services
-                </Button>
-              </Link>
-            </motion.div>
+          <div className="max-w-3xl min-h-[400px]"> {/* Added min-height to prevent layout shift */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={heroSlides[currentSlide].id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.35 }}
+              >
+                <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium tracking-widest uppercase mb-6">
+                  {heroSlides[currentSlide].badge}
+                </span>
+
+                <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-[1.1] mb-8">
+                  {heroSlides[currentSlide].title}
+                </h1>
+
+                <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-xl leading-relaxed font-light">
+                  {heroSlides[currentSlide].description}
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link href="/contact">
+                    <Button size="lg" className="rounded-full text-lg h-14 px-8">
+                      Book Consultation
+                    </Button>
+                  </Link>
+                  <Link href="/services">
+                    <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
+                      Explore Services
+                    </Button>
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Slide Indicators */}
+            <div className="flex gap-2 mt-12">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-primary" : "w-2 bg-primary/20"
+                    }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -136,11 +183,11 @@ export default function Home() {
       <Section className="py-0 px-0 md:px-0">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="h-[500px] md:h-auto overflow-hidden">
-             <img 
-               src={projectImage} 
-               alt="Featured Project" 
-               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-             />
+            <img
+              src={projectImage}
+              alt="Featured Project"
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+            />
           </div>
           <div className="bg-foreground text-background p-12 md:p-24 flex flex-col justify-center">
             <span className="text-accent tracking-widest uppercase text-sm font-medium mb-4">Case Study</span>
