@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import Section from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,32 +34,44 @@ const services = [
   }
 ];
 
-const heroSlides = [
-  {
-    id: 1,
-    badge: "Intelligent Digital Systems",
-    title: <>Designing the <br /><span className="text-primary italic">Heritage</span> of <br />Tomorrow.</>,
-    description: "Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots.",
-    image: heroMeso1
-  },
-  {
-    id: 2,
-    badge: "Future-Proof Architecture",
-    title: <>Building <span className="text-primary italic">Resilient</span> Systems <br />for Growth.</>,
-    description: "Scalable infrastructure designed to adapt and evolve with your business needs.",
-    image: heroMeso2
-  },
-  {
-    id: 3,
-    badge: "AI-Driven Innovation",
-    title: <>Empowering <span className="text-primary italic">Decisions</span> with <br />Data Intelligence.</>,
-    description: "Transforming raw data into actionable insights through advanced machine learning models.",
-    image: heroMeso3
-  }
-];
-
 export default function Home() {
+  const { t, i18n } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const isRtl = i18n.dir() === 'rtl';
+
+  const heroSlides = [
+    {
+      id: 1,
+      badge: t('hero.slides.1.badge'),
+      title: <>
+        {t('hero.slides.1.title_prefix')} <br />
+        <span className="text-primary italic">{t('hero.slides.1.title_highlight')}</span> <br />
+        {t('hero.slides.1.title_suffix')}
+      </>,
+      description: t('hero.slides.1.description'),
+      image: heroMeso1
+    },
+    {
+      id: 2,
+      badge: t('hero.slides.2.badge'),
+      title: <>
+        {t('hero.slides.2.title_prefix')} <span className="text-primary italic">{t('hero.slides.2.title_highlight')}</span> <br />
+        {t('hero.slides.2.title_suffix')}
+      </>,
+      description: t('hero.slides.2.description'),
+      image: heroMeso2
+    },
+    {
+      id: 3,
+      badge: t('hero.slides.3.badge'),
+      title: <>
+        {t('hero.slides.3.title_prefix')} <span className="text-primary italic">{t('hero.slides.3.title_highlight')}</span> <br />
+        {t('hero.slides.3.title_suffix')}
+      </>,
+      description: t('hero.slides.3.description'),
+      image: heroMeso3
+    }
+  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -115,12 +128,12 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/contact">
                     <Button size="lg" className="rounded-full text-lg h-14 px-8">
-                      Book Consultation
+                      {t('hero.book_consultation')}
                     </Button>
                   </Link>
                   <Link href="/services">
                     <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
-                      Explore Services
+                      {t('hero.explore_services')}
                     </Button>
                   </Link>
                 </div>
@@ -147,14 +160,15 @@ export default function Home() {
       <Section background="muted">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div className="max-w-xl">
-            <h2 className="text-4xl font-display font-bold mb-4">Core Capabilities</h2>
+            <h2 className="text-4xl font-display font-bold mb-4">{t('hero.core_capabilities')}</h2>
             <p className="text-muted-foreground text-lg">
               We build systems that are robust, scalable, and intelligent by design.
             </p>
           </div>
           <Link href="/services">
             <a className="group flex items-center text-primary font-medium mt-6 md:mt-0">
-              View All Services <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {t('hero.view_all_services')}
+              <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
             </a>
           </Link>
         </div>

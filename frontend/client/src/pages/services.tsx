@@ -3,59 +3,64 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { ArrowRight, Code, Server, Shield, Smartphone, Globe, BarChart } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-const serviceList = [
-  {
-    icon: <Globe className="w-10 h-10" />,
-    title: "Web & Digital Platforms",
-    description: "High-performance web applications built on Next.js and modern frameworks. We prioritize speed, accessibility, and aesthetic excellence.",
-    tags: ["React", "Next.js", "UI/UX"]
-  },
-  {
-    icon: <Smartphone className="w-10 h-10" />,
-    title: "Mobile Solutions",
-    description: "Native and cross-platform mobile apps that provide seamless user experiences across iOS and Android ecosystems.",
-    tags: ["React Native", "iOS", "Android"]
-  },
-  {
-    icon: <Server className="w-10 h-10" />,
-    title: "Backend Architecture",
-    description: "Robust server-side systems designed to handle high concurrency and complex data processing requirements.",
-    tags: ["Node.js", "Python", "Microservices"]
-  },
-  {
-    icon: <Shield className="w-10 h-10" />,
-    title: "Cybersecurity Audits",
-    description: "Comprehensive security assessments to identify vulnerabilities and strengthen your digital infrastructure against threats.",
-    tags: ["Pen Testing", "Compliance", "Audits"]
-  },
-  {
-    icon: <BarChart className="w-10 h-10" />,
-    title: "Data Analytics",
-    description: "Transform raw data into actionable insights through custom dashboards and predictive modeling.",
-    tags: ["Big Data", "Visualization", "BI"]
-  },
-  {
-    icon: <Code className="w-10 h-10" />,
-    title: "API Integration",
-    description: "Seamlessly connect your systems with third-party services to automate workflows and extend functionality.",
-    tags: ["REST", "GraphQL", "Webhooks"]
-  }
-];
+
 
 export default function Services() {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === 'rtl';
+
+  const serviceList = [
+    {
+      icon: <Globe className="w-10 h-10" />,
+      title: t('services.list.web.title'),
+      description: t('services.list.web.desc'),
+      tags: ["React", "Next.js", "UI/UX"]
+    },
+    {
+      icon: <Smartphone className="w-10 h-10" />,
+      title: t('services.list.mobile.title'),
+      description: t('services.list.mobile.desc'),
+      tags: ["React Native", "iOS", "Android"]
+    },
+    {
+      icon: <Server className="w-10 h-10" />,
+      title: t('services.list.backend.title'),
+      description: t('services.list.backend.desc'),
+      tags: ["Node.js", "Python", "Microservices"]
+    },
+    {
+      icon: <Shield className="w-10 h-10" />,
+      title: t('services.list.security.title'),
+      description: t('services.list.security.desc'),
+      tags: ["Pen Testing", "Compliance", "Audits"]
+    },
+    {
+      icon: <BarChart className="w-10 h-10" />,
+      title: t('services.list.data.title'),
+      description: t('services.list.data.desc'),
+      tags: ["Big Data", "Visualization", "BI"]
+    },
+    {
+      icon: <Code className="w-10 h-10" />,
+      title: t('services.list.api.title'),
+      description: t('services.list.api.desc'),
+      tags: ["REST", "GraphQL", "Webhooks"]
+    }
+  ];
+
   return (
     <div className="pt-24 min-h-screen">
       <Section background="pattern" className="pb-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-4xl"
         >
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Our Services</h1>
+
           <p className="text-xl text-muted-foreground leading-relaxed">
-            We deliver end-to-end technology solutions tailored to your organization's unique challenges. 
-            From architectural strategy to pixel-perfect execution.
+            {t('services.description')}
           </p>
         </motion.div>
       </Section>
@@ -91,7 +96,7 @@ export default function Services() {
                 </CardContent>
                 <CardFooter>
                   <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group">
-                    Learn More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    {t('services.learn_more')} <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
                   </Button>
                 </CardFooter>
               </Card>

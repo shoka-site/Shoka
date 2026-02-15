@@ -32,7 +32,13 @@
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
+}
+
+:root[lang="ar"] {
+  --font-sans: 'IBM Plex Arabic', sans-serif;
+  --font-display: 'IBM Plex Arabic', sans-serif;
 }
 
 :root {

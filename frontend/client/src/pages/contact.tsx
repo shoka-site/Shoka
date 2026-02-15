@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 const formSchema = z.object({
@@ -19,6 +20,7 @@ const formSchema = z.object({
 });
 
 export default function Contact() {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,8 +35,8 @@ export default function Contact() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: "Message Sent",
-      description: "We've received your inquiry and will respond within 24 hours.",
+      title: t('contact.form.success_title'),
+      description: t('contact.form.success_desc'),
     });
     form.reset();
   }
@@ -43,13 +45,13 @@ export default function Contact() {
     <div className="pt-24 min-h-screen">
       <Section background="pattern">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          
+
           {/* Contact Info */}
           <div>
-            <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">Get in touch</span>
-            <h1 className="text-5xl font-display font-bold mb-8">Let's discuss your next project.</h1>
+            <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">{t('contact.subtitle')}</span>
+            <h1 className="text-5xl font-display font-bold mb-8">{t('contact.title')}</h1>
             <p className="text-xl text-muted-foreground mb-12">
-              Whether you have a specific project in mind or just want to explore how Shoka can help your business grow, we're here to listen.
+              {t('contact.description')}
             </p>
 
             <div className="space-y-8">
@@ -58,7 +60,7 @@ export default function Contact() {
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold font-display">Email Us</h3>
+                  <h3 className="text-lg font-semibold font-display">{t('contact.email_us')}</h3>
                   <p className="text-muted-foreground">hello@shoka.com</p>
                   <p className="text-muted-foreground">careers@shoka.com</p>
                 </div>
@@ -69,9 +71,9 @@ export default function Contact() {
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold font-display">Call Us</h3>
+                  <h3 className="text-lg font-semibold font-display">{t('contact.call_us')}</h3>
                   <p className="text-muted-foreground">+964 770 123 4567</p>
-                  <p className="text-muted-foreground">Mon-Fri from 9am to 6pm</p>
+                  <p className="text-muted-foreground">{t('contact.mon_fri')}</p>
                 </div>
               </div>
 
@@ -80,7 +82,7 @@ export default function Contact() {
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold font-display">Visit Us</h3>
+                  <h3 className="text-lg font-semibold font-display">{t('contact.visit_us')}</h3>
                   <p className="text-muted-foreground">Al-Mansour District</p>
                   <p className="text-muted-foreground">Baghdad, Iraq</p>
                 </div>
@@ -90,7 +92,7 @@ export default function Contact() {
 
           {/* Contact Form */}
           <Card className="p-8 shadow-xl border-border/60">
-            <h2 className="text-2xl font-display font-bold mb-6">Send a Message</h2>
+            <h2 className="text-2xl font-display font-bold mb-6">{t('contact.form.title')}</h2>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -98,22 +100,21 @@ export default function Contact() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel>{t('contact.form.name')}</FormLabel>
                       <FormControl>
                         <Input placeholder="John Doe" {...field} />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>{t('contact.form.email')}</FormLabel>
                         <FormControl>
                           <Input placeholder="john@company.com" {...field} />
                         </FormControl>
@@ -126,7 +127,7 @@ export default function Contact() {
                     name="company"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Company (Optional)</FormLabel>
+                        <FormLabel>{t('contact.form.company')}</FormLabel>
                         <FormControl>
                           <Input placeholder="Acme Inc." {...field} />
                         </FormControl>
@@ -141,12 +142,12 @@ export default function Contact() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>How can we help?</FormLabel>
+                      <FormLabel>{t('contact.form.message')}</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="Tell us about your project requirements..." 
+                        <Textarea
+                          placeholder={t('contact.form.message')}
                           className="min-h-[120px]"
-                          {...field} 
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
@@ -155,7 +156,7 @@ export default function Contact() {
                 />
 
                 <Button type="submit" size="lg" className="w-full rounded-full">
-                  Send Message
+                  {t('contact.form.submit')}
                 </Button>
               </form>
             </Form>
