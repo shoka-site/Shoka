@@ -11,31 +11,30 @@ import heroMeso1 from "@/assets/hero-meso-1.png";
 import heroMeso2 from "@/assets/hero-meso-2.png";
 import heroMeso3 from "@/assets/hero-meso-3.png";
 
-const services = [
-  {
-    icon: <Brain className="w-8 h-8" />,
-    title: "AI & Machine Learning",
-    description: "Custom algorithms that optimize operations and predict market trends."
-  },
-  {
-    icon: <Database className="w-8 h-8" />,
-    title: "Data Systems",
-    description: "Scalable architecture for processing and securing mission-critical data."
-  },
-  {
-    icon: <Cloud className="w-8 h-8" />,
-    title: "Cloud Infrastructure",
-    description: "Resilient, high-availability deployments on AWS, Azure, and GCP."
-  },
-  {
-    icon: <Lock className="w-8 h-8" />,
-    title: "Enterprise Security",
-    description: "Military-grade protection for your most valuable digital assets."
-  }
-];
-
 export default function Home() {
   const { t, i18n } = useTranslation();
+  const services = [
+    {
+      icon: <Brain className="w-8 h-8" />,
+      title: t("navbar.menu_services.ai.title"),
+      description: t("navbar.menu_services.ai.desc")
+    },
+    {
+      icon: <Database className="w-8 h-8" />,
+      title: t("navbar.menu_services.data.title"),
+      description: t("navbar.menu_services.data.desc")
+    },
+    {
+      icon: <Cloud className="w-8 h-8" />,
+      title: t("navbar.menu_services.cloud.title"),
+      description: t("navbar.menu_services.cloud.desc")
+    },
+    {
+      icon: <Lock className="w-8 h-8" />,
+      title: t("navbar.menu_services.security.title"),
+      description: t("navbar.menu_services.security.desc")
+    }
+  ];
   const [currentSlide, setCurrentSlide] = useState(0);
   const isRtl = i18n.dir() === 'rtl';
 
@@ -128,12 +127,12 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/contact">
                     <Button size="lg" className="rounded-full text-lg h-14 px-8">
-                      {t('hero.book_consultation')}
+                      {t('book_consultation')}
                     </Button>
                   </Link>
                   <Link href="/services">
                     <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
-                      {t('hero.explore_services')}
+                      {t('explore_services')}
                     </Button>
                   </Link>
                 </div>
@@ -160,14 +159,14 @@ export default function Home() {
       <Section background="muted">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div className="max-w-xl">
-            <h2 className="text-4xl font-display font-bold mb-4">{t('hero.core_capabilities')}</h2>
+            <h2 className="text-4xl font-display font-bold mb-4">{t('core_capabilities')}</h2>
             <p className="text-muted-foreground text-lg">
-              We build systems that are robust, scalable, and intelligent by design.
+              {t('home.capabilities_desc')}
             </p>
           </div>
           <Link href="/services">
             <a className="group flex items-center text-primary font-medium mt-6 md:mt-0">
-              {t('hero.view_all_services')}
+              {t('view_all_services')}
               <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
             </a>
           </Link>
@@ -204,15 +203,15 @@ export default function Home() {
             />
           </div>
           <div className="bg-foreground text-background p-12 md:p-24 flex flex-col justify-center">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium mb-4">Case Study</span>
+            <span className="text-accent tracking-widest uppercase text-sm font-medium mb-4">{t('home.case_study.badge')}</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">
-              National Data Archive <br /> modernization
+              {t('home.case_study.title')}
             </h2>
             <p className="text-white/60 text-lg mb-10 leading-relaxed">
-              Digitizing 50 years of historical records into a secure, searchable cloud database powered by AI-driven optical character recognition.
+              {t('home.case_study.desc')}
             </p>
             <ul className="space-y-4 mb-10">
-              {["Cloud Migration", "AI/OCR", "Secure Access Control"].map((item) => (
+              {[t('home.case_study.features.cloud'), t('home.case_study.features.ai'), t('home.case_study.features.security')].map((item) => (
                 <li key={item} className="flex items-center text-white/80">
                   <Check className="w-5 h-5 text-accent mr-3" /> {item}
                 </li>
@@ -220,7 +219,7 @@ export default function Home() {
             </ul>
             <Link href="/portfolio">
               <Button variant="outline" className="w-fit rounded-full text-white border-white/20 hover:bg-white hover:text-foreground">
-                View Project Details
+                {t('home.case_study.view_project')}
               </Button>
             </Link>
           </div>
@@ -231,14 +230,14 @@ export default function Home() {
       <Section background="default" className="text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Ready to build something lasting?
+            {t('home.cta.title')}
           </h2>
           <p className="text-muted-foreground text-xl mb-10">
-            Schedule a consultation with our engineering team to discuss your digital transformation.
+            {t('home.cta.desc')}
           </p>
           <Link href="/contact">
             <Button size="lg" className="rounded-full text-lg h-16 px-10 shadow-xl shadow-primary/20">
-              Start a Conversation
+              {t('home.cta.button')}
             </Button>
           </Link>
         </div>

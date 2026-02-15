@@ -19,28 +19,28 @@ export default function Portfolio() {
       category: t('portfolio.projects.archive.category'),
       image: project1,
       description: t('portfolio.projects.archive.desc'),
-      tags: ["Cloud Migration", "AI/OCR", "Security"]
+      tags: [t("tags.cloud_migration"), t("tags.ai_ocr"), t("tags.security")]
     },
     {
       title: t('portfolio.projects.banking.title'),
       category: t('portfolio.projects.banking.category'),
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
       description: t('portfolio.projects.banking.desc'),
-      tags: ["Blockchain", "Node.js", "Real-time"]
+      tags: [t("tags.blockchain"), t("tags.nodejs"), t("tags.realtime")]
     },
     {
       title: t('portfolio.projects.smart_city.title'),
       category: t('portfolio.projects.smart_city.category'),
       image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2070&auto=format&fit=crop",
       description: t('portfolio.projects.smart_city.desc'),
-      tags: ["IoT", "Big Data", "Analytics"]
+      tags: [t("tags.iot"), t("tags.big_data"), t("tags.analytics")]
     },
     {
       title: t('portfolio.projects.edutech.title'),
       category: t('portfolio.projects.edutech.category'),
       image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2132&auto=format&fit=crop",
       description: t('portfolio.projects.edutech.desc'),
-      tags: ["React", "AI", "Mobile App"]
+      tags: [t("tags.react"), t("tags.ai"), t("tags.mobile_app")]
     }
   ];
   return (

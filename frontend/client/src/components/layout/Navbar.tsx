@@ -30,46 +30,46 @@ export default function Navbar() {
 
   const services = [
     {
-      title: "AI & Machine Learning",
+      title: t("navbar.menu_services.ai.title"),
       href: "/services",
-      description: "Custom algorithms that optimize operations and predict market trends.",
+      description: t("navbar.menu_services.ai.desc"),
       icon: <Brain className="w-5 h-5 mb-2 text-primary" />
     },
     {
-      title: "Data Systems",
+      title: t("navbar.menu_services.data.title"),
       href: "/services",
-      description: "Scalable architecture for processing and securing mission-critical data.",
+      description: t("navbar.menu_services.data.desc"),
       icon: <Database className="w-5 h-5 mb-2 text-primary" />
     },
     {
-      title: "Cloud Infrastructure",
+      title: t("navbar.menu_services.cloud.title"),
       href: "/services",
-      description: "Resilient, high-availability deployments on AWS, Azure, and GCP.",
+      description: t("navbar.menu_services.cloud.desc"),
       icon: <Cloud className="w-5 h-5 mb-2 text-primary" />
     },
     {
-      title: "Enterprise Security",
+      title: t("navbar.menu_services.security.title"),
       href: "/services",
-      description: "Military-grade protection for your most valuable digital assets.",
+      description: t("navbar.menu_services.security.desc"),
       icon: <Lock className="w-5 h-5 mb-2 text-primary" />
     }
   ];
 
   const projects = [
     {
-      title: "National Data Archive",
+      title: t("portfolio.projects.archive.title"),
       href: "/portfolio",
-      description: "Digitizing 50 years of historical records into a secure cloud database.",
+      description: t("portfolio.projects.archive.desc"),
     },
     {
-      title: "Smart City Grid",
+      title: t("portfolio.projects.smart_city.title"),
       href: "/portfolio",
-      description: "IoT infrastructure for real-time urban energy management.",
+      description: t("portfolio.projects.smart_city.desc"),
     },
     {
-      title: "FinTech Core",
+      title: t("portfolio.projects.banking.title"),
       href: "/portfolio",
-      description: "Low-latency trading engine for a regional banking leader.",
+      description: t("portfolio.projects.banking.desc"),
     }
   ];
 
@@ -136,10 +136,10 @@ export default function Navbar() {
                         >
                           <Building2 className="h-6 w-6 text-primary mb-2" />
                           <div className="mb-2 mt-4 text-lg font-medium text-foreground">
-                            Recent Work
+                            {t("navbar.recent_work")}
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
-                            Explore how we help organizations transform their digital landscape.
+                            {t("navbar.recent_work_desc")}
                           </p>
                         </a>
                       </NavigationMenuLink>
@@ -177,7 +177,7 @@ export default function Navbar() {
 
           <Link href="/contact">
             <a className="bg-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors">
-              Book Consultation
+              {t("navbar.book_consultation")}
             </a>
           </Link>
 
@@ -223,7 +223,7 @@ export default function Navbar() {
                   className="bg-primary text-primary-foreground px-5 py-3 rounded-md text-center font-medium hover:bg-primary/90 transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Book Consultation
+                  {t("navbar.book_consultation")}
                 </a>
               </Link>
             </nav>

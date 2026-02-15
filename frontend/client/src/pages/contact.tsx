@@ -12,15 +12,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { Mail, MapPin, Phone } from "lucide-react";
 
-const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  company: z.string().optional(),
-  message: z.string().min(10, "Please provide more detail about your inquiry"),
-});
-
 export default function Contact() {
   const { t } = useTranslation();
+
+  const formSchema = z.object({
+    name: z.string().min(2, t('contact.form.validation.name')),
+    email: z.string().email(t('contact.form.validation.email')),
+    company: z.string().optional(),
+    message: z.string().min(10, t('contact.form.validation.message')),
+  });
+
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -83,8 +84,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold font-display">{t('contact.visit_us')}</h3>
-                  <p className="text-muted-foreground">Al-Mansour District</p>
-                  <p className="text-muted-foreground">Baghdad, Iraq</p>
+                  <p className="text-muted-foreground">{t('contact.address.line1')}</p>
+                  <p className="text-muted-foreground">{t('contact.address.line2')}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +103,7 @@ export default function Contact() {
                     <FormItem>
                       <FormLabel>{t('contact.form.name')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="John Doe" {...field} />
+                        <Input placeholder={t('contact.form.placeholders.name')} {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -116,7 +117,7 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel>{t('contact.form.email')}</FormLabel>
                         <FormControl>
-                          <Input placeholder="john@company.com" {...field} />
+                          <Input placeholder={t('contact.form.placeholders.email')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -129,7 +130,7 @@ export default function Contact() {
                       <FormItem>
                         <FormLabel>{t('contact.form.company')}</FormLabel>
                         <FormControl>
-                          <Input placeholder="Acme Inc." {...field} />
+                          <Input placeholder={t('contact.form.placeholders.company')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
