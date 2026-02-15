@@ -58,7 +58,7 @@ export default function Services() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-4xl"
         >
-
+          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">{t('services.title')}</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
             {t('services.description')}
           </p>

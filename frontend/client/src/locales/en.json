@@ -7,7 +7,16 @@
         "contact": "Contact",
         "language": "Language",
         "english": "English",
-        "arabic": "Arabic"
+        "arabic": "Arabic",
+        "book_consultation": "Book Consultation",
+        "recent_work": "Recent Work",
+        "recent_work_desc": "Explore how we help organizations transform their digital landscape.",
+        "menu_services": {
+            "ai": { "title": "AI & Machine Learning", "desc": "Custom algorithms that optimize operations and predict market trends." },
+            "data": { "title": "Data Systems", "desc": "Scalable architecture for processing and securing mission-critical data." },
+            "cloud": { "title": "Cloud Infrastructure", "desc": "Resilient, high-availability deployments on AWS, Azure, and GCP." },
+            "security": { "title": "Enterprise Security", "desc": "Military-grade protection for your most valuable digital assets." }
+        }
     },
     "welcome": {
         "badge": "Gateway to the Future",
@@ -51,6 +60,25 @@
     "explore_services": "Explore Services",
     "core_capabilities": "Core Capabilities",
     "view_all_services": "View All Services",
+    "home": {
+       "capabilities_desc": "We build systems that are robust, scalable, and intelligent by design.",
+       "case_study": {
+         "badge": "Case Study",
+         "title": "National Data Archive modernization",
+         "desc": "Digitizing 50 years of historical records into a secure, searchable cloud database powered by AI-driven optical character recognition.",
+         "features": {
+           "cloud": "Cloud Migration",
+           "ai": "AI/OCR",
+           "security": "Secure Access Control"
+         },
+         "view_project": "View Project Details"
+       },
+       "cta": {
+         "title": "Ready to build something lasting?",
+         "desc": "Schedule a consultation with our engineering team to discuss your digital transformation.",
+         "button": "Start a Conversation"
+       }
+    },
     "services": {
         "title": "Our Services",
         "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges. From architectural strategy to pixel-perfect execution.",
@@ -142,6 +170,10 @@
         "call_us": "Call Us",
         "visit_us": "Visit Us",
         "mon_fri": "Mon-Fri from 9am to 6pm",
+        "address": {
+            "line1": "Al-Mansour District",
+            "line2": "Baghdad, Iraq"
+        },
         "form": {
             "title": "Send a Message",
             "name": "Full Name",
@@ -150,7 +182,17 @@
             "message": "How can we help?",
             "submit": "Send Message",
             "success_title": "Message Sent",
-            "success_desc": "We've received your inquiry and will respond within 24 hours."
+            "success_desc": "We've received your inquiry and will respond within 24 hours.",
+            "validation": {
+               "name": "Name is required",
+               "email": "Invalid email address",
+               "message": "Please provide more detail about your inquiry"
+            },
+            "placeholders": {
+               "name": "John Doe",
+               "email": "john@company.com",
+               "company": "Acme Inc."
+            }
         }
     },
     "footer": {
@@ -159,10 +201,31 @@
         "rights": "All rights reserved.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
-        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology."
+        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
+        "copyright": "Shoka Systems.",
+        "links": {
+            "home": "Home",
+            "services": "Services",
+            "portfolio": "Portfolio",
+            "contact": "Contact"
+        }
     },
     "not_found": {
         "title": "404 Page Not Found",
         "desc": "Did you forget to add the page to the router?"
+    },
+    "tags": {
+        "cloud_migration": "Cloud Migration",
+        "ai_ocr": "AI/OCR",
+        "security": "Security",
+        "blockchain": "Blockchain",
+        "nodejs": "Node.js",
+        "realtime": "Real-time",
+        "iot": "IoT",
+        "big_data": "Big Data",
+        "analytics": "Analytics",
+        "react": "React",
+        "ai": "AI",
+        "mobile_app": "Mobile App"
     }
 }

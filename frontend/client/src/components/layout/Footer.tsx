@@ -17,10 +17,10 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-display font-semibold mb-6 text-accent">{t('footer.sitemap')}</h3>
             <ul className="space-y-4">
-              <li><Link href="/home"><a className="text-white/60 hover:text-white transition-colors">Home</a></Link></li>
-              <li><Link href="/services"><a className="text-white/60 hover:text-white transition-colors">Services</a></Link></li>
-              <li><Link href="/portfolio"><a className="text-white/60 hover:text-white transition-colors">Portfolio</a></Link></li>
-              <li><Link href="/contact"><a className="text-white/60 hover:text-white transition-colors">Contact</a></Link></li>
+              <li><Link href="/home"><a className="text-white/60 hover:text-white transition-colors">{t('footer.links.home')}</a></Link></li>
+              <li><Link href="/services"><a className="text-white/60 hover:text-white transition-colors">{t('footer.links.services')}</a></Link></li>
+              <li><Link href="/portfolio"><a className="text-white/60 hover:text-white transition-colors">{t('footer.links.portfolio')}</a></Link></li>
+              <li><Link href="/contact"><a className="text-white/60 hover:text-white transition-colors">{t('footer.links.contact')}</a></Link></li>
             </ul>
           </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
-          <p>© {new Date().getFullYear()} Shoka Systems. {t('footer.rights')}</p>
+          <p>© {new Date().getFullYear()} {t('footer.copyright')} {t('footer.rights')}</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a>
             <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
