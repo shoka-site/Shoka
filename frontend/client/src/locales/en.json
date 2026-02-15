@@ -1,0 +1,168 @@
+{
+    "navbar": {
+        "brand": "SHOKA",
+        "services": "Services",
+        "portfolio": "Portfolio",
+        "about": "About",
+        "contact": "Contact",
+        "language": "Language",
+        "english": "English",
+        "arabic": "Arabic"
+    },
+    "welcome": {
+        "badge": "Gateway to the Future",
+        "cradle": "CRADLE OF",
+        "innovation": "INNOVATION",
+        "subtitle": "Where the wisdom of the ancients meets the technology of tomorrow.",
+        "subtitle_2": "Build your legacy with Shoka.",
+        "enter": "Enter Platform",
+        "system_ready": "SYS.READY",
+        "connected": "CONNECTED",
+        "est": "EST. 2026 // BABYLON_PRIME"
+    },
+    "hero": {
+        "learn_more": "Learn More",
+        "view_projects": "View Projects",
+        "slides": {
+            "1": {
+                "badge": "Intelligent Digital Systems",
+                "title_prefix": "Designing the",
+                "title_highlight": "Heritage",
+                "title_suffix": "of Tomorrow.",
+                "description": "Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots."
+            },
+            "2": {
+                "badge": "Infrastructure & Cloud",
+                "title_prefix": "Building",
+                "title_highlight": "Resilient",
+                "title_suffix": "Systems for Growth.",
+                "description": "Scalable infrastructure designed to adapt and evolve with your business needs."
+            },
+            "3": {
+                "badge": "Future-Proof Architecture",
+                "title_prefix": "Pioneering",
+                "title_highlight": "AI Innovation",
+                "title_suffix": "globally.",
+                "description": "Empowering enterprises with cutting-edge artificial intelligence and machine learning."
+            }
+        }
+    },
+    "book_consultation": "Book Consultation",
+    "explore_services": "Explore Services",
+    "core_capabilities": "Core Capabilities",
+    "view_all_services": "View All Services",
+    "services": {
+        "title": "Our Services",
+        "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges. From architectural strategy to pixel-perfect execution.",
+        "list": {
+            "web": {
+                "title": "Web & Digital Platforms",
+                "desc": "High-performance web applications built on Next.js and modern frameworks. We prioritize speed, accessibility, and aesthetic excellence."
+            },
+            "mobile": {
+                "title": "Mobile Solutions",
+                "desc": "Native and cross-platform mobile apps that provide seamless user experiences across iOS and Android ecosystems."
+            },
+            "backend": {
+                "title": "Backend Architecture",
+                "desc": "Robust server-side systems designed to handle high concurrency and complex data processing requirements."
+            },
+            "security": {
+                "title": "Cybersecurity Audits",
+                "desc": "Comprehensive security assessments to identify vulnerabilities and strengthen your digital infrastructure against threats."
+            },
+            "data": {
+                "title": "Data Analytics",
+                "desc": "Transform raw data into actionable insights through custom dashboards and predictive modeling."
+            },
+            "api": {
+                "title": "API Integration",
+                "desc": "Seamlessly connect your systems with third-party services to automate workflows and extend functionality."
+            }
+        },
+        "learn_more": "Learn More"
+    },
+    "portfolio": {
+        "subtitle": "Our Work",
+        "title": "Case Studies",
+        "description": "Real-world challenges solved with intelligent engineering. Explore how we've helped organizations transform their digital landscape.",
+        "view_case_study": "View Case Study",
+        "projects": {
+            "archive": {
+                "title": "National Data Archive",
+                "category": "Government / Data",
+                "desc": "Digitizing 50 years of historical records into a secure, searchable cloud database powered by AI-driven optical character recognition."
+            },
+            "banking": {
+                "title": "FinTech Core Banking",
+                "category": "Finance",
+                "desc": "A next-generation core banking system built for high-frequency trading and real-time transaction processing."
+            },
+            "smart_city": {
+                "title": "Smart City Grid",
+                "category": "Infrastructure",
+                "desc": "IoT network managing energy distribution across 3 major districts, reducing waste by 24%."
+            },
+            "edutech": {
+                "title": "EduTech Learning Platform",
+                "category": "Education",
+                "desc": "Adaptive learning system serving 50,000+ students with personalized AI-driven curriculum paths."
+            }
+        }
+    },
+    "about": {
+        "subtitle": "Who We Are",
+        "title": "Our Heritage & Future",
+        "description": "Shoka is a global technology consultancy rooted in the rich history of innovation. We believe that true intelligence comes from understanding where we come from while looking boldly ahead.",
+        "legacy_title": "A Legacy of Innovation",
+        "legacy_p1": "Founded in Baghdad with a global vision, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
+        "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
+        "stats": {
+            "clients": "Enterprise Clients",
+            "countries": "Countries Served",
+            "delivery": "Project Delivery",
+            "support": "Support & Monitoring"
+        },
+        "values": {
+            "precision": "Precision",
+            "precision_desc": "We measure twice and cut once. Every line of code serves a purpose.",
+            "standard": "Global Standard",
+            "standard_desc": "International best practices applied to local challenges.",
+            "partnership": "Partnership",
+            "partnership_desc": "We are not vendors; we are your strategic technology partners.",
+            "excellence": "Excellence",
+            "excellence_desc": "Mediocrity has no place here. We aim for the exceptional."
+        }
+    },
+    "contact": {
+        "subtitle": "Get in touch",
+        "title": "Let's discuss your next project.",
+        "description": "Whether you have a specific project in mind or just want to explore how Shoka can help your business grow, we're here to listen.",
+        "email_us": "Email Us",
+        "call_us": "Call Us",
+        "visit_us": "Visit Us",
+        "mon_fri": "Mon-Fri from 9am to 6pm",
+        "form": {
+            "title": "Send a Message",
+            "name": "Full Name",
+            "email": "Email",
+            "company": "Company (Optional)",
+            "message": "How can we help?",
+            "submit": "Send Message",
+            "success_title": "Message Sent",
+            "success_desc": "We've received your inquiry and will respond within 24 hours."
+        }
+    },
+    "footer": {
+        "sitemap": "Sitemap",
+        "connect": "Connect",
+        "rights": "All rights reserved.",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology."
+    },
+    "not_found": {
+        "title": "404 Page Not Found",
+        "desc": "Did you forget to add the page to the router?"
+    }
+}

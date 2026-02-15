@@ -1,31 +1,25 @@
-# Build Stage
-FROM node:18 AS builder
+FROM node:20.19.0-alpine
 
 WORKDIR /app
 
-# Install build dependencies for sqlite3 if needed (debian-based node:18 has most)
-# RUN apt-get update && apt-get install -y build-essential python3
+# Copy package files
+COPY package.json package-lock.json ./
 
-COPY package*.json ./
-RUN npm install
+# Install dependencies
+# Using npm ci for cleaner install
+RUN npm ci
 
+# Copy source code
 COPY . .
+
+# Build the application
 RUN npm run build
 
-# Production Stage
-FROM node:18 AS runner
+# Expose the port
+EXPOSE 5000
 
-WORKDIR /app
+# Set environment to production
+ENV NODE_ENV=production
 
-ENV NODE_ENV production
-
-COPY --from=builder /app/next.config.mjs ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/database.sqlite ./database.sqlite
-
-EXPOSE 3000
-
+# Start the application
 CMD ["npm", "start"]
