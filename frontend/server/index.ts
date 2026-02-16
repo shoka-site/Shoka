@@ -101,7 +101,9 @@ app.use((req, res, next) => {
       reusePort: true,
     },
     () => {
-      log(`serving on port ${port}`);
+      const address = httpServer.address();
+      const actualPort = typeof address === "object" && address ? address.port : port;
+      log(`serving on port ${actualPort}`);
     },
   );
 })();

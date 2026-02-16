@@ -37,7 +37,8 @@ export async function registerRoutes(
   // Hero Slides
   app.get("/api/content/hero-slides", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const slides = await storage.getHeroSlides(published);
       const transformed = transformForLanguage(slides, lang);
@@ -51,7 +52,8 @@ export async function registerRoutes(
   // Stats
   app.get("/api/content/stats", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const stats = await storage.getStats();
       const transformed = transformForLanguage(stats, lang);
       res.json(transformed);
@@ -64,7 +66,8 @@ export async function registerRoutes(
   // Services
   app.get("/api/content/services", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const services = await storage.getServices(published);
       const transformed = transformForLanguage(services, lang);
@@ -78,7 +81,8 @@ export async function registerRoutes(
   // Projects
   app.get("/api/content/projects", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const featured = req.query.featured === 'true' ? true : undefined;
       const projects = await storage.getProjects(published, featured);
@@ -93,7 +97,8 @@ export async function registerRoutes(
   // Testimonials
   app.get("/api/content/testimonials", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const testimonials = await storage.getTestimonials(published);
       const transformed = transformForLanguage(testimonials, lang);
@@ -107,7 +112,8 @@ export async function registerRoutes(
   // Why Shoka Points
   app.get("/api/content/why-shoka", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const points = await storage.getWhyShokaPoints(published);
       const transformed = transformForLanguage(points, lang);
@@ -121,7 +127,8 @@ export async function registerRoutes(
   // Process Steps
   app.get("/api/content/process-steps", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const steps = await storage.getProcessSteps();
       const transformed = transformForLanguage(steps, lang);
       res.json(transformed);
@@ -134,7 +141,8 @@ export async function registerRoutes(
   // Insight Topics
   app.get("/api/content/insights", async (req: Request, res: Response) => {
     try {
-      const lang = (req.query.lang as 'en' | 'ar') || 'en';
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
       const published = req.query.published !== 'false';
       const topics = await storage.getInsightTopics(published);
       const transformed = transformForLanguage(topics, lang);

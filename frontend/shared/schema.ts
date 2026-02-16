@@ -1,177 +1,164 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, boolean, timestamp, uuid } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// ========== USERS TABLE (existing) ==========
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-});
-
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+// ========== USERS TABLE ==========
+export const insertUserSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export type User = {
+  id: string;
+  username: string;
+  password: string;
+};
 
 // ========== HERO SLIDES ==========
-export const heroSlides = pgTable("hero_slides", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  imageUrl: text("image_url").notNull(),
-  badgeEn: text("badge_en").notNull(),
-  badgeAr: text("badge_ar").notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertHeroSlideSchema = z.object({
+  order: z.coerce.number(), // Coerce in case it comes as string from form
+  imageUrl: z.string().min(1, "Image URL is required"),
+  badgeEn: z.string(),
+  badgeAr: z.string(),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string().min(1, "English Description is required"),
+  descriptionAr: z.string().min(1, "Arabic Description is required"),
+  published: z.boolean().default(true),
 });
 
-export const insertHeroSlideSchema = createInsertSchema(heroSlides).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectHeroSlideSchema = createSelectSchema(heroSlides);
 export type InsertHeroSlide = z.infer<typeof insertHeroSlideSchema>;
-export type HeroSlide = typeof heroSlides.$inferSelect;
+export type HeroSlide = InsertHeroSlide & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== STATS ==========
-export const stats = pgTable("stats", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  key: varchar("key", { length: 50 }).notNull().unique(),
-  numberEn: varchar("number_en", { length: 20 }).notNull(),
-  numberAr: varchar("number_ar", { length: 20 }).notNull(),
-  labelEn: text("label_en").notNull(),
-  labelAr: text("label_ar").notNull(),
-  order: integer("order").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertStatSchema = z.object({
+  key: z.string().min(1, "Key is required"),
+  numberEn: z.string().min(1, "English Number is required"),
+  numberAr: z.string().min(1, "Arabic Number is required"),
+  labelEn: z.string().min(1, "English Label is required"),
+  labelAr: z.string().min(1, "Arabic Label is required"),
+  order: z.coerce.number(),
 });
 
-export const insertStatSchema = createInsertSchema(stats).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectStatSchema = createSelectSchema(stats);
 export type InsertStat = z.infer<typeof insertStatSchema>;
-export type Stat = typeof stats.$inferSelect;
+export type Stat = InsertStat & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== SERVICES ==========
-export const services = pgTable("services", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  iconName: varchar("icon_name", { length: 50 }).notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertServiceSchema = z.object({
+  order: z.coerce.number(),
+  iconName: z.string().min(1, "Icon Name is required"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string(),
+  descriptionAr: z.string(),
+  published: z.boolean().default(true),
 });
 
-export const insertServiceSchema = createInsertSchema(services).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectServiceSchema = createSelectSchema(services);
 export type InsertService = z.infer<typeof insertServiceSchema>;
-export type Service = typeof services.$inferSelect;
+export type Service = InsertService & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== PROJECTS ==========
-export const projects = pgTable("projects", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  imageUrl: text("image_url").notNull(),
-  categoryEn: varchar("category_en", { length: 100 }).notNull(),
-  categoryAr: varchar("category_ar", { length: 100 }).notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  featured: boolean("featured").notNull().default(false),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertProjectSchema = z.object({
+  order: z.coerce.number(),
+  imageUrl: z.string().min(1, "Image URL is required"),
+  categoryEn: z.string().min(1, "English Category is required"),
+  categoryAr: z.string().min(1, "Arabic Category is required"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string(),
+  descriptionAr: z.string(),
+  featured: z.boolean().default(false),
+  published: z.boolean().default(true),
 });
 
-export const insertProjectSchema = createInsertSchema(projects).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectProjectSchema = createSelectSchema(projects);
 export type InsertProject = z.infer<typeof insertProjectSchema>;
-export type Project = typeof projects.$inferSelect;
+export type Project = InsertProject & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== TESTIMONIALS ==========
-export const testimonials = pgTable("testimonials", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  quoteEn: text("quote_en").notNull(),
-  quoteAr: text("quote_ar").notNull(),
-  authorEn: varchar("author_en", { length: 100 }).notNull(),
-  authorAr: varchar("author_ar", { length: 100 }).notNull(),
-  roleEn: text("role_en").notNull(),
-  roleAr: text("role_ar").notNull(),
-  rating: integer("rating").notNull().default(5),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertTestimonialSchema = z.object({
+  order: z.coerce.number(),
+  quoteEn: z.string().min(1, "English Quote is required"),
+  quoteAr: z.string().min(1, "Arabic Quote is required"),
+  authorEn: z.string().min(1, "English Author Name is required"),
+  authorAr: z.string().min(1, "Arabic Author Name is required"),
+  roleEn: z.string().min(1, "English Role is required"),
+  roleAr: z.string().min(1, "Arabic Role is required"),
+  rating: z.coerce.number().min(1).max(5).default(5),
+  published: z.boolean().default(true),
 });
 
-export const insertTestimonialSchema = createInsertSchema(testimonials).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectTestimonialSchema = createSelectSchema(testimonials);
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
-export type Testimonial = typeof testimonials.$inferSelect;
+export type Testimonial = InsertTestimonial & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== WHY SHOKA POINTS ==========
-export const whyShokaPoints = pgTable("why_shoka_points", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  iconName: varchar("icon_name", { length: 50 }).notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertWhyShokaPointSchema = z.object({
+  order: z.coerce.number(),
+  iconName: z.string().min(1, "Icon Name is required"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string(),
+  descriptionAr: z.string(),
+  published: z.boolean().default(true),
 });
 
-export const insertWhyShokaPointSchema = createInsertSchema(whyShokaPoints).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectWhyShokaPointSchema = createSelectSchema(whyShokaPoints);
 export type InsertWhyShokaPoint = z.infer<typeof insertWhyShokaPointSchema>;
-export type WhyShokaPoint = typeof whyShokaPoints.$inferSelect;
+export type WhyShokaPoint = InsertWhyShokaPoint & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== PROCESS STEPS ==========
-export const processSteps = pgTable("process_steps", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  stepNumber: varchar("step_number", { length: 10 }).notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertProcessStepSchema = z.object({
+  order: z.coerce.number(),
+  stepNumber: z.string().min(1, "Step Number is required"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string(),
+  descriptionAr: z.string(),
 });
 
-export const insertProcessStepSchema = createInsertSchema(processSteps).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectProcessStepSchema = createSelectSchema(processSteps);
 export type InsertProcessStep = z.infer<typeof insertProcessStepSchema>;
-export type ProcessStep = typeof processSteps.$inferSelect;
+export type ProcessStep = InsertProcessStep & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // ========== INSIGHT TOPICS ==========
-export const insightTopics = pgTable("insight_topics", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  order: integer("order").notNull(),
-  titleEn: text("title_en").notNull(),
-  titleAr: text("title_ar").notNull(),
-  descriptionEn: text("description_en").notNull(),
-  descriptionAr: text("description_ar").notNull(),
-  readTimeEn: varchar("read_time_en", { length: 20 }).notNull(),
-  readTimeAr: varchar("read_time_ar", { length: 20 }).notNull(),
-  published: boolean("published").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+export const insertInsightTopicSchema = z.object({
+  order: z.coerce.number(),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  descriptionEn: z.string(),
+  descriptionAr: z.string(),
+  readTimeEn: z.string().min(1, "English Read Time is required"),
+  readTimeAr: z.string().min(1, "Arabic Read Time is required"),
+  published: z.boolean().default(true),
 });
 
-export const insertInsightTopicSchema = createInsertSchema(insightTopics).omit({ id: true, createdAt: true, updatedAt: true });
-export const selectInsightTopicSchema = createSelectSchema(insightTopics);
 export type InsertInsightTopic = z.infer<typeof insertInsightTopicSchema>;
-export type InsightTopic = typeof insightTopics.$inferSelect;
+export type InsightTopic = InsertInsightTopic & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

@@ -1,9 +1,10 @@
 import { type User, type InsertUser, type HeroSlide, type Stat, type Service, type Project, type Testimonial, type WhyShokaPoint, type ProcessStep, type InsightTopic } from "@shared/schema";
-import { randomUUID } from "crypto";
+import { PrismaClient } from "@prisma/client";
 
-// Storage interface with all CRUD methods
+const prisma = new PrismaClient();
+
 export interface IStorage {
-  // User methods (existing)
+  // User methods
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -65,306 +66,280 @@ export interface IStorage {
   deleteInsightTopic(id: string): Promise<boolean>;
 }
 
-// In-memory storage implementation (for development without DATABASE_URL)
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private heroSlides: Map<string, HeroSlide>;
-  private stats: Map<string, Stat>;
-  private services: Map<string, Service>;
-  private projects: Map<string, Project>;
-  private testimonials: Map<string, Testimonial>;
-  private whyShokaPoints: Map<string, WhyShokaPoint>;
-  private processSteps: Map<string, ProcessStep>;
-  private insightTopics: Map<string, InsightTopic>;
-
-  constructor() {
-    this.users = new Map();
-    this.heroSlides = new Map();
-    this.stats = new Map();
-    this.services = new Map();
-    this.projects = new Map();
-    this.testimonials = new Map();
-    this.whyShokaPoints = new Map();
-    this.processSteps = new Map();
-    this.insightTopics = new Map();
-  }
-
+export class PrismaStorage implements IStorage {
   // User methods
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    return await prisma.user.findUnique({ where: { id } }) || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    return await prisma.user.findUnique({ where: { username } }) || undefined;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createUser(user: InsertUser): Promise<User> {
+    return await prisma.user.create({ data: user });
   }
 
   // Hero Slides
   async getHeroSlides(published?: boolean): Promise<HeroSlide[]> {
-    let slides = Array.from(this.heroSlides.values());
-    if (published !== undefined) {
-      slides = slides.filter(s => s.published === published);
-    }
-    return slides.sort((a, b) => a.order - b.order);
+    return await prisma.heroSlide.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getHeroSlide(id: string): Promise<HeroSlide | undefined> {
-    return this.heroSlides.get(id);
+    return await prisma.heroSlide.findUnique({ where: { id } }) || undefined;
   }
 
   async createHeroSlide(slide: Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>): Promise<HeroSlide> {
-    const id = randomUUID();
-    const now = new Date();
-    const newSlide: HeroSlide = { ...slide, id, createdAt: now, updatedAt: now };
-    this.heroSlides.set(id, newSlide);
-    return newSlide;
+    return await prisma.heroSlide.create({ data: slide });
   }
 
   async updateHeroSlide(id: string, updates: Partial<Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>>): Promise<HeroSlide | undefined> {
-    const slide = this.heroSlides.get(id);
-    if (!slide) return undefined;
-    const updated = { ...slide, ...updates, updatedAt: new Date() };
-    this.heroSlides.set(id, updated);
-    return updated;
+    try {
+      return await prisma.heroSlide.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteHeroSlide(id: string): Promise<boolean> {
-    return this.heroSlides.delete(id);
+    try {
+      await prisma.heroSlide.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Stats
   async getStats(): Promise<Stat[]> {
-    return Array.from(this.stats.values()).sort((a, b) => a.order - b.order);
+    return await prisma.stat.findMany({ orderBy: { order: 'asc' } });
   }
 
   async getStat(id: string): Promise<Stat | undefined> {
-    return this.stats.get(id);
+    return await prisma.stat.findUnique({ where: { id } }) || undefined;
   }
 
   async createStat(stat: Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>): Promise<Stat> {
-    const id = randomUUID();
-    const now = new Date();
-    const newStat: Stat = { ...stat, id, createdAt: now, updatedAt: now };
-    this.stats.set(id, newStat);
-    return newStat;
+    return await prisma.stat.create({ data: stat });
   }
 
   async updateStat(id: string, updates: Partial<Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Stat | undefined> {
-    const stat = this.stats.get(id);
-    if (!stat) return undefined;
-    const updated = { ...stat, ...updates, updatedAt: new Date() };
-    this.stats.set(id, updated);
-    return updated;
+    try {
+      return await prisma.stat.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteStat(id: string): Promise<boolean> {
-    return this.stats.delete(id);
+    try {
+      await prisma.stat.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Services
   async getServices(published?: boolean): Promise<Service[]> {
-    let services = Array.from(this.services.values());
-    if (published !== undefined) {
-      services = services.filter(s => s.published === published);
-    }
-    return services.sort((a, b) => a.order - b.order);
+    return await prisma.service.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getService(id: string): Promise<Service | undefined> {
-    return this.services.get(id);
+    return await prisma.service.findUnique({ where: { id } }) || undefined;
   }
 
   async createService(service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<Service> {
-    const id = randomUUID();
-    const now = new Date();
-    const newService: Service = { ...service, id, createdAt: now, updatedAt: now };
-    this.services.set(id, newService);
-    return newService;
+    return await prisma.service.create({ data: service });
   }
 
   async updateService(id: string, updates: Partial<Omit<Service, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Service | undefined> {
-    const service = this.services.get(id);
-    if (!service) return undefined;
-    const updated = { ...service, ...updates, updatedAt: new Date() };
-    this.services.set(id, updated);
-    return updated;
+    try {
+      return await prisma.service.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteService(id: string): Promise<boolean> {
-    return this.services.delete(id);
+    try {
+      await prisma.service.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Projects
   async getProjects(published?: boolean, featured?: boolean): Promise<Project[]> {
-    let projects = Array.from(this.projects.values());
-    if (published !== undefined) {
-      projects = projects.filter(p => p.published === published);
-    }
-    if (featured !== undefined) {
-      projects = projects.filter(p => p.featured === featured);
-    }
-    return projects.sort((a, b) => a.order - b.order);
+    return await prisma.project.findMany({
+      where: {
+        ...(published !== undefined ? { published } : {}),
+        ...(featured !== undefined ? { featured } : {}),
+      },
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getProject(id: string): Promise<Project | undefined> {
-    return this.projects.get(id);
+    return await prisma.project.findUnique({ where: { id } }) || undefined;
   }
 
   async createProject(project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>): Promise<Project> {
-    const id = randomUUID();
-    const now = new Date();
-    const newProject: Project = { ...project, id, createdAt: now, updatedAt: now };
-    this.projects.set(id, newProject);
-    return newProject;
+    return await prisma.project.create({ data: project });
   }
 
   async updateProject(id: string, updates: Partial<Omit<Project, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Project | undefined> {
-    const project = this.projects.get(id);
-    if (!project) return undefined;
-    const updated = { ...project, ...updates, updatedAt: new Date() };
-    this.projects.set(id, updated);
-    return updated;
+    try {
+      return await prisma.project.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteProject(id: string): Promise<boolean> {
-    return this.projects.delete(id);
+    try {
+      await prisma.project.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Testimonials
   async getTestimonials(published?: boolean): Promise<Testimonial[]> {
-    let testimonials = Array.from(this.testimonials.values());
-    if (published !== undefined) {
-      testimonials = testimonials.filter(t => t.published === published);
-    }
-    return testimonials.sort((a, b) => a.order - b.order);
+    return await prisma.testimonial.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getTestimonial(id: string): Promise<Testimonial | undefined> {
-    return this.testimonials.get(id);
+    return await prisma.testimonial.findUnique({ where: { id } }) || undefined;
   }
 
   async createTestimonial(testimonial: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial> {
-    const id = randomUUID();
-    const now = new Date();
-    const newTestimonial: Testimonial = { ...testimonial, id, createdAt: now, updatedAt: now };
-    this.testimonials.set(id, newTestimonial);
-    return newTestimonial;
+    return await prisma.testimonial.create({ data: testimonial });
   }
 
   async updateTestimonial(id: string, updates: Partial<Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Testimonial | undefined> {
-    const testimonial = this.testimonials.get(id);
-    if (!testimonial) return undefined;
-    const updated = { ...testimonial, ...updates, updatedAt: new Date() };
-    this.testimonials.set(id, updated);
-    return updated;
+    try {
+      return await prisma.testimonial.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteTestimonial(id: string): Promise<boolean> {
-    return this.testimonials.delete(id);
+    try {
+      await prisma.testimonial.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Why Shoka Points
   async getWhyShokaPoints(published?: boolean): Promise<WhyShokaPoint[]> {
-    let points = Array.from(this.whyShokaPoints.values());
-    if (published !== undefined) {
-      points = points.filter(p => p.published === published);
-    }
-    return points.sort((a, b) => a.order - b.order);
+    return await prisma.whyShokaPoint.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getWhyShokaPoint(id: string): Promise<WhyShokaPoint | undefined> {
-    return this.whyShokaPoints.get(id);
+    return await prisma.whyShokaPoint.findUnique({ where: { id } }) || undefined;
   }
 
   async createWhyShokaPoint(point: Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>): Promise<WhyShokaPoint> {
-    const id = randomUUID();
-    const now = new Date();
-    const newPoint: WhyShokaPoint = { ...point, id, createdAt: now, updatedAt: now };
-    this.whyShokaPoints.set(id, newPoint);
-    return newPoint;
+    return await prisma.whyShokaPoint.create({ data: point });
   }
 
   async updateWhyShokaPoint(id: string, updates: Partial<Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>>): Promise<WhyShokaPoint | undefined> {
-    const point = this.whyShokaPoints.get(id);
-    if (!point) return undefined;
-    const updated = { ...point, ...updates, updatedAt: new Date() };
-    this.whyShokaPoints.set(id, updated);
-    return updated;
+    try {
+      return await prisma.whyShokaPoint.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteWhyShokaPoint(id: string): Promise<boolean> {
-    return this.whyShokaPoints.delete(id);
+    try {
+      await prisma.whyShokaPoint.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Process Steps
   async getProcessSteps(): Promise<ProcessStep[]> {
-    return Array.from(this.processSteps.values()).sort((a, b) => a.order - b.order);
+    return await prisma.processStep.findMany({ orderBy: { order: 'asc' } });
   }
 
   async getProcessStep(id: string): Promise<ProcessStep | undefined> {
-    return this.processSteps.get(id);
+    return await prisma.processStep.findUnique({ where: { id } }) || undefined;
   }
 
   async createProcessStep(step: Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>): Promise<ProcessStep> {
-    const id = randomUUID();
-    const now = new Date();
-    const newStep: ProcessStep = { ...step, id, createdAt: now, updatedAt: now };
-    this.processSteps.set(id, newStep);
-    return newStep;
+    return await prisma.processStep.create({ data: step });
   }
 
   async updateProcessStep(id: string, updates: Partial<Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>>): Promise<ProcessStep | undefined> {
-    const step = this.processSteps.get(id);
-    if (!step) return undefined;
-    const updated = { ...step, ...updates, updatedAt: new Date() };
-    this.processSteps.set(id, updated);
-    return updated;
+    try {
+      return await prisma.processStep.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteProcessStep(id: string): Promise<boolean> {
-    return this.processSteps.delete(id);
+    try {
+      await prisma.processStep.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Insight Topics
   async getInsightTopics(published?: boolean): Promise<InsightTopic[]> {
-    let topics = Array.from(this.insightTopics.values());
-    if (published !== undefined) {
-      topics = topics.filter(t => t.published === published);
-    }
-    return topics.sort((a, b) => a.order - b.order);
+    return await prisma.insightTopic.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
   }
 
   async getInsightTopic(id: string): Promise<InsightTopic | undefined> {
-    return this.insightTopics.get(id);
+    return await prisma.insightTopic.findUnique({ where: { id } }) || undefined;
   }
 
   async createInsightTopic(topic: Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>): Promise<InsightTopic> {
-    const id = randomUUID();
-    const now = new Date();
-    const newTopic: InsightTopic = { ...topic, id, createdAt: now, updatedAt: now };
-    this.insightTopics.set(id, newTopic);
-    return newTopic;
+    return await prisma.insightTopic.create({ data: topic });
   }
 
   async updateInsightTopic(id: string, updates: Partial<Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>>): Promise<InsightTopic | undefined> {
-    const topic = this.insightTopics.get(id);
-    if (!topic) return undefined;
-    const updated = { ...topic, ...updates, updatedAt: new Date() };
-    this.insightTopics.set(id, updated);
-    return updated;
+    try {
+      return await prisma.insightTopic.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async deleteInsightTopic(id: string): Promise<boolean> {
-    return this.insightTopics.delete(id);
+    try {
+      await prisma.insightTopic.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new PrismaStorage();
