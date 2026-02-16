@@ -473,7 +473,7 @@ export default function Home() {
           className="text-center bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-12 md:p-20 rounded-3xl"
         >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">{t('home.cta.title')}</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">{t('home.cta.subtitle')}</p>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">{t('home.cta.desc')}</p>
           <Link href="/contact">
             <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/30">
               {t('home.cta.button')}

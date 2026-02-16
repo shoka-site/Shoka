@@ -158,19 +158,19 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/about">
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent")}>
+                <NavigationMenuLink asChild>
+                  <Link href="/about" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent cursor-pointer")}>
                     {t("navbar.about")}
-                  </NavigationMenuLink>
-                </Link>
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/contact">
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent")}>
+                <NavigationMenuLink asChild>
+                  <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent cursor-pointer")}>
                     {t("navbar.contact")}
-                  </NavigationMenuLink>
-                </Link>
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>

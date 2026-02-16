@@ -1,8 +1,8 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import * as schema from '../shared/schema';
-import enTranslations from '../client/src/locales/en.json';
-import arTranslations from '../client/src/locales/ar.json';
+import enTranslations from '../src/locales/en.json';
+import arTranslations from '../src/locales/ar.json';
 
 // Get database connection
 const pool = new Pool({

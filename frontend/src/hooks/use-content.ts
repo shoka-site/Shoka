@@ -21,7 +21,7 @@ export interface HeroSlide {
 
 export function useHeroSlides() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<HeroSlide[]>({
         queryKey: ['heroSlides', language],
         queryFn: () => fetchContent<HeroSlide[]>('hero-slides', language),
@@ -38,7 +38,7 @@ export interface Stat {
 
 export function useStats() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<Stat[]>({
         queryKey: ['stats', language],
         queryFn: () => fetchContent<Stat[]>('stats', language),
@@ -56,7 +56,7 @@ export interface Service {
 
 export function useServices() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<Service[]>({
         queryKey: ['services', language],
         queryFn: () => fetchContent<Service[]>('services', language),
@@ -76,7 +76,7 @@ export interface Project {
 
 export function useProjects(featured?: boolean) {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     const endpoint = featured ? `projects?featured=true` : 'projects';
     return useQuery<Project[]>({
         queryKey: ['projects', language, featured],
@@ -96,7 +96,7 @@ export interface Testimonial {
 
 export function useTestimonials() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<Testimonial[]>({
         queryKey: ['testimonials', language],
         queryFn: () => fetchContent<Testimonial[]>('testimonials', language),
@@ -114,7 +114,7 @@ export interface WhyShokaPoint {
 
 export function useWhyShokaPoints() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<WhyShokaPoint[]>({
         queryKey: ['whyShokaPoints', language],
         queryFn: () => fetchContent<WhyShokaPoint[]>('why-shoka', language),
@@ -131,7 +131,7 @@ export interface ProcessStep {
 
 export function useProcessSteps() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<ProcessStep[]>({
         queryKey: ['processSteps', language],
         queryFn: () => fetchContent<ProcessStep[]>('process-steps', language),
@@ -149,7 +149,7 @@ export interface InsightTopic {
 
 export function useInsightTopics() {
     const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
+    const language = (i18n.language || 'en').substring(0, 2) as 'en' | 'ar';
     return useQuery<InsightTopic[]>({
         queryKey: ['insightTopics', language],
         queryFn: () => fetchContent<InsightTopic[]>('insights', language),
