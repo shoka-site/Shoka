@@ -13,6 +13,7 @@ export const serviceCategories = [
         icon: Database,
         description: "Unlock the power of your data with our comprehensive analytics and engineering solutions.",
         href: "/services",
+        image: "/images/services/service_data_services.png",
         items: [
             { name: "Data Analyst", href: "/services" },
             { name: "Data Science", href: "/services" },
@@ -25,6 +26,7 @@ export const serviceCategories = [
         icon: Brain,
         description: "Leverage cutting-edge artificial intelligence to automate and innovate.",
         href: "/services",
+        image: "/images/services/service_ai_solutions.png",
         items: [
             { name: "Chat Bot", href: "/services" },
             { name: "Computer Vision", href: "/services" },
@@ -37,6 +39,7 @@ export const serviceCategories = [
         icon: Layers,
         description: "End-to-end development for robust web and mobile applications.",
         href: "/services",
+        image: "/images/services/service_full_stack.png",
         items: [
             { name: "Web Development", href: "/services" },
             { name: "App Development", href: "/services" },
@@ -48,6 +51,7 @@ export const serviceCategories = [
         icon: Server,
         description: "Scalable and secure backend infrastructure for your digital products.",
         href: "/services",
+        image: "/images/services/service_backend.png",
         items: [
             { name: "Systems", href: "/services" },
             { name: "IoT", href: "/services" },
@@ -59,6 +63,7 @@ export const serviceCategories = [
         icon: Cloud,
         description: "Modern cloud solutions for storage, management, and scalability.",
         href: "/services",
+        image: "/images/services/service_cloud.png",
         items: [
             { name: "DBM", href: "/services" },
             { name: "Storage", href: "/services" },

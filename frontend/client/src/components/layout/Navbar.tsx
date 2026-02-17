@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import React from "react";
 import { serviceCategories } from "@/lib/data/services";
+import { industryCategories } from "@/lib/data/industries";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -214,13 +215,27 @@ export default function Navbar() {
                           <p className="text-muted-foreground">Specialized expertise across diverse sectors, delivering targeted results for complex challenges.</p>
                         </div>
                         <div className="col-span-3">
-                          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {industries.map((item) => (
-                              <ListItem key={item.title} title={item.title} href={item.href}>
-                                {item.description}
-                              </ListItem>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {industryCategories.map((category) => (
+                              <div key={category.title} className="space-y-4">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <category.icon className="w-5 h-5 text-primary" />
+                                  <h4 className="font-medium text-foreground">{category.title}</h4>
+                                </div>
+                                <ul className="space-y-2">
+                                  {category.items.map((item) => (
+                                    <li key={item.name}>
+                                      <Link href={item.href}>
+                                        <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer block py-1">
+                                          {item.name}
+                                        </span>
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             ))}
-                          </ul>
+                          </div>
                         </div>
                       </div>
                     </div>

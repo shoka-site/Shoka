@@ -36,15 +36,30 @@ export default function Services() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col">
-                <CardHeader>
-                  <div className="text-primary mb-4 p-3 bg-primary/5 w-fit rounded-xl">
-                    <category.icon className="w-8 h-8" />
+              <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
+                <div className="h-48 overflow-hidden relative">
+                  {category.image ? (
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                      <category.icon className="w-16 h-16 text-primary/40" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                  <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
+                    <category.icon className="w-6 h-6" />
                   </div>
-                  <CardTitle className="text-2xl font-display">{category.title}</CardTitle>
+                </div>
+                <CardHeader className="pt-2"> {/* Reduced padding top since icon is in image area */}
+                  <CardTitle className="text-2xl font-display mt-2">{category.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <CardDescription className="text-base text-muted-foreground mb-6">
+
                     {category.description}
                   </CardDescription>
                   <ul className="grid grid-cols-1 gap-2">
