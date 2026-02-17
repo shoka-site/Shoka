@@ -24,7 +24,7 @@ export default function Navbar() {
   const isRtl = i18n.dir() === 'rtl';
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
     i18n.changeLanguage(newLang);
   };
 
@@ -365,6 +365,16 @@ export default function Navbar() {
                   {t("navbar.book_consultation")}
                 </span>
               </Link>
+              <button
+                onClick={() => {
+                  toggleLanguage();
+                  setIsOpen(false);
+                }}
+                className="flex items-center gap-2 text-lg font-medium text-foreground hover:text-accent cursor-pointer"
+              >
+                <Globe className="w-5 h-5" />
+                <span>{i18n.language.startsWith('ar') ? 'English' : 'العربية'}</span>
+              </button>
             </nav>
           </motion.div>
         )}

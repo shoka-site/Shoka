@@ -42,6 +42,14 @@
         "est": "EST. 2026 // BABYLON_PRIME"
     },
     "hero": {
+        "static": {
+            "badge": "Engineering Excellence",
+            "title_line1": "Partners for",
+            "title_line2": "Progress.",
+            "description": "We design, build, and support the unique software that powers your business. Combining deep industry expertise with world-class engineering to deliver sustainable innovation.",
+            "cta_primary": "Let's Talk",
+            "cta_secondary": "Our Expertise"
+        },
         "slides": {
             "1": {
                 "badge": "Intelligent Digital Systems",

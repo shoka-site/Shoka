@@ -86,27 +86,26 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium tracking-widest uppercase mb-6">
-                Engineering Excellence
+                {t('hero.static.badge')}
               </span>
 
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground leading-[1.1] mb-8">
-                Partners for <br /><span className="text-primary">Progress.</span>
+                {t('hero.static.title_line1')} <br /><span className="text-primary">{t('hero.static.title_line2')}</span>
               </h1>
 
               <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-relaxed font-light">
-                We design, build, and support the unique software that powers your business.
-                Combining deep industry expertise with world-class engineering to deliver sustainable innovation.
+                {t('hero.static.description')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/contact">
                   <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow">
-                    Let's Talk
+                    {t('hero.static.cta_primary')}
                   </Button>
                 </Link>
                 <Link href="/services">
                   <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
-                    Our Expertise
+                    {t('hero.static.cta_secondary')}
                   </Button>
                 </Link>
               </div>
