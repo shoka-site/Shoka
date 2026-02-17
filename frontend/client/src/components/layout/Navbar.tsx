@@ -14,9 +14,9 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import React from "react";
+import { serviceCategories } from "@/lib/data/services";
+
 export default function Navbar() {
-
-
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -27,33 +27,6 @@ export default function Navbar() {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
   };
-
-  const services = [
-    {
-      title: t("navbar.menu_services.ai.title"),
-      href: "/services",
-      description: t("navbar.menu_services.ai.desc"),
-      icon: <Brain className="w-5 h-5 mb-2 text-primary" />
-    },
-    {
-      title: t("navbar.menu_services.data.title"),
-      href: "/services",
-      description: t("navbar.menu_services.data.desc"),
-      icon: <Database className="w-5 h-5 mb-2 text-primary" />
-    },
-    {
-      title: t("navbar.menu_services.cloud.title"),
-      href: "/services",
-      description: t("navbar.menu_services.cloud.desc"),
-      icon: <Cloud className="w-5 h-5 mb-2 text-primary" />
-    },
-    {
-      title: t("navbar.menu_services.security.title"),
-      href: "/services",
-      description: t("navbar.menu_services.security.desc"),
-      icon: <Lock className="w-5 h-5 mb-2 text-primary" />
-    }
-  ];
 
   const projects = [
     {
@@ -151,18 +124,27 @@ export default function Navbar() {
                           </Link>
                         </div>
                         <div className="col-span-3">
-                          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                            {services.map((service) => (
-                              <ListItem
-                                key={service.title}
-                                title={service.title}
-                                href={service.href}
-                                icon={service.icon}
-                              >
-                                {service.description}
-                              </ListItem>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {serviceCategories.map((category) => (
+                              <div key={category.title} className="space-y-4">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <category.icon className="w-5 h-5 text-primary" />
+                                  <h4 className="font-medium text-foreground">{category.title}</h4>
+                                </div>
+                                <ul className="space-y-2">
+                                  {category.items.map((item) => (
+                                    <li key={item.name}>
+                                      <Link href={item.href}>
+                                        <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer block py-1">
+                                          {item.name}
+                                        </span>
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             ))}
-                          </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
