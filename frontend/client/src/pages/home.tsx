@@ -54,104 +54,81 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [testimonials.length]);
 
-  if (loadingHero) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl text-muted-foreground">{t('loading')}</div>
-      </div>
-    );
-  }
+
 
   const currentHeroSlide = heroSlides[currentSlide];
 
   return (
     <div className="w-full">
       {/* HERO SECTION */}
-      {currentHeroSlide && (
-        <section className="relative min-h-[85vh] flex items-center bg-background overflow-hidden">
-          <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 pointer-events-none">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentHeroSlide.id}
-                src={currentHeroSlide.imageUrl}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.7 }}
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover mix-blend-multiply filter sepia-[.2] contrast-125"
-              />
-            </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background"></div>
-          </div>
+      {/* HERO SECTION */}
+      <section className="relative h-screen flex items-center bg-background overflow-hidden">
+        <div className="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-30 md:opacity-100 pointer-events-none">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key="hero-img"
+              src={heroSlides[0]?.imageUrl || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7 }}
+              alt="Background"
+              className="absolute inset-0 w-full h-full object-cover mix-blend-multiply filter sepia-[.2] contrast-125"
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background"></div>
+        </div>
 
-          <div className="container mx-auto px-6 md:px-12 relative z-10 pt-20">
-            <div className="max-w-4xl min-h-[400px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentHeroSlide.id}
-                  initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: isRtl ? -20 : 20 }}
-                  transition={{ duration: 0.35 }}
-                >
-                  <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium tracking-widest uppercase mb-6">
-                    {currentHeroSlide.badge}
-                  </span>
+        <div className="container mx-auto px-6 md:px-12 relative z-10 pt-20">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="inline-block py-1 px-3 rounded-full bg-accent/10 text-accent text-sm font-medium tracking-widest uppercase mb-6">
+                Engineering Excellence
+              </span>
 
-                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground leading-[1.1] mb-8">
-                    {currentHeroSlide.title}
-                  </h1>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground leading-[1.1] mb-8">
+                Partners for <br /><span className="text-primary">Progress.</span>
+              </h1>
 
-                  <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-relaxed font-light">
-                    {currentHeroSlide.description}
-                  </p>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl leading-relaxed font-light">
+                We design, build, and support the unique software that powers your business.
+                Combining deep industry expertise with world-class engineering to deliver sustainable innovation.
+              </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link href="/contact">
-                      <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow">
-                        {t('book_consultation')}
-                      </Button>
-                    </Link>
-                    <Link href="/services">
-                      <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
-                        {t('explore_services')}
-                      </Button>
-                    </Link>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="flex gap-2 mt-12">
-                {heroSlides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${index === currentSlide ? "w-8 bg-primary" : "w-2 bg-primary/20"
-                      }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/contact">
+                  <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-shadow">
+                    Let's Talk
+                  </Button>
+                </Link>
+                <Link href="/services">
+                  <Button variant="outline" size="lg" className="rounded-full text-lg h-14 px-8 bg-transparent border-primary/20 hover:bg-primary/5">
+                    Our Expertise
+                  </Button>
+                </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
+        </div>
 
-          <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.6 }}
-          >
-            <div className="w-6 h-10 border-2 border-primary/40 rounded-full flex items-start justify-center p-2">
-              <motion.div
-                className="w-1.5 h-1.5 bg-primary rounded-full"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-          </motion.div>
-        </section>
-      )}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
+        >
+          <div className="w-6 h-10 border-2 border-primary/40 rounded-full flex items-start justify-center p-2">
+            <motion.div
+              className="w-1.5 h-1.5 bg-primary rounded-full"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </motion.div>
+      </section>
 
       {/* STATS SECTION */}
       {!loadingStats && stats.length > 0 && (
@@ -200,7 +177,8 @@ export default function Home() {
           className="text-center max-w-4xl mx-auto relative z-10"
         >
           <p className="text-xl md:text-2xl text-foreground/80 font-light leading-relaxed">
-            {t('value_proposition')}
+            We are a global software engineering firm that takes a uniquely human approach to solving problems.
+            We help our clients build the future by combining deep industry expertise with world-class engineering.
           </p>
         </motion.div>
       </Section>
@@ -215,7 +193,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="max-w-xl"
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{t('core_capabilities')}</h2>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Our Expertise</h2>
             </motion.div>
             <Link href="/services">
               <span className={`group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer`}>
@@ -365,7 +343,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold">{t('home.why_shoka.title')}</h2>
+            <h2 className="text-4xl md:text-5xl font-display font-bold">Our Philosophy</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -472,11 +450,11 @@ export default function Home() {
           viewport={{ once: true }}
           className="text-center bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-12 md:p-20 rounded-3xl"
         >
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">{t('home.cta.title')}</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">{t('home.cta.subtitle')}</p>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Ready to Innovate?</h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Let's discuss how we can help you build your digital future.</p>
           <Link href="/contact">
             <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/30">
-              {t('home.cta.button')}
+              Contact Us
             </Button>
           </Link>
         </motion.div>

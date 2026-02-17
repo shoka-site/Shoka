@@ -103,7 +103,7 @@ app.use((req, res, next) => {
     () => {
       const address = httpServer.address();
       const actualPort = typeof address === "object" && address ? address.port : port;
-      log(`serving on port ${actualPort}`);
+      log(`serving at http://localhost:3000`);
     },
   );
 })();
