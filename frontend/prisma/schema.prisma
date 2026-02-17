@@ -73,6 +73,7 @@ model Project {
   descriptionAr String   @map("description_ar")
   featured      Boolean  @default(false)
   published     Boolean  @default(true)
+  status        String   @default("past")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 

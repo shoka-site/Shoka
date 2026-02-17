@@ -16,6 +16,7 @@ import Portfolio from "@/pages/portfolio";
 import About from "@/pages/about";
 import Industries from "@/pages/industries";
 import Solutions from "@/pages/solutions";
+import Projects from "@/pages/projects";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import AdminHeroSlides from "@/pages/admin/hero-slides";
@@ -41,6 +42,7 @@ function Router() {
         <Route path="/home" component={Home} />
         <Route path="/services" component={Services} />
         <Route path="/portfolio" component={Portfolio} />
+        <Route path="/projects" component={Projects} />
         <Route path="/industries" component={Industries} />
         <Route path="/solutions" component={Solutions} />
         <Route path="/about" component={About} />

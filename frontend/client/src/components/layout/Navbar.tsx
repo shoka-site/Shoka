@@ -79,6 +79,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: t("navbar.services"), href: "/services" },
+    { name: t("portfolio.projects.title"), href: "/projects" },
     { name: t("navbar.portfolio"), href: "/portfolio" },
     { name: "Industries", href: "/industries" },
     { name: "Solutions", href: "/solutions" },
@@ -197,6 +198,12 @@ export default function Navbar() {
                     </div>
                   </div>
                 </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/projects" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary")}>
+                  {t("portfolio.projects.title")}
+                </Link>
               </NavigationMenuItem>
 
               <NavigationMenuItem>

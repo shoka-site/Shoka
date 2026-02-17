@@ -269,6 +269,19 @@
                 "title": "EduTech Learning Platform",
                 "category": "Education",
                 "desc": "Adaptive learning system serving 50,000+ students with personalized AI-driven curriculum paths."
+            },
+            "title": "Projects",
+            "subtitle": "Our Execution Journey",
+            "description": "Explore our timeline of innovation, from completed milestones to upcoming breakthroughs.",
+            "categories": {
+                "made": "Projects We Have Made",
+                "making": "Projects We Are Making",
+                "will_make": "Projects We Will Make"
+            },
+            "status": {
+                "made": "Completed",
+                "making": "In Progress",
+                "will_make": "Upcoming"
             }
         }
     },

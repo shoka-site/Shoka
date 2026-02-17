@@ -80,6 +80,7 @@ export const insertProjectSchema = z.object({
   descriptionAr: z.string(),
   featured: z.boolean().default(false),
   published: z.boolean().default(true),
+  status: z.enum(["past", "current", "future"]).default("past"),
 });
 
 export type InsertProject = z.infer<typeof insertProjectSchema>;
