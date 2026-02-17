@@ -7,7 +7,28 @@
         "contact": "Contact",
         "language": "Language",
         "english": "English",
-        "arabic": "Arabic"
+        "arabic": "Arabic",
+        "book_consultation": "Book Consultation",
+        "recent_work": "Recent Work",
+        "recent_work_desc": "Explore how we help organizations transform their digital landscape.",
+        "menu_services": {
+            "ai": {
+                "title": "AI & Machine Learning",
+                "desc": "Custom algorithms that optimize operations and predict market trends."
+            },
+            "data": {
+                "title": "Data Systems",
+                "desc": "Scalable architecture for processing and securing mission-critical data."
+            },
+            "cloud": {
+                "title": "Cloud Infrastructure",
+                "desc": "Resilient, high-availability deployments on AWS, Azure, and GCP."
+            },
+            "security": {
+                "title": "Enterprise Security",
+                "desc": "Military-grade protection for your most valuable digital assets."
+            }
+        }
     },
     "welcome": {
         "badge": "Gateway to the Future",
@@ -21,15 +42,19 @@
         "est": "EST. 2026 // BABYLON_PRIME"
     },
     "hero": {
-        "learn_more": "Learn More",
-        "view_projects": "View Projects",
+        "static": {
+            "badge": "Engineering Excellence",
+            "title_line1": "Partners for",
+            "title_line2": "Progress.",
+            "description": "We design, build, and support the unique software that powers your business. Combining deep industry expertise with world-class engineering to deliver sustainable innovation.",
+            "cta_primary": "Let's Talk",
+            "cta_secondary": "Our Expertise"
+        },
         "slides": {
             "1": {
                 "badge": "Intelligent Digital Systems",
-                "title_prefix": "Designing the",
-                "title_highlight": "Heritage",
-                "title_suffix": "of Tomorrow.",
-                "description": "Shoka blends modern AI, cloud, and data solutions with the stability and wisdom of deep roots."
+                "title": "Designing Intelligent Digital Systems",
+                "description": "AI, Software, Data & Cloud Solutions for Modern Organizations"
             },
             "2": {
                 "badge": "Infrastructure & Cloud",
@@ -47,10 +72,155 @@
             }
         }
     },
+    "stats": {
+        "experience": {
+            "number": "15+",
+            "label": "Years Combined Experience"
+        },
+        "projects": {
+            "number": "100+",
+            "label": "Projects Delivered"
+        },
+        "clients": {
+            "number": "50+",
+            "label": "Enterprise Clients"
+        },
+        "satisfaction": {
+            "number": "99.8%",
+            "label": "Client Satisfaction"
+        }
+    },
+    "value_proposition": "We help businesses build, automate, and scale through intelligent technology solutions.",
     "book_consultation": "Book Consultation",
     "explore_services": "Explore Services",
     "core_capabilities": "Core Capabilities",
     "view_all_services": "View All Services",
+    "home": {
+        "services": {
+            "ai": {
+                "title": "AI Solutions",
+                "desc": "Intelligent automation, AI integration, and smart systems."
+            },
+            "fullstack": {
+                "title": "Full Stack Development",
+                "desc": "Scalable, high-performance web & system development."
+            },
+            "data": {
+                "title": "Data & Analytics",
+                "desc": "Transforming data into strategic decisions."
+            },
+            "cloud": {
+                "title": "Cloud Services",
+                "desc": "Secure, scalable cloud infrastructure & deployment."
+            },
+            "learn_more": "Learn More"
+        },
+        "trust": {
+            "title": "Trusted by forward-thinking teams",
+            "clients": "Enterprise Clients",
+            "testimonials": {
+                "1": {
+                    "quote": "Shoka transformed our legacy infrastructure into a modern, scalable cloud platform. Their expertise in AI integration was exceptional.",
+                    "author": "Amira Hassan",
+                    "role": "CTO, National Data Systems",
+                    "rating": 5
+                },
+                "2": {
+                    "quote": "Working with Shoka was a game-changer. They delivered a complex full-stack solution ahead of schedule with remarkable precision.",
+                    "author": "Omar Al-Rashid",
+                    "role": "VP Engineering, Modern Banking Corp",
+                    "rating": 5
+                },
+                "3": {
+                    "quote": "Their AI-driven approach to solving our data challenges exceeded all expectations. True engineering excellence.",
+                    "author": "Layla Ibrahim",
+                    "role": "Director of Innovation, Smart City Initiative",
+                    "rating": 5
+                }
+            }
+        },
+        "projects": {
+            "title": "Featured Projects",
+            "subtitle": "Proof of Capability"
+        },
+        "why_shoka": {
+            "title": "Why Work With Shoka",
+            "points": {
+                "business_first": {
+                    "title": "Business-First Solutions",
+                    "desc": "Technology serves your goals, not the other way around."
+                },
+                "rapid_prototyping": {
+                    "title": "Rapid Prototyping",
+                    "desc": "Fast iteration cycles to validate ideas before full-scale development."
+                },
+                "modern_stack": {
+                    "title": "Modern Technology Stack",
+                    "desc": "Latest tools and frameworks that ensure longevity and performance."
+                },
+                "ai_driven": {
+                    "title": "AI-Driven Mindset",
+                    "desc": "Intelligence embedded in every solution we architect."
+                },
+                "engineering_precision": {
+                    "title": "Engineering Precision",
+                    "desc": "Meticulous attention to detail in every line of code."
+                }
+            }
+        },
+        "process": {
+            "title": "How We Work",
+            "steps": {
+                "discover": {
+                    "title": "Discover",
+                    "desc": "Understanding your business, challenges, and objectives."
+                },
+                "design": {
+                    "title": "Design",
+                    "desc": "Architecting solutions that align with your vision."
+                },
+                "build": {
+                    "title": "Build",
+                    "desc": "Engineering robust, scalable systems with precision."
+                },
+                "launch": {
+                    "title": "Launch",
+                    "desc": "Deploying and validating in production environments."
+                },
+                "scale": {
+                    "title": "Scale",
+                    "desc": "Continuous optimization and growth enablement."
+                }
+            }
+        },
+        "insights": {
+            "title": "Insights & Perspectives",
+            "subtitle": "Thought Leadership",
+            "topics": {
+                "1": {
+                    "title": "The Future of AI in Modern Infrastructure",
+                    "desc": "Exploring how artificial intelligence is reshaping enterprise systems and cloud architecture.",
+                    "readTime": "5 min read"
+                },
+                "2": {
+                    "title": "Building Resilient Cloud Systems",
+                    "desc": "Best practices for designing fault-tolerant, scalable cloud infrastructure that grows with your business.",
+                    "readTime": "7 min read"
+                },
+                "3": {
+                    "title": "Data-Driven Decision Making",
+                    "desc": "Transforming raw data into actionable insights through advanced analytics and machine learning.",
+                    "readTime": "6 min read"
+                }
+            }
+        },
+        "cta": {
+            "title": "Let's Build Something Intelligent",
+            "desc": "Tell us about your project or schedule a consultation.",
+            "button": "Book Consultation",
+            "button_secondary": "Contact Us"
+        }
+    },
     "services": {
         "title": "Our Services",
         "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges. From architectural strategy to pixel-perfect execution.",
@@ -142,6 +312,10 @@
         "call_us": "Call Us",
         "visit_us": "Visit Us",
         "mon_fri": "Mon-Fri from 9am to 6pm",
+        "address": {
+            "line1": "Al-Mansour District",
+            "line2": "Baghdad, Iraq"
+        },
         "form": {
             "title": "Send a Message",
             "name": "Full Name",
@@ -150,7 +324,17 @@
             "message": "How can we help?",
             "submit": "Send Message",
             "success_title": "Message Sent",
-            "success_desc": "We've received your inquiry and will respond within 24 hours."
+            "success_desc": "We've received your inquiry and will respond within 24 hours.",
+            "validation": {
+                "name": "Name is required",
+                "email": "Invalid email address",
+                "message": "Please provide more detail about your inquiry"
+            },
+            "placeholders": {
+                "name": "John Doe",
+                "email": "john@company.com",
+                "company": "Acme Inc."
+            }
         }
     },
     "footer": {
@@ -159,10 +343,31 @@
         "rights": "All rights reserved.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
-        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology."
+        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
+        "copyright": "Shoka Systems.",
+        "links": {
+            "home": "Home",
+            "services": "Services",
+            "portfolio": "Portfolio",
+            "contact": "Contact"
+        }
     },
     "not_found": {
         "title": "404 Page Not Found",
         "desc": "Did you forget to add the page to the router?"
+    },
+    "tags": {
+        "cloud_migration": "Cloud Migration",
+        "ai_ocr": "AI/OCR",
+        "security": "Security",
+        "blockchain": "Blockchain",
+        "nodejs": "Node.js",
+        "realtime": "Real-time",
+        "iot": "IoT",
+        "big_data": "Big Data",
+        "analytics": "Analytics",
+        "react": "React",
+        "ai": "AI",
+        "mobile_app": "Mobile App"
     }
 }

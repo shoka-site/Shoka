@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+
+  @@map("users")
+}
+
+model HeroSlide {
+  id            String   @id @default(uuid())
+  order         Int
+  imageUrl      String   @map("image_url")
+  badgeEn       String   @map("badge_en")
+  badgeAr       String   @map("badge_ar")
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("hero_slides")
+}
+
+model Stat {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  numberEn  String   @map("number_en")
+  numberAr  String   @map("number_ar")
+  labelEn   String   @map("label_en")
+  labelAr   String   @map("label_ar")
+  order     Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("stats")
+}
+
+model Service {
+  id            String   @id @default(uuid())
+  order         Int
+  iconName      String   @map("icon_name")
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("services")
+}
+
+model Project {
+  id            String   @id @default(uuid())
+  order         Int
+  imageUrl      String   @map("image_url")
+  categoryEn    String   @map("category_en")
+  categoryAr    String   @map("category_ar")
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  featured      Boolean  @default(false)
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  order     Int
+  quoteEn   String   @map("quote_en")
+  quoteAr   String   @map("quote_ar")
+  authorEn  String   @map("author_en")
+  authorAr  String   @map("author_ar")
+  roleEn    String   @map("role_en")
+  roleAr    String   @map("role_ar")
+  rating    Int      @default(5)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("testimonials")
+}
+
+model WhyShokaPoint {
+  id            String   @id @default(uuid())
+  order         Int
+  iconName      String   @map("icon_name")
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("why_shoka_points")
+}
+
+model ProcessStep {
+  id            String   @id @default(uuid())
+  order         Int
+  stepNumber    String   @map("step_number")
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("process_steps")
+}
+
+model InsightTopic {
+  id            String   @id @default(uuid())
+  order         Int
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String   @map("description_en")
+  descriptionAr String   @map("description_ar")
+  readTimeEn    String   @map("read_time_en")
+  readTimeAr    String   @map("read_time_ar")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("insight_topics")
+}
