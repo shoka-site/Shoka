@@ -165,7 +165,7 @@ export default function Navbar() {
                   <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
                     <div className="container mx-auto px-6 md:px-12 py-10">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <li className="col-span-1 list-none">
+                        <div className="col-span-1">
                           <NavigationMenuLink asChild>
                             <Link
                               className="flex h-full w-full select-none flex-col justify-end rounded-2xl bg-gradient-to-br from-primary/20 via-primary/5 to-transparent p-8 no-underline outline-none focus:shadow-md transition-all hover:scale-[1.02] border border-primary/10"
@@ -180,7 +180,7 @@ export default function Navbar() {
                               </p>
                             </Link>
                           </NavigationMenuLink>
-                        </li>
+                        </div>
                         <div className="col-span-2">
                           <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {projects.map((project) => (

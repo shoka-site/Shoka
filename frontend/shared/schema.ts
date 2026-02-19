@@ -163,3 +163,22 @@ export type InsightTopic = InsertInsightTopic & {
   createdAt: Date;
   updatedAt: Date;
 };
+
+// ========== PLATFORM UPDATES ==========
+export const insertPlatformUpdateSchema = z.object({
+  order: z.coerce.number().default(0),
+  type: z.enum(["news", "achievement", "event", "new"]).default("news"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  summaryEn: z.string(),
+  summaryAr: z.string(),
+  date: z.coerce.date().default(() => new Date()),
+  published: z.boolean().default(true),
+});
+
+export type InsertPlatformUpdate = z.infer<typeof insertPlatformUpdateSchema>;
+export type PlatformUpdate = InsertPlatformUpdate & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
