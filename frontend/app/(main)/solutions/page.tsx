@@ -23,9 +23,9 @@ export default function Solutions() {
                     animate={{ opacity: 1, y: 0 }}
                     className="max-w-4xl"
                 >
-                    <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Solutions</h1>
+                    <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">{t("home.solutions.title")}</h1>
                     <p className="text-xl text-muted-foreground leading-relaxed">
-                        Strategic digital solutions designed to drive business outcomes and accelerate transformation.
+                        {t("home.solutions.description")}
                     </p>
                 </motion.div>
             </Section>

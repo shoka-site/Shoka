@@ -95,8 +95,8 @@ export default function About() {
       {/* Consultants Section */}
       <Section>
         <div className="mb-12 text-center">
-          <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">Our Team</span>
-          <h2 className="text-4xl font-display font-bold">Meet Our Experts</h2>
+          <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">{t('about.team.badge')}</span>
+          <h2 className="text-4xl font-display font-bold">{t('about.team.title')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {!isLoading && consultants.map((consultant, index) => (

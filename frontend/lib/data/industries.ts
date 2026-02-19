@@ -2,86 +2,87 @@ import { Building2, Landmark, ShoppingBag, Plane, Play, GraduationCap } from "lu
 
 export const industryCategories = [
     {
-        title: "Finance",
+        title: "navbar.menu.industries.finance.title",
         icon: Landmark,
-        description: "Empowering financial institutions with robust data analytics and secure digital infrastructure.",
+        description: "navbar.menu.industries.finance.desc",
         href: "/industries",
         image: "/images/industries/finance.png",
         items: [
-            { name: "Asset Management", href: "/industries" },
-            { name: "Capital Markets", href: "/industries" },
-            { name: "Insurance", href: "/industries" },
-            { name: "Banking", href: "/industries" },
-            { name: "Payments", href: "/industries" },
+            { name: "navbar.menu.industries.finance.banking", href: "/industries" },
+            { name: "navbar.menu.industries.finance.fintech", href: "/industries" },
+            { name: "navbar.menu.industries.finance.insurance", href: "/industries" },
         ]
     },
     {
-        title: "Healthcare",
+        title: "navbar.menu.industries.healthcare.title",
         icon: Building2,
-        description: "Advancing patient care through innovative digital health solutions and intelligent information systems.",
+        description: "navbar.menu.industries.healthcare.desc",
         href: "/industries",
         image: "/images/industries/healthcare.png",
         items: [
-            { name: "Digital Health", href: "/industries" },
-            { name: "Medical Devices", href: "/industries" },
-            { name: "DiGA", href: "/industries" },
-            { name: "GenAI for Healthcare", href: "/industries" },
-            { name: "Hospital Information Systems (HIS)", href: "/industries" },
+            { name: "navbar.menu.industries.healthcare.telehealth", href: "/industries" },
+            { name: "navbar.menu.industries.healthcare.hms", href: "/industries" },
+            { name: "navbar.menu.industries.healthcare.diagnostics", href: "/industries" },
         ]
     },
     {
-        title: "Retail",
+        title: "navbar.menu.industries.government.title",
+        icon: Building2,
+        description: "navbar.menu.industries.government.desc",
+        href: "/industries",
+        image: "/images/industries/government.png",
+        items: [
+            { name: "navbar.menu.industries.government.egov", href: "/industries" },
+            { name: "navbar.menu.industries.government.smart_city", href: "/industries" },
+            { name: "navbar.menu.industries.government.public_safety", href: "/industries" },
+        ]
+    },
+    {
+        title: "navbar.menu.industries.retail.title",
         icon: ShoppingBag,
-        description: "Transforming the shopping experience with omnichannel strategies and supply chain excellence.",
+        description: "navbar.menu.industries.retail.desc",
         href: "/industries",
-        image: "/images/industries/retail.png",
+        image: "/images/retail.png",
         items: [
-            { name: "eCommerce", href: "/industries" },
-            { name: "Logistics", href: "/industries" },
-            { name: "Customer Engagement", href: "/industries" },
-            { name: "Fashion", href: "/industries" },
-            { name: "Supply Chain Management", href: "/industries" },
+            { name: "navbar.menu.industries.retail.ecommerce", href: "/industries" },
+            { name: "navbar.menu.industries.retail.logistics", href: "/industries" },
+            { name: "navbar.menu.industries.retail.fashion", href: "/industries" },
         ]
     },
     {
-        title: "Travel",
+        title: "navbar.menu.industries.travel.title",
         icon: Plane,
-        description: "Elevating the travel industry with smart aviation, hospitality, and agency technology solutions.",
+        description: "navbar.menu.industries.travel.desc",
         href: "/industries",
-        image: "/images/industries/travel.png",
+        image: "/images/travel.png",
         items: [
-            { name: "Aviation", href: "/industries" },
-            { name: "Cruise and Ferry", href: "/industries" },
-            { name: "Hospitality", href: "/industries" },
-            { name: "Agency Solutions", href: "/industries" },
+            { name: "navbar.menu.industries.travel.aviation", href: "/industries" },
+            { name: "navbar.menu.industries.travel.hospitality", href: "/industries" },
+            { name: "navbar.menu.industries.travel.agencies", href: "/industries" },
         ]
     },
     {
-        title: "Media",
+        title: "navbar.menu.industries.media.title",
         icon: Play,
-        description: "Innovating the media landscape with next-gen video, betting, and digital publishing solutions.",
+        description: "navbar.menu.industries.media.desc",
         href: "/industries",
-        image: "/images/industries/media.png",
+        image: "/images/media.png",
         items: [
-            { name: "Video Business", href: "/industries" },
-            { name: "Sports Betting", href: "/industries" },
-            { name: "Art Market", href: "/industries" },
-            { name: "Music Business", href: "/industries" },
-            { name: "Book Publishing", href: "/industries" },
-            { name: "Digital Media", href: "/industries" },
+            { name: "navbar.menu.industries.media.video", href: "/industries" },
+            { name: "navbar.menu.industries.media.betting", href: "/industries" },
+            { name: "navbar.menu.industries.media.publishing", href: "/industries" },
         ]
     },
     {
-        title: "Education",
+        title: "navbar.menu.industries.education.title",
         icon: GraduationCap,
-        description: "Shaping the future of learning with data platforms and AI-first educational technology.",
+        description: "navbar.menu.industries.education.desc",
         href: "/industries",
-        image: "/images/industries/education.png",
+        image: "/images/education.png",
         items: [
-            { name: "EdTech Data Platforms", href: "/industries" },
-            { name: "AI-first EdTech Solutions", href: "/industries" },
-            { name: "LMS and Learning Platforms", href: "/industries" },
-            { name: "Next-Gen Education Platforms", href: "/industries" },
+            { name: "navbar.menu.industries.education.platforms", href: "/industries" },
+            { name: "navbar.menu.industries.education.ai_edtech", href: "/industries" },
+            { name: "navbar.menu.industries.education.lms", href: "/industries" },
         ]
     }
 ];

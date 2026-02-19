@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import Link from "next/link";
-import { ChevronRight, Sparkles } from "lucide-react";
+import { ChevronRight, Sparkles, Globe } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
@@ -10,6 +10,11 @@ import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
 export default function WelcomeV3() {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.dir() === "rtl";
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === "en" ? "ar" : "en";
+        i18n.changeLanguage(newLang);
+    };
 
     // Mouse tracking for the "Golden Aura"
     const mouseX = useMotionValue(0);
@@ -31,7 +36,23 @@ export default function WelcomeV3() {
     const spotlight = useMotionTemplate`radial-gradient(1000px circle at ${springX}px ${springY}px, rgba(194,164,92,0.07), transparent 80%)`;
 
     return (
-        <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display">
+        <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display" dir={isRtl ? "rtl" : "ltr"}>
+
+            {/* Language Switcher Overlay */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className={`absolute top-10 ${isRtl ? "left-10" : "right-10"} z-50`}
+            >
+                <button
+                    onClick={toggleLanguage}
+                    className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/5 backdrop-blur-xl rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/10 transition-all text-white/50 hover:text-white"
+                >
+                    <Globe className="w-3.5 h-3.5" />
+                    {i18n.language === "en" ? "العربية" : "English"}
+                </button>
+            </motion.div>
 
             {/* 0. Video Background Layer */}
             <video
@@ -156,16 +177,16 @@ export default function WelcomeV3() {
                             {t("welcome.enter")}
                         </span>
 
-                        <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white text-black group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:scale-110">
+                        <div className={`relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white text-black group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:scale-110 ${isRtl ? "rotate-180" : ""}`}>
                             <ChevronRight className="w-6 h-6" />
                         </div>
                     </Link>
 
                     {/* Quick Navigation Links */}
                     <div className="flex gap-12 text-xs uppercase tracking-[0.3em] font-bold text-white/30">
-                        <Link href="/services" className="hover:text-accent transition-colors">Expertise</Link>
-                        <Link href="/portfolio" className="hover:text-accent transition-colors">Portfolio</Link>
-                        <Link href="/contact" className="hover:text-accent transition-colors">Discuss Project</Link>
+                        <Link href="/services" className="hover:text-accent transition-colors">{t("welcome.nav.expertise")}</Link>
+                        <Link href="/portfolio" className="hover:text-accent transition-colors">{t("welcome.nav.portfolio")}</Link>
+                        <Link href="/contact" className="hover:text-accent transition-colors">{t("welcome.nav.discuss")}</Link>
                     </div>
                 </motion.div>
 

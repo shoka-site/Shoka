@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Brain, Database, Cloud, Lock, Building2, Globe, ArrowRight } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,356 +33,255 @@ export default function Navbar() {
     i18n.changeLanguage(newLang);
   };
 
-  const projects = [
-    {
-      title: t("portfolio.projects.archive.title"),
-      href: "/portfolio",
-      description: t("portfolio.projects.archive.desc"),
-    },
-    {
-      title: t("portfolio.projects.smart_city.title"),
-      href: "/portfolio",
-      description: t("portfolio.projects.smart_city.desc"),
-    },
-    {
-      title: t("portfolio.projects.banking.title"),
-      href: "/portfolio",
-      description: t("portfolio.projects.banking.desc"),
-    }
-  ];
-
-  const industries = [
-    { title: "Healthcare", href: "/industries", description: "Digital transformation for medical providers." },
-    { title: "Finance", href: "/industries", description: "Secure, compliant financial technology solutions." },
-    { title: "Retail", href: "/industries", description: "Omnichannel commerce and supply chain optimization." },
-    { title: "Manufacturing", href: "/industries", description: "Industry 4.0 and smart factory solutions." },
-    { title: "Education", href: "/industries", description: "EdTech platforms for modern learning." }
-  ];
-
-  const solutions = [
-    { title: "Operational Efficiency", href: "/solutions", description: "Reduce costs and streamline workflows." },
-    { title: "Revenue Growth", href: "/solutions", description: "Digital channels to unlock new revenue streams." },
-    { title: "Customer Experience", href: "/solutions", description: "Engage users with personalized experiences." },
-    { title: "Risk Management", href: "/solutions", description: "Protect your business with advanced security." }
-  ];
-
-  const aboutSections = [
-    { title: "Our Team", href: "/about" },
-    { title: "Clients", href: "/about" },
-    { title: "Events", href: "/about" },
-    { title: "Awards", href: "/about" }
-  ];
-
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: t("navbar.services"), href: "/services" },
-    { name: t("portfolio.projects.title"), href: "/projects" },
-    { name: t("navbar.portfolio"), href: "/portfolio" },
-    { name: "Industries", href: "/industries" },
-    { name: "Solutions", href: "/solutions" },
-    { name: t("navbar.about"), href: "/about" },
-    { name: t("navbar.contact"), href: "/contact" },
+  const solutions = [
+    { title_key: "navbar.menu.solutions.efficiency.title", href: "/solutions", desc_key: "navbar.menu.solutions.efficiency.desc", icon: Zap },
+    { title_key: "navbar.menu.solutions.growth.title", href: "/solutions", desc_key: "navbar.menu.solutions.growth.desc", icon: BarChart3 },
+    { title_key: "navbar.menu.solutions.experience.title", href: "/solutions", desc_key: "navbar.menu.solutions.experience.desc", icon: Activity },
+    { title_key: "navbar.menu.solutions.risk.title", href: "/solutions", desc_key: "navbar.menu.solutions.risk.desc", icon: ShieldCheck }
+  ];
+
+  const aboutLinks = [
+    { title_key: "navbar.menu.about.story", href: "/about", desc_key: "navbar.menu.about.story_desc" },
+    { title_key: "navbar.menu.about.team", href: "/about", desc_key: "navbar.menu.about.team_desc" },
+    { title_key: "navbar.menu.about.careers", href: "/about", desc_key: "navbar.menu.about.careers_desc" },
+    { title_key: "navbar.menu.about.contact", href: "/contact", desc_key: "navbar.menu.about.contact_desc" }
   ];
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b border-transparent",
-        scrolled ? "bg-background/80 backdrop-blur-md border-border/40 py-4" : "bg-transparent py-6"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] border-b",
+        scrolled
+          ? "bg-black/80 backdrop-blur-xl border-white/5 py-3 shadow-lg"
+          : "bg-black/20 backdrop-blur-sm border-white/5 py-4"
       )}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-        <Link href="/home">
-          <span className={`text-2xl font-display font-bold text-foreground hover:opacity-80 transition-opacity cursor-pointer ${isRtl ? 'tracking-normal' : 'tracking-tighter'}`}>
+        {/* Logo */}
+        <Link href="/home" className="group relative z-50">
+          <span className={`text-2xl font-display font-bold text-white tracking-tight group-hover:opacity-90 transition-opacity flex items-center gap-2`}>
+            {/* Optional: Add a small logo icon here if available */}
             {t("navbar.brand")}
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden lg:flex items-center gap-6">
           <NavigationMenu className="static">
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-2">
+
               <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  onClick={() => router.push("/services")}
-                  className="bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary data-[state=open]:bg-accent/10 cursor-pointer"
-                >
+                <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-white focus:text-white data-[state=open]:bg-white/5 data-[state=open]:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full">
                   {t("navbar.services")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
-                    <div className="container mx-auto px-6 md:px-12 py-10">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div className="col-span-1">
-                          <h3 className="text-2xl font-display font-bold mb-4">{t("navbar.services")}</h3>
-                          <p className="text-muted-foreground mb-6">Innovative digital solutions tailored to accelerate your business growth.</p>
-                          <Link href="/services">
-                            <span className="text-primary font-medium hover:underline cursor-pointer flex items-center gap-2">
-                              View all services <ArrowRight className="w-4 h-4" />
-                            </span>
-                          </Link>
-                        </div>
-                        <div className="col-span-3">
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {serviceCategories.map((category) => (
-                              <div key={category.title} className="space-y-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <category.icon className="w-5 h-5 text-primary" />
-                                  <h4 className="font-medium text-foreground">{category.title}</h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {category.items.map((item) => (
-                                    <li key={item.name}>
-                                      <Link href={item.href}>
-                                        <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer block py-1">
-                                          {item.name}
-                                        </span>
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
+                  <MegaMenuSection
+                    title={t("navbar.services")}
+                    description={t("navbar.recent_work_desc")}
+                    icon={Cpu}
+                    href="/services"
+                    layout="columns"
+                  >
+                    <div className="grid grid-cols-3 gap-x-8 gap-y-6">
+                      {serviceCategories.map((category) => (
+                        <div key={category.title} className="space-y-3">
+                          <div className={`flex items-center gap-2 text-foreground font-semibold ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <category.icon className="w-4 h-4 text-primary" />
+                            <span>{t(category.title)}</span>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  onClick={() => router.push("/portfolio")}
-                  className="bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary data-[state=open]:bg-accent/10 cursor-pointer"
-                >
-                  {t("navbar.portfolio")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
-                    <div className="container mx-auto px-6 md:px-12 py-10">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="col-span-1">
-                          <NavigationMenuLink asChild>
-                            <Link
-                              className="flex h-full w-full select-none flex-col justify-end rounded-2xl bg-gradient-to-br from-primary/20 via-primary/5 to-transparent p-8 no-underline outline-none focus:shadow-md transition-all hover:scale-[1.02] border border-primary/10"
-                              href="/portfolio"
-                            >
-                              <Building2 className="h-10 w-10 text-primary mb-4" />
-                              <div className="mb-3 mt-4 text-2xl font-display font-bold text-foreground">
-                                {t("navbar.recent_work")}
-                              </div>
-                              <p className="text-base leading-relaxed text-muted-foreground">
-                                {t("navbar.recent_work_desc")}
-                              </p>
-                            </Link>
-                          </NavigationMenuLink>
-                        </div>
-                        <div className="col-span-2">
-                          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {projects.map((project) => (
-                              <ListItem
-                                key={project.title}
-                                title={project.title}
-                                href={project.href}
-                              >
-                                {project.description}
-                              </ListItem>
+                          <ul className="space-y-1">
+                            {category.items.map(item => (
+                              <li key={item.name}>
+                                <Link href={item.href} className={`block text-sm text-muted-foreground hover:text-primary transition-colors py-1 ${isRtl ? 'pr-6 border-r text-right' : 'pl-6 border-l text-left'} border-transparent hover:border-primary/20`}>
+                                  {t(item.name)}
+                                </Link>
+                              </li>
                             ))}
                           </ul>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  </div>
+                  </MegaMenuSection>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/projects" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary")}>
-                  {t("portfolio.projects.title")}
+                <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-white focus:text-white data-[state=open]:bg-white/5 data-[state=open]:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full">
+                  {t("navbar.industries")}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <MegaMenuSection
+                    title={t("navbar.brand")}
+                    description={t("hero.static.description")}
+                    icon={LayoutGrid}
+                    href="/industries"
+                    layout="grid"
+                  >
+                    <div className="grid grid-cols-3 gap-4">
+                      {industryCategories.map((cat) => (
+                        <Link key={cat.title} href={cat.items[0]?.href || "/industries"} className={`group block p-3 rounded-lg hover:bg-muted/50 transition-colors ${isRtl ? 'text-right' : 'text-left'}`}>
+                          <div className={`flex items-center gap-2 mb-1 group-hover:text-primary transition-colors ${isRtl ? 'flex-row-reverse' : ''}`}>
+                            <cat.icon className="w-4 h-4" />
+                            <span className="font-semibold text-sm">{t(cat.title)}</span>
+                          </div>
+                          <p className={`text-xs text-muted-foreground line-clamp-2 ${isRtl ? 'pr-6' : 'pl-6'}`}>
+                            {cat.items.slice(0, 2).map(i => t(i.name)).join(", ")}...
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </MegaMenuSection>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-white focus:text-white data-[state=open]:bg-white/5 data-[state=open]:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full">
+                  {t("navbar.recent_work")}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <MegaMenuSection
+                    title={t("navbar.menu.solutions.risk.title")}
+                    description={t("navbar.menu.solutions.risk.desc")}
+                    icon={Sparkles}
+                    href="/solutions"
+                    layout="list"
+                  >
+                    <ul className="grid grid-cols-2 gap-4">
+                      {solutions.map((item) => (
+                        <Link key={item.title_key} href={item.href} className={`group flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                          <div className="mt-1 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <item.icon className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{t(item.title_key)}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5">{t(item.desc_key)}</div>
+                          </div>
+                        </Link>
+                      ))}
+                    </ul>
+                  </MegaMenuSection>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/portfolio" legacyBehavior passHref>
+                  <NavigationMenuLink className="bg-transparent text-white/80 hover:text-white focus:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full flex items-center">
+                    {t("navbar.portfolio")}
+                  </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  onClick={() => router.push("/industries")}
-                  className="bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary data-[state=open]:bg-accent/10 cursor-pointer"
-                >
-                  Industries
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
-                    <div className="container mx-auto px-6 md:px-12 py-10">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div className="col-span-1">
-                          <h3 className="text-2xl font-display font-bold mb-4">Industries</h3>
-                          <p className="text-muted-foreground">Specialized expertise across diverse sectors, delivering targeted results for complex challenges.</p>
-                        </div>
-                        <div className="col-span-3">
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {industryCategories.map((category) => (
-                              <div key={category.title} className="space-y-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <category.icon className="w-5 h-5 text-primary" />
-                                  <h4 className="font-medium text-foreground">{category.title}</h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {category.items.map((item) => (
-                                    <li key={item.name}>
-                                      <Link href={item.href}>
-                                        <span className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer block py-1">
-                                          {item.name}
-                                        </span>
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  onClick={() => router.push("/solutions")}
-                  className="bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary data-[state=open]:bg-accent/10 cursor-pointer"
-                >
-                  Solutions
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
-                    <div className="container mx-auto px-6 md:px-12 py-10">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div className="col-span-1">
-                          <h3 className="text-2xl font-display font-bold mb-4">Solutions</h3>
-                          <p className="text-muted-foreground">Strategic digital transformations designed to drive measurable business outcomes.</p>
-                        </div>
-                        <div className="col-span-3">
-                          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {solutions.map((item) => (
-                              <ListItem key={item.title} title={item.title} href={item.href}>
-                                {item.description}
-                              </ListItem>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  onClick={() => router.push("/about")}
-                  className="bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary data-[state=open]:bg-accent/10 cursor-pointer"
-                >
+                <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-white focus:text-white data-[state=open]:bg-white/5 data-[state=open]:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full">
                   {t("navbar.about")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="w-screen bg-popover/95 backdrop-blur-md border-y border-border/40 shadow-2xl">
-                    <div className="container mx-auto px-6 md:px-12 py-10">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div className="col-span-1">
-                          <h3 className="text-2xl font-display font-bold mb-4">Who We Are</h3>
-                          <p className="text-muted-foreground">A team of experts dedicated to pushing the boundaries of what's possible in the digital realm.</p>
-                        </div>
-                        <div className="col-span-3">
-                          <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {aboutSections.map((item) => (
-                              <ListItem key={item.title} title={item.title} href={item.href} className="hover:bg-accent/10">
-                                {/* No description for simple list */}
-                              </ListItem>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <MegaMenuSection
+                    title={t("navbar.about")}
+                    description={t("footer.desc")}
+                    icon={Globe}
+                    href="/about"
+                    layout="list"
+                  >
+                    <ul className="grid grid-cols-2 gap-2">
+                      {aboutLinks.map((item) => (
+                        <Link key={item.title_key} href={item.href} className={`block p-4 rounded-lg hover:bg-muted/50 transition-colors group ${isRtl ? 'text-right' : ''}`}>
+                          <div className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">{t(item.title_key)}</div>
+                          <div className="text-xs text-muted-foreground">{t(item.desc_key)}</div>
+                        </Link>
+                      ))}
+                    </ul>
+                  </MegaMenuSection>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-muted-foreground hover:text-accent focus:text-accent data-[active]:text-primary")}>
-                  {t("navbar.contact")}
-                </Link>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
 
-          <Link href="/contact">
-            <span className="bg-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors cursor-pointer inline-block">
-              {t("navbar.book_consultation")}
-            </span>
-          </Link>
-
-          <button
-            onClick={toggleLanguage}
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Globe className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-3 pl-4 border-l border-white/10">
+            <button
+              onClick={toggleLanguage}
+              className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              aria-label="Toggle Language"
+            >
+              <Globe className="w-4 h-4" />
+            </button>
+            <Link href="/contact">
+              <span className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-white/90 hover:scale-105 transition-all cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                {t("navbar.book_consultation")}
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-foreground"
+          className="lg:hidden text-white p-2"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X /> : <Menu />}
+          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-background border-b border-border p-6 md:hidden shadow-lg"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "100vh" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed inset-0 top-[60px] z-40 bg-black/95 backdrop-blur-xl border-t border-white/10 overflow-auto"
           >
-            <nav className="flex flex-col space-y-4">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href}>
-                  <span
-                    className="text-lg font-medium text-foreground hover:text-accent cursor-pointer"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.name}
+            <nav className="container mx-auto px-6 py-8 flex flex-col space-y-6">
+              {[
+                { name: t("navbar.services"), href: "/services" },
+                { name: t("navbar.industries"), href: "/industries" },
+                { name: t("navbar.recent_work"), href: "/solutions" },
+                { name: t("navbar.portfolio"), href: "/portfolio" },
+                { name: t("navbar.about"), href: "/about" },
+              ].map((link, idx) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <Link href={link.href} onClick={() => setIsOpen(false)}>
+                    <span className="text-2xl font-display font-medium text-white/90 hover:text-primary transition-colors block py-2 border-b border-white/5">
+                      {link.name}
+                    </span>
+                  </Link>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="pt-8 flex flex-col gap-4"
+              >
+                <Link href="/contact" onClick={() => setIsOpen(false)}>
+                  <span className="block w-full bg-primary text-primary-foreground text-center py-4 rounded-xl text-lg font-bold">
+                    {t("navbar.book_consultation")}
                   </span>
                 </Link>
-              ))}
-              <Link href="/contact">
-                <span
-                  className="bg-primary text-primary-foreground px-5 py-3 rounded-md text-center font-medium hover:bg-primary/90 transition-colors cursor-pointer inline-block"
-                  onClick={() => setIsOpen(false)}
+                <button
+                  onClick={() => { toggleLanguage(); setIsOpen(false); }}
+                  className="flex items-center justify-center gap-2 w-full py-4 rounded-xl border border-white/10 text-white/80 hover:bg-white/5"
                 >
-                  {t("navbar.book_consultation")}
-                </span>
-              </Link>
-              <button
-                onClick={() => {
-                  toggleLanguage();
-                  setIsOpen(false);
-                }}
-                className="flex items-center gap-2 text-lg font-medium text-foreground hover:text-accent cursor-pointer"
-              >
-                <Globe className="w-5 h-5" />
-                <span>{i18n.language.startsWith('ar') ? 'English' : 'العربية'}</span>
-              </button>
+                  <Globe className="w-5 h-5" />
+                  <span>{i18n.language.startsWith('ar') ? 'English' : 'العربية'}</span>
+                </button>
+              </motion.div>
             </nav>
           </motion.div>
         )}
@@ -391,33 +290,42 @@ export default function Navbar() {
   );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<typeof Link>,
-  React.ComponentPropsWithoutRef<typeof Link> & { title: string; icon?: React.ReactNode }
->(({ className, title, children, icon, ...props }, ref) => {
+// ─── Mega Menu Content Helper ─────────────────────────────────────────────────
+function MegaMenuSection({ title, description, icon: Icon, href, children, layout = "columns" }: {
+  title: string;
+  description: string;
+  icon: any;
+  href: string;
+  children: React.ReactNode;
+  layout?: "columns" | "grid" | "list";
+}) {
+  const { i18n, t } = useTranslation();
+  const isRtl = i18n.dir() === 'rtl';
+
   return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          ref={ref as any}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="flex items-center gap-2">
-            {icon}
-            <div className="text-sm font-medium leading-none">{title}</div>
+    <div className={`w-screen bg-popover/95 backdrop-blur-xl border-y border-white/10 shadow-2xl ${isRtl ? 'rtl' : 'ltr'}`}>
+      <div className={`container mx-auto px-6 md:px-12 flex items-stretch ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
+        {/* Sidebar / Featured */}
+        <div className={`w-1/4 bg-muted/30 p-8 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-white/5`}>
+          {/* Noise texture for sidebar */}
+          <div className="absolute inset-0 bg-grain opacity-[0.03] pointer-events-none" />
+          <div className="relative z-10 flex flex-col h-full">
+            <div className={`w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6`}>
+              <Icon className="w-6 h-6" />
+            </div>
+            <h3 className={`text-xl font-display font-bold text-foreground mb-3 ${isRtl ? 'text-right' : 'text-left'}`}>{title}</h3>
+            <p className={`text-sm text-muted-foreground leading-relaxed mb-8 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}>{description}</p>
+            <Link href={href} className={`inline-flex items-center text-primary text-sm font-semibold hover:gap-2 transition-all group ${isRtl ? 'flex-row-reverse' : ''}`}>
+              {t("common.explore_all")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-1 rotate-180 group-hover:-translate-x-1' : 'ml-1 group-hover:translate-x-1'}`} />
+            </Link>
           </div>
-          {children && (
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground mt-1">
-              {children}
-            </p>
-          )}
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+        </div>
+
+        {/* Content Area */}
+        <div className="w-3/4 p-10 bg-background/20">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}

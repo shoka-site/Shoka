@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Lock, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function AdminLogin() {
+    const { t } = useTranslation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -22,7 +24,7 @@ export default function AdminLogin() {
         if (success) {
             router.push("/admin");
         } else {
-            setError("Invalid username or password");
+            setError(t("admin.login.error_invalid"));
         }
     };
 
@@ -35,8 +37,8 @@ export default function AdminLogin() {
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
                             <Lock className="w-8 h-8 text-primary" />
                         </div>
-                        <h1 className="text-3xl font-bold mb-2">Shoka Admin</h1>
-                        <p className="text-muted-foreground">Sign in to manage content</p>
+                        <h1 className="text-3xl font-bold mb-2">{t("admin.login.brand")}</h1>
+                        <p className="text-muted-foreground">{t("admin.login.subtitle")}</p>
                     </div>
 
                     {/* Login Form */}
@@ -48,12 +50,12 @@ export default function AdminLogin() {
                         )}
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Username</label>
+                            <label className="text-sm font-medium">{t("admin.login.username")}</label>
                             <div className="relative">
                                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                                 <Input
                                     type="text"
-                                    placeholder="Enter username"
+                                    placeholder={t("admin.login.username_placeholder")}
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     className="pl-10"
@@ -63,12 +65,12 @@ export default function AdminLogin() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Password</label>
+                            <label className="text-sm font-medium">{t("admin.login.password")}</label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                                 <Input
                                     type="password"
-                                    placeholder="Enter password"
+                                    placeholder={t("admin.login.password_placeholder")}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="pl-10"
@@ -78,13 +80,13 @@ export default function AdminLogin() {
                         </div>
 
                         <Button type="submit" className="w-full" size="lg">
-                            Sign In
+                            {t("admin.login.signin")}
                         </Button>
                     </form>
 
                     {/* Demo Credentials */}
                     <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground text-center mb-2">Demo Credentials:</p>
+                        <p className="text-xs text-muted-foreground text-center mb-2">{t("admin.login.demo_title")}</p>
                         <p className="text-sm font-mono text-center">
                             <span className="text-muted-foreground">username:</span> <strong>admin</strong><br />
                             <span className="text-muted-foreground">password:</span> <strong>admin123</strong>

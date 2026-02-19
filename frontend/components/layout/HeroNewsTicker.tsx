@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { usePlatformUpdates } from "@/hooks/use-content";
 
 // ─────────────────────────────────────────────
@@ -21,18 +22,11 @@ const TYPE_CONFIG: Record<
     UpdateType,
     { label: string; icon: string; color: string; bg: string; dotColor: string }
 > = {
-    news: { label: "News", icon: "📰", color: "text-sky-300", bg: "bg-sky-500/15", dotColor: "bg-sky-400" },
-    achievement: { label: "Achievement", icon: "🏆", color: "text-amber-300", bg: "bg-amber-500/15", dotColor: "bg-amber-400" },
-    event: { label: "Event", icon: "📅", color: "text-violet-300", bg: "bg-violet-500/15", dotColor: "bg-violet-400" },
-    new: { label: "New", icon: "✨", color: "text-emerald-300", bg: "bg-emerald-500/15", dotColor: "bg-emerald-400" },
+    news: { label: "hero.updates.news", icon: "📰", color: "text-sky-300", bg: "bg-sky-500/15", dotColor: "bg-sky-400" },
+    achievement: { label: "hero.updates.achievement", icon: "🏆", color: "text-amber-300", bg: "bg-amber-500/15", dotColor: "bg-amber-400" },
+    event: { label: "hero.updates.event", icon: "📅", color: "text-violet-300", bg: "bg-violet-500/15", dotColor: "bg-violet-400" },
+    new: { label: "hero.updates.new", icon: "✨", color: "text-emerald-300", bg: "bg-emerald-500/15", dotColor: "bg-emerald-400" },
 };
-
-const FALLBACK_ITEMS: TickerItem[] = [
-    { id: "f1", type: "new", title: "Platform Officially Launched", summary: "Shoka Platform is now live — welcome aboard!" },
-    { id: "f2", type: "achievement", title: "500+ Projects Delivered", summary: "Celebrating our milestone of over 500 successful projects." },
-    { id: "f3", type: "event", title: "Baghdad Tech Summit 2026", summary: "Join us at the Baghdad Tech Summit — March 15-17." },
-    { id: "f4", type: "news", title: "AI Analytics Module in Beta", summary: "Our AI-powered analytics module is open for early access." },
-];
 
 interface HeroNewsTickerProps {
     isRtl?: boolean;
@@ -42,7 +36,15 @@ interface HeroNewsTickerProps {
 }
 
 export function HeroNewsTicker({ isRtl = false, variant = "dark", className = "" }: HeroNewsTickerProps) {
+    const { t } = useTranslation();
     const { data: updates = [] } = usePlatformUpdates();
+
+    const FALLBACK_ITEMS: TickerItem[] = [
+        { id: "f1", type: "new", title: t("hero.updates.fallback.f1_title"), summary: t("hero.updates.fallback.f1_summary") },
+        { id: "f2", type: "achievement", title: t("hero.updates.fallback.f2_title"), summary: t("hero.updates.fallback.f2_summary") },
+        { id: "f3", type: "event", title: t("hero.updates.fallback.f3_title"), summary: t("hero.updates.fallback.f3_summary") },
+        { id: "f4", type: "news", title: t("hero.updates.fallback.f4_title"), summary: t("hero.updates.fallback.f4_summary") },
+    ];
     const items: TickerItem[] =
         updates.length > 0
             ? updates.map((u) => ({ id: u.id, type: u.type, title: u.title, summary: u.summary }))
@@ -87,7 +89,7 @@ export function HeroNewsTicker({ isRtl = false, variant = "dark", className = ""
                 <div className={`flex-shrink-0 flex items-center gap-2 px-4 py-3 border-r border-current/10 ${cfg.bg}`}>
                     <span className="text-base leading-none">{cfg.icon}</span>
                     <span className={`text-[10px] font-bold uppercase tracking-widest ${cfg.color} hidden sm:inline`}>
-                        {cfg.label}
+                        {t(cfg.label)}
                     </span>
                 </div>
 

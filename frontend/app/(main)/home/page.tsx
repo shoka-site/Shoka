@@ -27,61 +27,93 @@ const iconMap: Record<string, any> = {
 type UpdateType = "news" | "achievement" | "event" | "new";
 
 // Uses the site's brand: Bronze, Gold, Sand, Clay tones
-const UPDATE_STYLE: Record<UpdateType, {
+function useUpdateStyle() {
+  return {
+    news: {
+      label: "hero.updates.news",
+      emoji: "📰",
+      accentHex: "#C2A45C",
+      accentLight: "rgba(194,164,92,0.14)",
+      textClass: "text-amber-300",
+      bgFrom: "from-[#1e1505]",
+      bgVia: "via-[#2a1f08]",
+    },
+    achievement: {
+      label: "hero.updates.achievement",
+      emoji: "🏆",
+      accentHex: "#8C6239",
+      accentLight: "rgba(140,98,57,0.18)",
+      textClass: "text-[#D6C6A5]",
+      bgFrom: "from-[#1a0f08]",
+      bgVia: "via-[#221508]",
+    },
+    event: {
+      label: "hero.updates.event",
+      emoji: "📅",
+      accentHex: "#D6C6A5",
+      accentLight: "rgba(214,198,165,0.12)",
+      textClass: "text-[#e8ddcc]",
+      bgFrom: "from-[#17110a]",
+      bgVia: "via-[#22190e]",
+    },
+    new: {
+      label: "hero.updates.new",
+      emoji: "✨",
+      accentHex: "#C2A45C",
+      accentLight: "rgba(194,164,92,0.16)",
+      textClass: "text-amber-200",
+      bgFrom: "from-[#1c1408]",
+      bgVia: "via-[#251c0c]",
+    },
+  };
+}
+
+const UPDATE_STYLE_FALLBACK: Record<UpdateType, {
   label: string;
   emoji: string;
-  // CSS color values
-  accentHex: string;       // e.g. badge border / button bg
-  accentLight: string;     // translucent tint for badge bg / glow
-  textClass: string;       // Tailwind text class for label
-  // hero background: dark but on-brand
-  bgFrom: string;          // Tailwind bg-gradient-to-br from class
+  accentHex: string;
+  accentLight: string;
+  textClass: string;
+  bgFrom: string;
   bgVia: string;
 }> = {
   news: {
-    label: "Latest News",
+    label: "hero.updates.news",
     emoji: "📰",
-    accentHex: "#C2A45C",        // Accent Gold
+    accentHex: "#C2A45C",
     accentLight: "rgba(194,164,92,0.14)",
     textClass: "text-amber-300",
     bgFrom: "from-[#1e1505]",
     bgVia: "via-[#2a1f08]",
   },
   achievement: {
-    label: "Achievement",
+    label: "hero.updates.achievement",
     emoji: "🏆",
-    accentHex: "#8C6239",        // Deep Clay/Bronze
+    accentHex: "#8C6239",
     accentLight: "rgba(140,98,57,0.18)",
     textClass: "text-[#D6C6A5]",
     bgFrom: "from-[#1a0f08]",
     bgVia: "via-[#221508]",
   },
   event: {
-    label: "Upcoming Event",
+    label: "hero.updates.event",
     emoji: "📅",
-    accentHex: "#D6C6A5",        // Heritage Sand
+    accentHex: "#D6C6A5",
     accentLight: "rgba(214,198,165,0.12)",
     textClass: "text-[#e8ddcc]",
     bgFrom: "from-[#17110a]",
     bgVia: "via-[#22190e]",
   },
   new: {
-    label: "What's New",
+    label: "hero.updates.new",
     emoji: "✨",
-    accentHex: "#C2A45C",        // Accent Gold (same warmth)
+    accentHex: "#C2A45C",
     accentLight: "rgba(194,164,92,0.16)",
     textClass: "text-amber-200",
     bgFrom: "from-[#1c1408]",
     bgVia: "via-[#251c0c]",
   },
 };
-
-const FALLBACK_UPDATES = [
-  { id: "f1", type: "new" as UpdateType, title: "Platform Officially Launched", summary: "Shoka Platform is now live. Experience next-generation digital solutions built for Iraq's future." },
-  { id: "f2", type: "achievement" as UpdateType, title: "500+ Projects Delivered", summary: "We celebrate crossing the milestone of 500 successfully delivered projects across industries in Iraq." },
-  { id: "f3", type: "event" as UpdateType, title: "Baghdad Tech Summit 2026", summary: "Join us at the Baghdad Tech Summit on March 15–17, 2026. Register now to secure your spot." },
-  { id: "f4", type: "news" as UpdateType, title: "AI Analytics Module in Beta", summary: "Our AI-powered analytics module is open for early access — unlock deeper business intelligence today." },
-];
 
 // ─── Scroll progress bar (top of page) ───────────────────────────────────────
 function ScrollProgressBar() {
@@ -118,6 +150,14 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const yOffset = useTransform(scrollY, [0, 600], [0, -80]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+  const { t } = useTranslation();
+  const FALLBACK_UPDATES = [
+    { id: "f1", type: "new" as UpdateType, title: t("hero.updates.fallback.f1_title"), summary: t("hero.updates.fallback.f1_summary") },
+    { id: "f2", type: "achievement" as UpdateType, title: t("hero.updates.fallback.f2_title"), summary: t("hero.updates.fallback.f2_summary") },
+    { id: "f3", type: "event" as UpdateType, title: t("hero.updates.fallback.f3_title"), summary: t("hero.updates.fallback.f3_summary") },
+    { id: "f4", type: "news" as UpdateType, title: t("hero.updates.fallback.f4_title"), summary: t("hero.updates.fallback.f4_summary") },
+  ];
+
   const { data: raw = [] } = usePlatformUpdates();
   const items = raw.length > 0
     ? raw.map(u => ({ id: u.id, type: u.type as UpdateType, title: u.title, summary: u.summary }))
@@ -126,13 +166,14 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
     const timer = setInterval(() => {
       setDirection(1);
       setActiveIdx(p => (p + 1) % items.length);
-    }, 6000);
+    }, 8000); // Slower interval for better readability
     return () => clearInterval(timer);
   }, [items.length, isPaused]);
 
@@ -140,13 +181,32 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const prev = () => goTo((activeIdx - 1 + items.length) % items.length);
   const next = () => goTo((activeIdx + 1) % items.length);
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    setMousePosition({
+      x: (clientX / innerWidth - 0.5) * 20, // -10 to 10
+      y: (clientY / innerHeight - 0.5) * 20 // -10 to 10
+    });
+  };
+
+  const updateStyle = useUpdateStyle();
   const item = items[activeIdx];
-  const style = UPDATE_STYLE[item?.type] ?? UPDATE_STYLE.news;
+  const style = updateStyle[item?.type] ?? updateStyle.news;
 
   const slideVariants = {
-    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
-    center: ({ opacity: 1, x: 0 }),
-    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -80 : 80 }),
+    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 40 : -40, filter: "blur(8px)" }),
+    center: { opacity: 1, x: 0, filter: "blur(0px)" },
+    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -40 : 40, filter: "blur(8px)" }),
+  };
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (custom: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] as any }
+    })
   };
 
   return (
@@ -156,6 +216,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
       style={{ backgroundColor: "#0f0a04" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onMouseMove={handleMouseMove}
     >
       {/* Brand-toned gradient bg per type */}
       <AnimatePresence mode="wait">
@@ -164,7 +225,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
           className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#0f0a04]`}
         />
       </AnimatePresence>
@@ -172,39 +233,43 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
       {/* Warm radial glow — brand gold accent */}
       <motion.div
         key={item.id + "-glow"}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 55% 55% at 65% 50%, ${style.accentLight} 0%, transparent 70%)`,
+          background: `radial-gradient(circle at 70% 40%, ${style.accentLight} 0%, transparent 60%)`,
         }}
       />
 
       {/* Subtle grain texture */}
-      <div className="absolute inset-0 bg-grain opacity-30 pointer-events-none" />
+      <div className="absolute inset-0 bg-grain opacity-[0.07] pointer-events-none mix-blend-overlay" />
 
       {/* Decorative horizontal rule lines — Mesopotamian geometry */}
-      <div className="absolute left-0 right-0 top-[30%] h-px bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
-      <div className="absolute left-0 right-0 bottom-[30%] h-px bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
+      <div className="absolute left-0 right-0 top-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+      <div className="absolute left-0 right-0 bottom-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
       {/* Large ghost emoji — faint brand echo */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 text-[28vw] leading-none select-none pointer-events-none opacity-[0.035]"
-        style={{ color: style.accentHex, right: "-3vw" }}
+      <motion.div
+        key={item.id + "-emoji"}
+        initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
+        animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className={`absolute ${isRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[35vw] leading-none select-none pointer-events-none`}
+        style={{ color: style.accentHex }}
       >
         {style.emoji}
-      </div>
+      </motion.div>
 
       {/* Top progress bar in brand gold */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/5 z-20">
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/5 z-20">
         <motion.div
           key={activeIdx}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: isPaused ? undefined : 1 }}
-          transition={{ duration: 6, ease: "linear" }}
-          className="h-full origin-left"
-          style={{ backgroundColor: style.accentHex }}
+          transition={{ duration: 8, ease: "linear" }}
+          className="h-full origin-left box-shadow-glow"
+          style={{ backgroundColor: style.accentHex, boxShadow: `0 0 10px ${style.accentHex}` }}
         />
       </div>
 
@@ -222,70 +287,81 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className={`max-w-4xl ${isRtl ? "mr-0 ml-auto text-right" : ""}`}
+            transition={{ duration: 0.7, ease: [0.2, 0.65, 0.3, 0.9] }}
+            className={`max-w-5xl ${isRtl ? "mr-0 ml-auto text-right" : ""}`}
           >
             {/* Type badge */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className={`mb-6 flex items-center gap-3 ${isRtl ? "justify-end" : ""}`}
+              custom={1}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className={`mb-8 flex items-center gap-4 ${isRtl ? "justify-end" : ""}`}
             >
-              <span className="text-3xl">{style.emoji}</span>
+              <span className="text-4xl drop-shadow-md">{style.emoji}</span>
               <span
-                className={`text-xs font-bold uppercase tracking-[0.25em] ${style.textClass} border px-4 py-1.5 rounded-full`}
-                style={{ borderColor: style.accentHex + "50", backgroundColor: style.accentLight }}
+                className={`text-xs font-bold uppercase tracking-[0.3em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
+                style={{ borderColor: style.accentHex + "60", backgroundColor: style.accentLight }}
               >
-                {style.label}
+                {t(style.label)}
               </span>
             </motion.div>
 
             {/* Title */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-6"
-              style={{ textShadow: `0 0 80px ${style.accentHex}25` }}
+              custom={2}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-5xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight"
+              style={{
+                textShadow: `0 0 40px ${style.accentHex}30`,
+                x: mousePosition.x * -1,
+                y: mousePosition.y * -1
+              }}
             >
               {item.title}
             </motion.h1>
 
             {/* Summary */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-              className="text-xl md:text-2xl text-white/55 max-w-2xl leading-relaxed font-light mb-10"
+              custom={3}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12"
+              style={{
+                x: mousePosition.x * -0.5,
+                y: mousePosition.y * -0.5
+              }}
             >
               {item.summary}
             </motion.p>
 
             {/* CTA — brand-colored */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className={`flex flex-col sm:flex-row gap-4 ${isRtl ? "justify-end" : ""}`}
+              custom={4}
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              className={`flex flex-col sm:flex-row gap-5 ${isRtl ? "justify-end" : ""}`}
             >
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="rounded-full text-base h-12 px-8 font-semibold border-0"
-                  style={{ backgroundColor: style.accentHex, color: "#1a1005" }}
+                  className="rounded-full text-base h-14 px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
+                  style={{ backgroundColor: style.accentHex, color: "#1a1005", boxShadow: `0 8px 30px ${style.accentHex}40` }}
                 >
-                  Let's Talk
+                  {t("hero.updates.cta_talk")}
                 </Button>
               </Link>
               <Link href="/services">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-full text-base h-12 px-8 bg-transparent font-semibold text-white/80 hover:text-white"
-                  style={{ borderColor: style.accentHex + "55" }}
+                  className="rounded-full text-base h-14 px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
                 >
-                  Our Expertise
+                  {t("hero.updates.cta_expertise")}
                 </Button>
               </Link>
             </motion.div>
@@ -294,59 +370,67 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
       </motion.div>
 
       {/* Bottom navigation */}
-      <div className="absolute bottom-10 left-0 right-0 px-8 md:px-16 lg:px-24 z-20 flex items-center justify-between">
+      <div className="absolute bottom-12 left-0 right-0 px-8 md:px-16 lg:px-24 z-20 flex items-center justify-between">
         {/* Counter */}
-        <div className="text-sm font-mono text-white/25">
-          <span className="font-bold text-base" style={{ color: style.accentHex }}>
+        <div className="text-sm font-mono text-white/30 tracking-widest">
+          <span className="font-bold text-lg" style={{ color: style.accentHex }}>
             {String(activeIdx + 1).padStart(2, "0")}
           </span>
-          <span className="mx-1">/</span>
+          <span className="mx-2 opacity-50">/</span>
           <span>{String(items.length).padStart(2, "0")}</span>
         </div>
 
         {/* Arrows + dots */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={prev}
-            className="w-10 h-10 rounded-full border flex items-center justify-center text-white/40 hover:text-white transition-all"
-            style={{ borderColor: "rgba(255,255,255,0.15)" }}
-            aria-label="Previous"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <div className="flex gap-2">
+        <div className="flex items-center gap-6">
+          <div className="flex gap-3">
+            <button
+              onClick={prev}
+              className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
+              aria-label="Previous"
+            >
+              <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+            </button>
+            <button
+              onClick={next}
+              className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
+              aria-label="Next"
+            >
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </div>
+
+          <div className="h-8 w-px bg-white/10 mx-2 hidden md:block"></div>
+
+          <div className="flex gap-2.5 hidden md:flex">
             {items.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`rounded-full transition-all duration-300 ${i === activeIdx ? "w-6 h-2" : "w-2 h-2 hover:opacity-60"}`}
-                style={i === activeIdx
-                  ? { backgroundColor: style.accentHex }
-                  : { backgroundColor: "rgba(255,255,255,0.2)" }}
+                className={`rounded-full transition-all duration-500 ease-out ${i === activeIdx ? "w-8 h-1.5 opacity-100" : "w-1.5 h-1.5 opacity-30 hover:opacity-100"}`}
+                style={{ backgroundColor: i === activeIdx ? style.accentHex : "white" }}
                 aria-label={`Go to update ${i + 1}`}
               />
             ))}
           </div>
-          <button
-            onClick={next}
-            className="w-10 h-10 rounded-full border flex items-center justify-center text-white/40 hover:text-white transition-all"
-            style={{ borderColor: "rgba(255,255,255,0.15)" }}
-            aria-label="Next"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
 
       {/* Scroll cue */}
       <motion.div
-        initial={{ opacity: 0, y: -4 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{ delay: 2.5, duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-white/20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pb-8 cursor-pointer"
+        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
-        <span className="text-[10px] uppercase tracking-widest font-mono">Scroll</span>
-        <div className="w-px h-8" style={{ background: `linear-gradient(to bottom, ${style.accentHex}60, transparent)` }} />
+        <span className={`text-[10px] uppercase tracking-[0.2em] font-medium text-white/30 mb-3 ${isRtl ? 'mr-1' : 'ml-1'}`}>{t("hero.updates.scroll")}</span>
+        <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/20 to-white/0 relative overflow-hidden">
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white/80"
+            animate={{ y: [-50, 64] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
       </motion.div>
     </section>
   );
@@ -389,7 +473,7 @@ export default function Home() {
         <div className="container mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28">
           <FadeInSection>
             <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
-              The Shoka Difference
+              {t("home.why_us.badge")}
             </p>
           </FadeInSection>
           <FadeInSection delay={0.08}>
@@ -397,12 +481,12 @@ export default function Home() {
               className="text-center font-display font-black text-foreground leading-[1.0]"
               style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
             >
-              Why Us?
+              {t("home.why_us.title")}
             </h2>
           </FadeInSection>
           <FadeInSection delay={0.14}>
             <p className="text-center text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mt-6 leading-relaxed font-light">
-              Everything below is our answer. Numbers, services, real projects, and the people who made them happen.
+              {t("home.why_us.description")}
             </p>
           </FadeInSection>
         </div>
@@ -437,10 +521,10 @@ export default function Home() {
           <FadeInSection>
             <div className="flex flex-col md:flex-row justify-between items-end mb-16">
               <div className="max-w-xl">
-                <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">What We Do</span>
-                <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Our Expertise</h2>
+                <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.services.badge")}</span>
+                <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{t("home.services.title")}</h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  End-to-end digital solutions — strategy, design, engineering, and ongoing support.
+                  {t("home.services.description")}
                 </p>
               </div>
               <Link href="/services">
@@ -486,10 +570,10 @@ export default function Home() {
       {!loadingProjects && projects.length > 0 && (
         <Section background="default">
           <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.projects.subtitle")}</span>
+            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.projects.badge")}</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.projects.title")}</h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-              Real products, real industries, real impact.
+              {t("home.projects.description")}
             </p>
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -524,10 +608,10 @@ export default function Home() {
       {!loadingProcess && processSteps.length > 0 && (
         <Section background="muted">
           <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.subtitle")}</span>
+            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.badge")}</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-              A clear, collaborative process — so you're never left guessing.
+              {t("home.process.description")}
             </p>
           </FadeInSection>
           <div className="relative">
@@ -558,10 +642,10 @@ export default function Home() {
       {!loadingTestimonials && testimonials.length > 0 && (
         <Section background="default">
           <FadeInSection className="text-center">
-            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">Client Stories</span>
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.trust.badge")}</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">{t("home.trust.title")}</h2>
             <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
-              Hear directly from the businesses that trusted us with their vision.
+              {t("home.trust.description")}
             </p>
           </FadeInSection>
           <div className="max-w-4xl mx-auto">
@@ -610,10 +694,10 @@ export default function Home() {
       {!loadingWhyShoka && whyShokaPoints.length > 0 && (
         <Section background="muted">
           <FadeInSection className="text-center mb-16">
-            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">Our Values</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold">Our Philosophy</h2>
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.philosophy.badge")}</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
             <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-              The principles that guide every decision we make for our clients.
+              {t("home.philosophy.description")}
             </p>
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -649,7 +733,7 @@ export default function Home() {
                 <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.insights.subtitle")}</span>
                 <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.insights.title")}</h2>
                 <p className="text-muted-foreground text-lg mt-3 max-w-md">
-                  Thinking at the frontier of technology and business in Iraq.
+                  {t("home.insights.description")}
                 </p>
               </div>
             </div>
@@ -686,7 +770,7 @@ export default function Home() {
         <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
           <FadeInSection>
             <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
-              Measurable Impact
+              {t("home.results.badge")}
             </p>
           </FadeInSection>
           <FadeInSection delay={0.06}>
@@ -694,26 +778,26 @@ export default function Home() {
               className="text-center font-display font-black text-white leading-[1.0] mb-6"
               style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
             >
-              Results We've Delivered
+              {t("home.results.title")}
             </h2>
           </FadeInSection>
           <FadeInSection delay={0.12}>
             <p className="text-center text-lg max-w-2xl mx-auto mb-20 leading-relaxed" style={{ color: "rgba(247,243,235,0.5)" }}>
-              Real numbers from real projects. Not projections — actual outcomes our clients measured after going live with Shoka-built systems.
+              {t("home.results.description")}
             </p>
           </FadeInSection>
 
           {/* Results grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(194,164,92,0.12)" }}>
             {[
-              { value: "3×", label: "Faster Time-to-Market", sub: "vs. previous in-house estimates" },
-              { value: "62%", label: "Reduction in Operational Cost", sub: "banking & finance clients" },
-              { value: "99.97%", label: "Platform Uptime", sub: "across production systems" },
-              { value: "4.9 ★", label: "Average Client Rating", sub: "post-project satisfaction score" },
-              { value: "200%+", label: "Revenue Growth", sub: "e-commerce clients after relaunch" },
-              { value: "40%", label: "Faster Onboarding", sub: "via custom HR & ERP portals" },
-              { value: "500+", label: "Projects Delivered", sub: "on time and within budget" },
-              { value: "<24h", label: "Bug Resolution SLA", sub: "average for critical issues" },
+              { value: "3×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
+              { value: "62%", label: t("home.results.items.cost_reduction"), sub: t("home.results.items.cost_reduction_sub") },
+              { value: "99.97%", label: t("home.results.items.uptime"), sub: t("home.results.items.uptime_sub") },
+              { value: "4.9 ★", label: t("home.results.items.satisfaction"), sub: t("home.results.items.satisfaction_sub") },
+              { value: "200%+", label: t("home.results.items.revenue"), sub: t("home.results.items.revenue_sub") },
+              { value: "40%", label: t("home.results.items.onboarding"), sub: t("home.results.items.onboarding_sub") },
+              { value: "500+", label: t("home.results.items.delivered"), sub: t("home.results.items.delivered_sub") },
+              { value: "<24h", label: t("home.results.items.sla"), sub: t("home.results.items.sla_sub") },
             ].map((result, i) => (
               <motion.div
                 key={i}
@@ -747,7 +831,7 @@ export default function Home() {
           {/* Footnote */}
           <FadeInSection delay={0.2}>
             <p className="text-center text-xs mt-10" style={{ color: "rgba(247,243,235,0.25)" }}>
-              Figures based on client-reported data and post-launch analytics from 2022–2025 engagements.
+              {t("home.results.footnote")}
             </p>
           </FadeInSection>
         </div>
@@ -763,10 +847,10 @@ export default function Home() {
             <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
             <div className="relative z-10">
-              <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4">Start Today</p>
-              <h2 className="text-3xl md:text-5xl font-display font-black mb-6">Ready to Innovate?</h2>
+              <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4">{t("home.cta.badge")}</p>
+              <h2 className="text-3xl md:text-5xl font-display font-black mb-6">{t("home.cta.title")}</h2>
               <p className="text-xl mb-10 max-w-2xl mx-auto" style={{ color: "rgba(247,243,235,0.6)" }}>
-                Let's discuss how we can help you build your digital future — free first consultation, no commitment required.
+                {t("home.cta.description")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/contact">
@@ -775,7 +859,7 @@ export default function Home() {
                     className="rounded-full text-lg h-14 px-10 font-semibold border-0"
                     style={{ backgroundColor: "#C2A45C", color: "#1a1005" }}
                   >
-                    Contact Us
+                    {t("home.cta.primary")}
                   </Button>
                 </Link>
                 <Link href="/services">
@@ -785,7 +869,7 @@ export default function Home() {
                     className="rounded-full text-lg h-14 px-10 font-semibold bg-transparent text-white/80 hover:text-white"
                     style={{ borderColor: "rgba(255,255,255,0.2)" }}
                   >
-                    Explore Services
+                    {t("home.cta.secondary")}
                   </Button>
                 </Link>
               </div>

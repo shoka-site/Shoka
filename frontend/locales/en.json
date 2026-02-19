@@ -10,6 +10,7 @@
         "arabic": "Arabic",
         "book_consultation": "Book Consultation",
         "recent_work": "Recent Work",
+        "industries": "Industries",
         "recent_work_desc": "Explore how we help organizations transform their digital landscape.",
         "menu_services": {
             "ai": {
@@ -27,6 +28,141 @@
             "security": {
                 "title": "Enterprise Security",
                 "desc": "Military-grade protection for your most valuable digital assets."
+            },
+            "fullstack": {
+                "title": "Full Stack",
+                "desc": "End-to-end development for robust web and mobile applications."
+            },
+            "backend": {
+                "title": "Backend Systems",
+                "desc": "Scalable and secure backend infrastructure for your digital products."
+            }
+        },
+        "menu": {
+            "services": {
+                "data": {
+                    "title": "Data Services",
+                    "desc": "Unlock the power of your data with our comprehensive analytics and engineering solutions.",
+                    "analyst": "Data Analyst",
+                    "science": "Data Science",
+                    "entries": "Data Entries",
+                    "engineering": "Data Engineering"
+                },
+                "ai": {
+                    "title": "AI Solutions",
+                    "desc": "Leverage cutting-edge artificial intelligence to automate and innovate.",
+                    "chatbot": "Chat Bot",
+                    "cv": "Computer Vision",
+                    "ml": "ML Models",
+                    "agentic": "Agentic AI"
+                },
+                "fullstack": {
+                    "title": "Full Stack",
+                    "desc": "End-to-end development for robust web and mobile applications.",
+                    "web": "Web Development",
+                    "app": "App Development",
+                    "platforms": "Platforms"
+                },
+                "backend": {
+                    "title": "Backend",
+                    "desc": "Scalable and secure backend infrastructure for your digital products.",
+                    "systems": "Systems",
+                    "iot": "IoT",
+                    "robotics": "Robotics"
+                },
+                "cloud": {
+                    "title": "Cloud",
+                    "desc": "Modern cloud solutions for storage, management, and scalability.",
+                    "dbm": "DBM",
+                    "storage": "Storage",
+                    "control": "Data Control"
+                }
+            },
+            "industries": {
+                "oil_gas": {
+                    "title": "Oil & Gas",
+                    "desc": "Intelligent solutions for the entire energy value chain.",
+                    "upstream": "Upstream",
+                    "downstream": "Downstream",
+                    "refining": "Refining"
+                },
+                "government": {
+                    "title": "Government",
+                    "desc": "Digital transformation for public sector efficiency.",
+                    "egov": "e-Government",
+                    "smart_city": "Smart City",
+                    "public_safety": "Public Safety"
+                },
+                "finance": {
+                    "title": "Finance",
+                    "desc": "Secure, scalable Fintech and Banking solutions.",
+                    "banking": "Digital Banking",
+                    "fintech": "FinTech",
+                    "insurance": "InsurTech"
+                },
+                "healthcare": {
+                    "title": "Healthcare",
+                    "desc": "AI-driven diagnostics and patient care systems.",
+                    "telehealth": "Telehealth",
+                    "hms": "HMS",
+                    "diagnostics": "AI Diagnostics"
+                },
+                "retail": {
+                    "title": "Retail",
+                    "desc": "Modern e-commerce and retail logic.",
+                    "ecommerce": "eCommerce",
+                    "logistics": "Logistics",
+                    "fashion": "Fashion"
+                },
+                "travel": {
+                    "title": "Travel",
+                    "desc": "Smart booking and hospitality platforms.",
+                    "aviation": "Aviation",
+                    "hospitality": "Hospitality",
+                    "agencies": "Travel Agencies"
+                },
+                "media": {
+                    "title": "Media",
+                    "desc": "High-performance digital publishing and streaming.",
+                    "video": "Video Business",
+                    "betting": "Sports Betting",
+                    "publishing": "Digital Publishing"
+                },
+                "education": {
+                    "title": "Education",
+                    "desc": "Empowering learning through advanced EdTech.",
+                    "platforms": "EdTech Platforms",
+                    "ai_edtech": "AI EdTech",
+                    "lms": "LMS"
+                }
+            },
+            "solutions": {
+                "efficiency": {
+                    "title": "Operational Efficiency",
+                    "desc": "Streamline workflows and reduce overhead."
+                },
+                "growth": {
+                    "title": "Revenue Growth",
+                    "desc": "Unlock new streams with digital channels."
+                },
+                "experience": {
+                    "title": "Customer Experience",
+                    "desc": "Engage users with personalized journeys."
+                },
+                "risk": {
+                    "title": "Risk Management",
+                    "desc": "Secure your business with advanced protection."
+                }
+            },
+            "about": {
+                "story": "Our Story",
+                "story_desc": "From inception to innovation leader.",
+                "team": "Team",
+                "team_desc": "Meet the experts behind the tech.",
+                "careers": "Careers",
+                "careers_desc": "Join us in building the future.",
+                "contact": "Contact",
+                "contact_desc": "Get in touch with our support."
             }
         }
     },
@@ -39,9 +175,33 @@
         "enter": "Enter Platform",
         "system_ready": "SYS.READY",
         "connected": "CONNECTED",
-        "est": "EST. 2026 // BABYLON_PRIME"
+        "est": "EST. 2026 // BABYLON_PRIME",
+        "nav": {
+            "expertise": "Expertise",
+            "portfolio": "Portfolio",
+            "discuss": "Discuss Project"
+        }
     },
     "hero": {
+        "updates": {
+            "news": "Latest News",
+            "achievement": "Achievement",
+            "event": "Upcoming Event",
+            "new": "What's New",
+            "cta_talk": "Let's Talk",
+            "cta_expertise": "Our Expertise",
+            "scroll": "Scroll",
+            "fallback": {
+                "f1_title": "Platform Officially Launched",
+                "f1_summary": "Shoka Platform is now live — welcome aboard!",
+                "f2_title": "500+ Projects Delivered",
+                "f2_summary": "Celebrating our milestone of over 500 successful projects.",
+                "f3_title": "Baghdad Tech Summit 2026",
+                "f3_summary": "Join us at the Baghdad Tech Summit — March 15-17.",
+                "f4_title": "AI Analytics Module in Beta",
+                "f4_summary": "Our AI-powered analytics module is open for early access."
+            }
+        },
         "static": {
             "badge": "Engineering Excellence",
             "title_line1": "Partners for",
@@ -97,6 +257,9 @@
     "view_all_services": "View All Services",
     "home": {
         "services": {
+            "badge": "Expertise",
+            "title": "Our Expertise",
+            "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges.",
             "ai": {
                 "title": "AI Solutions",
                 "desc": "Intelligent automation, AI integration, and smart systems."
@@ -116,7 +279,9 @@
             "learn_more": "Learn More"
         },
         "trust": {
+            "badge": "Recognition",
             "title": "Trusted by forward-thinking teams",
+            "description": "We work with organizations across the globe to build their digital future.",
             "clients": "Enterprise Clients",
             "testimonials": {
                 "1": {
@@ -140,11 +305,14 @@
             }
         },
         "projects": {
+            "badge": "Portfolio",
             "title": "Featured Projects",
-            "subtitle": "Proof of Capability"
+            "description": "Real-world challenges solved with intelligent engineering."
         },
-        "why_shoka": {
-            "title": "Why Work With Shoka",
+        "why_us": {
+            "badge": "Why Us",
+            "title": "Built for Reliability.",
+            "description": "We combine human ingenuity with technical precision to deliver systems that don't just work—they excel.",
             "points": {
                 "business_first": {
                     "title": "Business-First Solutions",
@@ -168,8 +336,15 @@
                 }
             }
         },
+        "philosophy": {
+            "badge": "Our Values",
+            "title": "Core Philosophy",
+            "description": "The principles that guide every decision and every line of code we write."
+        },
         "process": {
+            "badge": "Methodology",
             "title": "How We Work",
+            "description": "Our proven iterative approach ensures transparency, speed, and exceptional quality.",
             "steps": {
                 "discover": {
                     "title": "Discover",
@@ -196,6 +371,7 @@
         "insights": {
             "title": "Insights & Perspectives",
             "subtitle": "Thought Leadership",
+            "description": "Stay ahead of the curve with our latest research and engineering breakthroughs.",
             "topics": {
                 "1": {
                     "title": "The Future of AI in Modern Infrastructure",
@@ -214,11 +390,45 @@
                 }
             }
         },
+        "industries": {
+            "title": "Industries",
+            "description": "We provide specialized digital solutions tailored to the unique challenges and opportunities of various sectors.",
+            "learn_more": "Learn more"
+        },
+        "solutions": {
+            "title": "Solutions",
+            "description": "Strategic digital solutions designed to drive business outcomes and accelerate transformation."
+        },
+        "results": {
+            "badge": "Our Impact",
+            "title": "Results Delivered.",
+            "description": "We measure our success by the tangible outcomes we deliver for our clients globally.",
+            "items": {
+                "market_time": "Time to Market",
+                "market_time_sub": "Average reduction in deployment cycles",
+                "cost_reduction": "Cost Optimization",
+                "cost_reduction_sub": "Infrastructure cost savings realized",
+                "uptime": "System Reliability",
+                "uptime_sub": "Guaranteed availability for critical systems",
+                "satisfaction": "Client Satisfaction",
+                "satisfaction_sub": "Based on post-delivery satisfaction surveys",
+                "revenue": "Revenue Growth",
+                "revenue_sub": "Average increase in digital channel revenue",
+                "onboarding": "Faster Onboarding",
+                "onboarding_sub": "Reduction in new user setup time",
+                "delivered": "Projects Delivered",
+                "delivered_sub": "Successful enterprise implementations",
+                "sla": "SLA Compliance",
+                "sla_sub": "Critical response time and resolution"
+            },
+            "footnote": "* Statistics based on aggregate client data from FY 2024-2025 across global implementations."
+        },
         "cta": {
-            "title": "Let's Build Something Intelligent",
-            "desc": "Tell us about your project or schedule a consultation.",
-            "button": "Book Consultation",
-            "button_secondary": "Contact Us"
+            "badge": "Start Today",
+            "title": "Ready to Innovate?",
+            "description": "Let's discuss how we can help you build your digital future — free first consultation, no commitment required.",
+            "primary": "Contact Us",
+            "secondary": "Explore Services"
         }
     },
     "services": {
@@ -315,6 +525,10 @@
             "partnership_desc": "We are not vendors; we are your strategic technology partners.",
             "excellence": "Excellence",
             "excellence_desc": "Mediocrity has no place here. We aim for the exceptional."
+        },
+        "team": {
+            "badge": "Our Team",
+            "title": "Meet Our Experts"
         }
     },
     "contact": {
@@ -353,6 +567,11 @@
     "footer": {
         "sitemap": "Sitemap",
         "connect": "Connect",
+        "social": {
+            "linkedin": "LinkedIn",
+            "twitter": "Twitter",
+            "instagram": "Instagram"
+        },
         "rights": "All rights reserved.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
@@ -382,5 +601,22 @@
         "react": "React",
         "ai": "AI",
         "mobile_app": "Mobile App"
+    },
+    "admin": {
+        "login": {
+            "brand": "Shoka Admin",
+            "subtitle": "Sign in to manage content",
+            "username": "Username",
+            "username_placeholder": "Enter username",
+            "password": "Password",
+            "password_placeholder": "Enter password",
+            "signin": "Sign In",
+            "demo_title": "Demo Credentials:",
+            "error_invalid": "Invalid username or password"
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "explore_all": "Explore All"
     }
 }

@@ -25,9 +25,9 @@ export default function Industries() {
                     animate={{ opacity: 1, y: 0 }}
                     className="max-w-4xl"
                 >
-                    <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Industries</h1>
+                    <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">{t("home.industries.title")}</h1>
                     <p className="text-xl text-muted-foreground leading-relaxed">
-                        We provide specialized digital solutions tailored to the unique challenges and opportunities of various sectors.
+                        {t("home.industries.description")}
                     </p>
                 </motion.div>
             </Section>
@@ -64,7 +64,7 @@ export default function Industries() {
                                     </CardContent>
                                     <CardFooter>
                                         <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group mt-auto">
-                                            Learn more <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
+                                            {t("home.industries.learn_more")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
                                         </Button>
                                     </CardFooter>
                                 </Card>

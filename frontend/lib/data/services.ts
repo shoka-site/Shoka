@@ -9,65 +9,65 @@ import {
 
 export const serviceCategories = [
     {
-        title: "Data Services",
+        title: "navbar.menu.services.data.title",
         icon: Database,
-        description: "Unlock the power of your data with our comprehensive analytics and engineering solutions.",
+        description: "navbar.menu.services.data.desc",
         href: "/services",
         image: "/images/services/service_data_services.png",
         items: [
-            { name: "Data Analyst", href: "/services" },
-            { name: "Data Science", href: "/services" },
-            { name: "Data Entries", href: "/services" },
-            { name: "Data Engineering", href: "/services" },
+            { name: "navbar.menu.services.data.analyst", href: "/services" },
+            { name: "navbar.menu.services.data.science", href: "/services" },
+            { name: "navbar.menu.services.data.entries", href: "/services" },
+            { name: "navbar.menu.services.data.engineering", href: "/services" },
         ]
     },
     {
-        title: "AI Solutions",
+        title: "navbar.menu.services.ai.title",
         icon: Brain,
-        description: "Leverage cutting-edge artificial intelligence to automate and innovate.",
+        description: "navbar.menu.services.ai.desc",
         href: "/services",
         image: "/images/services/service_ai_solutions.png",
         items: [
-            { name: "Chat Bot", href: "/services" },
-            { name: "Computer Vision", href: "/services" },
-            { name: "ML Models", href: "/services" },
-            { name: "Agentic AI", href: "/services" },
+            { name: "navbar.menu.services.ai.chatbot", href: "/services" },
+            { name: "navbar.menu.services.ai.cv", href: "/services" },
+            { name: "navbar.menu.services.ai.ml", href: "/services" },
+            { name: "navbar.menu.services.ai.agentic", href: "/services" },
         ]
     },
     {
-        title: "Full Stack",
+        title: "navbar.menu.services.fullstack.title",
         icon: Layers,
-        description: "End-to-end development for robust web and mobile applications.",
+        description: "navbar.menu.services.fullstack.desc",
         href: "/services",
         image: "/images/services/service_full_stack.png",
         items: [
-            { name: "Web Development", href: "/services" },
-            { name: "App Development", href: "/services" },
-            { name: "Platforms", href: "/services" },
+            { name: "navbar.menu.services.fullstack.web", href: "/services" },
+            { name: "navbar.menu.services.fullstack.app", href: "/services" },
+            { name: "navbar.menu.services.fullstack.platforms", href: "/services" },
         ]
     },
     {
-        title: "Backend",
+        title: "navbar.menu.services.backend.title",
         icon: Server,
-        description: "Scalable and secure backend infrastructure for your digital products.",
+        description: "navbar.menu.services.backend.desc",
         href: "/services",
         image: "/images/services/service_backend.png",
         items: [
-            { name: "Systems", href: "/services" },
-            { name: "IoT", href: "/services" },
-            { name: "Robotics", href: "/services" },
+            { name: "navbar.menu.services.backend.systems", href: "/services" },
+            { name: "navbar.menu.services.backend.iot", href: "/services" },
+            { name: "navbar.menu.services.backend.robotics", href: "/services" },
         ]
     },
     {
-        title: "Cloud",
+        title: "navbar.menu.services.cloud.title",
         icon: Cloud,
-        description: "Modern cloud solutions for storage, management, and scalability.",
+        description: "navbar.menu.services.cloud.desc",
         href: "/services",
         image: "/images/services/service_cloud.png",
         items: [
-            { name: "DBM", href: "/services" },
-            { name: "Storage", href: "/services" },
-            { name: "Data Control", href: "/services" },
+            { name: "navbar.menu.services.cloud.dbm", href: "/services" },
+            { name: "navbar.menu.services.cloud.storage", href: "/services" },
+            { name: "navbar.menu.services.cloud.control", href: "/services" },
         ]
     }
 ];
