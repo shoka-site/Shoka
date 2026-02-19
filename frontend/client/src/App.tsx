@@ -8,8 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import Welcome from "@/pages/welcome";
-import WelcomeV2 from "@/pages/welcome-v2";
+import WelcomeV3 from "@/pages/welcome-v3";
 import Services from "@/pages/services";
 import Contact from "@/pages/contact";
 import Portfolio from "@/pages/portfolio";
@@ -37,8 +36,7 @@ function Router() {
   return (
     <AnimatePresence mode="wait">
       <Switch location={location} key={location}>
-        <Route path="/" component={WelcomeV2} />
-        <Route path="/welcome-v1" component={Welcome} />
+        <Route path="/" component={WelcomeV3} />
         <Route path="/home" component={Home} />
         <Route path="/services" component={Services} />
         <Route path="/portfolio" component={Portfolio} />
@@ -112,7 +110,7 @@ function App() {
   }, [i18n.language]);
 
   // Hide navbar/footer on Welcome and Admin pages
-  const isWelcome = location === "/" || location === "/welcome-v1";
+  const isWelcome = location === "/";
   const isAdmin = location.startsWith("/admin");
 
   return (

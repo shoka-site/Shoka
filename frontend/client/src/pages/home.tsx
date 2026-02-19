@@ -406,7 +406,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── STATS ─────────────────────────────────────────────────── */}
+      {/* ── 1. STATS — instant credibility ────────────────────────── */}
       {!loadingStats && stats.length > 0 && (
         <Section background="default" className="py-16 border-y border-border/30">
           <FadeInSection>
@@ -429,29 +429,17 @@ export default function Home() {
         </Section>
       )}
 
-      {/* ── VALUE PROP ────────────────────────────────────────────── */}
-      <Section background="muted" className="py-12 md:py-16 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
-          }} />
-        </div>
-        <FadeInSection className="text-center max-w-4xl mx-auto relative z-10">
-          <p className="text-xl md:text-2xl text-foreground/80 font-light leading-relaxed">
-            We are a global software engineering firm that takes a uniquely human approach to solving problems.
-            We help our clients build the future by combining deep industry expertise with world-class engineering.
-          </p>
-        </FadeInSection>
-      </Section>
-
-      {/* ── SERVICES ─────────────────────────────────────────────── */}
+      {/* ── 2. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
-        <Section background="default">
+        <Section background="muted">
           <FadeInSection>
             <div className="flex flex-col md:flex-row justify-between items-end mb-16">
               <div className="max-w-xl">
+                <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">What We Do</span>
                 <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Our Expertise</h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  End-to-end digital solutions — strategy, design, engineering, and ongoing support.
+                </p>
               </div>
               <Link href="/services">
                 <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
@@ -472,7 +460,7 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                  className="bg-muted/50 p-8 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-muted/70 transition-all duration-300 group cursor-pointer"
+                  className="bg-background/60 p-8 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer"
                 >
                   <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-12 h-12" />
@@ -492,11 +480,87 @@ export default function Home() {
         </Section>
       )}
 
-      {/* ── TESTIMONIALS ─────────────────────────────────────────── */}
-      {!loadingTestimonials && testimonials.length > 0 && (
+      {/* ── 3. PROJECTS — proof of work ───────────────────────────── */}
+      {!loadingProjects && projects.length > 0 && (
+        <Section background="default">
+          <FadeInSection className="text-center mb-16">
+            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.projects.subtitle")}</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.projects.title")}</h2>
+            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+              Real products, real industries, real impact.
+            </p>
+          </FadeInSection>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+              >
+                <div className="relative h-80 overflow-hidden">
+                  <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <span className="text-accent text-sm font-medium mb-2 block">{project.category}</span>
+                  <h3 className="text-2xl font-display font-bold text-foreground mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+
+
+      {/* ── 4. PROCESS — how easy it is to work with us ───────────── */}
+
+      {!loadingProcess && processSteps.length > 0 && (
         <Section background="muted">
+          <FadeInSection className="text-center mb-16">
+            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.subtitle")}</span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
+            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+              A clear, collaborative process — so you're never left guessing.
+            </p>
+          </FadeInSection>
+          <div className="relative">
+            <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+              {processSteps.map((step, index) => (
+                <motion.div
+                  key={step.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center relative"
+                >
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground font-bold text-xl mb-6 relative z-10">
+                    {step.stepNumber}
+                  </div>
+                  <h3 className="text-xl font-display font-bold mb-3">{step.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      {/* ── 5. TESTIMONIALS — don't take our word for it ──────────── */}
+      {!loadingTestimonials && testimonials.length > 0 && (
+        <Section background="default">
           <FadeInSection className="text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-12">{t("home.trust.title")}</h2>
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">Client Stories</span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">{t("home.trust.title")}</h2>
+            <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
+              Hear directly from the businesses that trusted us with their vision.
+            </p>
           </FadeInSection>
           <div className="max-w-4xl mx-auto">
             <AnimatePresence mode="wait">
@@ -506,7 +570,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="bg-background/50 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-lg border border-border"
+                className="bg-muted/50 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-lg border border-border"
               >
                 {testimonials[currentTestimonial] && (
                   <>
@@ -540,43 +604,15 @@ export default function Home() {
         </Section>
       )}
 
-      {/* ── PROJECTS ─────────────────────────────────────────────── */}
-      {!loadingProjects && projects.length > 0 && (
-        <Section background="default">
-          <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.projects.subtitle")}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.projects.title")}</h2>
-          </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
-              >
-                <div className="relative h-80 overflow-hidden">
-                  <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <span className="text-accent text-sm font-medium mb-2 block">{project.category}</span>
-                  <h3 className="text-2xl font-display font-bold text-foreground mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* ── WHY SHOKA ────────────────────────────────────────────── */}
+      {/* ── 6. PHILOSOPHY — our values & what we stand for ────────── */}
       {!loadingWhyShoka && whyShokaPoints.length > 0 && (
         <Section background="muted">
           <FadeInSection className="text-center mb-16">
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">Our Values</span>
             <h2 className="text-4xl md:text-5xl font-display font-bold">Our Philosophy</h2>
+            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+              The principles that guide every decision we make for our clients.
+            </p>
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {whyShokaPoints.map((point, index) => {
@@ -602,45 +638,17 @@ export default function Home() {
         </Section>
       )}
 
-      {/* ── PROCESS ──────────────────────────────────────────────── */}
-      {!loadingProcess && processSteps.length > 0 && (
-        <Section background="default">
-          <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.subtitle")}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
-          </FadeInSection>
-          <div className="relative">
-            <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20 transform -translate-y-1/2" />
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
-              {processSteps.map((step, index) => (
-                <motion.div
-                  key={step.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center relative"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground font-bold text-xl mb-6 relative z-10">
-                    {step.stepNumber}
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </Section>
-      )}
-
-      {/* ── INSIGHTS ─────────────────────────────────────────────── */}
+      {/* ── 7. INSIGHTS — thought leadership ─────────────────────── */}
       {!loadingInsights && insightTopics.length > 0 && (
-        <Section background="muted">
+        <Section background="default">
           <FadeInSection>
             <div className="flex flex-col md:flex-row justify-between items-end mb-16">
               <div>
                 <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.insights.subtitle")}</span>
                 <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.insights.title")}</h2>
+                <p className="text-muted-foreground text-lg mt-3 max-w-md">
+                  Thinking at the frontier of technology and business in Iraq.
+                </p>
               </div>
             </div>
           </FadeInSection>
@@ -653,7 +661,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="bg-background/50 p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="bg-muted/50 p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <h3 className="text-xl font-display font-bold mb-3 line-clamp-2">{topic.title}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3">{topic.description}</p>
@@ -664,20 +672,126 @@ export default function Home() {
         </Section>
       )}
 
-      {/* ── BOTTOM CTA ───────────────────────────────────────────── */}
-      <Section background="default">
+      {/* ── 8. RESULTS — outcomes delivered to clients ────────────── */}
+      <section className="relative overflow-hidden py-24 md:py-32" style={{ backgroundColor: "#0f0a04" }}>
+        {/* Grain overlay */}
+        <div className="absolute inset-0 opacity-[0.15] pointer-events-none"
+          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }}
+        />
+        {/* Gold top rule */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
+
+        <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+          <FadeInSection>
+            <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
+              Measurable Impact
+            </p>
+          </FadeInSection>
+          <FadeInSection delay={0.06}>
+            <h2
+              className="text-center font-display font-black text-white leading-[1.0] mb-6"
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+            >
+              Results We've Delivered
+            </h2>
+          </FadeInSection>
+          <FadeInSection delay={0.12}>
+            <p className="text-center text-lg max-w-2xl mx-auto mb-20 leading-relaxed" style={{ color: "rgba(247,243,235,0.5)" }}>
+              Real numbers from real projects. Not projections — actual outcomes our clients measured after going live with Shoka-built systems.
+            </p>
+          </FadeInSection>
+
+          {/* Results grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(194,164,92,0.12)" }}>
+            {[
+              { value: "3×", label: "Faster Time-to-Market", sub: "vs. previous in-house estimates" },
+              { value: "62%", label: "Reduction in Operational Cost", sub: "banking & finance clients" },
+              { value: "99.97%", label: "Platform Uptime", sub: "across production systems" },
+              { value: "4.9 ★", label: "Average Client Rating", sub: "post-project satisfaction score" },
+              { value: "200%+", label: "Revenue Growth", sub: "e-commerce clients after relaunch" },
+              { value: "40%", label: "Faster Onboarding", sub: "via custom HR & ERP portals" },
+              { value: "500+", label: "Projects Delivered", sub: "on time and within budget" },
+              { value: "<24h", label: "Bug Resolution SLA", sub: "average for critical issues" },
+            ].map((result, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: i * 0.07, duration: 0.5, ease: "easeOut" }}
+                className="group flex flex-col justify-between p-8 md:p-10 transition-all duration-300"
+                style={{ backgroundColor: "rgba(15,10,4,1)" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(194,164,92,0.06)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(15,10,4,1)"; }}
+              >
+                <div
+                  className="font-display font-black leading-none mb-3 transition-colors duration-300"
+                  style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", color: "#C2A45C" }}
+                >
+                  {result.value}
+                </div>
+                <div>
+                  <div className="text-white font-semibold text-base md:text-lg leading-snug mb-1">
+                    {result.label}
+                  </div>
+                  <div className="text-xs" style={{ color: "rgba(247,243,235,0.38)" }}>
+                    {result.sub}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Footnote */}
+          <FadeInSection delay={0.2}>
+            <p className="text-center text-xs mt-10" style={{ color: "rgba(247,243,235,0.25)" }}>
+              Figures based on client-reported data and post-launch analytics from 2022–2025 engagements.
+            </p>
+          </FadeInSection>
+        </div>
+
+        {/* Gold bottom rule */}
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
+      </section>
+
+      {/* ── 9. CTA — close the deal ───────────────────────────────── */}
+      <Section background="muted">
         <FadeInSection>
-          <div className="text-center bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-12 md:p-20 rounded-3xl">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Ready to Innovate?</h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">Let's discuss how we can help you build your digital future.</p>
-            <Link href="/contact">
-              <Button size="lg" className="rounded-full text-lg h-14 px-8 shadow-lg shadow-primary/30">
-                Contact Us
-              </Button>
-            </Link>
+          <div className="text-center bg-foreground text-background p-12 md:p-20 rounded-3xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-grain opacity-20 pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
+            <div className="relative z-10">
+              <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4">Start Today</p>
+              <h2 className="text-3xl md:text-5xl font-display font-black mb-6">Ready to Innovate?</h2>
+              <p className="text-xl mb-10 max-w-2xl mx-auto" style={{ color: "rgba(247,243,235,0.6)" }}>
+                Let's discuss how we can help you build your digital future — free first consultation, no commitment required.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="rounded-full text-lg h-14 px-10 font-semibold border-0"
+                    style={{ backgroundColor: "#C2A45C", color: "#1a1005" }}
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
+                <Link href="/services">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full text-lg h-14 px-10 font-semibold bg-transparent text-white/80 hover:text-white"
+                    style={{ borderColor: "rgba(255,255,255,0.2)" }}
+                  >
+                    Explore Services
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </FadeInSection>
       </Section>
+
 
     </div>
   );
