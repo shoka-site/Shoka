@@ -467,5 +467,55 @@ export async function registerRoutes(
     }
   });
 
+  // Platform Updates - Public
+  app.get("/api/content/platform-updates", async (req: Request, res: Response) => {
+    try {
+      const requestedLang = req.query.lang as string || 'en';
+      const lang = requestedLang.split('-')[0] as 'en' | 'ar';
+      const published = req.query.published !== 'false';
+      const updates = await storage.getPlatformUpdates(published);
+      const transformed = transformForLanguage(updates, lang);
+      res.json(transformed);
+    } catch (error) {
+      console.error('Error fetching platform updates:', error);
+      res.status(500).json({ error: 'Failed to fetch platform updates' });
+    }
+  });
+
+  // Platform Updates - Admin CRUD
+  app.post("/api/admin/platform-updates", async (req: Request, res: Response) => {
+    try {
+      const update = await storage.createPlatformUpdate(req.body);
+      res.status(201).json(update);
+    } catch (error) {
+      console.error('Error creating platform update:', error);
+      res.status(500).json({ error: 'Failed to create platform update' });
+    }
+  });
+
+  app.put("/api/admin/platform-updates/:id", async (req: Request, res: Response) => {
+    try {
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      const updated = await storage.updatePlatformUpdate(id, req.body);
+      if (!updated) return res.status(404).json({ error: 'Platform update not found' });
+      res.json(updated);
+    } catch (error) {
+      console.error('Error updating platform update:', error);
+      res.status(500).json({ error: 'Failed to update platform update' });
+    }
+  });
+
+  app.delete("/api/admin/platform-updates/:id", async (req: Request, res: Response) => {
+    try {
+      const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+      const deleted = await storage.deletePlatformUpdate(id);
+      if (!deleted) return res.status(404).json({ error: 'Platform update not found' });
+      res.status(204).send();
+    } catch (error) {
+      console.error('Error deleting platform update:', error);
+      res.status(500).json({ error: 'Failed to delete platform update' });
+    }
+  });
+
   return httpServer;
 }

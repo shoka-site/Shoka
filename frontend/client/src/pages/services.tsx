@@ -1,54 +1,15 @@
+
 import Section from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { ArrowRight, Code, Server, Shield, Smartphone, Globe, BarChart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-
-
+import { serviceCategories } from "@/lib/data/services";
 
 export default function Services() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
-
-  const serviceList = [
-    {
-      icon: <Globe className="w-10 h-10" />,
-      title: t('services.list.web.title'),
-      description: t('services.list.web.desc'),
-      tags: ["React", "Next.js", "UI/UX"]
-    },
-    {
-      icon: <Smartphone className="w-10 h-10" />,
-      title: t('services.list.mobile.title'),
-      description: t('services.list.mobile.desc'),
-      tags: ["React Native", "iOS", "Android"]
-    },
-    {
-      icon: <Server className="w-10 h-10" />,
-      title: t('services.list.backend.title'),
-      description: t('services.list.backend.desc'),
-      tags: ["Node.js", "Python", "Microservices"]
-    },
-    {
-      icon: <Shield className="w-10 h-10" />,
-      title: t('services.list.security.title'),
-      description: t('services.list.security.desc'),
-      tags: ["Pen Testing", "Compliance", "Audits"]
-    },
-    {
-      icon: <BarChart className="w-10 h-10" />,
-      title: t('services.list.data.title'),
-      description: t('services.list.data.desc'),
-      tags: ["Big Data", "Visualization", "BI"]
-    },
-    {
-      icon: <Code className="w-10 h-10" />,
-      title: t('services.list.api.title'),
-      description: t('services.list.api.desc'),
-      tags: ["REST", "GraphQL", "Webhooks"]
-    }
-  ];
 
   return (
     <div className="pt-24 min-h-screen">
@@ -67,36 +28,52 @@ export default function Services() {
 
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {serviceList.map((service, index) => (
+          {serviceCategories.map((category, index) => (
             <motion.div
-              key={index}
+              key={category.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300">
-                <CardHeader>
-                  <div className="text-primary mb-4 p-3 bg-primary/5 w-fit rounded-xl">
-                    {service.icon}
+              <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
+                <div className="h-48 overflow-hidden relative">
+                  {category.image ? (
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                      <category.icon className="w-16 h-16 text-primary/40" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                  <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
+                    <category.icon className="w-6 h-6" />
                   </div>
-                  <CardTitle className="text-2xl font-display">{service.title}</CardTitle>
+                </div>
+                <CardHeader className="pt-2"> {/* Reduced padding top since icon is in image area */}
+                  <CardTitle className="text-2xl font-display mt-2">{category.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-grow">
                   <CardDescription className="text-base text-muted-foreground mb-6">
-                    {service.description}
+
+                    {category.description}
                   </CardDescription>
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.map(tag => (
-                      <span key={tag} className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary/50 text-secondary-foreground">
-                        {tag}
-                      </span>
+                  <ul className="grid grid-cols-1 gap-2">
+                    {category.items.map(item => (
+                      <li key={item.name} className="flex items-center text-sm text-foreground/80">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/60 mr-2" />
+                        {item.name}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group">
-                    {t('services.learn_more')} <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} />
+                  <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group mt-auto">
+                    {t('services.learn_more')} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
                   </Button>
                 </CardFooter>
               </Card>

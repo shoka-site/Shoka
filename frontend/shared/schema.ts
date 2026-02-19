@@ -80,6 +80,7 @@ export const insertProjectSchema = z.object({
   descriptionAr: z.string(),
   featured: z.boolean().default(false),
   published: z.boolean().default(true),
+  status: z.enum(["past", "current", "future"]).default("past"),
 });
 
 export type InsertProject = z.infer<typeof insertProjectSchema>;
@@ -158,6 +159,25 @@ export const insertInsightTopicSchema = z.object({
 
 export type InsertInsightTopic = z.infer<typeof insertInsightTopicSchema>;
 export type InsightTopic = InsertInsightTopic & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// ========== PLATFORM UPDATES ==========
+export const insertPlatformUpdateSchema = z.object({
+  order: z.coerce.number().default(0),
+  type: z.enum(["news", "achievement", "event", "new"]).default("news"),
+  titleEn: z.string().min(1, "English Title is required"),
+  titleAr: z.string().min(1, "Arabic Title is required"),
+  summaryEn: z.string(),
+  summaryAr: z.string(),
+  date: z.coerce.date().default(() => new Date()),
+  published: z.boolean().default(true),
+});
+
+export type InsertPlatformUpdate = z.infer<typeof insertPlatformUpdateSchema>;
+export type PlatformUpdate = InsertPlatformUpdate & {
   id: string;
   createdAt: Date;
   updatedAt: Date;

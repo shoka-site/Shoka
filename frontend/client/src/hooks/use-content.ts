@@ -155,3 +155,22 @@ export function useInsightTopics() {
         queryFn: () => fetchContent<InsightTopic[]>('insights', language),
     });
 }
+
+export interface PlatformUpdate {
+    id: string;
+    order: number;
+    type: 'news' | 'achievement' | 'event' | 'new';
+    title: string;
+    summary: string;
+    date: string;
+    published: boolean;
+}
+
+export function usePlatformUpdates() {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<PlatformUpdate[]>({
+        queryKey: ['platformUpdates', language],
+        queryFn: () => fetchContent<PlatformUpdate[]>('platform-updates', language),
+    });
+}

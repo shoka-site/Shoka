@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type HeroSlide, type Stat, type Service, type Project, type Testimonial, type WhyShokaPoint, type ProcessStep, type InsightTopic } from "@shared/schema";
+import { type User, type InsertUser, type HeroSlide, type Stat, type Service, type Project, type Testimonial, type WhyShokaPoint, type ProcessStep, type InsightTopic, type PlatformUpdate } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -64,6 +64,13 @@ export interface IStorage {
   createInsightTopic(topic: Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>): Promise<InsightTopic>;
   updateInsightTopic(id: string, topic: Partial<Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>>): Promise<InsightTopic | undefined>;
   deleteInsightTopic(id: string): Promise<boolean>;
+
+  // Platform Updates
+  getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]>;
+  getPlatformUpdate(id: string): Promise<PlatformUpdate | undefined>;
+  createPlatformUpdate(update: Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>): Promise<PlatformUpdate>;
+  updatePlatformUpdate(id: string, update: Partial<Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>>): Promise<PlatformUpdate | undefined>;
+  deletePlatformUpdate(id: string): Promise<boolean>;
 }
 
 export class PrismaStorage implements IStorage {
@@ -335,6 +342,39 @@ export class PrismaStorage implements IStorage {
   async deleteInsightTopic(id: string): Promise<boolean> {
     try {
       await prisma.insightTopic.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Platform Updates
+  async getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]> {
+    return await prisma.platformUpdate.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { date: 'desc' },
+    }) as PlatformUpdate[];
+  }
+
+  async getPlatformUpdate(id: string): Promise<PlatformUpdate | undefined> {
+    return await prisma.platformUpdate.findUnique({ where: { id } }) as PlatformUpdate | undefined || undefined;
+  }
+
+  async createPlatformUpdate(update: Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>): Promise<PlatformUpdate> {
+    return await prisma.platformUpdate.create({ data: update }) as PlatformUpdate;
+  }
+
+  async updatePlatformUpdate(id: string, updates: Partial<Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>>): Promise<PlatformUpdate | undefined> {
+    try {
+      return await prisma.platformUpdate.update({ where: { id }, data: updates }) as PlatformUpdate;
+    } catch (e) {
+      return undefined;
+    }
+  }
+
+  async deletePlatformUpdate(id: string): Promise<boolean> {
+    try {
+      await prisma.platformUpdate.delete({ where: { id } });
       return true;
     } catch (e) {
       return false;

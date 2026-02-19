@@ -73,6 +73,7 @@ model Project {
   descriptionAr String   @map("description_ar")
   featured      Boolean  @default(false)
   published     Boolean  @default(true)
+  status        String   @default("past")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
@@ -139,4 +140,20 @@ model InsightTopic {
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("insight_topics")
+}
+
+model PlatformUpdate {
+  id         String   @id @default(uuid())
+  order      Int      @default(0)
+  type       String   @default("news") // news | achievement | event | new
+  titleEn    String   @map("title_en")
+  titleAr    String   @map("title_ar")
+  summaryEn  String   @map("summary_en")
+  summaryAr  String   @map("summary_ar")
+  date       DateTime @default(now())
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("platform_updates")
 }

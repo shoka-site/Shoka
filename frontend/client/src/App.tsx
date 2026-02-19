@@ -8,14 +8,14 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import Welcome from "@/pages/welcome";
-import WelcomeV2 from "@/pages/welcome-v2";
+import WelcomeV3 from "@/pages/welcome-v3";
 import Services from "@/pages/services";
 import Contact from "@/pages/contact";
 import Portfolio from "@/pages/portfolio";
 import About from "@/pages/about";
 import Industries from "@/pages/industries";
 import Solutions from "@/pages/solutions";
+import Projects from "@/pages/projects";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
 import AdminHeroSlides from "@/pages/admin/hero-slides";
@@ -36,11 +36,11 @@ function Router() {
   return (
     <AnimatePresence mode="wait">
       <Switch location={location} key={location}>
-        <Route path="/" component={WelcomeV2} />
-        <Route path="/welcome-v1" component={Welcome} />
+        <Route path="/" component={WelcomeV3} />
         <Route path="/home" component={Home} />
         <Route path="/services" component={Services} />
         <Route path="/portfolio" component={Portfolio} />
+        <Route path="/projects" component={Projects} />
         <Route path="/industries" component={Industries} />
         <Route path="/solutions" component={Solutions} />
         <Route path="/about" component={About} />
@@ -110,7 +110,7 @@ function App() {
   }, [i18n.language]);
 
   // Hide navbar/footer on Welcome and Admin pages
-  const isWelcome = location === "/" || location === "/welcome-v1";
+  const isWelcome = location === "/";
   const isAdmin = location.startsWith("/admin");
 
   return (

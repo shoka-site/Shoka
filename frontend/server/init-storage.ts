@@ -117,6 +117,7 @@ export async function initializeStorage() {
                 descriptionAr: 'رقمنة 50 عامًا من السجلات التاريخية في قاعدة بيانات سحابية آمنة وقابلة للبحث.',
                 featured: true,
                 published: true,
+                status: 'past',
             });
 
             await storage.createProject({
@@ -130,6 +131,35 @@ export async function initializeStorage() {
                 descriptionAr: 'حل مصرفي آمن وقابل للتوسع مع معاملات في الوقت الفعلي.',
                 featured: true,
                 published: true,
+                status: 'past',
+            });
+
+            await storage.createProject({
+                order: 3,
+                imageUrl: '/src/assets/project-1.png',
+                categoryEn: 'Smart City',
+                categoryAr: 'المدينة الذكية',
+                titleEn: 'IoT Traffic Management',
+                titleAr: 'إدارة حركة المرور عبر إنترنت الأشياء',
+                descriptionEn: 'Developing a real-time traffic monitoring system using IoT sensors and AI.',
+                descriptionAr: 'تطوير نظام مراقبة حركة المرور في الوقت الفعلي باستخدام مستشعرات إنترنت الأشياء والذكاء الاصطناعي.',
+                featured: false,
+                published: true,
+                status: 'current',
+            });
+
+            await storage.createProject({
+                order: 4,
+                imageUrl: '/src/assets/project-1.png',
+                categoryEn: 'Blockchain',
+                categoryAr: 'بلوكشين',
+                titleEn: 'Supply Chain Transparency',
+                titleAr: 'شفافية سلسلة التوريد',
+                descriptionEn: 'Implementing a blockchain-based platform for end-to-end supply chain visibility.',
+                descriptionAr: 'تنفيذ منصة قائمة على البلوكشين لرؤية سلسلة التوريد من البداية إلى النهاية.',
+                featured: false,
+                published: true,
+                status: 'future',
             });
         }
 
