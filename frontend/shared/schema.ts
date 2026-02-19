@@ -1,184 +1,210 @@
 import { z } from "zod";
 
-// ========== USERS TABLE ==========
-export const insertUserSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
+// User schema
+export const userSchema = z.object({
+    id: z.string().uuid(),
+    username: z.string().min(1),
+    password: z.string().min(1),
 });
-
+export type User = z.infer<typeof userSchema>;
+export const insertUserSchema = userSchema.omit({ id: true });
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = {
-  id: string;
-  username: string;
-  password: string;
-};
 
-// ========== HERO SLIDES ==========
-export const insertHeroSlideSchema = z.object({
-  order: z.coerce.number(), // Coerce in case it comes as string from form
-  imageUrl: z.string().min(1, "Image URL is required"),
-  badgeEn: z.string(),
-  badgeAr: z.string(),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string().min(1, "English Description is required"),
-  descriptionAr: z.string().min(1, "Arabic Description is required"),
-  published: z.boolean().default(true),
+// HeroSlide schema
+export const heroSlideSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    imageUrl: z.string(),
+    badgeEn: z.string(),
+    badgeAr: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type HeroSlide = z.infer<typeof heroSlideSchema>;
 
-export type InsertHeroSlide = z.infer<typeof insertHeroSlideSchema>;
-export type HeroSlide = InsertHeroSlide & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== STATS ==========
-export const insertStatSchema = z.object({
-  key: z.string().min(1, "Key is required"),
-  numberEn: z.string().min(1, "English Number is required"),
-  numberAr: z.string().min(1, "Arabic Number is required"),
-  labelEn: z.string().min(1, "English Label is required"),
-  labelAr: z.string().min(1, "Arabic Label is required"),
-  order: z.coerce.number(),
+// Stat schema
+export const statSchema = z.object({
+    id: z.string().uuid(),
+    key: z.string(),
+    numberEn: z.string(),
+    numberAr: z.string(),
+    labelEn: z.string(),
+    labelAr: z.string(),
+    order: z.number(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type Stat = z.infer<typeof statSchema>;
 
-export type InsertStat = z.infer<typeof insertStatSchema>;
-export type Stat = InsertStat & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== SERVICES ==========
-export const insertServiceSchema = z.object({
-  order: z.coerce.number(),
-  iconName: z.string().min(1, "Icon Name is required"),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string(),
-  descriptionAr: z.string(),
-  published: z.boolean().default(true),
+// Service schema
+export const serviceSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    iconName: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type Service = z.infer<typeof serviceSchema>;
 
-export type InsertService = z.infer<typeof insertServiceSchema>;
-export type Service = InsertService & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== PROJECTS ==========
-export const insertProjectSchema = z.object({
-  order: z.coerce.number(),
-  imageUrl: z.string().min(1, "Image URL is required"),
-  categoryEn: z.string().min(1, "English Category is required"),
-  categoryAr: z.string().min(1, "Arabic Category is required"),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string(),
-  descriptionAr: z.string(),
-  featured: z.boolean().default(false),
-  published: z.boolean().default(true),
-  status: z.enum(["past", "current", "future"]).default("past"),
+// Project schema
+export const projectSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    imageUrl: z.string(),
+    categoryEn: z.string(),
+    categoryAr: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    featured: z.boolean().default(false),
+    published: z.boolean().default(true),
+    status: z.string().default("past"),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type Project = z.infer<typeof projectSchema>;
 
-export type InsertProject = z.infer<typeof insertProjectSchema>;
-export type Project = InsertProject & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== TESTIMONIALS ==========
-export const insertTestimonialSchema = z.object({
-  order: z.coerce.number(),
-  quoteEn: z.string().min(1, "English Quote is required"),
-  quoteAr: z.string().min(1, "Arabic Quote is required"),
-  authorEn: z.string().min(1, "English Author Name is required"),
-  authorAr: z.string().min(1, "Arabic Author Name is required"),
-  roleEn: z.string().min(1, "English Role is required"),
-  roleAr: z.string().min(1, "Arabic Role is required"),
-  rating: z.coerce.number().min(1).max(5).default(5),
-  published: z.boolean().default(true),
+// Testimonial schema
+export const testimonialSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    quoteEn: z.string(),
+    quoteAr: z.string(),
+    authorEn: z.string(),
+    authorAr: z.string(),
+    roleEn: z.string(),
+    roleAr: z.string(),
+    rating: z.number().default(5),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type Testimonial = z.infer<typeof testimonialSchema>;
 
-export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
-export type Testimonial = InsertTestimonial & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== WHY SHOKA POINTS ==========
-export const insertWhyShokaPointSchema = z.object({
-  order: z.coerce.number(),
-  iconName: z.string().min(1, "Icon Name is required"),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string(),
-  descriptionAr: z.string(),
-  published: z.boolean().default(true),
+// WhyShokaPoint schema
+export const whyShokaPointSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    iconName: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type WhyShokaPoint = z.infer<typeof whyShokaPointSchema>;
 
-export type InsertWhyShokaPoint = z.infer<typeof insertWhyShokaPointSchema>;
-export type WhyShokaPoint = InsertWhyShokaPoint & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== PROCESS STEPS ==========
-export const insertProcessStepSchema = z.object({
-  order: z.coerce.number(),
-  stepNumber: z.string().min(1, "Step Number is required"),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string(),
-  descriptionAr: z.string(),
+// ProcessStep schema
+export const processStepSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    stepNumber: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type ProcessStep = z.infer<typeof processStepSchema>;
 
-export type InsertProcessStep = z.infer<typeof insertProcessStepSchema>;
-export type ProcessStep = InsertProcessStep & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== INSIGHT TOPICS ==========
-export const insertInsightTopicSchema = z.object({
-  order: z.coerce.number(),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  descriptionEn: z.string(),
-  descriptionAr: z.string(),
-  readTimeEn: z.string().min(1, "English Read Time is required"),
-  readTimeAr: z.string().min(1, "Arabic Read Time is required"),
-  published: z.boolean().default(true),
+// InsightTopic schema
+export const insightTopicSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    readTimeEn: z.string(),
+    readTimeAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type InsightTopic = z.infer<typeof insightTopicSchema>;
 
-export type InsertInsightTopic = z.infer<typeof insertInsightTopicSchema>;
-export type InsightTopic = InsertInsightTopic & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-// ========== PLATFORM UPDATES ==========
-export const insertPlatformUpdateSchema = z.object({
-  order: z.coerce.number().default(0),
-  type: z.enum(["news", "achievement", "event", "new"]).default("news"),
-  titleEn: z.string().min(1, "English Title is required"),
-  titleAr: z.string().min(1, "Arabic Title is required"),
-  summaryEn: z.string(),
-  summaryAr: z.string(),
-  date: z.coerce.date().default(() => new Date()),
-  published: z.boolean().default(true),
+// PlatformUpdate schema
+export const platformUpdateSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number().default(0),
+    type: z.enum(["news", "achievement", "event", "new"]).default("news"),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    summaryEn: z.string(),
+    summaryAr: z.string(),
+    date: z.date(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
 });
+export type PlatformUpdate = z.infer<typeof platformUpdateSchema>;
 
-export type InsertPlatformUpdate = z.infer<typeof insertPlatformUpdateSchema>;
-export type PlatformUpdate = InsertPlatformUpdate & {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+// Industry schema
+export const industrySchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    iconName: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
+export type Industry = z.infer<typeof industrySchema>;
+
+// Solution schema
+export const solutionSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    iconName: z.string(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    descriptionEn: z.string(),
+    descriptionAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
+export type Solution = z.infer<typeof solutionSchema>;
+
+// Consultant schema
+export const consultantSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    nameEn: z.string(),
+    nameAr: z.string(),
+    roleEn: z.string(),
+    roleAr: z.string(),
+    bioEn: z.string(),
+    bioAr: z.string(),
+    imageUrl: z.string(),
+    socialButtons: z.string(), // JSON string
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
+export type Consultant = z.infer<typeof consultantSchema>;
+
+// Admin schema
+export const adminSchema = z.object({
+    id: z.string().uuid(),
+    username: z.string().min(1),
+    password: z.string().min(1),
+});
+export type Admin = z.infer<typeof adminSchema>;
