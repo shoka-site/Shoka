@@ -7,16 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Edit, Trash2 } from "lucide-react";
-import type { HeroSlide } from "@/hooks/use-content";
+import type { Solution } from "@/hooks/use-content";
 
-export default function AdminHeroSlides() {
+export default function AdminSolutions() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({
-        imageUrl: "",
-        badgeEn: "",
-        badgeAr: "",
+        iconName: "",
         titleEn: "",
         titleAr: "",
         descriptionEn: "",
@@ -25,19 +23,17 @@ export default function AdminHeroSlides() {
         published: true,
     });
 
-    // Fetch all hero slides
-    const { data: slides = [], isLoading } = useQuery<HeroSlide[]>({
-        queryKey: ["admin-hero-slides"],
+    const { data: solutions = [], isLoading } = useQuery<Solution[]>({
+        queryKey: ["admin-solutions"],
         queryFn: async () => {
-            const res = await fetch("/api/content/hero-slides?lang=en");
+            const res = await fetch("/api/content/solutions?lang=en");
             return res.json();
         },
     });
 
-    // Create mutation
     const createMutation = useMutation({
         mutationFn: async (data: any) => {
-            const res = await fetch("/api/admin/hero-slides", {
+            const res = await fetch("/api/admin/solutions", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -45,16 +41,15 @@ export default function AdminHeroSlides() {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-hero-slides"] });
-            queryClient.invalidateQueries({ queryKey: ["heroSlides"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-solutions"] });
+            queryClient.invalidateQueries({ queryKey: ["solutions"] });
             resetForm();
         },
     });
 
-    // Update mutation
     const updateMutation = useMutation({
         mutationFn: async ({ id, data }: { id: string; data: any }) => {
-            const res = await fetch(`/api/admin/hero-slides/${id}`, {
+            const res = await fetch(`/api/admin/solutions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -62,28 +57,25 @@ export default function AdminHeroSlides() {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-hero-slides"] });
-            queryClient.invalidateQueries({ queryKey: ["heroSlides"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-solutions"] });
+            queryClient.invalidateQueries({ queryKey: ["solutions"] });
             resetForm();
         },
     });
 
-    // Delete mutation
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
-            await fetch(`/api/admin/hero-slides/${id}`, { method: "DELETE" });
+            await fetch(`/api/admin/solutions/${id}`, { method: "DELETE" });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-hero-slides"] });
-            queryClient.invalidateQueries({ queryKey: ["heroSlides"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-solutions"] });
+            queryClient.invalidateQueries({ queryKey: ["solutions"] });
         },
     });
 
     const resetForm = () => {
         setFormData({
-            imageUrl: "",
-            badgeEn: "",
-            badgeAr: "",
+            iconName: "",
             titleEn: "",
             titleAr: "",
             descriptionEn: "",
@@ -104,19 +96,17 @@ export default function AdminHeroSlides() {
         }
     };
 
-    const handleEdit = (slide: any) => {
+    const handleEdit = (solution: any) => {
         setFormData({
-            imageUrl: slide.imageUrl,
-            badgeEn: slide.badgeEn || slide.badge,
-            badgeAr: slide.badgeAr || slide.badge,
-            titleEn: slide.titleEn || slide.title,
-            titleAr: slide.titleAr || slide.title,
-            descriptionEn: slide.descriptionEn || slide.description,
-            descriptionAr: slide.descriptionAr || slide.description,
-            order: slide.order,
-            published: slide.published,
+            iconName: solution.iconName,
+            titleEn: solution.titleEn || solution.title,
+            titleAr: solution.titleAr || solution.title,
+            descriptionEn: solution.descriptionEn || solution.description,
+            descriptionAr: solution.descriptionAr || solution.description,
+            order: solution.order,
+            published: solution.published,
         });
-        setEditingId(slide.id);
+        setEditingId(solution.id);
         setIsEditing(true);
     };
 
@@ -126,7 +116,7 @@ export default function AdminHeroSlides() {
         <AdminLayout>
             <div className="max-w-6xl">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Hero Slides</h1>
+                    <h1 className="text-3xl font-bold">Solutions</h1>
                     <Button onClick={() => setIsEditing(!isEditing)}>
                         <Plus className="w-4 h-4 mr-2" />
                         {isEditing ? "Cancel" : "Add New"}
@@ -137,9 +127,9 @@ export default function AdminHeroSlides() {
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <Input
-                                placeholder="Image URL"
-                                value={formData.imageUrl}
-                                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                                placeholder="Icon Name (e.g., Target, Shield, Zap)"
+                                value={formData.iconName}
+                                onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
                                 required
                             />
                             <Input
@@ -147,21 +137,6 @@ export default function AdminHeroSlides() {
                                 placeholder="Order"
                                 value={formData.order}
                                 onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                                required
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                placeholder="Badge (English)"
-                                value={formData.badgeEn}
-                                onChange={(e) => setFormData({ ...formData, badgeEn: e.target.value })}
-                                required
-                            />
-                            <Input
-                                placeholder="Badge (Arabic)"
-                                value={formData.badgeAr}
-                                onChange={(e) => setFormData({ ...formData, badgeAr: e.target.value })}
                                 required
                             />
                         </div>
@@ -208,34 +183,33 @@ export default function AdminHeroSlides() {
                         </div>
 
                         <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
-                            {editingId ? "Update" : "Create"} Slide
+                            {editingId ? "Update" : "Create"} Solution
                         </Button>
                     </form>
                 )}
 
                 <div className="space-y-4">
-                    {slides.map((slide: any) => (
-                        <div key={slide.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
+                    {solutions.map((solution: any) => (
+                        <div key={solution.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-sm text-muted-foreground">Order: {slide.order}</span>
-                                    {slide.published && (
+                                    <span className="text-sm text-muted-foreground">Order: {solution.order}</span>
+                                    {solution.published && (
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
+                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {solution.iconName}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{slide.title || slide.titleEn}</h3>
-                                <p className="text-sm text-muted-foreground mb-2">{slide.badge || slide.badgeEn}</p>
-                                <p className="text-sm">{slide.description || slide.descriptionEn}</p>
-                                <p className="text-xs text-muted-foreground mt-2">Image: {slide.imageUrl}</p>
+                                <h3 className="text-xl font-bold mb-2">{solution.title || solution.titleEn}</h3>
+                                <p className="text-sm">{solution.description || solution.descriptionEn}</p>
                             </div>
                             <div className="flex gap-2">
-                                <Button variant="outline" size="sm" onClick={() => handleEdit(slide)}>
+                                <Button variant="outline" size="sm" onClick={() => handleEdit(solution)}>
                                     <Edit className="w-4 h-4" />
                                 </Button>
                                 <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() => deleteMutation.mutate(slide.id)}
+                                    onClick={() => deleteMutation.mutate(solution.id)}
                                     disabled={deleteMutation.isPending}
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -243,6 +217,11 @@ export default function AdminHeroSlides() {
                             </div>
                         </div>
                     ))}
+                    {solutions.length === 0 && (
+                        <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
+                            No solutions found. Click "Add New" to create one.
+                        </div>
+                    )}
                 </div>
             </div>
         </AdminLayout>

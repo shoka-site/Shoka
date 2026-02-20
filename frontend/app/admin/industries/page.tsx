@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Edit, Trash2 } from "lucide-react";
-import type { WhyShokaPoint } from "@/hooks/use-content";
+import type { Industry } from "@/hooks/use-content";
 
-export default function AdminWhyShoka() {
+export default function AdminIndustries() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -23,17 +23,17 @@ export default function AdminWhyShoka() {
         published: true,
     });
 
-    const { data: points = [], isLoading } = useQuery<WhyShokaPoint[]>({
-        queryKey: ["admin-why-shoka"],
+    const { data: industries = [], isLoading } = useQuery<Industry[]>({
+        queryKey: ["admin-industries"],
         queryFn: async () => {
-            const res = await fetch("/api/content/why-shoka?lang=en");
+            const res = await fetch("/api/content/industries?lang=en");
             return res.json();
         },
     });
 
     const createMutation = useMutation({
         mutationFn: async (data: any) => {
-            const res = await fetch("/api/admin/why-shoka", {
+            const res = await fetch("/api/admin/industries", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -41,15 +41,15 @@ export default function AdminWhyShoka() {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-why-shoka"] });
-            queryClient.invalidateQueries({ queryKey: ["whyShokaPoints"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-industries"] });
+            queryClient.invalidateQueries({ queryKey: ["industries"] });
             resetForm();
         },
     });
 
     const updateMutation = useMutation({
         mutationFn: async ({ id, data }: { id: string; data: any }) => {
-            const res = await fetch(`/api/admin/why-shoka/${id}`, {
+            const res = await fetch(`/api/admin/industries/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -57,19 +57,19 @@ export default function AdminWhyShoka() {
             return res.json();
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-why-shoka"] });
-            queryClient.invalidateQueries({ queryKey: ["whyShokaPoints"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-industries"] });
+            queryClient.invalidateQueries({ queryKey: ["industries"] });
             resetForm();
         },
     });
 
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
-            await fetch(`/api/admin/why-shoka/${id}`, { method: "DELETE" });
+            await fetch(`/api/admin/industries/${id}`, { method: "DELETE" });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-why-shoka"] });
-            queryClient.invalidateQueries({ queryKey: ["whyShokaPoints"] });
+            queryClient.invalidateQueries({ queryKey: ["admin-industries"] });
+            queryClient.invalidateQueries({ queryKey: ["industries"] });
         },
     });
 
@@ -96,17 +96,17 @@ export default function AdminWhyShoka() {
         }
     };
 
-    const handleEdit = (point: any) => {
+    const handleEdit = (industry: any) => {
         setFormData({
-            iconName: point.iconName,
-            titleEn: point.titleEn || point.title,
-            titleAr: point.titleAr || point.title,
-            descriptionEn: point.descriptionEn || point.description,
-            descriptionAr: point.descriptionAr || point.description,
-            order: point.order,
-            published: point.published,
+            iconName: industry.iconName,
+            titleEn: industry.titleEn || industry.title,
+            titleAr: industry.titleAr || industry.title,
+            descriptionEn: industry.descriptionEn || industry.description,
+            descriptionAr: industry.descriptionAr || industry.description,
+            order: industry.order,
+            published: industry.published,
         });
-        setEditingId(point.id);
+        setEditingId(industry.id);
         setIsEditing(true);
     };
 
@@ -116,7 +116,7 @@ export default function AdminWhyShoka() {
         <AdminLayout>
             <div className="max-w-6xl">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Why Shoka Points</h1>
+                    <h1 className="text-3xl font-bold">Industries</h1>
                     <Button onClick={() => setIsEditing(!isEditing)}>
                         <Plus className="w-4 h-4 mr-2" />
                         {isEditing ? "Cancel" : "Add New"}
@@ -127,7 +127,7 @@ export default function AdminWhyShoka() {
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <Input
-                                placeholder="Icon Name (e.g., Target, Zap, Layers)"
+                                placeholder="Icon Name (e.g., Code, Database)"
                                 value={formData.iconName}
                                 onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
                                 required
@@ -183,33 +183,33 @@ export default function AdminWhyShoka() {
                         </div>
 
                         <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
-                            {editingId ? "Update" : "Create"} Point
+                            {editingId ? "Update" : "Create"} Industry
                         </Button>
                     </form>
                 )}
 
                 <div className="space-y-4">
-                    {points.map((point: any) => (
-                        <div key={point.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
+                    {industries.map((industry: any) => (
+                        <div key={industry.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-sm text-muted-foreground">Order: {point.order}</span>
-                                    {point.published && (
+                                    <span className="text-sm text-muted-foreground">Order: {industry.order}</span>
+                                    {industry.published && (
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
-                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {point.iconName}</span>
+                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {industry.iconName}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{point.title || point.titleEn}</h3>
-                                <p className="text-sm">{point.description || point.descriptionEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{industry.title || industry.titleEn}</h3>
+                                <p className="text-sm">{industry.description || industry.descriptionEn}</p>
                             </div>
                             <div className="flex gap-2">
-                                <Button variant="outline" size="sm" onClick={() => handleEdit(point)}>
+                                <Button variant="outline" size="sm" onClick={() => handleEdit(industry)}>
                                     <Edit className="w-4 h-4" />
                                 </Button>
                                 <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() => deleteMutation.mutate(point.id)}
+                                    onClick={() => deleteMutation.mutate(industry.id)}
                                     disabled={deleteMutation.isPending}
                                 >
                                     <Trash2 className="w-4 h-4" />
@@ -217,6 +217,11 @@ export default function AdminWhyShoka() {
                             </div>
                         </div>
                     ))}
+                    {industries.length === 0 && (
+                        <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
+                            No industries found. Click "Add New" to create one.
+                        </div>
+                    )}
                 </div>
             </div>
         </AdminLayout>

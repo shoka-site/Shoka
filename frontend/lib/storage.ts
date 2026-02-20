@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type HeroSlide, type Stat, type Service, type Project, type Testimonial, type WhyShokaPoint, type ProcessStep, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant, type Admin } from "@shared/schema";
+import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant, type Admin } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -8,20 +8,6 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-
-  // Hero Slides
-  getHeroSlides(published?: boolean): Promise<HeroSlide[]>;
-  getHeroSlide(id: string): Promise<HeroSlide | undefined>;
-  createHeroSlide(slide: Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>): Promise<HeroSlide>;
-  updateHeroSlide(id: string, slide: Partial<Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>>): Promise<HeroSlide | undefined>;
-  deleteHeroSlide(id: string): Promise<boolean>;
-
-  // Stats
-  getStats(): Promise<Stat[]>;
-  getStat(id: string): Promise<Stat | undefined>;
-  createStat(stat: Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>): Promise<Stat>;
-  updateStat(id: string, stat: Partial<Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Stat | undefined>;
-  deleteStat(id: string): Promise<boolean>;
 
   // Services
   getServices(published?: boolean): Promise<Service[]>;
@@ -43,20 +29,6 @@ export interface IStorage {
   createTestimonial(testimonial: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial>;
   updateTestimonial(id: string, testimonial: Partial<Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Testimonial | undefined>;
   deleteTestimonial(id: string): Promise<boolean>;
-
-  // Why Shoka Points
-  getWhyShokaPoints(published?: boolean): Promise<WhyShokaPoint[]>;
-  getWhyShokaPoint(id: string): Promise<WhyShokaPoint | undefined>;
-  createWhyShokaPoint(point: Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>): Promise<WhyShokaPoint>;
-  updateWhyShokaPoint(id: string, point: Partial<Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>>): Promise<WhyShokaPoint | undefined>;
-  deleteWhyShokaPoint(id: string): Promise<boolean>;
-
-  // Process Steps
-  getProcessSteps(): Promise<ProcessStep[]>;
-  getProcessStep(id: string): Promise<ProcessStep | undefined>;
-  createProcessStep(step: Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>): Promise<ProcessStep>;
-  updateProcessStep(id: string, step: Partial<Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>>): Promise<ProcessStep | undefined>;
-  deleteProcessStep(id: string): Promise<boolean>;
 
   // Insight Topics
   getInsightTopics(published?: boolean): Promise<InsightTopic[]>;
@@ -96,10 +68,20 @@ export interface IStorage {
   // Admins
   getAdmins(): Promise<Admin[]>;
   getAdmin(id: string): Promise<Admin | undefined>;
-  getAdminByUsername(username: string): Promise<Admin | undefined>;
+  getAdminByEmail(email: string): Promise<Admin | undefined>;
   createAdmin(admin: Omit<Admin, 'id'>): Promise<Admin>;
   updateAdmin(id: string, admin: Partial<Omit<Admin, 'id'>>): Promise<Admin | undefined>;
   deleteAdmin(id: string): Promise<boolean>;
+
+  // Count methods for dashboard
+  getServiceCount(): Promise<number>;
+  getProjectCount(): Promise<number>;
+  getTestimonialCount(): Promise<number>;
+  getInsightTopicCount(): Promise<number>;
+  getPlatformUpdateCount(): Promise<number>;
+  getIndustryCount(): Promise<number>;
+  getSolutionCount(): Promise<number>;
+  getConsultantCount(): Promise<number>;
 }
 
 export class PrismaStorage implements IStorage {
@@ -114,69 +96,6 @@ export class PrismaStorage implements IStorage {
 
   async createUser(user: InsertUser): Promise<User> {
     return await prisma.user.create({ data: user });
-  }
-
-  // Hero Slides
-  async getHeroSlides(published?: boolean): Promise<HeroSlide[]> {
-    return await prisma.heroSlide.findMany({
-      where: published !== undefined ? { published } : undefined,
-      orderBy: { order: 'asc' },
-    });
-  }
-
-  async getHeroSlide(id: string): Promise<HeroSlide | undefined> {
-    return await prisma.heroSlide.findUnique({ where: { id } }) || undefined;
-  }
-
-  async createHeroSlide(slide: Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>): Promise<HeroSlide> {
-    return await prisma.heroSlide.create({ data: slide });
-  }
-
-  async updateHeroSlide(id: string, updates: Partial<Omit<HeroSlide, 'id' | 'createdAt' | 'updatedAt'>>): Promise<HeroSlide | undefined> {
-    try {
-      return await prisma.heroSlide.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteHeroSlide(id: string): Promise<boolean> {
-    try {
-      await prisma.heroSlide.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  // Stats
-  async getStats(): Promise<Stat[]> {
-    return await prisma.stat.findMany({ orderBy: { order: 'asc' } });
-  }
-
-  async getStat(id: string): Promise<Stat | undefined> {
-    return await prisma.stat.findUnique({ where: { id } }) || undefined;
-  }
-
-  async createStat(stat: Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>): Promise<Stat> {
-    return await prisma.stat.create({ data: stat });
-  }
-
-  async updateStat(id: string, updates: Partial<Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Stat | undefined> {
-    try {
-      return await prisma.stat.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteStat(id: string): Promise<boolean> {
-    try {
-      await prisma.stat.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
   }
 
   // Services
@@ -275,69 +194,6 @@ export class PrismaStorage implements IStorage {
   async deleteTestimonial(id: string): Promise<boolean> {
     try {
       await prisma.testimonial.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  // Why Shoka Points
-  async getWhyShokaPoints(published?: boolean): Promise<WhyShokaPoint[]> {
-    return await prisma.whyShokaPoint.findMany({
-      where: published !== undefined ? { published } : undefined,
-      orderBy: { order: 'asc' },
-    });
-  }
-
-  async getWhyShokaPoint(id: string): Promise<WhyShokaPoint | undefined> {
-    return await prisma.whyShokaPoint.findUnique({ where: { id } }) || undefined;
-  }
-
-  async createWhyShokaPoint(point: Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>): Promise<WhyShokaPoint> {
-    return await prisma.whyShokaPoint.create({ data: point });
-  }
-
-  async updateWhyShokaPoint(id: string, updates: Partial<Omit<WhyShokaPoint, 'id' | 'createdAt' | 'updatedAt'>>): Promise<WhyShokaPoint | undefined> {
-    try {
-      return await prisma.whyShokaPoint.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteWhyShokaPoint(id: string): Promise<boolean> {
-    try {
-      await prisma.whyShokaPoint.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  // Process Steps
-  async getProcessSteps(): Promise<ProcessStep[]> {
-    return await prisma.processStep.findMany({ orderBy: { order: 'asc' } });
-  }
-
-  async getProcessStep(id: string): Promise<ProcessStep | undefined> {
-    return await prisma.processStep.findUnique({ where: { id } }) || undefined;
-  }
-
-  async createProcessStep(step: Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>): Promise<ProcessStep> {
-    return await prisma.processStep.create({ data: step });
-  }
-
-  async updateProcessStep(id: string, updates: Partial<Omit<ProcessStep, 'id' | 'createdAt' | 'updatedAt'>>): Promise<ProcessStep | undefined> {
-    try {
-      return await prisma.processStep.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteProcessStep(id: string): Promise<boolean> {
-    try {
-      await prisma.processStep.delete({ where: { id } });
       return true;
     } catch (e) {
       return false;
@@ -518,8 +374,8 @@ export class PrismaStorage implements IStorage {
     return await prisma.admin.findUnique({ where: { id } }) || undefined;
   }
 
-  async getAdminByUsername(username: string): Promise<Admin | undefined> {
-    return await prisma.admin.findUnique({ where: { username } }) || undefined;
+  async getAdminByEmail(email: string): Promise<Admin | undefined> {
+    return await prisma.admin.findUnique({ where: { email } }) || undefined;
   }
 
   async createAdmin(admin: Omit<Admin, 'id'>): Promise<Admin> {
@@ -541,6 +397,39 @@ export class PrismaStorage implements IStorage {
     } catch (e) {
       return false;
     }
+  }
+
+  // Count methods for dashboard
+  async getServiceCount(): Promise<number> {
+    return await prisma.service.count();
+  }
+
+  async getProjectCount(): Promise<number> {
+    return await prisma.project.count();
+  }
+
+  async getTestimonialCount(): Promise<number> {
+    return await prisma.testimonial.count();
+  }
+
+  async getInsightTopicCount(): Promise<number> {
+    return await prisma.insightTopic.count();
+  }
+
+  async getPlatformUpdateCount(): Promise<number> {
+    return await prisma.platformUpdate.count();
+  }
+
+  async getIndustryCount(): Promise<number> {
+    return await prisma.industry.count();
+  }
+
+  async getSolutionCount(): Promise<number> {
+    return await prisma.solution.count();
+  }
+
+  async getConsultantCount(): Promise<number> {
+    return await prisma.consultant.count();
   }
 
 }

@@ -8,14 +8,14 @@ export async function PUT(
     try {
         const { id } = await params;
         const body = await req.json();
-        const updated = await storage.updateStat(id, body);
+        const updated = await storage.updateIndustry(id, body);
         if (!updated) {
-            return NextResponse.json({ error: "Stat not found" }, { status: 404 });
+            return NextResponse.json({ error: "Industry not found" }, { status: 404 });
         }
         return NextResponse.json(updated);
     } catch (error) {
-        console.error("Error updating stat:", error);
-        return NextResponse.json({ error: "Failed to update stat" }, { status: 500 });
+        console.error("Error updating industry:", error);
+        return NextResponse.json({ error: "Failed to update industry" }, { status: 500 });
     }
 }
 
@@ -25,13 +25,13 @@ export async function DELETE(
 ) {
     try {
         const { id } = await params;
-        const deleted = await storage.deleteStat(id);
+        const deleted = await storage.deleteIndustry(id);
         if (!deleted) {
-            return NextResponse.json({ error: "Stat not found" }, { status: 404 });
+            return NextResponse.json({ error: "Industry not found" }, { status: 404 });
         }
         return new NextResponse(null, { status: 204 });
     } catch (error) {
-        console.error("Error deleting stat:", error);
-        return NextResponse.json({ error: "Failed to delete stat" }, { status: 500 });
+        console.error("Error deleting industry:", error);
+        return NextResponse.json({ error: "Failed to delete industry" }, { status: 500 });
     }
 }

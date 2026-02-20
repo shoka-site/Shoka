@@ -83,15 +83,6 @@ export default function AdminLogin() {
                             {t("admin.login.signin")}
                         </Button>
                     </form>
-
-                    {/* Demo Credentials */}
-                    <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-                        <p className="text-xs text-muted-foreground text-center mb-2">{t("admin.login.demo_title")}</p>
-                        <p className="text-sm font-mono text-center">
-                            <span className="text-muted-foreground">username:</span> <strong>admin</strong><br />
-                            <span className="text-muted-foreground">password:</span> <strong>admin123</strong>
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>

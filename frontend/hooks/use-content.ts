@@ -9,42 +9,6 @@ async function fetchContent<T>(endpoint: string, lang: string): Promise<T> {
     return response.json();
 }
 
-export interface HeroSlide {
-    id: string;
-    order: number;
-    imageUrl: string;
-    badge: string;
-    title: string;
-    description: string;
-    published: boolean;
-}
-
-export function useHeroSlides() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<HeroSlide[]>({
-        queryKey: ['heroSlides', language],
-        queryFn: () => fetchContent<HeroSlide[]>('hero-slides', language),
-    });
-}
-
-export interface Stat {
-    id: string;
-    key: string;
-    number: string;
-    label: string;
-    order: number;
-}
-
-export function useStats() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<Stat[]>({
-        queryKey: ['stats', language],
-        queryFn: () => fetchContent<Stat[]>('stats', language),
-    });
-}
-
 export interface Service {
     id: string;
     order: number;
@@ -101,42 +65,6 @@ export function useTestimonials() {
     return useQuery<Testimonial[]>({
         queryKey: ['testimonials', language],
         queryFn: () => fetchContent<Testimonial[]>('testimonials', language),
-    });
-}
-
-export interface WhyShokaPoint {
-    id: string;
-    order: number;
-    iconName: string;
-    title: string;
-    description: string;
-    published: boolean;
-}
-
-export function useWhyShokaPoints() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<WhyShokaPoint[]>({
-        queryKey: ['whyShokaPoints', language],
-        queryFn: () => fetchContent<WhyShokaPoint[]>('why-shoka', language),
-    });
-}
-
-export interface ProcessStep {
-    id: string;
-    order: number;
-    stepNumber: string;
-    title: string;
-    description: string;
-    published: boolean;
-}
-
-export function useProcessSteps() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<ProcessStep[]>({
-        queryKey: ['processSteps', language],
-        queryFn: () => fetchContent<ProcessStep[]>('process-steps', language),
     });
 }
 

@@ -8,14 +8,14 @@ export async function PUT(
     try {
         const { id } = await params;
         const body = await req.json();
-        const updated = await storage.updateProcessStep(id, body);
+        const updated = await storage.updateSolution(id, body);
         if (!updated) {
-            return NextResponse.json({ error: "Process step not found" }, { status: 404 });
+            return NextResponse.json({ error: "Solution not found" }, { status: 404 });
         }
         return NextResponse.json(updated);
     } catch (error) {
-        console.error("Error updating process step:", error);
-        return NextResponse.json({ error: "Failed to update process step" }, { status: 500 });
+        console.error("Error updating solution:", error);
+        return NextResponse.json({ error: "Failed to update solution" }, { status: 500 });
     }
 }
 
@@ -25,13 +25,13 @@ export async function DELETE(
 ) {
     try {
         const { id } = await params;
-        const deleted = await storage.deleteProcessStep(id);
+        const deleted = await storage.deleteSolution(id);
         if (!deleted) {
-            return NextResponse.json({ error: "Process step not found" }, { status: 404 });
+            return NextResponse.json({ error: "Solution not found" }, { status: 404 });
         }
         return new NextResponse(null, { status: 204 });
     } catch (error) {
-        console.error("Error deleting process step:", error);
-        return NextResponse.json({ error: "Failed to delete process step" }, { status: 500 });
+        console.error("Error deleting solution:", error);
+        return NextResponse.json({ error: "Failed to delete solution" }, { status: 500 });
     }
 }

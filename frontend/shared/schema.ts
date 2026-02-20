@@ -10,36 +10,7 @@ export type User = z.infer<typeof userSchema>;
 export const insertUserSchema = userSchema.omit({ id: true });
 export type InsertUser = z.infer<typeof insertUserSchema>;
 
-// HeroSlide schema
-export const heroSlideSchema = z.object({
-    id: z.string().uuid(),
-    order: z.number(),
-    imageUrl: z.string(),
-    badgeEn: z.string(),
-    badgeAr: z.string(),
-    titleEn: z.string(),
-    titleAr: z.string(),
-    descriptionEn: z.string(),
-    descriptionAr: z.string(),
-    published: z.boolean().default(true),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
-export type HeroSlide = z.infer<typeof heroSlideSchema>;
 
-// Stat schema
-export const statSchema = z.object({
-    id: z.string().uuid(),
-    key: z.string(),
-    numberEn: z.string(),
-    numberAr: z.string(),
-    labelEn: z.string(),
-    labelAr: z.string(),
-    order: z.number(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
-export type Stat = z.infer<typeof statSchema>;
 
 // Service schema
 export const serviceSchema = z.object({
@@ -92,34 +63,7 @@ export const testimonialSchema = z.object({
 });
 export type Testimonial = z.infer<typeof testimonialSchema>;
 
-// WhyShokaPoint schema
-export const whyShokaPointSchema = z.object({
-    id: z.string().uuid(),
-    order: z.number(),
-    iconName: z.string(),
-    titleEn: z.string(),
-    titleAr: z.string(),
-    descriptionEn: z.string(),
-    descriptionAr: z.string(),
-    published: z.boolean().default(true),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
-export type WhyShokaPoint = z.infer<typeof whyShokaPointSchema>;
 
-// ProcessStep schema
-export const processStepSchema = z.object({
-    id: z.string().uuid(),
-    order: z.number(),
-    stepNumber: z.string(),
-    titleEn: z.string(),
-    titleAr: z.string(),
-    descriptionEn: z.string(),
-    descriptionAr: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
-export type ProcessStep = z.infer<typeof processStepSchema>;
 
 // InsightTopic schema
 export const insightTopicSchema = z.object({
@@ -204,7 +148,7 @@ export type Consultant = z.infer<typeof consultantSchema>;
 // Admin schema
 export const adminSchema = z.object({
     id: z.string().uuid(),
-    username: z.string().min(1),
+    email: z.string().email(),
     password: z.string().min(1),
 });
 export type Admin = z.infer<typeof adminSchema>;

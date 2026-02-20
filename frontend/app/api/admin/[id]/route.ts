@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { storage } from "@/lib/storage";
 import { adminSchema } from "@shared/schema";
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
-        const success = await storage.deleteAdmin(params.id);
+        const success = await storage.deleteAdmin(id);
         if (!success) {
             return NextResponse.json({ error: "Admin not found or failed to delete" }, { status: 404 });
         }
@@ -15,7 +16,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     }
 }
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         const body = await req.json();
         // Validate partial update
@@ -25,7 +27,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
             return NextResponse.json({ error: "Invalid admin data", details: parseResult.error }, { status: 400 });
         }
 
-        const updatedAdmin = await storage.updateAdmin(params.id, parseResult.data as any);
+        const updatedAdmin = await storage.updateAdmin(id, parseResult.data as any);
         // Casting to any to avoid strict type checks on update method if not fully aligned yet,
         // strictly speaking storage.updateAdmin expects Partial<Omit<Admin, 'id'>> which matches.
         // However, existing storage pattern might need verification.

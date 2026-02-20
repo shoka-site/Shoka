@@ -15,36 +15,6 @@ model User {
   @@map("users")
 }
 
-model HeroSlide {
-  id            String   @id @default(uuid())
-  order         Int
-  imageUrl      String   @map("image_url")
-  badgeEn       String   @map("badge_en")
-  badgeAr       String   @map("badge_ar")
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  published     Boolean  @default(true)
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("hero_slides")
-}
-
-model Stat {
-  id        String   @id @default(uuid())
-  key       String   @unique
-  numberEn  String   @map("number_en")
-  numberAr  String   @map("number_ar")
-  labelEn   String   @map("label_en")
-  labelAr   String   @map("label_ar")
-  order     Int
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("stats")
-}
 
 model Service {
   id            String   @id @default(uuid())
@@ -97,34 +67,6 @@ model Testimonial {
   @@map("testimonials")
 }
 
-model WhyShokaPoint {
-  id            String   @id @default(uuid())
-  order         Int
-  iconName      String   @map("icon_name")
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  published     Boolean  @default(true)
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("why_shoka_points")
-}
-
-model ProcessStep {
-  id            String   @id @default(uuid())
-  order         Int
-  stepNumber    String   @map("step_number")
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("process_steps")
-}
 
 model InsightTopic {
   id            String   @id @default(uuid())
@@ -208,7 +150,7 @@ model Consultant {
 
 model Admin {
   id       String @id @default(uuid())
-  username String @unique
+  email    String @unique
   password String
 
   @@map("admins")

@@ -8,15 +8,11 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import Section from "@/components/layout/Section";
 import {
-  useHeroSlides,
-  useStats,
   useServices,
   useProjects,
   useTestimonials,
-  useWhyShokaPoints,
-  useProcessSteps,
-  useInsightTopics,
   usePlatformUpdates,
+  useInsightTopics,
 } from "@/hooks/use-content";
 
 const iconMap: Record<string, any> = {
@@ -441,13 +437,36 @@ export default function Home() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
-  const { data: stats = [], isLoading: loadingStats } = useStats();
   const { data: services = [], isLoading: loadingServices } = useServices();
   const { data: projects = [], isLoading: loadingProjects } = useProjects(true);
   const { data: testimonials = [], isLoading: loadingTestimonials } = useTestimonials();
-  const { data: whyShokaPoints = [], isLoading: loadingWhyShoka } = useWhyShokaPoints();
-  const { data: processSteps = [], isLoading: loadingProcess } = useProcessSteps();
   const { data: insightTopics = [], isLoading: loadingInsights } = useInsightTopics();
+
+  // Static Data for Stats
+  const stats = [
+    { id: "stat-exp", number: t("stats.experience.number"), label: t("stats.experience.label") },
+    { id: "stat-proj", number: t("stats.projects.number"), label: t("stats.projects.label") },
+    { id: "stat-clients", number: t("stats.clients.number"), label: t("stats.clients.label") },
+    { id: "stat-sat", number: t("stats.satisfaction.number"), label: t("stats.satisfaction.label") },
+  ];
+
+  // Static Data for Why Us / Philosophy
+  const whyShokaPoints = [
+    { id: "why-1", iconName: "Target", title: t("home.why_us.points.business_first.title"), description: t("home.why_us.points.business_first.desc") },
+    { id: "why-2", iconName: "Zap", title: t("home.why_us.points.rapid_prototyping.title"), description: t("home.why_us.points.rapid_prototyping.desc") },
+    { id: "why-3", iconName: "Layers", title: t("home.why_us.points.modern_stack.title"), description: t("home.why_us.points.modern_stack.desc") },
+    { id: "why-4", iconName: "Cpu", title: t("home.why_us.points.ai_driven.title"), description: t("home.why_us.points.ai_driven.desc") },
+    { id: "why-5", iconName: "Lock", title: t("home.why_us.points.engineering_precision.title"), description: t("home.why_us.points.engineering_precision.desc") },
+  ];
+
+  // Static Data for Process Steps
+  const processSteps = [
+    { id: "step-1", stepNumber: "01", title: t("home.process.steps.discover.title"), description: t("home.process.steps.discover.desc") },
+    { id: "step-2", stepNumber: "02", title: t("home.process.steps.design.title"), description: t("home.process.steps.design.desc") },
+    { id: "step-3", stepNumber: "03", title: t("home.process.steps.build.title"), description: t("home.process.steps.build.desc") },
+    { id: "step-4", stepNumber: "04", title: t("home.process.steps.launch.title"), description: t("home.process.steps.launch.desc") },
+    { id: "step-5", stepNumber: "05", title: t("home.process.steps.scale.title"), description: t("home.process.steps.scale.desc") },
+  ];
 
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
@@ -493,27 +512,25 @@ export default function Home() {
       </div>
 
       {/* ── 1. STATS — instant credibility ────────────────────────── */}
-      {!loadingStats && stats.length > 0 && (
-        <Section background="default" className="py-16 border-y border-border/30">
-          <FadeInSection>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  className="text-center"
-                >
-                  <div className="text-4xl md:text-5xl font-display font-bold text-primary mb-2">{stat.number}</div>
-                  <div className="text-sm md:text-base text-muted-foreground">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </FadeInSection>
-        </Section>
-      )}
+      <Section background="default" className="py-16 border-y border-border/30">
+        <FadeInSection>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="text-4xl md:text-5xl font-display font-bold text-primary mb-2">{stat.number}</div>
+                <div className="text-sm md:text-base text-muted-foreground">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </FadeInSection>
+      </Section>
 
       {/* ── 2. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
@@ -605,38 +622,36 @@ export default function Home() {
 
       {/* ── 4. PROCESS — how easy it is to work with us ───────────── */}
 
-      {!loadingProcess && processSteps.length > 0 && (
-        <Section background="muted">
-          <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.badge")}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
-            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-              {t("home.process.description")}
-            </p>
-          </FadeInSection>
-          <div className="relative">
-            <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
-              {processSteps.map((step, index) => (
-                <motion.div
-                  key={step.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center relative"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground font-bold text-xl mb-6 relative z-10">
-                    {step.stepNumber}
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3">{step.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
-                </motion.div>
-              ))}
-            </div>
+      <Section background="muted">
+        <FadeInSection className="text-center mb-16">
+          <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.badge")}</span>
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
+          <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+            {t("home.process.description")}
+          </p>
+        </FadeInSection>
+        <div className="relative">
+          <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center relative"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground font-bold text-xl mb-6 relative z-10">
+                  {step.stepNumber}
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+              </motion.div>
+            ))}
           </div>
-        </Section>
-      )}
+        </div>
+      </Section>
 
       {/* ── 5. TESTIMONIALS — don't take our word for it ──────────── */}
       {!loadingTestimonials && testimonials.length > 0 && (
@@ -691,38 +706,36 @@ export default function Home() {
       )}
 
       {/* ── 6. PHILOSOPHY — our values & what we stand for ────────── */}
-      {!loadingWhyShoka && whyShokaPoints.length > 0 && (
-        <Section background="muted">
-          <FadeInSection className="text-center mb-16">
-            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.philosophy.badge")}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
-            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
-              {t("home.philosophy.description")}
-            </p>
-          </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {whyShokaPoints.map((point, index) => {
-              const Icon = iconMap[point.iconName] || Target;
-              return (
-                <motion.div
-                  key={point.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
-                    <Icon className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-3">{point.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{point.description}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </Section>
-      )}
+      <Section background="muted">
+        <FadeInSection className="text-center mb-16">
+          <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.philosophy.badge")}</span>
+          <h2 className="text-4xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
+          <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+            {t("home.philosophy.description")}
+          </p>
+        </FadeInSection>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {whyShokaPoints.map((point, index) => {
+            const Icon = iconMap[point.iconName] || Target;
+            return (
+              <motion.div
+                key={point.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
+                  <Icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3">{point.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{point.description}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </Section>
 
       {/* ── 7. INSIGHTS — thought leadership ─────────────────────── */}
       {!loadingInsights && insightTopics.length > 0 && (
