@@ -172,9 +172,9 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/portfolio" legacyBehavior passHref>
+                <Link href="/projects" legacyBehavior passHref>
                   <NavigationMenuLink className="bg-transparent text-white/80 hover:text-white focus:text-white h-9 px-4 text-sm font-medium transition-colors hover:bg-white/5 rounded-full flex items-center">
-                    {t("navbar.portfolio")}
+                    {t("navbar.projects")}
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -246,7 +246,7 @@ export default function Navbar() {
                 { name: t("navbar.services"), href: "/services" },
                 { name: t("navbar.industries"), href: "/industries" },
                 { name: t("navbar.recent_work"), href: "/solutions" },
-                { name: t("navbar.portfolio"), href: "/portfolio" },
+                { name: t("navbar.projects"), href: "/projects" },
                 { name: t("navbar.about"), href: "/about" },
               ].map((link, idx) => (
                 <motion.div

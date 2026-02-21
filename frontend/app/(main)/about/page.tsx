@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 import { Award, Users, Globe, Target, Linkedin, Twitter, Mail } from "lucide-react";
 import heroPattern from "@/assets/hero-pattern.png";
 import { useTranslation } from "react-i18next";
-import { useConsultants } from "@/hooks/use-content";
+import { useTeamMembers } from "@/hooks/use-content";
 import { Button } from "@/components/ui/button";
 
 export default function About() {
   const { t } = useTranslation();
-  const { data: consultants = [], isLoading } = useConsultants();
+  const { data: teamMembers = [], isLoading: isLoadingTeam } = useTeamMembers();
 
   return (
     <div className="pt-24 min-h-screen">
@@ -92,35 +92,47 @@ export default function About() {
         </div>
       </Section>
 
-      {/* Consultants Section */}
+      {/* Team Section */}
       <Section>
         <div className="mb-12 text-center">
           <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">{t('about.team.badge')}</span>
           <h2 className="text-4xl font-display font-bold">{t('about.team.title')}</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {!isLoading && consultants.map((consultant, index) => (
+          {!isLoadingTeam && teamMembers.map((member, index) => (
             <motion.div
-              key={consultant.id}
+              key={member.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="group relative overflow-hidden rounded-xl bg-muted/30">
+              <div className="group relative overflow-hidden rounded-xl bg-muted/30 h-full flex flex-col">
                 <div className="aspect-[3/4] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
                   <img
-                    src={consultant.imageUrl}
-                    alt={consultant.name}
+                    src={member.imageUrl}
+                    alt={member.name}
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop';
                     }}
                   />
                 </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold font-display">{consultant.name}</h3>
-                  <p className="text-sm text-accent mb-2">{consultant.role}</p>
-                  <p className="text-sm text-muted-foreground line-clamp-3">{consultant.bio}</p>
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold font-display">{member.name}</h3>
+                  <p className="text-sm text-accent mb-2">{member.role}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{member.bio}</p>
+                  {member.description && (
+                    <p className="text-xs text-muted-foreground italic mb-4 line-clamp-2">{member.description}</p>
+                  )}
+                  {member.resumeUrl && (
+                    <div className="mt-auto">
+                      <Button variant="outline" size="sm" asChild className="w-full">
+                        <a href={member.resumeUrl} target="_blank" rel="noopener noreferrer">
+                          {t('about.team.view_resume') || 'View Resume'}
+                        </a>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>

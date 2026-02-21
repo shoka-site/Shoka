@@ -554,7 +554,8 @@ export default function Home() {
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => {
-              const Icon = iconMap[service.iconName] || Brain;
+              const isImage = service.iconName?.startsWith('/uploads/') || service.iconName?.startsWith('http');
+              const Icon = !isImage ? (iconMap[service.iconName as string] || Brain) : null;
               return (
                 <motion.div
                   key={service.id}
@@ -566,7 +567,11 @@ export default function Home() {
                   className="bg-background/60 p-8 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer"
                 >
                   <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-12 h-12" />
+                    {isImage ? (
+                      <img src={service.iconName} alt={service.title} className="w-12 h-12 object-contain" />
+                    ) : (
+                      <Icon className="w-12 h-12" />
+                    )}
                   </div>
                   <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>

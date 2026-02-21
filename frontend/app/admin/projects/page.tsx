@@ -13,6 +13,7 @@ export default function AdminProjects() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
         imageUrl: "",
         category: "",
@@ -93,10 +94,39 @@ export default function AdminProjects() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formData.imageUrl) {
+            alert("Please select an image");
+            return;
+        }
         if (editingId) {
             updateMutation.mutate({ id: editingId, data: formData });
         } else {
             createMutation.mutate(formData);
+        }
+    };
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            if (data.url) {
+                setFormData((prev) => ({ ...prev, imageUrl: data.url }));
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Failed to upload image");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -132,12 +162,24 @@ export default function AdminProjects() {
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-3 gap-4">
-                            <Input
-                                placeholder="Image URL"
-                                value={formData.imageUrl}
-                                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                                required
-                            />
+                            <div className="space-y-2">
+                                <Input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileUpload}
+                                    disabled={isUploading}
+                                    className="cursor-pointer"
+                                />
+                                {isUploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                                {formData.imageUrl && (
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
+                                            Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
+                                        </p>
+                                        <img src={formData.imageUrl} alt="Preview" className="h-16 w-32 object-cover rounded" />
+                                    </div>
+                                )}
+                            </div>
                             <Input
                                 placeholder="Category"
                                 value={formData.category}

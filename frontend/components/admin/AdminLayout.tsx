@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, LogOut, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -17,6 +17,7 @@ const navItems = [
     { icon: Target, label: "Industries", path: "/admin/industries" },
     { icon: LayoutDashboard, label: "Solutions", path: "/admin/solutions" },
     { icon: MessageSquare, label: "Consultants", path: "/admin/consultants" },
+    { icon: Users, label: "Our Team", path: "/admin/team" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

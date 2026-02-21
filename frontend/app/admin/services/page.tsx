@@ -13,6 +13,7 @@ export default function AdminServices() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
         iconName: "",
         titleEn: "",
@@ -89,10 +90,39 @@ export default function AdminServices() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formData.iconName) {
+            alert("Please provide an Icon Name or upload an Image");
+            return;
+        }
         if (editingId) {
             updateMutation.mutate({ id: editingId, data: formData });
         } else {
             createMutation.mutate(formData);
+        }
+    };
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploading(true);
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            if (data.url) {
+                setFormData((prev) => ({ ...prev, iconName: data.url }));
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Failed to upload image");
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -126,12 +156,36 @@ export default function AdminServices() {
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                placeholder="Icon Name (e.g., Brain, Code, Database)"
-                                value={formData.iconName}
-                                onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                                required
-                            />
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium">Text Icon (e.g., Target, Brain) OR Image</label>
+                                    <Input
+                                        placeholder="Icon Name"
+                                        value={formData.iconName}
+                                        onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <p className="text-xs text-muted-foreground uppercase text-center">- OR UPLOAD NEW -</p>
+                                    <Input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileUpload}
+                                        disabled={isUploading}
+                                        className="cursor-pointer"
+                                    />
+                                    {isUploading && <p className="text-xs text-muted-foreground mr-1">Uploading...</p>}
+                                    {formData.iconName && (formData.iconName.startsWith('/uploads/') || formData.iconName.startsWith('http')) && (
+                                        <div className="flex flex-col gap-1 mt-2">
+                                            <p className="text-xs text-muted-foreground truncate" title={formData.iconName}>
+                                                Image Url: {formData.iconName.split('/').pop()}
+                                            </p>
+                                            <img src={formData.iconName} alt="Preview" className="h-16 w-auto object-contain rounded" />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                             <Input
                                 type="number"
                                 placeholder="Order"

@@ -163,3 +163,25 @@ export function useConsultants() {
         queryFn: () => fetchContent<Consultant[]>('consultants', language),
     });
 }
+
+// Team Members
+export interface TeamMember {
+    id: string;
+    order: number;
+    name: string;
+    role: string;
+    bio: string;
+    description?: string;
+    imageUrl: string;
+    resumeUrl?: string;
+    published: boolean;
+}
+
+export function useTeamMembers() {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<TeamMember[]>({
+        queryKey: ['teamMembers', language],
+        queryFn: () => fetchContent<TeamMember[]>('team', language),
+    });
+}
