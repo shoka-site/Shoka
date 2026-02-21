@@ -145,10 +145,4 @@ export const consultantSchema = z.object({
 });
 export type Consultant = z.infer<typeof consultantSchema>;
 
-// Admin schema
-export const adminSchema = z.object({
-    id: z.string().uuid(),
-    email: z.string().email(),
-    password: z.string().min(1),
-});
-export type Admin = z.infer<typeof adminSchema>;
+

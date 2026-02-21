@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant, type Admin } from "@shared/schema";
+import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -65,13 +65,7 @@ export interface IStorage {
   updateConsultant(id: string, consultant: Partial<Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultant | undefined>;
   deleteConsultant(id: string): Promise<boolean>;
 
-  // Admins
-  getAdmins(): Promise<Admin[]>;
-  getAdmin(id: string): Promise<Admin | undefined>;
-  getAdminByEmail(email: string): Promise<Admin | undefined>;
-  createAdmin(admin: Omit<Admin, 'id'>): Promise<Admin>;
-  updateAdmin(id: string, admin: Partial<Omit<Admin, 'id'>>): Promise<Admin | undefined>;
-  deleteAdmin(id: string): Promise<boolean>;
+
 
   // Count methods for dashboard
   getServiceCount(): Promise<number>;
@@ -365,39 +359,7 @@ export class PrismaStorage implements IStorage {
     }
   }
 
-  // Admins
-  async getAdmins(): Promise<Admin[]> {
-    return await prisma.admin.findMany();
-  }
 
-  async getAdmin(id: string): Promise<Admin | undefined> {
-    return await prisma.admin.findUnique({ where: { id } }) || undefined;
-  }
-
-  async getAdminByEmail(email: string): Promise<Admin | undefined> {
-    return await prisma.admin.findUnique({ where: { email } }) || undefined;
-  }
-
-  async createAdmin(admin: Omit<Admin, 'id'>): Promise<Admin> {
-    return await prisma.admin.create({ data: admin });
-  }
-
-  async updateAdmin(id: string, updates: Partial<Omit<Admin, 'id'>>): Promise<Admin | undefined> {
-    try {
-      return await prisma.admin.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteAdmin(id: string): Promise<boolean> {
-    try {
-      await prisma.admin.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 
   // Count methods for dashboard
   async getServiceCount(): Promise<number> {

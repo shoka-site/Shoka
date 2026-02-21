@@ -148,13 +148,6 @@ model Consultant {
   @@map("consultants")
 }
 
-model Admin {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
-
-  @@map("admins")
-}
 
 model TeamMember {
   id            String   @id @default(uuid())
