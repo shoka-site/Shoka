@@ -156,11 +156,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Handle empty data case
-  if (items.length === 0) {
-    return null;
-  }
-
+  // Hooks must be called unconditionally - move before early return
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
     const timer = setInterval(() => {
@@ -169,6 +165,13 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
     }, 8000); // Slower interval for better readability
     return () => clearInterval(timer);
   }, [items.length, isPaused]);
+
+  const updateStyle = useUpdateStyle();
+
+  // Handle empty data case - after hooks are called
+  if (items.length === 0) {
+    return null;
+  }
 
   const goTo = (i: number) => { setDirection(i > activeIdx ? 1 : -1); setActiveIdx(i); };
   const prev = () => goTo((activeIdx - 1 + items.length) % items.length);
@@ -183,7 +186,6 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
     });
   };
 
-  const updateStyle = useUpdateStyle();
   const item = items[activeIdx];
   const style = updateStyle[item?.type] ?? updateStyle.news;
 
