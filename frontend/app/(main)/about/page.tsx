@@ -4,7 +4,6 @@ import Section from "@/components/ui/section";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Award, Users, Globe, Target, Linkedin, Twitter, Mail } from "lucide-react";
-import heroPattern from "@/assets/hero-pattern.png";
 import { useTranslation } from "react-i18next";
 import { useTeamMembers } from "@/hooks/use-content";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,7 @@ export default function About() {
           <div className="relative">
             <div className="absolute -inset-4 bg-accent/10 rounded-3xl transform -rotate-2"></div>
             <img
-              src={heroPattern.src}
+              src="/hero-pattern.png"
               alt="Office"
               className="rounded-2xl shadow-2xl relative z-10 w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
