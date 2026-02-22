@@ -3,10 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const consultation = await storage.getConsultation(params.id);
+        const { id } = await params;
+        const consultation = await storage.getConsultation(id);
         if (!consultation) {
             return NextResponse.json({ error: "Consultation not found" }, { status: 404 });
         }
@@ -19,11 +20,12 @@ export async function GET(
 
 export async function PUT(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const body = await req.json();
-        const consultation = await storage.updateConsultation(params.id, body);
+        const consultation = await storage.updateConsultation(id, body);
         if (!consultation) {
             return NextResponse.json({ error: "Consultation not found" }, { status: 404 });
         }
@@ -36,10 +38,11 @@ export async function PUT(
 
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const deleted = await storage.deleteConsultation(params.id);
+        const { id } = await params;
+        const deleted = await storage.deleteConsultation(id);
         if (!deleted) {
             return NextResponse.json({ error: "Consultation not found" }, { status: 404 });
         }

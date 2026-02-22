@@ -156,6 +156,11 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
+  // Handle empty data case
+  if (items.length === 0) {
+    return null;
+  }
+
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
     const timer = setInterval(() => {

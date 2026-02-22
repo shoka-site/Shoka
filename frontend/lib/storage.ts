@@ -368,22 +368,26 @@ export class PrismaStorage implements IStorage {
 
   // Consultations
   async getConsultations(): Promise<Consultation[]> {
-    return await prisma.consultation.findMany({
+    const consultations = await prisma.consultation.findMany({
       orderBy: { createdAt: 'desc' },
     });
+    return consultations as Consultation[];
   }
 
   async getConsultation(id: string): Promise<Consultation | undefined> {
-    return await prisma.consultation.findUnique({ where: { id } }) || undefined;
+    const consultation = await prisma.consultation.findUnique({ where: { id } });
+    return consultation as Consultation | undefined;
   }
 
   async createConsultation(consultation: InsertConsultation): Promise<Consultation> {
-    return await prisma.consultation.create({ data: consultation });
+    const created = await prisma.consultation.create({ data: consultation });
+    return created as Consultation;
   }
 
   async updateConsultation(id: string, updates: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined> {
     try {
-      return await prisma.consultation.update({ where: { id }, data: updates });
+      const updated = await prisma.consultation.update({ where: { id }, data: updates });
+      return updated as Consultation;
     } catch (e) {
       return undefined;
     }
