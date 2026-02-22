@@ -14,7 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         document.dir = i18n.dir();
         document.documentElement.lang = i18n.language;
-    }, [i18n.language]);
+    }, [i18n]);
 
     return (
         <QueryClientProvider client={queryClient}>
