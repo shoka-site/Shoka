@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant } from "@shared/schema";
+import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant, type Consultation, type InsertConsultation } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -64,6 +64,13 @@ export interface IStorage {
   createConsultant(consultant: Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>): Promise<Consultant>;
   updateConsultant(id: string, consultant: Partial<Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultant | undefined>;
   deleteConsultant(id: string): Promise<boolean>;
+
+  // Consultations
+  getConsultations(): Promise<Consultation[]>;
+  getConsultation(id: string): Promise<Consultation | undefined>;
+  createConsultation(consultation: InsertConsultation): Promise<Consultation>;
+  updateConsultation(id: string, consultation: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined>;
+  deleteConsultation(id: string): Promise<boolean>;
 
 
 
@@ -353,6 +360,38 @@ export class PrismaStorage implements IStorage {
   async deleteConsultant(id: string): Promise<boolean> {
     try {
       await prisma.consultant.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Consultations
+  async getConsultations(): Promise<Consultation[]> {
+    return await prisma.consultation.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async getConsultation(id: string): Promise<Consultation | undefined> {
+    return await prisma.consultation.findUnique({ where: { id } }) || undefined;
+  }
+
+  async createConsultation(consultation: InsertConsultation): Promise<Consultation> {
+    return await prisma.consultation.create({ data: consultation });
+  }
+
+  async updateConsultation(id: string, updates: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined> {
+    try {
+      return await prisma.consultation.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
+  }
+
+  async deleteConsultation(id: string): Promise<boolean> {
+    try {
+      await prisma.consultation.delete({ where: { id } });
       return true;
     } catch (e) {
       return false;

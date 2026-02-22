@@ -191,17 +191,7 @@
             "new": "What's New",
             "cta_talk": "Let's Talk",
             "cta_expertise": "Our Expertise",
-            "scroll": "Scroll",
-            "fallback": {
-                "f1_title": "Platform Officially Launched",
-                "f1_summary": "Shoka Platform is now live — welcome aboard!",
-                "f2_title": "500+ Projects Delivered",
-                "f2_summary": "Celebrating our milestone of over 500 successful projects.",
-                "f3_title": "Baghdad Tech Summit 2026",
-                "f3_summary": "Join us at the Baghdad Tech Summit — March 15-17.",
-                "f4_title": "AI Analytics Module in Beta",
-                "f4_summary": "Our AI-powered analytics module is open for early access."
-            }
+            "scroll": "Scroll"
         },
         "static": {
             "badge": "Engineering Excellence",
@@ -283,27 +273,7 @@
             "badge": "Recognition",
             "title": "Trusted by forward-thinking teams",
             "description": "We work with organizations across the globe to build their digital future.",
-            "clients": "Enterprise Clients",
-            "testimonials": {
-                "1": {
-                    "quote": "Shoka transformed our legacy infrastructure into a modern, scalable cloud platform. Their expertise in AI integration was exceptional.",
-                    "author": "Amira Hassan",
-                    "role": "CTO, National Data Systems",
-                    "rating": 5
-                },
-                "2": {
-                    "quote": "Working with Shoka was a game-changer. They delivered a complex full-stack solution ahead of schedule with remarkable precision.",
-                    "author": "Omar Al-Rashid",
-                    "role": "VP Engineering, Modern Banking Corp",
-                    "rating": 5
-                },
-                "3": {
-                    "quote": "Their AI-driven approach to solving our data challenges exceeded all expectations. True engineering excellence.",
-                    "author": "Layla Ibrahim",
-                    "role": "Director of Innovation, Smart City Initiative",
-                    "rating": 5
-                }
-            }
+            "clients": "Enterprise Clients"
         },
         "projects": {
             "badge": "Portfolio",
@@ -372,24 +342,7 @@
         "insights": {
             "title": "Insights & Perspectives",
             "subtitle": "Thought Leadership",
-            "description": "Stay ahead of the curve with our latest research and engineering breakthroughs.",
-            "topics": {
-                "1": {
-                    "title": "The Future of AI in Modern Infrastructure",
-                    "desc": "Exploring how artificial intelligence is reshaping enterprise systems and cloud architecture.",
-                    "readTime": "5 min read"
-                },
-                "2": {
-                    "title": "Building Resilient Cloud Systems",
-                    "desc": "Best practices for designing fault-tolerant, scalable cloud infrastructure that grows with your business.",
-                    "readTime": "7 min read"
-                },
-                "3": {
-                    "title": "Data-Driven Decision Making",
-                    "desc": "Transforming raw data into actionable insights through advanced analytics and machine learning.",
-                    "readTime": "6 min read"
-                }
-            }
+            "description": "Stay ahead of the curve with our latest research and engineering breakthroughs."
         },
         "industries": {
             "title": "Industries",
@@ -553,6 +506,8 @@
             "submit": "Send Message",
             "success_title": "Message Sent",
             "success_desc": "We've received your inquiry and will respond within 24 hours.",
+            "error_title": "Error",
+            "error_desc": "Something went wrong. Please try again later.",
             "validation": {
                 "name": "Name is required",
                 "email": "Invalid email address",

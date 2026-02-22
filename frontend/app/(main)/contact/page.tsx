@@ -34,12 +34,36 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: t('contact.form.success_title'),
-      description: t('contact.form.success_desc'),
-    });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch('/api/admin/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        toast({
+          title: t('contact.form.success_title'),
+          description: t('contact.form.success_desc'),
+        });
+        form.reset();
+      } else {
+        toast({
+          title: t('contact.form.error_title'),
+          description: t('contact.form.error_desc'),
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: t('contact.form.error_title'),
+        description: t('contact.form.error_desc'),
+        variant: "destructive",
+      });
+    }
   }
 
   return (

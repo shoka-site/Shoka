@@ -2,9 +2,11 @@
 
 import Section from "@/components/ui/section";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Building2 } from "lucide-react";
+import { useIndustries } from "@/hooks/use-content";
 
 export default function Industries() {
     const { t, i18n } = useTranslation();

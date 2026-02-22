@@ -145,4 +145,19 @@ export const consultantSchema = z.object({
 });
 export type Consultant = z.infer<typeof consultantSchema>;
 
+// Consultation schema
+export const consultationSchema = z.object({
+    id: z.string().uuid(),
+    name: z.string(),
+    email: z.string().email(),
+    company: z.string().optional(),
+    message: z.string(),
+    status: z.enum(["pending", "responded", "closed"]).default("pending"),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
+export type Consultation = z.infer<typeof consultationSchema>;
+export const insertConsultationSchema = consultationSchema.omit({ id: true, status: true, createdAt: true, updatedAt: true });
+export type InsertConsultation = z.infer<typeof insertConsultationSchema>;
+
 

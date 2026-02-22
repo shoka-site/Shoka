@@ -167,3 +167,16 @@ model TeamMember {
 
   @@map("our_team")
 }
+
+model Consultation {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  message   String
+  status    String   @default("pending") // pending | responded | closed
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("consultations")
+}

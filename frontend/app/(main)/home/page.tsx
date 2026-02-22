@@ -148,17 +148,8 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   const { t } = useTranslation();
-  const FALLBACK_UPDATES = [
-    { id: "f1", type: "new" as UpdateType, title: t("hero.updates.fallback.f1_title"), summary: t("hero.updates.fallback.f1_summary") },
-    { id: "f2", type: "achievement" as UpdateType, title: t("hero.updates.fallback.f2_title"), summary: t("hero.updates.fallback.f2_summary") },
-    { id: "f3", type: "event" as UpdateType, title: t("hero.updates.fallback.f3_title"), summary: t("hero.updates.fallback.f3_summary") },
-    { id: "f4", type: "news" as UpdateType, title: t("hero.updates.fallback.f4_title"), summary: t("hero.updates.fallback.f4_summary") },
-  ];
-
   const { data: raw = [] } = usePlatformUpdates();
-  const items = raw.length > 0
-    ? raw.map(u => ({ id: u.id, type: u.type as UpdateType, title: u.title, summary: u.summary }))
-    : FALLBACK_UPDATES;
+  const items = raw.map(u => ({ id: u.id, type: u.type as UpdateType, title: u.title, summary: u.summary }));
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
