@@ -5,6 +5,7 @@ export const userSchema = z.object({
     id: z.string().uuid(),
     username: z.string().min(1),
     password: z.string().min(1),
+    email: z.string().email(),
 });
 export type User = z.infer<typeof userSchema>;
 export const insertUserSchema = userSchema.omit({ id: true });

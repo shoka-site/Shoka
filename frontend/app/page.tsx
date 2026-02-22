@@ -77,30 +77,40 @@ export default function WelcomeV3() {
                 style={{ backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(15,10,4,0.4) 50%, rgba(0,0,0,0.9) 100%)" }}
             />
 
-            {/* Floating Golden Dust Particles (CSS Only) */}
+            {/* Floating Golden Dust Particles - Generated on client only to avoid hydration mismatch */}
             <div className="absolute inset-0 z-10 pointer-events-none">
-                {[...Array(20)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-accent rounded-full opacity-20"
-                        initial={{
-                            x: Math.random() * 2000,
-                            y: Math.random() * 1000,
-                            scale: Math.random() * 0.5
-                        }}
-                        animate={{
-                            y: [null, -200],
-                            opacity: [0, 0.3, 0],
-                            x: [null, (Math.random() - 0.5) * 100 + "px"]
-                        }}
-                        transition={{
-                            duration: 5 + Math.random() * 10,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: Math.random() * 5
-                        }}
-                    />
-                ))}
+                {typeof window !== 'undefined' && [...Array(20)].map((_, i) => {
+                    // Generate random values once per render
+                    const x = Math.random() * 2000;
+                    const y = Math.random() * 1000;
+                    const scale = Math.random() * 0.5;
+                    const duration = 5 + Math.random() * 10;
+                    const delay = Math.random() * 5;
+                    const xOffset = (Math.random() - 0.5) * 100;
+                    
+                    return (
+                        <motion.div
+                            key={i}
+                            className="absolute w-1 h-1 bg-accent rounded-full opacity-20"
+                            initial={{
+                                x,
+                                y,
+                                scale
+                            }}
+                            animate={{
+                                y: [y, y - 200],
+                                opacity: [0, 0.3, 0],
+                                x: [x, x + xOffset]
+                            }}
+                            transition={{
+                                duration,
+                                repeat: Infinity,
+                                ease: "linear",
+                                delay
+                            }}
+                        />
+                    );
+                })}
             </div>
 
             {/* 2. Main Narrative Content */}
