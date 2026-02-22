@@ -12,7 +12,6 @@ async function fetchContent<T>(endpoint: string, lang: string): Promise<T> {
 export interface Service {
     id: string;
     order: number;
-    iconName: string;
     title: string;
     description: string;
     published: boolean;
@@ -109,7 +108,6 @@ export function usePlatformUpdates() {
 export interface Industry {
     id: string;
     order: number;
-    iconName: string;
     title: string;
     description: string;
     published: boolean;

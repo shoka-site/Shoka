@@ -17,7 +17,8 @@ export default function AdminProjects() {
     const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
         imageUrl: "",
-        category: "",
+        categoryEn: "",
+        categoryAr: "",
         titleEn: "",
         titleAr: "",
         descriptionEn: "",
@@ -80,7 +81,8 @@ export default function AdminProjects() {
     const resetForm = () => {
         setFormData({
             imageUrl: "",
-            category: "",
+            categoryEn: "",
+            categoryAr: "",
             titleEn: "",
             titleAr: "",
             descriptionEn: "",
@@ -134,7 +136,8 @@ export default function AdminProjects() {
     const handleEdit = (project: any) => {
         setFormData({
             imageUrl: project.imageUrl,
-            category: project.category,
+            categoryEn: project.categoryEn || project.category,
+            categoryAr: project.categoryAr || project.category,
             titleEn: project.titleEn || project.title,
             titleAr: project.titleAr || project.title,
             descriptionEn: project.descriptionEn || project.description,
@@ -162,8 +165,9 @@ export default function AdminProjects() {
 
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
+                                <label className="text-sm font-medium">Project Image</label>
                                 <Input
                                     type="file"
                                     accept="image/*"
@@ -187,17 +191,29 @@ export default function AdminProjects() {
                                     </div>
                                 )}
                             </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Order</label>
+                                <Input
+                                    type="number"
+                                    placeholder="Order"
+                                    value={formData.order}
+                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
                             <Input
-                                placeholder="Category"
-                                value={formData.category}
-                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                placeholder="Category (English)"
+                                value={formData.categoryEn}
+                                onChange={(e) => setFormData({ ...formData, categoryEn: e.target.value })}
                                 required
                             />
                             <Input
-                                type="number"
-                                placeholder="Order"
-                                value={formData.order}
-                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
+                                placeholder="Category (Arabic)"
+                                value={formData.categoryAr}
+                                onChange={(e) => setFormData({ ...formData, categoryAr: e.target.value })}
                                 required
                             />
                         </div>
@@ -269,7 +285,7 @@ export default function AdminProjects() {
                                     {project.featured && (
                                         <span className="text-xs bg-yellow-500/20 text-yellow-600 px-2 py-1 rounded">Featured</span>
                                     )}
-                                    <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">{project.category}</span>
+                                    <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">{project.categoryEn || project.category}</span>
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{project.title || project.titleEn}</h3>
                                 <p className="text-sm mb-2">{project.description || project.descriptionEn}</p>

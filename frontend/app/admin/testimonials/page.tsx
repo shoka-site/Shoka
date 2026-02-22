@@ -16,8 +16,10 @@ export default function AdminTestimonials() {
     const [formData, setFormData] = useState({
         quoteEn: "",
         quoteAr: "",
-        author: "",
-        role: "",
+        authorEn: "",
+        authorAr: "",
+        roleEn: "",
+        roleAr: "",
         rating: 5,
         order: 1,
         published: true,
@@ -77,8 +79,10 @@ export default function AdminTestimonials() {
         setFormData({
             quoteEn: "",
             quoteAr: "",
-            author: "",
-            role: "",
+            authorEn: "",
+            authorAr: "",
+            roleEn: "",
+            roleAr: "",
             rating: 5,
             order: 1,
             published: true,
@@ -100,8 +104,10 @@ export default function AdminTestimonials() {
         setFormData({
             quoteEn: testimonial.quoteEn || testimonial.quote,
             quoteAr: testimonial.quoteAr || testimonial.quote,
-            author: testimonial.author,
-            role: testimonial.role,
+            authorEn: testimonial.authorEn || testimonial.author,
+            authorAr: testimonial.authorAr || testimonial.author,
+            roleEn: testimonial.roleEn || testimonial.role,
+            roleAr: testimonial.roleAr || testimonial.role,
             rating: testimonial.rating,
             order: testimonial.order,
             published: testimonial.published,
@@ -125,19 +131,37 @@ export default function AdminTestimonials() {
 
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <Input
-                                placeholder="Author Name"
-                                value={formData.author}
-                                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                                placeholder="Author Name (English)"
+                                value={formData.authorEn}
+                                onChange={(e) => setFormData({ ...formData, authorEn: e.target.value })}
                                 required
                             />
                             <Input
-                                placeholder="Role/Position"
-                                value={formData.role}
-                                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                placeholder="Author Name (Arabic)"
+                                value={formData.authorAr}
+                                onChange={(e) => setFormData({ ...formData, authorAr: e.target.value })}
                                 required
                             />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <Input
+                                placeholder="Role/Position (English)"
+                                value={formData.roleEn}
+                                onChange={(e) => setFormData({ ...formData, roleEn: e.target.value })}
+                                required
+                            />
+                            <Input
+                                placeholder="Role/Position (Arabic)"
+                                value={formData.roleAr}
+                                onChange={(e) => setFormData({ ...formData, roleAr: e.target.value })}
+                                required
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
                             <Input
                                 type="number"
                                 min="1"
@@ -145,6 +169,13 @@ export default function AdminTestimonials() {
                                 placeholder="Rating (1-5)"
                                 value={formData.rating}
                                 onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) })}
+                                required
+                            />
+                            <Input
+                                type="number"
+                                placeholder="Order"
+                                value={formData.order}
+                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
                                 required
                             />
                         </div>
@@ -166,14 +197,7 @@ export default function AdminTestimonials() {
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                type="number"
-                                placeholder="Order"
-                                value={formData.order}
-                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                                required
-                            />
+                        <div className="flex items-center gap-2">
                             <label className="flex items-center gap-2">
                                 <input
                                     type="checkbox"
@@ -205,8 +229,8 @@ export default function AdminTestimonials() {
                                 </div>
                                 <p className="text-sm italic mb-3">&quot;{testimonial.quote || testimonial.quoteEn}&quot;</p>
                                 <div>
-                                    <p className="font-bold">{testimonial.author}</p>
-                                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                                    <p className="font-bold">{testimonial.authorEn} / {testimonial.authorAr}</p>
+                                    <p className="text-sm text-muted-foreground">{testimonial.roleEn} / {testimonial.roleAr}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">

@@ -4,13 +4,7 @@ import Section from "@/components/ui/section";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, Building2, Factory, Landmark, Stethoscope, GraduationCap, Plane } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useIndustries } from "@/hooks/use-content";
-
-const iconMap: Record<string, any> = {
-    Building2, Factory, Landmark, Stethoscope, GraduationCap, Plane
-};
+import { ArrowRight, Building2 } from "lucide-react";
 
 export default function Industries() {
     const { t, i18n } = useTranslation();
@@ -35,7 +29,7 @@ export default function Industries() {
             <Section>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {!isLoading && industries.map((industry, index) => {
-                        const Icon = iconMap[industry.iconName] || Building2;
+                        const Icon = Building2;
                         return (
                             <motion.div
                                 key={industry.id}

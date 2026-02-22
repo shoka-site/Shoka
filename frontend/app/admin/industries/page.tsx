@@ -14,7 +14,6 @@ export default function AdminIndustries() {
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({
-        iconName: "",
         titleEn: "",
         titleAr: "",
         descriptionEn: "",
@@ -75,7 +74,6 @@ export default function AdminIndustries() {
 
     const resetForm = () => {
         setFormData({
-            iconName: "",
             titleEn: "",
             titleAr: "",
             descriptionEn: "",
@@ -98,7 +96,6 @@ export default function AdminIndustries() {
 
     const handleEdit = (industry: any) => {
         setFormData({
-            iconName: industry.iconName,
             titleEn: industry.titleEn || industry.title,
             titleAr: industry.titleAr || industry.title,
             descriptionEn: industry.descriptionEn || industry.description,
@@ -125,13 +122,7 @@ export default function AdminIndustries() {
 
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                placeholder="Icon Name (e.g., Code, Database)"
-                                value={formData.iconName}
-                                onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                                required
-                            />
+                        <div className="grid grid-cols-1 gap-4">
                             <Input
                                 type="number"
                                 placeholder="Order"
@@ -197,7 +188,6 @@ export default function AdminIndustries() {
                                     {industry.published && (
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
-                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {industry.iconName}</span>
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{industry.title || industry.titleEn}</h3>
                                 <p className="text-sm">{industry.description || industry.descriptionEn}</p>

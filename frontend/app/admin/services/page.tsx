@@ -1,22 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Edit, Trash2 } from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import type { Service } from "@/hooks/use-content";
 
 export default function AdminServices() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
-        iconName: "",
+        type: "Other",
         titleEn: "",
         titleAr: "",
         descriptionEn: "",
@@ -77,7 +82,7 @@ export default function AdminServices() {
 
     const resetForm = () => {
         setFormData({
-            iconName: "",
+            type: "Other",
             titleEn: "",
             titleAr: "",
             descriptionEn: "",
@@ -91,10 +96,6 @@ export default function AdminServices() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.iconName) {
-            alert("Please provide an Icon Name or upload an Image");
-            return;
-        }
         if (editingId) {
             updateMutation.mutate({ id: editingId, data: formData });
         } else {
@@ -102,34 +103,9 @@ export default function AdminServices() {
         }
     };
 
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        setIsUploading(true);
-        const uploadData = new FormData();
-        uploadData.append("file", file);
-
-        try {
-            const res = await fetch("/api/upload", {
-                method: "POST",
-                body: uploadData,
-            });
-            const data = await res.json();
-            if (data.url) {
-                setFormData((prev) => ({ ...prev, iconName: data.url }));
-            }
-        } catch (error) {
-            console.error("Upload error:", error);
-            alert("Failed to upload image");
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
     const handleEdit = (service: any) => {
         setFormData({
-            iconName: service.iconName,
+            type: service.type || "Other",
             titleEn: service.titleEn || service.title,
             titleAr: service.titleAr || service.title,
             descriptionEn: service.descriptionEn || service.description,
@@ -156,50 +132,39 @@ export default function AdminServices() {
 
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4">
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium">Text Icon (e.g., Target, Brain) OR Image</label>
+                                    <label className="text-sm font-medium">Service Type</label>
+                                    <Select
+                                        value={formData.type}
+                                        onValueChange={(value) => setFormData({ ...formData, type: value })}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select type" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="AI">AI</SelectItem>
+                                            <SelectItem value="Cloud">Cloud</SelectItem>
+                                            <SelectItem value="Full Stack">Full Stack</SelectItem>
+                                            <SelectItem value="Mobile">Mobile</SelectItem>
+                                            <SelectItem value="Cybersecurity">Cybersecurity</SelectItem>
+                                            <SelectItem value="Data Analysis">Data Analysis</SelectItem>
+                                            <SelectItem value="Other">Other</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium">Order</label>
                                     <Input
-                                        placeholder="Icon Name"
-                                        value={formData.iconName}
-                                        onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
+                                        type="number"
+                                        placeholder="Order"
+                                        value={formData.order}
+                                        onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
                                         required
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-xs text-muted-foreground uppercase text-center">- OR UPLOAD NEW -</p>
-                                    <Input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleFileUpload}
-                                        disabled={isUploading}
-                                        className="cursor-pointer"
-                                    />
-                                    {isUploading && <p className="text-xs text-muted-foreground mr-1">Uploading...</p>}
-                                    {formData.iconName && (formData.iconName.startsWith('/uploads/') || formData.iconName.startsWith('http')) && (
-                                        <div className="flex flex-col gap-1 mt-2">
-                                            <p className="text-xs text-muted-foreground truncate" title={formData.iconName}>
-                                                Image Url: {formData.iconName.split('/').pop()}
-                                            </p>
-                                            <Image
-                                                src={formData.iconName || ""}
-                                                alt="Preview"
-                                                width={64}
-                                                height={64}
-                                                className="h-16 w-auto object-contain rounded"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
                             </div>
-                            <Input
-                                type="number"
-                                placeholder="Order"
-                                value={formData.order}
-                                onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                                required
-                            />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
@@ -258,7 +223,7 @@ export default function AdminServices() {
                                     {service.published && (
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
-                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {service.iconName}</span>
+                                    <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">Type: {service.type}</span>
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{service.title || service.titleEn}</h3>
                                 <p className="text-sm">{service.description || service.descriptionEn}</p>

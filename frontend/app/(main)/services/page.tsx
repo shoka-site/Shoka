@@ -9,10 +9,6 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useServices } from "@/hooks/use-content";
 
-const iconMap: Record<string, any> = {
-  Brain, Code, Database, Cloud
-};
-
 export default function Services() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
@@ -36,8 +32,6 @@ export default function Services() {
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {!isLoading && services.map((category, index) => {
-            const isImage = category.iconName?.startsWith('/uploads/') || category.iconName?.startsWith('http');
-            const Icon = !isImage ? (iconMap[category.iconName as string] || Brain) : null;
             return (
               <motion.div
                 key={category.id}
@@ -47,25 +41,8 @@ export default function Services() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
-                  <div className="h-48 overflow-hidden relative">
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                      {isImage ? (
-                        <Image src={category.iconName || ""} alt={category.title} fill className="object-cover opacity-60" />
-                      ) : (
-                        <Icon className="w-16 h-16 text-primary/40" />
-                      )}
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
-                    <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
-                      {isImage ? (
-                        <Image src={category.iconName || ""} alt={category.title} width={32} height={32} className="object-contain" />
-                      ) : (
-                        <Icon className="w-6 h-6" />
-                      )}
-                    </div>
-                  </div>
-                  <CardHeader className="pt-2"> {/* Reduced padding top since icon is in image area */}
-                    <CardTitle className="text-2xl font-display mt-2">{category.title}</CardTitle>
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-display">{category.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="flex-grow">
                     <CardDescription className="text-base text-muted-foreground mb-6">

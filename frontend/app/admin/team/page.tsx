@@ -14,6 +14,8 @@ export default function AdminTeam() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
+    const [isUploadingResume, setIsUploadingResume] = useState(false);
     const [formData, setFormData] = useState({
         nameEn: "",
         nameAr: "",
@@ -107,6 +109,56 @@ export default function AdminTeam() {
         }
     };
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploadingImage(true);
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            if (data.url) {
+                setFormData((prev) => ({ ...prev, imageUrl: data.url }));
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Failed to upload image");
+        } finally {
+            setIsUploadingImage(false);
+        }
+    };
+
+    const handleResumeUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploadingResume(true);
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            if (data.url) {
+                setFormData((prev) => ({ ...prev, resumeUrl: data.url }));
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Failed to upload resume");
+        } finally {
+            setIsUploadingResume(false);
+        }
+    };
+
     const handleEdit = (member: any) => {
         setFormData({
             nameEn: member.nameEn,
@@ -142,24 +194,51 @@ export default function AdminTeam() {
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-3 gap-4">
-                            <div>
-                                <label className="text-sm font-medium mb-1 block">Image URL</label>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Team Member Photo</label>
                                 <Input
-                                    placeholder="/uploads/team/member.png"
-                                    value={formData.imageUrl}
-                                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                                    required
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    disabled={isUploadingImage}
+                                    className="cursor-pointer"
                                 />
+                                {isUploadingImage && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                                {formData.imageUrl && (
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
+                                            Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
+                                        </p>
+                                        <Image
+                                            src={formData.imageUrl || ""}
+                                            alt="Preview"
+                                            width={80}
+                                            height={80}
+                                            className="h-20 w-20 object-cover rounded-full"
+                                        />
+                                    </div>
+                                )}
                             </div>
-                            <div>
-                                <label className="text-sm font-medium mb-1 block">Resume URL</label>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Resume (PDF)</label>
                                 <Input
-                                    placeholder="https://..."
-                                    value={formData.resumeUrl}
-                                    onChange={(e) => setFormData({ ...formData, resumeUrl: e.target.value })}
+                                    type="file"
+                                    accept=".pdf,.doc,.docx"
+                                    onChange={handleResumeUpload}
+                                    disabled={isUploadingResume}
+                                    className="cursor-pointer"
                                 />
+                                {isUploadingResume && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                                {formData.resumeUrl && (
+                                    <div className="flex items-center gap-2">
+                                        <FileText className="w-4 h-4 text-blue-500" />
+                                        <p className="text-xs text-muted-foreground truncate" title={formData.resumeUrl}>
+                                            {formData.resumeUrl.startsWith('/uploads/') ? formData.resumeUrl.split('/').pop() : formData.resumeUrl}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
-                            <div>
+                            <div className="space-y-2">
                                 <label className="text-sm font-medium mb-1 block">Order</label>
                                 <Input
                                     type="number"

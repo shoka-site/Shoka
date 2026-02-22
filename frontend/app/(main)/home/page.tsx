@@ -555,8 +555,6 @@ export default function Home() {
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => {
-              const isImage = service.iconName?.startsWith('/uploads/') || service.iconName?.startsWith('http');
-              const Icon = !isImage ? (iconMap[service.iconName as string] || Brain) : null;
               return (
                 <motion.div
                   key={service.id}
@@ -567,19 +565,6 @@ export default function Home() {
                   whileHover={{ y: -8, transition: { duration: 0.2 } }}
                   className="bg-background/60 p-8 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer"
                 >
-                  <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
-                    {isImage ? (
-                      <Image
-                        src={service.iconName || ""}
-                        alt={service.title}
-                        width={48}
-                        height={48}
-                        className="object-contain"
-                      />
-                    ) : (
-                      <Icon className="w-12 h-12" />
-                    )}
-                  </div>
                   <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
                   <Link href="/services">
@@ -789,15 +774,8 @@ export default function Home() {
       )}
 
       {/* ── 8. RESULTS — outcomes delivered to clients ────────────── */}
-      <section className="relative overflow-hidden py-24 md:py-32" style={{ backgroundColor: "#0f0a04" }}>
-        {/* Grain overlay */}
-        <div className="absolute inset-0 opacity-[0.15] pointer-events-none"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }}
-        />
-        {/* Gold top rule */}
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
-
-        <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+      <Section background="muted" className="border-y border-border/30">
+        <div className="relative z-10">
           <FadeInSection>
             <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
               {t("home.results.badge")}
@@ -805,20 +783,20 @@ export default function Home() {
           </FadeInSection>
           <FadeInSection delay={0.06}>
             <h2
-              className="text-center font-display font-black text-white leading-[1.0] mb-6"
+              className="text-center font-display font-black text-foreground leading-[1.0] mb-6"
               style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
             >
               {t("home.results.title")}
             </h2>
           </FadeInSection>
           <FadeInSection delay={0.12}>
-            <p className="text-center text-lg max-w-2xl mx-auto mb-20 leading-relaxed" style={{ color: "rgba(247,243,235,0.5)" }}>
+            <p className="text-center text-lg max-w-2xl mx-auto mb-20 leading-relaxed text-muted-foreground">
               {t("home.results.description")}
             </p>
           </FadeInSection>
 
           {/* Results grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(194,164,92,0.12)" }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border/30 rounded-2xl overflow-hidden border border-border/30">
             {[
               { value: "3×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
               { value: "62%", label: t("home.results.items.cost_reduction"), sub: t("home.results.items.cost_reduction_sub") },
@@ -835,22 +813,19 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.07, duration: 0.5, ease: "easeOut" }}
-                className="group flex flex-col justify-between p-8 md:p-10 transition-all duration-300"
-                style={{ backgroundColor: "rgba(15,10,4,1)" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(194,164,92,0.06)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(15,10,4,1)"; }}
+                className="group flex flex-col justify-between p-8 md:p-10 transition-all duration-300 bg-background/40 hover:bg-background/80"
               >
                 <div
-                  className="font-display font-black leading-none mb-3 transition-colors duration-300"
-                  style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)", color: "#C2A45C" }}
+                  className="font-display font-black leading-none mb-3 transition-colors duration-300 text-accent group-hover:scale-105"
+                  style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}
                 >
                   {result.value}
                 </div>
                 <div>
-                  <div className="text-white font-semibold text-base md:text-lg leading-snug mb-1">
+                  <div className="text-foreground font-semibold text-base md:text-lg leading-snug mb-1">
                     {result.label}
                   </div>
-                  <div className="text-xs" style={{ color: "rgba(247,243,235,0.38)" }}>
+                  <div className="text-xs text-muted-foreground">
                     {result.sub}
                   </div>
                 </div>
@@ -860,15 +835,12 @@ export default function Home() {
 
           {/* Footnote */}
           <FadeInSection delay={0.2}>
-            <p className="text-center text-xs mt-10" style={{ color: "rgba(247,243,235,0.25)" }}>
+            <p className="text-center text-xs mt-10 text-muted-foreground/60">
               {t("home.results.footnote")}
             </p>
           </FadeInSection>
         </div>
-
-        {/* Gold bottom rule */}
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent to-transparent" />
-      </section>
+      </Section>
 
       {/* ── 9. CTA — close the deal ───────────────────────────────── */}
       <Section background="muted">

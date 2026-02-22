@@ -17,7 +17,7 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export const serviceSchema = z.object({
     id: z.string().uuid(),
     order: z.number(),
-    iconName: z.string(),
+    type: z.string().default("Other"),
     titleEn: z.string(),
     titleAr: z.string(),
     descriptionEn: z.string(),
@@ -102,7 +102,6 @@ export type PlatformUpdate = z.infer<typeof platformUpdateSchema>;
 export const industrySchema = z.object({
     id: z.string().uuid(),
     order: z.number(),
-    iconName: z.string(),
     titleEn: z.string(),
     titleAr: z.string(),
     descriptionEn: z.string(),

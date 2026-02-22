@@ -12,7 +12,7 @@ export async function initializeStorage() {
             console.log('  Creating default Services...');
             await storage.createService({
                 order: 1,
-                iconName: 'Brain',
+                type: 'Other',
                 titleEn: 'AI Solutions',
                 titleAr: 'حلول الذكاء الاصطناعي',
                 descriptionEn: 'Intelligent automation, AI integration, and smart systems.',
@@ -22,7 +22,7 @@ export async function initializeStorage() {
 
             await storage.createService({
                 order: 2,
-                iconName: 'Code',
+                type: 'Other',
                 titleEn: 'Full Stack Development',
                 titleAr: 'تطوير متكامل',
                 descriptionEn: 'Scalable, high-performance web & system development.',
@@ -32,7 +32,7 @@ export async function initializeStorage() {
 
             await storage.createService({
                 order: 3,
-                iconName: 'Database',
+                type: 'Other',
                 titleEn: 'Data & Analytics',
                 titleAr: 'البيانات والتحليلات',
                 descriptionEn: 'Transforming data into strategic decisions.',
@@ -42,7 +42,7 @@ export async function initializeStorage() {
 
             await storage.createService({
                 order: 4,
-                iconName: 'Cloud',
+                type: 'Other',
                 titleEn: 'Cloud Services',
                 titleAr: 'الخدمات السحابية',
                 descriptionEn: 'Secure, scalable cloud infrastructure & deployment.',

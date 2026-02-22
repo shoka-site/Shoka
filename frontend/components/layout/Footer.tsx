@@ -36,14 +36,6 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
-          <p>© {new Date().getFullYear()} {t('footer.copyright')} {t('footer.rights')}</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
-          </div>
-        </div>
       </div>
     </footer>
   );
