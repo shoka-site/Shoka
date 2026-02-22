@@ -287,7 +287,7 @@ export default function AdminConsultants() {
                     ))}
                     {consultants.length === 0 && (
                         <div className="col-span-full text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No consultants found. Click "Add New Consultant" to create one.
+                            No consultants found. Click &quot;Add New Consultant&quot; to create one.
                         </div>
                     )}
                 </div>

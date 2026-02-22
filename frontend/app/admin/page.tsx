@@ -72,7 +72,7 @@ export default function AdminDashboard() {
                     <h2 className="text-xl font-bold mb-4">Quick Tips</h2>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                         <li>• All content supports both English and Arabic</li>
-                        <li>• Use the "Published" toggle to show/hide content on the website</li>
+                        <li>• Use the &quot;Published&quot; toggle to show/hide content on the website</li>
                         <li>• Changes are reflected immediately on the frontend</li>
                         <li>• Order field controls the display sequence</li>
                         <li>• Real-time data synchronization across all admin pages</li>
