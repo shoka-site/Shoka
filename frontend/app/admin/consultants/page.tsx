@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -251,7 +252,13 @@ export default function AdminConsultants() {
                             <div className="flex items-start gap-4">
                                 <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     {consultant.imageUrl ? (
-                                        <img src={consultant.imageUrl} alt={consultant.name} className="w-full h-full object-cover" />
+                                        <Image
+                                            src={consultant.imageUrl}
+                                            alt={consultant.name}
+                                            width={80}
+                                            height={80}
+                                            className="w-full h-full object-cover"
+                                        />
                                     ) : (
                                         <Camera className="w-8 h-8 text-muted-foreground" />
                                     )}

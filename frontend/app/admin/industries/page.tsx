@@ -219,7 +219,7 @@ export default function AdminIndustries() {
                     ))}
                     {industries.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No industries found. Click "Add New" to create one.
+                            No industries found. Click &quot;Add New&quot; to create one.
                         </div>
                     )}
                 </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { Brain, Code, Database, Cloud, ArrowRight, Star, Target, Zap, Layers, Cpu, Lock, ChevronRight, ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -568,7 +569,13 @@ export default function Home() {
                 >
                   <div className="text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                     {isImage ? (
-                      <img src={service.iconName} alt={service.title} className="w-12 h-12 object-contain" />
+                      <Image
+                        src={service.iconName || ""}
+                        alt={service.title}
+                        width={48}
+                        height={48}
+                        className="object-contain"
+                      />
                     ) : (
                       <Icon className="w-12 h-12" />
                     )}
@@ -609,7 +616,12 @@ export default function Home() {
                 className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
               >
                 <div className="relative h-80 overflow-hidden">
-                  <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <Image
+                    src={project.imageUrl || ""}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -686,7 +698,7 @@ export default function Home() {
                       ))}
                     </div>
                     <p className="text-lg md:text-xl text-foreground/80 mb-8 italic leading-relaxed">
-                      "{testimonials[currentTestimonial].quote}"
+                      &quot;{testimonials[currentTestimonial].quote}&quot;
                     </p>
                     <div className="text-center">
                       <div className="font-bold text-foreground">{testimonials[currentTestimonial].author}</div>

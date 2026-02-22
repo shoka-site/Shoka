@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@/components/ui/section";
+import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Award, Users, Globe, Target, Linkedin, Twitter, Mail } from "lucide-react";
@@ -32,9 +33,11 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="absolute -inset-4 bg-accent/10 rounded-3xl transform -rotate-2"></div>
-            <img
+            <Image
               src="/hero-pattern.png"
               alt="Office"
+              width={800}
+              height={1000}
               className="rounded-2xl shadow-2xl relative z-10 w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
           </div>
@@ -107,10 +110,11 @@ export default function About() {
             >
               <div className="group relative overflow-hidden rounded-xl bg-muted/30 h-full flex flex-col">
                 <div className="aspect-[3/4] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
-                  <img
+                  <Image
                     src={member.imageUrl}
                     alt={member.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop';
                     }}

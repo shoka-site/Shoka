@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -274,7 +275,13 @@ export default function AdminTeam() {
                             <div className="flex items-start gap-4">
                                 <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     {member.imageUrl ? (
-                                        <img src={member.imageUrl} alt={member.nameEn} className="w-full h-full object-cover" />
+                                        <Image
+                                            src={member.imageUrl}
+                                            alt={member.nameEn}
+                                            width={80}
+                                            height={80}
+                                            className="w-full h-full object-cover"
+                                        />
                                     ) : (
                                         <Camera className="w-8 h-8 text-muted-foreground" />
                                     )}
@@ -313,7 +320,7 @@ export default function AdminTeam() {
                     ))}
                     {members.length === 0 && (
                         <div className="col-span-full text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No team members found. Click "Add Team Member" to create one.
+                            No team members found. Click &quot;Add Team Member&quot; to create one.
                         </div>
                     )}
                 </div>

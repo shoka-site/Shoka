@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@/components/ui/section";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -43,10 +44,11 @@ export default function Portfolio() {
             >
               <div className="overflow-hidden rounded-2xl mb-6 relative aspect-video">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                <img
+                <Image
                   src={project.imageUrl}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 

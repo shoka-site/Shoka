@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@/components/ui/section";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { ArrowRight, Brain, Code, Database, Cloud } from "lucide-react";
@@ -49,7 +50,7 @@ export default function Services() {
                   <div className="h-48 overflow-hidden relative">
                     <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                       {isImage ? (
-                        <img src={category.iconName} alt={category.title} className="w-full h-full object-cover opacity-60" />
+                        <Image src={category.iconName || ""} alt={category.title} fill className="object-cover opacity-60" />
                       ) : (
                         <Icon className="w-16 h-16 text-primary/40" />
                       )}
@@ -57,7 +58,7 @@ export default function Services() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                     <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
                       {isImage ? (
-                        <img src={category.iconName} alt={category.title} className="w-8 h-8 object-contain" />
+                        <Image src={category.iconName || ""} alt={category.title} width={32} height={32} className="object-contain" />
                       ) : (
                         <Icon className="w-6 h-6" />
                       )}

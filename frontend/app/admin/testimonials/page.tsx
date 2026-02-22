@@ -203,7 +203,7 @@ export default function AdminTestimonials() {
                                         ⭐ {testimonial.rating}/5
                                     </span>
                                 </div>
-                                <p className="text-sm italic mb-3">"{testimonial.quote || testimonial.quoteEn}"</p>
+                                <p className="text-sm italic mb-3">&quot;{testimonial.quote || testimonial.quoteEn}&quot;</p>
                                 <div>
                                     <p className="font-bold">{testimonial.author}</p>
                                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>

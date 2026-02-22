@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -181,7 +182,13 @@ export default function AdminServices() {
                                             <p className="text-xs text-muted-foreground truncate" title={formData.iconName}>
                                                 Image Url: {formData.iconName.split('/').pop()}
                                             </p>
-                                            <img src={formData.iconName} alt="Preview" className="h-16 w-auto object-contain rounded" />
+                                            <Image
+                                                src={formData.iconName || ""}
+                                                alt="Preview"
+                                                width={64}
+                                                height={64}
+                                                className="h-16 w-auto object-contain rounded"
+                                            />
                                         </div>
                                     )}
                                 </div>

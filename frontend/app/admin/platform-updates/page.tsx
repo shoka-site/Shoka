@@ -267,7 +267,7 @@ export default function AdminPlatformUpdates() {
                     ))}
                     {updates.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No platform updates found. Click "Add New Update" to create one.
+                            No platform updates found. Click &quot;Add New Update&quot; to create one.
                         </div>
                     )}
                 </div>

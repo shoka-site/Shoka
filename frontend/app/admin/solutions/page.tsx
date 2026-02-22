@@ -219,7 +219,7 @@ export default function AdminSolutions() {
                     ))}
                     {solutions.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No solutions found. Click "Add New" to create one.
+                            No solutions found. Click &quot;Add New&quot; to create one.
                         </div>
                     )}
                 </div>
