@@ -149,7 +149,8 @@ export default function AdminServices() {
                                             <SelectItem value="Full Stack">Full Stack</SelectItem>
                                             <SelectItem value="Mobile">Mobile</SelectItem>
                                             <SelectItem value="Cybersecurity">Cybersecurity</SelectItem>
-                                            <SelectItem value="Data Analysis">Data Analysis</SelectItem>
+                                            <SelectItem value="Data">Data</SelectItem>
+                                            <SelectItem value="Consulting">Consulting</SelectItem>
                                             <SelectItem value="Other">Other</SelectItem>
                                         </SelectContent>
                                     </Select>

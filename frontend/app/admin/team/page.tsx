@@ -7,7 +7,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Edit, Trash2, Camera, FileText } from "lucide-react";
+import { Plus, Edit, Trash2, Camera, FileText, Globe } from "lucide-react";
 import type { TeamMember } from "@/hooks/use-content";
 
 export default function AdminTeam() {
@@ -27,6 +27,7 @@ export default function AdminTeam() {
         descriptionAr: "",
         imageUrl: "",
         resumeUrl: "",
+        portfolioUrl: "",
         order: 1,
         published: true,
     });
@@ -93,6 +94,7 @@ export default function AdminTeam() {
             descriptionAr: "",
             imageUrl: "",
             resumeUrl: "",
+            portfolioUrl: "",
             order: 1,
             published: true,
         });
@@ -171,6 +173,7 @@ export default function AdminTeam() {
             descriptionAr: member.descriptionAr || "",
             imageUrl: member.imageUrl,
             resumeUrl: member.resumeUrl || "",
+            portfolioUrl: member.portfolioUrl || "",
             order: member.order,
             published: member.published,
         });
@@ -237,6 +240,14 @@ export default function AdminTeam() {
                                         </p>
                                     </div>
                                 )}
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium mb-1 block">Portfolio Link</label>
+                                <Input
+                                    placeholder="https://portfolio.com"
+                                    value={formData.portfolioUrl}
+                                    onChange={(e) => setFormData({ ...formData, portfolioUrl: e.target.value })}
+                                />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-medium mb-1 block">Order</label>
@@ -373,6 +384,9 @@ export default function AdminTeam() {
                                         )}
                                         {member.resumeUrl && (
                                             <FileText className="w-3 h-3 text-blue-500" />
+                                        )}
+                                        {member.portfolioUrl && (
+                                            <Globe className="w-3 h-3 text-accent" />
                                         )}
                                     </div>
                                     <h3 className="text-lg font-bold truncate">{member.nameEn}</h3>

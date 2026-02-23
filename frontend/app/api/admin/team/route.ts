@@ -30,6 +30,7 @@ export async function POST(request: Request) {
                 descriptionAr: body.descriptionAr,
                 imageUrl: body.imageUrl,
                 resumeUrl: body.resumeUrl,
+                portfolioUrl: body.portfolioUrl,
                 published: body.published ?? true,
             },
         });

@@ -127,15 +127,22 @@ export default function About() {
                   {member.description && (
                     <p className="text-xs text-muted-foreground italic mb-4 line-clamp-2">{member.description}</p>
                   )}
-                  {member.resumeUrl && (
-                    <div className="mt-auto">
+                  <div className="mt-auto space-y-2">
+                    {member.resumeUrl && (
                       <Button variant="outline" size="sm" asChild className="w-full">
                         <a href={member.resumeUrl} target="_blank" rel="noopener noreferrer">
                           {t('about.team.view_resume') || 'View Resume'}
                         </a>
                       </Button>
-                    </div>
-                  )}
+                    )}
+                    {member.portfolioUrl && (
+                      <Button variant="default" size="sm" asChild className="w-full">
+                        <a href={member.portfolioUrl} target="_blank" rel="noopener noreferrer">
+                          {t('about.team.view_portfolio') || 'View Portfolio'}
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>

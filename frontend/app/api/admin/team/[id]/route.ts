@@ -24,6 +24,7 @@ export async function PUT(
                 descriptionAr: body.descriptionAr,
                 imageUrl: body.imageUrl,
                 resumeUrl: body.resumeUrl,
+                portfolioUrl: body.portfolioUrl,
                 published: body.published,
             },
         });

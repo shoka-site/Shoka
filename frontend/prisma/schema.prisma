@@ -161,6 +161,7 @@ model TeamMember {
   descriptionAr String?  @map("description_ar")
   imageUrl      String   @map("image_url")
   resumeUrl     String?  @map("resume_url")
+  portfolioUrl  String?  @map("portfolio_url")
   published     Boolean  @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")

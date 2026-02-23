@@ -21,6 +21,7 @@ export async function GET(request: Request) {
             description: lang === "ar" ? member.descriptionAr : member.descriptionEn,
             imageUrl: member.imageUrl,
             resumeUrl: member.resumeUrl,
+            portfolioUrl: member.portfolioUrl,
             order: member.order,
         }));
 

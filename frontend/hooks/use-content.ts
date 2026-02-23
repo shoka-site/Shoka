@@ -172,6 +172,7 @@ export interface TeamMember {
     description?: string;
     imageUrl: string;
     resumeUrl?: string;
+    portfolioUrl?: string;
     published: boolean;
 }
 
