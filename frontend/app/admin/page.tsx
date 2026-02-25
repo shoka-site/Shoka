@@ -10,11 +10,9 @@ interface DashboardStats {
     services: number;
     projects: number;
     testimonials: number;
-    insights: number;
     updates: number;
     industries: number;
     solutions: number;
-    consultants: number;
 }
 
 export default function AdminDashboard() {
@@ -30,11 +28,9 @@ export default function AdminDashboard() {
         { icon: Briefcase, label: "Services", path: "/admin/services", key: "services" },
         { icon: FileText, label: "Projects", path: "/admin/projects", key: "projects" },
         { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials", key: "testimonials" },
-        { icon: Lightbulb, label: "Insight Topics", path: "/admin/insights", key: "insights" },
         { icon: GitBranch, label: "Platform Updates", path: "/admin/platform-updates", key: "updates" },
         { icon: Target, label: "Industries", path: "/admin/industries", key: "industries" },
         { icon: LayoutDashboard, label: "Solutions", path: "/admin/solutions", key: "solutions" },
-        { icon: MessageSquare, label: "Consultants", path: "/admin/consultants", key: "consultants" },
     ];
 
     return (

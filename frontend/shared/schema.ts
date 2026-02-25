@@ -3,8 +3,8 @@ import { z } from "zod";
 // User schema
 export const userSchema = z.object({
     id: z.string().uuid(),
-    username: z.string().min(1),
-    password: z.string().min(1),
+    name: z.string().nullable(),
+    surname: z.string().nullable(),
     email: z.string().email(),
 });
 export type User = z.infer<typeof userSchema>;
@@ -66,21 +66,6 @@ export type Testimonial = z.infer<typeof testimonialSchema>;
 
 
 
-// InsightTopic schema
-export const insightTopicSchema = z.object({
-    id: z.string().uuid(),
-    order: z.number(),
-    titleEn: z.string(),
-    titleAr: z.string(),
-    descriptionEn: z.string(),
-    descriptionAr: z.string(),
-    readTimeEn: z.string(),
-    readTimeAr: z.string(),
-    published: z.boolean().default(true),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-});
-export type InsightTopic = z.infer<typeof insightTopicSchema>;
 
 // PlatformUpdate schema
 export const platformUpdateSchema = z.object({
@@ -127,8 +112,8 @@ export const solutionSchema = z.object({
 });
 export type Solution = z.infer<typeof solutionSchema>;
 
-// Consultant schema
-export const consultantSchema = z.object({
+// TeamMember schema
+export const teamMemberSchema = z.object({
     id: z.string().uuid(),
     order: z.number(),
     nameEn: z.string(),
@@ -137,13 +122,16 @@ export const consultantSchema = z.object({
     roleAr: z.string(),
     bioEn: z.string(),
     bioAr: z.string(),
+    descriptionEn: z.string().optional().nullable(),
+    descriptionAr: z.string().optional().nullable(),
     imageUrl: z.string(),
-    socialButtons: z.string(), // JSON string
+    resumeUrl: z.string().optional().nullable(),
+    portfolioUrl: z.string().optional().nullable(),
     published: z.boolean().default(true),
     createdAt: z.date(),
     updatedAt: z.date(),
 });
-export type Consultant = z.infer<typeof consultantSchema>;
+export type TeamMember = z.infer<typeof teamMemberSchema>;
 
 // Consultation schema
 export const consultationSchema = z.object({

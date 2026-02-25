@@ -1,25 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
-generator client {
-  provider = "prisma-client-js"
-}
+
 model User {
   id        String   @id @default(uuid())
-  username  String   @unique
-  password  String
   createdAt DateTime @default(now())
   email     String   @unique
   name      String?
+  surname   String?
 }
-
 
 model Service {
   id            String   @id @default(uuid())
   order         Int
-  type          String   @default("Other")
   titleEn       String   @map("title_en")
   titleAr       String   @map("title_ar")
   descriptionEn String   @map("description_en")
@@ -27,6 +26,7 @@ model Service {
   published     Boolean  @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  type          String   @default("Other")
 
   @@map("services")
 }
@@ -67,35 +67,18 @@ model Testimonial {
   @@map("testimonials")
 }
 
-
-model InsightTopic {
-  id            String   @id @default(uuid())
-  order         Int
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  readTimeEn    String   @map("read_time_en")
-  readTimeAr    String   @map("read_time_ar")
-  published     Boolean  @default(true)
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("insight_topics")
-}
-
 model PlatformUpdate {
-  id         String   @id @default(uuid())
-  order      Int      @default(0)
-  type       String   @default("news") // news | achievement | event | new
-  titleEn    String   @map("title_en")
-  titleAr    String   @map("title_ar")
-  summaryEn  String   @map("summary_en")
-  summaryAr  String   @map("summary_ar")
-  date       DateTime @default(now())
-  published  Boolean  @default(true)
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
+  id        String   @id @default(uuid())
+  order     Int      @default(0)
+  type      String   @default("news")
+  titleEn   String   @map("title_en")
+  titleAr   String   @map("title_ar")
+  summaryEn String   @map("summary_en")
+  summaryAr String   @map("summary_ar")
+  date      DateTime @default(now())
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("platform_updates")
 }
@@ -129,25 +112,6 @@ model Solution {
   @@map("solutions")
 }
 
-model Consultant {
-  id        String   @id @default(uuid())
-  order     Int
-  nameEn    String   @map("name_en")
-  nameAr    String   @map("name_ar")
-  roleEn    String   @map("role_en")
-  roleAr    String   @map("role_ar")
-  bioEn     String   @map("bio_en")
-  bioAr     String   @map("bio_ar")
-  imageUrl  String   @map("image_url")
-  socialButtons String @map("social_buttons") // JSON string for flexibility
-  published Boolean  @default(true)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@map("consultants")
-}
-
-
 model TeamMember {
   id            String   @id @default(uuid())
   order         Int
@@ -161,13 +125,14 @@ model TeamMember {
   descriptionAr String?  @map("description_ar")
   imageUrl      String   @map("image_url")
   resumeUrl     String?  @map("resume_url")
-  portfolioUrl  String?  @map("portfolio_url")
   published     Boolean  @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  portfolioUrl  String?  @map("portfolio_url")
 
   @@map("our_team")
 }
+
 
 model Consultation {
   id        String   @id @default(uuid())
@@ -175,7 +140,7 @@ model Consultation {
   email     String
   company   String?
   message   String
-  status    String   @default("pending") // pending | responded | closed
+  status    String   @default("pending")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 

@@ -13,7 +13,6 @@ import {
   useProjects,
   useTestimonials,
   usePlatformUpdates,
-  useInsightTopics,
 } from "@/hooks/use-content";
 
 const iconMap: Record<string, any> = {
@@ -291,7 +290,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`mb-8 flex items-center gap-4 ${isRtl ? "justify-end" : ""}`}
+              className={`mb-8 flex items-center gap-4 ${isRtl ? "justify-start" : ""}`}
             >
               <span className="text-4xl drop-shadow-md">{style.emoji}</span>
               <span
@@ -308,7 +307,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className="text-5xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight"
+              className={`text-5xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${isRtl ? "md:text-5xl lg:text-7xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
                 x: mousePosition.x * -1,
@@ -324,7 +323,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className="text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12"
+              className={`text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12 ${isRtl ? "lg:text-xl max-w-xl" : ""}`}
               style={{
                 x: mousePosition.x * -0.5,
                 y: mousePosition.y * -0.5
@@ -339,7 +338,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`flex flex-col sm:flex-row gap-5 ${isRtl ? "justify-end" : ""}`}
+              className={`flex flex-col sm:flex-row gap-5 ${isRtl ? "justify-start" : ""}`}
             >
               <Link href="/contact">
                 <Button
@@ -365,7 +364,10 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
       </motion.div>
 
       {/* Bottom navigation */}
-      <div className="absolute bottom-12 left-0 right-0 px-8 md:px-16 lg:px-24 z-20 flex items-center justify-between">
+      <div
+        className="absolute bottom-12 left-0 right-0 px-8 md:px-16 lg:px-24 z-20 flex items-center justify-between"
+        dir={isRtl ? "rtl" : "ltr"}
+      >
         {/* Counter */}
         <div className="text-sm font-mono text-white/30 tracking-widest">
           <span className="font-bold text-lg" style={{ color: style.accentHex }}>
@@ -383,14 +385,22 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+              {isRtl ? (
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              ) : (
+                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+              )}
             </button>
             <button
               onClick={next}
               className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
               aria-label="Next"
             >
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              {isRtl ? (
+                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+              ) : (
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              )}
             </button>
           </div>
 
@@ -439,7 +449,6 @@ export default function Home() {
   const { data: services = [], isLoading: loadingServices } = useServices();
   const { data: projects = [], isLoading: loadingProjects } = useProjects(true);
   const { data: testimonials = [], isLoading: loadingTestimonials } = useTestimonials();
-  const { data: insightTopics = [], isLoading: loadingInsights } = useInsightTopics();
 
   // Static Data for Stats
   const stats = [
@@ -580,40 +589,103 @@ export default function Home() {
 
       {/* ── 3. PROJECTS — proof of work ───────────────────────────── */}
       {!loadingProjects && projects.length > 0 && (
-        <Section background="default">
-          <FadeInSection className="text-center mb-16">
-            <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.projects.badge")}</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.projects.title")}</h2>
-            <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+        <Section background="default" className="py-24 md:py-32">
+          <FadeInSection className="text-center mb-20">
+            <span className="text-accent tracking-[0.4em] uppercase text-xs font-bold mb-4 block opacity-80">{t("home.projects.badge")}</span>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
+              {t("home.projects.title")}
+            </h2>
+            <p className="text-muted-foreground text-lg md:text-xl mt-6 max-w-2xl mx-auto font-light leading-relaxed">
               {t("home.projects.description")}
             </p>
           </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
+            {projects.map((project, index) => {
+              // Create an asymmetrical staggered layout
+              // Pattern: 7/5, 5/7, 8/4, 4/8, etc.
+              const isLarge = project.featured;
+              const colSpan = isLarge
+                ? "md:col-span-7 lg:col-span-8"
+                : "md:col-span-5 lg:col-span-4";
+
+              const isAlternate = Math.floor(index / 2) % 2 === 1;
+              const finalColSpan = isAlternate
+                ? (isLarge ? "md:col-span-5 lg:col-span-4" : "md:col-span-7 lg:col-span-8")
+                : colSpan;
+
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  className={`${finalColSpan} group relative min-h-[400px] md:min-h-[500px] rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30`}
+                >
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src={project.imageUrl || ""}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
+                  </div>
+
+                  <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                      className="flex items-center gap-3 mb-4"
+                    >
+                      <span className="w-8 h-[1px] bg-accent/60"></span>
+                      <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
+                    </motion.div>
+
+                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-white mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-white/60 text-base md:text-lg max-w-lg mb-8 line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                      {project.description}
+                    </p>
+
+                    <div className="flex items-center gap-4 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="rounded-full bg-white/5 border-white/20 text-white backdrop-blur-md hover:bg-accent hover:text-black hover:border-accent transition-all duration-500"
+                      >
+                        {t("home.projects.learn_more")}
+                        <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"}`} />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Corner Accent */}
+                  <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="w-12 h-12 rounded-full border border-accent/30 flex items-center justify-center backdrop-blur-sm bg-accent/10">
+                      <ArrowRight className={`w-5 h-5 text-accent ${isRtl ? "rotate-[225deg]" : "-rotate-45"}`} />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-20 text-center">
+            <Link href="/portfolio">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
               >
-                <div className="relative h-80 overflow-hidden">
-                  <Image
-                    src={project.imageUrl || ""}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <span className="text-accent text-sm font-medium mb-2 block">{project.category}</span>
-                  <h3 className="text-2xl font-display font-bold text-foreground mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                </div>
-              </motion.div>
-            ))}
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("view_all_projects")}</span>
+                <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
+              </Button>
+            </Link>
           </div>
         </Section>
       )}
@@ -737,39 +809,6 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── 7. INSIGHTS — thought leadership ─────────────────────── */}
-      {!loadingInsights && insightTopics.length > 0 && (
-        <Section background="default">
-          <FadeInSection>
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-              <div>
-                <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.insights.subtitle")}</span>
-                <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.insights.title")}</h2>
-                <p className="text-muted-foreground text-lg mt-3 max-w-md">
-                  {t("home.insights.description")}
-                </p>
-              </div>
-            </div>
-          </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {insightTopics.map((topic, index) => (
-              <motion.div
-                key={topic.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="bg-muted/50 p-8 rounded-2xl border border-border hover:border-primary/20 hover:shadow-xl transition-all duration-300 cursor-pointer"
-              >
-                <h3 className="text-xl font-display font-bold mb-3 line-clamp-2">{topic.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3">{topic.description}</p>
-                <span className="text-sm text-accent">{topic.readTime}</span>
-              </motion.div>
-            ))}
-          </div>
-        </Section>
-      )}
 
       {/* ── 8. RESULTS — outcomes delivered to clients ────────────── */}
       <Section background="muted" className="border-y border-border/30">

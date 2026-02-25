@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Sparkles, Globe } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
+import { usePlatformUpdates } from "@/hooks/use-content";
 
 export default function WelcomeV3() {
     const { t, i18n } = useTranslation();
@@ -34,6 +35,17 @@ export default function WelcomeV3() {
 
     // Aura spotlight effect
     const spotlight = useMotionTemplate`radial-gradient(1000px circle at ${springX}px ${springY}px, rgba(194,164,92,0.07), transparent 80%)`;
+
+    const { data: updates = [] } = usePlatformUpdates();
+    const [activeIdx, setActiveIdx] = useState(0);
+
+    useEffect(() => {
+        if (updates.length <= 1) return;
+        const timer = setInterval(() => {
+            setActiveIdx((prev) => (prev + 1) % updates.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [updates.length]);
 
     return (
         <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display" dir={isRtl ? "rtl" : "ltr"}>
@@ -87,7 +99,7 @@ export default function WelcomeV3() {
                     const duration = 5 + Math.random() * 10;
                     const delay = Math.random() * 5;
                     const xOffset = (Math.random() - 0.5) * 100;
-                    
+
                     return (
                         <motion.div
                             key={i}
@@ -159,15 +171,28 @@ export default function WelcomeV3() {
                     </motion.div>
                 </div>
 
-                {/* Tagline Banner */}
-                <motion.p
+                {/* Tagline Banner - Data Driven */}
+                <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className="text-white/40 text-sm md:text-base uppercase tracking-[0.6em] mb-12 max-w-3xl leading-relaxed"
+                    className="mb-12 h-12 flex items-center justify-center overflow-hidden"
                 >
-                    {t("welcome.subtitle")}
-                </motion.p>
+                    <AnimatePresence mode="wait">
+                        <motion.p
+                            key={updates.length > 0 ? updates[activeIdx]?.id : 'fallback'}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-white/40 text-sm md:text-base uppercase tracking-[0.6em] max-w-3xl leading-relaxed"
+                        >
+                            {updates.length > 0
+                                ? updates[activeIdx]?.title
+                                : t("welcome.subtitle")}
+                        </motion.p>
+                    </AnimatePresence>
+                </motion.div>
 
                 {/* Discovery CTA */}
                 <motion.div

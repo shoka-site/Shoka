@@ -191,7 +191,17 @@
             "new": "What's New",
             "cta_talk": "Let's Talk",
             "cta_expertise": "Our Expertise",
-            "scroll": "Scroll"
+            "scroll": "Scroll",
+            "fallback": {
+                "f1_title": "Design Excellence",
+                "f1_summary": "Pioneering the next generation of intelligent digital systems.",
+                "f2_title": "Platform Milestones",
+                "f2_summary": "Celebrating major achievements in infrastructure and cloud engineering.",
+                "f3_title": "Community Events",
+                "f3_summary": "Join us at our upcoming tech summits and collaborative workshops.",
+                "f4_title": "Latest Innovations",
+                "f4_summary": "Exploring new boundaries in AI and high-frequency data processing."
+            }
         },
         "static": {
             "badge": "Engineering Excellence",
@@ -414,7 +424,41 @@
                 "desc": "Seamlessly connect your systems with third-party services to automate workflows and extend functionality."
             }
         },
-        "learn_more": "Learn More"
+        "learn_more": "Learn More",
+        "categories": {
+            "software_development": "Software Development",
+            "data_analytics": "Data & Analytics",
+            "cloud_solutions": "Cloud Solutions",
+            "ai_ml": "AI & Machine Learning",
+            "digital_transformation": "Digital Transformation",
+            "enterprise_solutions": "Enterprise Solutions"
+        },
+        "items": {
+            "web_development": "Web Development",
+            "mobile_apps": "Mobile Apps",
+            "custom_software": "Custom Software",
+            "api_development": "API Development",
+            "business_intelligence": "Business Intelligence",
+            "data_visualization": "Data Visualization",
+            "big_data": "Big Data",
+            "predictive_analytics": "Predictive Analytics",
+            "cloud_migration": "Cloud Migration",
+            "cloud_infrastructure": "Cloud Infrastructure",
+            "devops_services": "DevOps Services",
+            "cloud_security": "Cloud Security",
+            "machine_learning": "Machine Learning",
+            "nlp_solutions": "NLP Solutions",
+            "computer_vision": "Computer Vision",
+            "ai_strategy": "AI Strategy",
+            "process_automation": "Process Automation",
+            "digital_strategy": "Digital Strategy",
+            "change_management": "Change Management",
+            "digital_consulting": "Digital Consulting",
+            "erp_systems": "ERP Systems",
+            "crm_solutions": "CRM Solutions",
+            "enterprise_integration": "Enterprise Integration",
+            "security_solutions": "Security Solutions"
+        }
     },
     "portfolio": {
         "subtitle": "Our Work",
@@ -483,6 +527,41 @@
         "team": {
             "badge": "Our Team",
             "title": "Meet Our Experts"
+        },
+        "events": {
+            "badge": "Our Events",
+            "title": "Connecting the Tech Hub",
+            "view_all": "View All Events"
+        },
+        "awards": {
+            "badge": "Recognition",
+            "title": "Excellence Acknowledged"
+        },
+        "history": {
+            "badge": "Our Story",
+            "title": "Journey Through Time",
+            "milestones": {
+                "2020": {
+                    "title": "Founding Vision",
+                    "desc": "Shoka was founded with a mission to bridge the gap between traditional industry and digital excellence."
+                },
+                "2021": {
+                    "title": "Regional Expansion",
+                    "desc": "Established our first international office and began serving enterprise clients across the Middle East."
+                },
+                "2022": {
+                    "title": "Innovation Lab",
+                    "desc": "Launched our dedicated R&D lab focused on AI and blockchain solutions for governance."
+                },
+                "2023": {
+                    "title": "Strategic Partnerships",
+                    "desc": "Formed alliances with global tech leaders to bring cutting-edge infrastructure to the region."
+                },
+                "2024": {
+                    "title": "Digital Transformation Hub",
+                    "desc": "Recognized as a leading partner for large-scale digital transformation projects."
+                }
+            }
         }
     },
     "contact": {
@@ -574,5 +653,51 @@
     "common": {
         "loading": "Loading...",
         "explore_all": "Explore All"
+    },
+    "industries": {
+        "categories": {
+            "healthcare": "Healthcare",
+            "education": "Education",
+            "finance": "Finance",
+            "retail": "Retail",
+            "manufacturing": "Manufacturing",
+            "real_estate": "Real Estate",
+            "travel": "Travel",
+            "automotive": "Automotive",
+            "food": "Food & Beverage",
+            "entertainment": "Entertainment"
+        },
+        "items": {
+            "hospital_management": "Hospital Management",
+            "telemedicine": "Telemedicine",
+            "health_analytics": "Health Analytics",
+            "e_learning": "E-Learning",
+            "lms": "LMS",
+            "ed_tech": "EdTech",
+            "fintech": "FinTech",
+            "banking": "Banking",
+            "blockchain": "Blockchain",
+            "ecommerce": "E-Commerce",
+            "pos_systems": "POS Systems",
+            "inventory": "Inventory Management",
+            "automation": "Factory Automation",
+            "iot": "Industrial IoT",
+            "supply_chain": "Supply Chain",
+            "property_management": "Property Management",
+            "smart_buildings": "Smart Buildings",
+            "marketplace": "Real Estate Marketplace",
+            "booking_systems": "Booking Systems",
+            "tourism_tech": "Tourism Tech",
+            "travel_analytics": "Travel Analytics",
+            "fleet_management": "Fleet Management",
+            "autonomous_vehicles": "Autonomous Vehicles",
+            "auto_dealerships": "Auto Dealerships",
+            "food_delivery": "Food Delivery",
+            "restaurant_apps": "Restaurant Apps",
+            "food_safety": "Food Safety",
+            "streaming": "Streaming Platforms",
+            "gaming": "Gaming Tech",
+            "social_media": "Social Media"
+        }
     }
 }

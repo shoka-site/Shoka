@@ -119,8 +119,8 @@ export default function Navbar() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <MegaMenuSection
-                    title={t("navbar.brand")}
-                    description={t("hero.static.description")}
+                    title={t("navbar.industries")}
+                    description={t("home.industries.description")}
                     icon={LayoutGrid}
                     href="/industries"
                     layout="grid"

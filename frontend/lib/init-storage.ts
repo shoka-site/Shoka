@@ -51,43 +51,6 @@ export async function initializeStorage() {
             });
         }
 
-        // Insight Topics
-        const existingTopics = await storage.getInsightTopics();
-        if (existingTopics.length === 0) {
-            console.log('  Creating default Insight Topics...');
-            await storage.createInsightTopic({
-                order: 1,
-                titleEn: 'The Future of AI in Modern Infrastructure',
-                titleAr: 'مستقبل الذكاء الاصطناعي في البنية التحتية الحديثة',
-                descriptionEn: 'Exploring how artificial intelligence is reshaping enterprise systems and cloud architecture.',
-                descriptionAr: 'استكشاف كيفية إعادة تشكيل الذكاء الاصطناعي لأنظمة المؤسسات وهندسة السحابة.',
-                readTimeEn: '5 min read',
-                readTimeAr: 'قراءة 5 دقائق',
-                published: true,
-            });
-
-            await storage.createInsightTopic({
-                order: 2,
-                titleEn: 'Building Resilient Cloud Systems',
-                titleAr: 'بناء أنظمة سحابية مرنة',
-                descriptionEn: 'Best practices for designing fault-tolerant, scalable cloud infrastructure that grows with your business.',
-                descriptionAr: 'أفضل الممارسات لتصميم بنية تحتية سحابية متسامحة مع الأخطاء وقابلة للتوسع تنمو مع عملك.',
-                readTimeEn: '7 min read',
-                readTimeAr: 'قراءة 7 دقائق',
-                published: true,
-            });
-
-            await storage.createInsightTopic({
-                order: 3,
-                titleEn: 'Data-Driven Decision Making',
-                titleAr: 'اتخاذ القرارات القائمة على البيانات',
-                descriptionEn: 'Transforming raw data into actionable insights through advanced analytics and machine learning.',
-                descriptionAr: 'تحويل البيانات الخام إلى رؤى قابلة للتنفيذ من خلال التحليلات المتقدمة والتعلم الآلي.',
-                readTimeEn: '6 min read',
-                readTimeAr: 'قراءة 6 دقائق',
-                published: true,
-            });
-        }
 
         console.log('✅ Storage initialized successfully!');
     } catch (error) {

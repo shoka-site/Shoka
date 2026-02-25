@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Service, type Project, type Testimonial, type InsightTopic, type PlatformUpdate, type Industry, type Solution, type Consultant, type Consultation, type InsertConsultation } from "@shared/schema";
+import { type User, type InsertUser, type Service, type Project, type Testimonial, type PlatformUpdate, type Industry, type Solution, type TeamMember, type Consultation, type InsertConsultation } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export interface IStorage {
   // User methods
   getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 
   // Services
@@ -30,12 +30,6 @@ export interface IStorage {
   updateTestimonial(id: string, testimonial: Partial<Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Testimonial | undefined>;
   deleteTestimonial(id: string): Promise<boolean>;
 
-  // Insight Topics
-  getInsightTopics(published?: boolean): Promise<InsightTopic[]>;
-  getInsightTopic(id: string): Promise<InsightTopic | undefined>;
-  createInsightTopic(topic: Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>): Promise<InsightTopic>;
-  updateInsightTopic(id: string, topic: Partial<Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>>): Promise<InsightTopic | undefined>;
-  deleteInsightTopic(id: string): Promise<boolean>;
 
   // Platform Updates
   getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]>;
@@ -58,12 +52,12 @@ export interface IStorage {
   updateSolution(id: string, solution: Partial<Omit<Solution, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Solution | undefined>;
   deleteSolution(id: string): Promise<boolean>;
 
-  // Consultants
-  getConsultants(published?: boolean): Promise<Consultant[]>;
-  getConsultant(id: string): Promise<Consultant | undefined>;
-  createConsultant(consultant: Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>): Promise<Consultant>;
-  updateConsultant(id: string, consultant: Partial<Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultant | undefined>;
-  deleteConsultant(id: string): Promise<boolean>;
+  // Team Members
+  getTeamMembers(published?: boolean): Promise<TeamMember[]>;
+  getTeamMember(id: string): Promise<TeamMember | undefined>;
+  createTeamMember(member: Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>): Promise<TeamMember>;
+  updateTeamMember(id: string, member: Partial<Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>>): Promise<TeamMember | undefined>;
+  deleteTeamMember(id: string): Promise<boolean>;
 
   // Consultations
   getConsultations(): Promise<Consultation[]>;
@@ -78,11 +72,10 @@ export interface IStorage {
   getServiceCount(): Promise<number>;
   getProjectCount(): Promise<number>;
   getTestimonialCount(): Promise<number>;
-  getInsightTopicCount(): Promise<number>;
   getPlatformUpdateCount(): Promise<number>;
   getIndustryCount(): Promise<number>;
   getSolutionCount(): Promise<number>;
-  getConsultantCount(): Promise<number>;
+  getTeamMemberCount(): Promise<number>;
 }
 
 export class PrismaStorage implements IStorage {
@@ -91,8 +84,8 @@ export class PrismaStorage implements IStorage {
     return await prisma.user.findUnique({ where: { id } }) || undefined;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return await prisma.user.findUnique({ where: { username } }) || undefined;
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return await prisma.user.findUnique({ where: { email } }) || undefined;
   }
 
   async createUser(user: InsertUser): Promise<User> {
@@ -201,38 +194,6 @@ export class PrismaStorage implements IStorage {
     }
   }
 
-  // Insight Topics
-  async getInsightTopics(published?: boolean): Promise<InsightTopic[]> {
-    return await prisma.insightTopic.findMany({
-      where: published !== undefined ? { published } : undefined,
-      orderBy: { order: 'asc' },
-    });
-  }
-
-  async getInsightTopic(id: string): Promise<InsightTopic | undefined> {
-    return await prisma.insightTopic.findUnique({ where: { id } }) || undefined;
-  }
-
-  async createInsightTopic(topic: Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>): Promise<InsightTopic> {
-    return await prisma.insightTopic.create({ data: topic });
-  }
-
-  async updateInsightTopic(id: string, updates: Partial<Omit<InsightTopic, 'id' | 'createdAt' | 'updatedAt'>>): Promise<InsightTopic | undefined> {
-    try {
-      return await prisma.insightTopic.update({ where: { id }, data: updates });
-    } catch (e) {
-      return undefined;
-    }
-  }
-
-  async deleteInsightTopic(id: string): Promise<boolean> {
-    try {
-      await prisma.insightTopic.delete({ where: { id } });
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 
   // Platform Updates
   async getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]> {
@@ -333,33 +294,33 @@ export class PrismaStorage implements IStorage {
     }
   }
 
-  // Consultants
-  async getConsultants(published?: boolean): Promise<Consultant[]> {
-    return await prisma.consultant.findMany({
+  // Team Members
+  async getTeamMembers(published?: boolean): Promise<TeamMember[]> {
+    return await prisma.teamMember.findMany({
       where: published !== undefined ? { published } : undefined,
       orderBy: { order: 'asc' },
     });
   }
 
-  async getConsultant(id: string): Promise<Consultant | undefined> {
-    return await prisma.consultant.findUnique({ where: { id } }) || undefined;
+  async getTeamMember(id: string): Promise<TeamMember | undefined> {
+    return await prisma.teamMember.findUnique({ where: { id } }) || undefined;
   }
 
-  async createConsultant(consultant: Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>): Promise<Consultant> {
-    return await prisma.consultant.create({ data: consultant });
+  async createTeamMember(member: Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>): Promise<TeamMember> {
+    return await prisma.teamMember.create({ data: member });
   }
 
-  async updateConsultant(id: string, updates: Partial<Omit<Consultant, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultant | undefined> {
+  async updateTeamMember(id: string, updates: Partial<Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>>): Promise<TeamMember | undefined> {
     try {
-      return await prisma.consultant.update({ where: { id }, data: updates });
+      return await prisma.teamMember.update({ where: { id }, data: updates });
     } catch (e) {
       return undefined;
     }
   }
 
-  async deleteConsultant(id: string): Promise<boolean> {
+  async deleteTeamMember(id: string): Promise<boolean> {
     try {
-      await prisma.consultant.delete({ where: { id } });
+      await prisma.teamMember.delete({ where: { id } });
       return true;
     } catch (e) {
       return false;
@@ -417,10 +378,6 @@ export class PrismaStorage implements IStorage {
     return await prisma.testimonial.count();
   }
 
-  async getInsightTopicCount(): Promise<number> {
-    return await prisma.insightTopic.count();
-  }
-
   async getPlatformUpdateCount(): Promise<number> {
     return await prisma.platformUpdate.count();
   }
@@ -433,8 +390,8 @@ export class PrismaStorage implements IStorage {
     return await prisma.solution.count();
   }
 
-  async getConsultantCount(): Promise<number> {
-    return await prisma.consultant.count();
+  async getTeamMemberCount(): Promise<number> {
+    return await prisma.teamMember.count();
   }
 
 }

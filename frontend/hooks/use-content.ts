@@ -67,23 +67,6 @@ export function useTestimonials() {
     });
 }
 
-export interface InsightTopic {
-    id: string;
-    order: number;
-    title: string;
-    description: string;
-    readTime: string;
-    published: boolean;
-}
-
-export function useInsightTopics() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<InsightTopic[]>({
-        queryKey: ['insightTopics', language],
-        queryFn: () => fetchContent<InsightTopic[]>('insights', language),
-    });
-}
 
 export interface PlatformUpdate {
     id: string;
@@ -141,26 +124,6 @@ export function useSolutions() {
     });
 }
 
-// Consultants
-export interface Consultant {
-    id: string;
-    order: number;
-    name: string;
-    role: string;
-    bio: string;
-    imageUrl: string;
-    socialButtons: string; // JSON string
-    published: boolean;
-}
-
-export function useConsultants() {
-    const { i18n } = useTranslation();
-    const language = i18n.language as 'en' | 'ar';
-    return useQuery<Consultant[]>({
-        queryKey: ['consultants', language],
-        queryFn: () => fetchContent<Consultant[]>('consultants', language),
-    });
-}
 
 // Team Members
 export interface TeamMember {
