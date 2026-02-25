@@ -14,6 +14,7 @@ import {
   useTestimonials,
   usePlatformUpdates,
 } from "@/hooks/use-content";
+import { CountUp } from "@/components/ui/count-up";
 
 const iconMap: Record<string, any> = {
   Brain, Code, Database, Cloud, Target, Zap, Layers, Cpu, Lock,
@@ -615,68 +616,69 @@ export default function Home() {
                 : colSpan;
 
               return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className={`${finalColSpan} group relative min-h-[400px] md:min-h-[500px] rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30`}
-                >
-                  <div className="absolute inset-0 z-0">
-                    <Image
-                      src={project.imageUrl || ""}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
-                  </div>
+                <Link key={project.id} href={`/projects/${project.id}`} className={finalColSpan}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative min-h-[400px] md:min-h-[500px] h-full rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30 block"
+                  >
+                    <div className="absolute inset-0 z-0">
+                      <Image
+                        src={project.imageUrl || ""}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
+                    </div>
 
-                  <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                      className="flex items-center gap-3 mb-4"
-                    >
-                      <span className="w-8 h-[1px] bg-accent/60"></span>
-                      <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
-                    </motion.div>
-
-                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-white mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-white/60 text-base md:text-lg max-w-lg mb-8 line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                      {project.description}
-                    </p>
-
-                    <div className="flex items-center gap-4 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="rounded-full bg-white/5 border-white/20 text-white backdrop-blur-md hover:bg-accent hover:text-black hover:border-accent transition-all duration-500"
+                    <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 + index * 0.1 }}
+                        className="flex items-center gap-3 mb-4"
                       >
-                        {t("home.projects.learn_more")}
-                        <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"}`} />
-                      </Button>
-                    </div>
-                  </div>
+                        <span className="w-8 h-[1px] bg-accent/60"></span>
+                        <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
+                      </motion.div>
 
-                  {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                    <div className="w-12 h-12 rounded-full border border-accent/30 flex items-center justify-center backdrop-blur-sm bg-accent/10">
-                      <ArrowRight className={`w-5 h-5 text-accent ${isRtl ? "rotate-[225deg]" : "-rotate-45"}`} />
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-white mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
+                        {project.title}
+                      </h3>
+
+                      <p className="text-white/60 text-base md:text-lg max-w-lg mb-8 line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                        {project.description}
+                      </p>
+
+                      <div className="flex items-center gap-4 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="rounded-full bg-white/5 border-white/20 text-white backdrop-blur-md hover:bg-accent hover:text-black hover:border-accent transition-all duration-500 pointer-events-none"
+                        >
+                          {t("View Project")}
+                          <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"}`} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
+
+                    {/* Corner Accent */}
+                    <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                      <div className="w-12 h-12 rounded-full border border-accent/30 flex items-center justify-center backdrop-blur-sm bg-accent/10">
+                        <ArrowRight className={`w-5 h-5 text-accent ${isRtl ? "rotate-[225deg]" : "-rotate-45"}`} />
+                      </div>
+                    </div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
 
           <div className="mt-20 text-center">
-            <Link href="/portfolio">
+            <Link href="/projects">
               <Button
                 variant="ghost"
                 size="lg"
@@ -811,58 +813,83 @@ export default function Home() {
 
 
       {/* ── 8. RESULTS — outcomes delivered to clients ────────────── */}
-      <Section background="muted" className="border-y border-border/30">
-        <div className="relative z-10">
+      <section className="relative py-32 bg-foreground text-background overflow-hidden">
+        {/* Deep background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="results-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M30 0L60 30L30 60L0 30Z" fill="none" stroke="currentColor" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#results-pattern)" />
+          </svg>
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground via-transparent to-foreground/90 z-0" />
+
+        <div className="container mx-auto px-6 relative z-10">
           <FadeInSection>
-            <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
+            <p className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-4 text-center">
               {t("home.results.badge")}
             </p>
           </FadeInSection>
-          <FadeInSection delay={0.06}>
+          <FadeInSection delay={0.1}>
             <h2
-              className="text-center font-display font-black text-foreground leading-[1.0] mb-6"
-              style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
+              className="text-center font-display font-black text-white leading-[1.0] mb-6 tracking-tight"
+              style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
             >
               {t("home.results.title")}
             </h2>
           </FadeInSection>
-          <FadeInSection delay={0.12}>
-            <p className="text-center text-lg max-w-2xl mx-auto mb-20 leading-relaxed text-muted-foreground">
+          <FadeInSection delay={0.2}>
+            <p className="text-center text-lg md:text-xl max-w-3xl mx-auto mb-20 leading-relaxed text-white/60 font-light">
               {t("home.results.description")}
             </p>
           </FadeInSection>
 
-          {/* Results grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border/30 rounded-2xl overflow-hidden border border-border/30">
+          {/* Results grid - Glassmorphism cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
             {[
-              { value: "3×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
-              { value: "62%", label: t("home.results.items.cost_reduction"), sub: t("home.results.items.cost_reduction_sub") },
-              { value: "99.97%", label: t("home.results.items.uptime"), sub: t("home.results.items.uptime_sub") },
-              { value: "4.9 ★", label: t("home.results.items.satisfaction"), sub: t("home.results.items.satisfaction_sub") },
-              { value: "200%+", label: t("home.results.items.revenue"), sub: t("home.results.items.revenue_sub") },
-              { value: "40%", label: t("home.results.items.onboarding"), sub: t("home.results.items.onboarding_sub") },
-              { value: "500+", label: t("home.results.items.delivered"), sub: t("home.results.items.delivered_sub") },
-              { value: "<24h", label: t("home.results.items.sla"), sub: t("home.results.items.sla_sub") },
+              { value: "3", suffix: "×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
+              { value: "62", suffix: "%", label: t("home.results.items.cost_reduction"), sub: t("home.results.items.cost_reduction_sub") },
+              { value: "99", suffix: ".9%", label: t("home.results.items.uptime"), sub: t("home.results.items.uptime_sub") },
+              { value: "4", suffix: ".9★", label: t("home.results.items.satisfaction"), sub: t("home.results.items.satisfaction_sub") },
+              { value: "200", prefix: "+", suffix: "%", label: t("home.results.items.revenue"), sub: t("home.results.items.revenue_sub") },
+              { value: "40", suffix: "%", label: t("home.results.items.onboarding"), sub: t("home.results.items.onboarding_sub") },
+              { value: "500", suffix: "+", label: t("home.results.items.delivered"), sub: t("home.results.items.delivered_sub") },
+              { value: "24", prefix: "<", suffix: "h", label: t("home.results.items.sla"), sub: t("home.results.items.sla_sub") },
             ].map((result, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: i * 0.07, duration: 0.5, ease: "easeOut" }}
-                className="group flex flex-col justify-between p-8 md:p-10 transition-all duration-300 bg-background/40 hover:bg-background/80"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative flex flex-col justify-between p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 backdrop-blur-xl hover:bg-white/[0.06] hover:border-accent/40 transition-all duration-500 overflow-hidden"
               >
-                <div
-                  className="font-display font-black leading-none mb-3 transition-colors duration-300 text-accent group-hover:scale-105"
-                  style={{ fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}
-                >
-                  {result.value}
+                {/* Subtle hover glow */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="mb-6 flex items-baseline gap-1">
+                  {result.prefix && (
+                    <span className="text-2xl md:text-3xl font-display font-medium text-accent/80">{result.prefix}</span>
+                  )}
+                  <div
+                    className="font-display font-black leading-none text-white tracking-tighter"
+                    style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+                  >
+                    <CountUp end={Number(result.value)} duration={2.5} />
+                  </div>
+                  {result.suffix && (
+                    <span className="text-2xl md:text-3xl font-display font-medium text-accent">{result.suffix}</span>
+                  )}
                 </div>
                 <div>
-                  <div className="text-foreground font-semibold text-base md:text-lg leading-snug mb-1">
+                  <div className="text-white font-bold text-lg leading-snug mb-2 tracking-wide group-hover:text-accent transition-colors duration-300">
                     {result.label}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-sm text-white/50 leading-relaxed font-light">
                     {result.sub}
                   </div>
                 </div>
@@ -871,13 +898,13 @@ export default function Home() {
           </div>
 
           {/* Footnote */}
-          <FadeInSection delay={0.2}>
-            <p className="text-center text-xs mt-10 text-muted-foreground/60">
+          <FadeInSection delay={0.4}>
+            <p className="text-center text-sm mt-16 text-white/40 tracking-wide">
               {t("home.results.footnote")}
             </p>
           </FadeInSection>
         </div>
-      </Section>
+      </section>
 
       {/* ── 9. CTA — close the deal ───────────────────────────────── */}
       <Section background="muted">

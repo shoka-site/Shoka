@@ -14,7 +14,9 @@ export interface Service {
     order: number;
     title: string;
     description: string;
+    type: string;
     published: boolean;
+    createdAt?: string | Date;
 }
 
 export function useServices() {
@@ -23,6 +25,16 @@ export function useServices() {
     return useQuery<Service[]>({
         queryKey: ['services', language],
         queryFn: () => fetchContent<Service[]>('services', language),
+    });
+}
+
+export function useService(id: string) {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<Service>({
+        queryKey: ['service', id, language],
+        queryFn: () => fetchContent<Service>(`services/${id}`, language),
+        enabled: !!id,
     });
 }
 
@@ -36,6 +48,7 @@ export interface Project {
     featured: boolean;
     published: boolean;
     status: string;
+    createdAt?: string | Date;
 }
 
 export function useProjects(featured?: boolean) {
@@ -45,6 +58,16 @@ export function useProjects(featured?: boolean) {
     return useQuery<Project[]>({
         queryKey: ['projects', language, featured],
         queryFn: () => fetchContent<Project[]>(endpoint, language),
+    });
+}
+
+export function useProject(id: string) {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<Project>({
+        queryKey: ['project', id, language],
+        queryFn: () => fetchContent<Project>(`projects/${id}`, language),
+        enabled: !!id,
     });
 }
 
@@ -92,8 +115,10 @@ export interface Industry {
     id: string;
     order: number;
     title: string;
+    type?: string;
     description: string;
     published: boolean;
+    createdAt?: string | Date;
 }
 
 export function useIndustries() {
@@ -102,6 +127,16 @@ export function useIndustries() {
     return useQuery<Industry[]>({
         queryKey: ['industries', language],
         queryFn: () => fetchContent<Industry[]>('industries', language),
+    });
+}
+
+export function useIndustry(id: string) {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<Industry>({
+        queryKey: ['industry', id, language],
+        queryFn: () => fetchContent<Industry>(`industries/${id}`, language),
+        enabled: !!id,
     });
 }
 

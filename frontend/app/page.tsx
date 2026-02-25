@@ -220,7 +220,7 @@ export default function WelcomeV3() {
                     {/* Quick Navigation Links */}
                     <div className="flex gap-12 text-xs uppercase tracking-[0.3em] font-bold text-white/30">
                         <Link href="/services" className="hover:text-accent transition-colors">{t("welcome.nav.expertise")}</Link>
-                        <Link href="/portfolio" className="hover:text-accent transition-colors">{t("welcome.nav.portfolio")}</Link>
+                        <Link href="/projects" className="hover:text-accent transition-colors">{t("welcome.nav.portfolio")}</Link>
                         <Link href="/contact" className="hover:text-accent transition-colors">{t("welcome.nav.discuss")}</Link>
                     </div>
                 </motion.div>

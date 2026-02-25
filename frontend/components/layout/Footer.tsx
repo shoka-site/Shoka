@@ -21,7 +21,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li><Link href="/home" className="text-white/60 hover:text-white transition-colors">{t('footer.links.home')}</Link></li>
               <li><Link href="/services" className="text-white/60 hover:text-white transition-colors">{t('footer.links.services')}</Link></li>
-              <li><Link href="/portfolio" className="text-white/60 hover:text-white transition-colors">{t('footer.links.portfolio')}</Link></li>
+              <li><Link href="/projects" className="text-white/60 hover:text-white transition-colors">{t('footer.links.portfolio')}</Link></li>
               <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors">{t('footer.links.contact')}</Link></li>
             </ul>
           </div>

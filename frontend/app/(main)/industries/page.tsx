@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Building2 } from "lucide-react";
 import { useIndustries } from "@/hooks/use-content";
+import Link from "next/link";
 
 export default function Industries() {
     const { t, i18n } = useTranslation();
@@ -40,30 +41,32 @@ export default function Industries() {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
                             >
-                                <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
-                                    <div className="h-48 overflow-hidden relative">
-                                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                                            <Icon className="w-16 h-16 text-primary/40" />
+                                <Link href={`/industries/${industry.id}`} className="block h-full group">
+                                    <Card className="h-full border-border/60 hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
+                                        <div className="h-48 overflow-hidden relative">
+                                            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                                                <Icon className="w-16 h-16 text-primary/40" />
+                                            </div>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                                            <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
+                                                <Icon className="w-6 h-6" />
+                                            </div>
                                         </div>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
-                                        <div className="absolute bottom-4 left-6 text-primary p-2 bg-background/80 backdrop-blur-sm rounded-lg shadow-sm">
-                                            <Icon className="w-6 h-6" />
-                                        </div>
-                                    </div>
-                                    <CardHeader className="pt-2">
-                                        <CardTitle className="text-2xl font-display mt-2">{industry.title}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="flex-grow">
-                                        <CardDescription className="text-base text-muted-foreground mb-6">
-                                            {industry.description}
-                                        </CardDescription>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group mt-auto">
-                                            {t("home.industries.learn_more")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
-                                        </Button>
-                                    </CardFooter>
-                                </Card>
+                                        <CardHeader className="pt-2">
+                                            <CardTitle className="text-2xl font-display mt-2 group-hover:text-primary transition-colors">{industry.title}</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className="flex-grow">
+                                            <CardDescription className="text-base text-muted-foreground mb-6 line-clamp-3">
+                                                {industry.description}
+                                            </CardDescription>
+                                        </CardContent>
+                                        <CardFooter>
+                                            <Button variant="ghost" className="p-0 hover:bg-transparent text-primary hover:text-primary/80 group mt-auto pointer-events-none">
+                                                {t("home.industries.learn_more")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'}`} />
+                                            </Button>
+                                        </CardFooter>
+                                    </Card>
+                                </Link>
                             </motion.div>
                         );
                     })}

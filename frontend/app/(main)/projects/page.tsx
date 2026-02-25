@@ -2,6 +2,7 @@
 
 import Section from "@/components/ui/section";
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, History, Zap, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
@@ -64,45 +65,46 @@ export default function Projects() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                             {categoryProjects.map((project, index) => (
-                                <motion.div
-                                    key={project.id}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                    className="group cursor-pointer bg-white rounded-2xl border border-border/40 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
-                                >
-                                    <div className="overflow-hidden relative aspect-video">
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
-                                        <Image
-                                            src={project.imageUrl}
-                                            alt={project.title}
-                                            fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                    </div>
-
-                                    <div className="p-8">
-                                        <div className="flex items-center gap-3 mb-3">
-                                            <span className="text-accent text-sm font-medium tracking-wide uppercase">
-                                                {project.category}
-                                            </span>
-                                            <div className="h-px w-8 bg-border" />
+                                <Link key={project.id} href={`/projects/${project.id}`}>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 40 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: index * 0.1 }}
+                                        className="group cursor-pointer bg-white rounded-2xl border border-border/40 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 h-full"
+                                    >
+                                        <div className="overflow-hidden relative aspect-video">
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10" />
+                                            <Image
+                                                src={project.imageUrl}
+                                                alt={project.title}
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
                                         </div>
 
-                                        <h3 className="text-2xl font-display font-bold mb-3 group-hover:text-primary transition-colors">
-                                            {project.title}
-                                        </h3>
+                                        <div className="p-8">
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <span className="text-accent text-sm font-medium tracking-wide uppercase">
+                                                    {project.category}
+                                                </span>
+                                                <div className="h-px w-8 bg-border" />
+                                            </div>
 
-                                        <p className="text-muted-foreground mb-6 leading-relaxed">
-                                            {project.description}
-                                        </p>
+                                            <h3 className="text-2xl font-display font-bold mb-3 group-hover:text-primary transition-colors">
+                                                {project.title}
+                                            </h3>
 
-                                        <div className={`flex items-center text-primary font-medium transition-transform ${isRtl ? 'group-hover:-translate-x-2' : 'group-hover:translate-x-2'}`}>
-                                            {t('portfolio.view_case_study')} <ArrowRight className={`mx-2 w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+                                            <p className="text-muted-foreground mb-6 leading-relaxed">
+                                                {project.description}
+                                            </p>
+
+                                            <div className={`flex items-center text-primary font-medium transition-transform ${isRtl ? 'group-hover:-translate-x-2' : 'group-hover:translate-x-2'}`}>
+                                                {t('portfolio.view_case_study')} <ArrowRight className={`mx-2 w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+                                            </div>
                                         </div>
-                                    </div>
-                                </motion.div>
+                                    </motion.div>
+                                </Link>
                             ))}
                         </div>
                     </Section>
