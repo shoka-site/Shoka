@@ -144,10 +144,10 @@ export default function AdminServices() {
                                             <SelectValue placeholder="Select type" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="AI">AI</SelectItem>
+                                            <SelectItem value="AI & ML">AI & ML</SelectItem>
                                             <SelectItem value="Cloud">Cloud</SelectItem>
                                             <SelectItem value="Full Stack">Full Stack</SelectItem>
-                                            <SelectItem value="Mobile">Mobile</SelectItem>
+                                            <SelectItem value="Automation">Automation</SelectItem>
                                             <SelectItem value="Cybersecurity">Cybersecurity</SelectItem>
                                             <SelectItem value="Data">Data</SelectItem>
                                             <SelectItem value="Consulting">Consulting</SelectItem>
