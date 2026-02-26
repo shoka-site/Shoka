@@ -555,14 +555,14 @@ export default function Home() {
               </div>
               <Link href="/services">
                 <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
-                  {t("view_all_services")}
+                  {t("View All Services")}
                   <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
                 </span>
               </Link>
             </div>
           </FadeInSection>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => {
+            {services.slice(0, 4).map((service, index) => {
               return (
                 <motion.div
                   key={service.id}
@@ -684,7 +684,7 @@ export default function Home() {
                 size="lg"
                 className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
               >
-                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("view_all_projects")}</span>
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("View All Projects")}</span>
                 <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
               </Button>
             </Link>

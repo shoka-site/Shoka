@@ -1,12 +1,12 @@
 "use client";
 
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
+import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Sparkles, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
-import { usePlatformUpdates } from "@/hooks/use-content";
+
 
 export default function WelcomeV3() {
     const { t, i18n } = useTranslation();
@@ -36,16 +36,23 @@ export default function WelcomeV3() {
     // Aura spotlight effect
     const spotlight = useMotionTemplate`radial-gradient(1000px circle at ${springX}px ${springY}px, rgba(194,164,92,0.07), transparent 80%)`;
 
-    const { data: updates = [] } = usePlatformUpdates();
-    const [activeIdx, setActiveIdx] = useState(0);
+    // Generate particles only on the client to avoid hydration mismatch
+    const [particles, setParticles] = useState<Array<{
+        x: number; y: number; scale: number; duration: number; delay: number; xOffset: number;
+    }>>([]);
 
     useEffect(() => {
-        if (updates.length <= 1) return;
-        const timer = setInterval(() => {
-            setActiveIdx((prev) => (prev + 1) % updates.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, [updates.length]);
+        setParticles(
+            Array.from({ length: 20 }, () => ({
+                x: Math.random() * 2000,
+                y: Math.random() * 1000,
+                scale: Math.random() * 0.5,
+                duration: 5 + Math.random() * 10,
+                delay: Math.random() * 5,
+                xOffset: (Math.random() - 0.5) * 100,
+            }))
+        );
+    }, []);
 
     return (
         <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display" dir={isRtl ? "rtl" : "ltr"}>
@@ -89,40 +96,26 @@ export default function WelcomeV3() {
                 style={{ backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(15,10,4,0.4) 50%, rgba(0,0,0,0.9) 100%)" }}
             />
 
-            {/* Floating Golden Dust Particles - Generated on client only to avoid hydration mismatch */}
+            {/* Floating Golden Dust Particles - Rendered client-side only */}
             <div className="absolute inset-0 z-10 pointer-events-none">
-                {typeof window !== 'undefined' && [...Array(20)].map((_, i) => {
-                    // Generate random values once per render
-                    const x = Math.random() * 2000;
-                    const y = Math.random() * 1000;
-                    const scale = Math.random() * 0.5;
-                    const duration = 5 + Math.random() * 10;
-                    const delay = Math.random() * 5;
-                    const xOffset = (Math.random() - 0.5) * 100;
-
-                    return (
-                        <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 bg-accent rounded-full opacity-20"
-                            initial={{
-                                x,
-                                y,
-                                scale
-                            }}
-                            animate={{
-                                y: [y, y - 200],
-                                opacity: [0, 0.3, 0],
-                                x: [x, x + xOffset]
-                            }}
-                            transition={{
-                                duration,
-                                repeat: Infinity,
-                                ease: "linear",
-                                delay
-                            }}
-                        />
-                    );
-                })}
+                {particles.map((p, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-accent rounded-full opacity-20"
+                        initial={{ x: p.x, y: p.y, scale: p.scale }}
+                        animate={{
+                            y: [p.y, p.y - 200],
+                            opacity: [0, 0.3, 0],
+                            x: [p.x, p.x + p.xOffset]
+                        }}
+                        transition={{
+                            duration: p.duration,
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: p.delay
+                        }}
+                    />
+                ))}
             </div>
 
             {/* 2. Main Narrative Content */}
@@ -171,28 +164,53 @@ export default function WelcomeV3() {
                     </motion.div>
                 </div>
 
-                {/* Tagline Banner - Data Driven */}
+                {/* Tagline */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.8 }}
-                    className="mb-12 h-12 flex items-center justify-center overflow-hidden"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.2, delay: 0.9 }}
+                    className="mb-12 flex flex-col items-center gap-4"
                 >
-                    <AnimatePresence mode="wait">
-                        <motion.p
-                            key={updates.length > 0 ? updates[activeIdx]?.id : 'fallback'}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-white/40 text-sm md:text-base uppercase tracking-[0.6em] max-w-3xl leading-relaxed"
-                        >
-                            {updates.length > 0
-                                ? updates[activeIdx]?.title
-                                : t("welcome.subtitle")}
-                        </motion.p>
-                    </AnimatePresence>
+                    {/* Decorative separator */}
+                    <div className="flex items-center gap-4 w-full max-w-xs">
+                        <div className="flex-1 h-px bg-gradient-to-r from-transparent to-accent/40" />
+                        <div className="w-1 h-1 rounded-full bg-accent/60" />
+                        <div className="flex-1 h-px bg-gradient-to-l from-transparent to-accent/40" />
+                    </div>
+
+                    <p className={`text-white/70 text-lg md:text-xl max-w-2xl leading-relaxed text-center ${isRtl ? "" : "tracking-wide"}`}>
+                        {i18n.language === "en" ? (
+                            <>
+                                Where the{" "}
+                                <em className="not-italic font-semibold"
+                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                                    wisdom of the ancients
+                                </em>
+                                {" "}meets the{" "}
+                                <em className="not-italic font-semibold"
+                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                                    technology of tomorrow
+                                </em>
+                                .
+                            </>
+                        ) : (
+                            <>
+                                حيث تلتقي{" "}
+                                <em className="not-italic font-semibold"
+                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                                    حكمة القدماء
+                                </em>
+                                {" "}بـ
+                                <em className="not-italic font-semibold"
+                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                                    تكنولوجيا الغد
+                                </em>
+                                .
+                            </>
+                        )}
+                    </p>
                 </motion.div>
+
 
                 {/* Discovery CTA */}
                 <motion.div
