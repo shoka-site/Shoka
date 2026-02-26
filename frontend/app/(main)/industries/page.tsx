@@ -80,7 +80,7 @@ export default function Industries() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Discover</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{t('common.discover')}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -168,13 +168,13 @@ export default function Industries() {
                         <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
-                            Build for your industry
+                            {t('industries.cta.title')}
                         </h2>
                         <p className="text-xl text-muted-foreground mb-10 font-light">
-                            Localized expertise for global digital excellence.
+                            {t('industries.cta.description')}
                         </p>
                         <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
-                            Partner with us
+                            {t('industries.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>
                     </motion.div>

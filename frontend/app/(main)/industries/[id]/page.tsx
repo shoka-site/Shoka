@@ -66,6 +66,24 @@ export default function IndustryDetails() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(var(--secondary),0.15)_0%,transparent_50%)] mix-blend-screen" />
                 </motion.div>
 
+                <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
+                    <div className="container mx-auto px-6">
+                        <motion.div
+                            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="pointer-events-auto"
+                        >
+                            <Link href="/industries" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
+                                    <ArrowLeft className="w-4 h-4" />
+                                </div>
+                                {t("home.industries.back_to_industries")}
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
+
                 <div className="container relative z-10 px-6 mx-auto pb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -73,11 +91,10 @@ export default function IndustryDetails() {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-4xl mx-auto text-center flex flex-col items-center"
                     >
-                        <Link href="/industries" className="group inline-flex items-center gap-3 text-white/60 hover:text-white mb-10 transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-                            <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
-                                <ArrowLeft className="w-4 h-4" />
-                            </div>
-                            {t("home.industries.back_to_industries", "Back to Industries")}
+
+                        <Link href="/industries" className="group inline-flex items-center gap-3 text-white/50 hover:text-white mb-8 transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                            <ArrowLeft className={`w-4 h-4 transition-transform group-hover:-translate-x-1 ${isRtl ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
+                            {t("home.industries.back_to_industries")}
                         </Link>
 
                         <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
@@ -88,7 +105,7 @@ export default function IndustryDetails() {
                             >
                                 <Badge variant="outline" className="text-secondary border-secondary/30 bg-secondary/10 px-5 py-2 text-sm backdrop-blur-md flex items-center justify-center gap-2">
                                     <Building2 className="w-3.5 h-3.5" />
-                                    {industry.type || t("home.industries.industry", "Industry")}
+                                    {industry.type || t("home.industries.industry")}
                                 </Badge>
                             </motion.div>
                         </div>
@@ -106,7 +123,7 @@ export default function IndustryDetails() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
+                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">{t("common.scroll")}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -131,7 +148,7 @@ export default function IndustryDetails() {
                         >
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="h-px w-12 bg-secondary/50" />
-                                <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">{t("home.industries.overview", "Industry Overview")}</h2>
+                                <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">{t("home.industries.overview")}</h2>
                             </div>
 
                             <div className="prose prose-lg md:prose-xl dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
@@ -159,16 +176,15 @@ export default function IndustryDetails() {
                                 <div className="p-8 relative z-10">
                                     <h3 className="text-2xl font-display font-bold mb-8 text-foreground flex items-center gap-3">
                                         <div className="w-2 h-8 bg-secondary rounded-full" />
-                                        {t("home.industries.details", "Industry Details")}
+                                        {t("home.industries.details")}
                                     </h3>
 
                                     <div className="space-y-8">
                                         <div className="group">
                                             <span className="flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2 font-semibold">
-                                                <Tag className="w-3.5 h-3.5 group-hover:text-secondary transition-colors" />
-                                                {t("services.type", "Type")}
+                                                {t("services.type")}
                                             </span>
-                                            <span className="text-lg font-medium text-foreground">{industry.type || t("home.industries.industry", "Industry")}</span>
+                                            <span className="text-lg font-medium text-foreground">{industry.type || t("home.industries.industry")}</span>
                                         </div>
 
                                         <div className="w-full h-px bg-border/50" />

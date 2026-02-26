@@ -87,7 +87,7 @@ export default function Projects() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Timeline</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{t('portfolio.projects.timeline')}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -197,13 +197,13 @@ export default function Projects() {
                         className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
                     >
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
-                            Start your project?
+                            {t('portfolio.projects.cta.title')}
                         </h2>
                         <p className="text-xl text-muted-foreground mb-10 font-light">
-                            Let's architect the next milestone in your digital history.
+                            {t('portfolio.projects.cta.description')}
                         </p>
                         <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
-                            Discuss Project
+                            {t('portfolio.projects.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>
                     </motion.div>

@@ -48,7 +48,7 @@ export default function ServiceDetails() {
                     <p className="text-muted-foreground mb-10 max-w-md mx-auto">{t("services.not_found_desc", "The service you are looking for does not exist or has been removed.")}</p>
                     <Link href="/services" className="group relative flex items-center gap-4 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors overflow-hidden">
                         <ArrowLeft className={`w-5 h-5 transition-transform group-hover:-translate-x-1 ${isRtl ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-                        <span className="relative z-10">{t("services.back", "Back to Services")}</span>
+                        <span className="relative z-10">{t("services.back")}</span>
                     </Link>
                 </motion.div>
             </div>
@@ -66,6 +66,24 @@ export default function ServiceDetails() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(var(--primary),0.15)_0%,transparent_50%)] mix-blend-screen" />
                 </motion.div>
 
+                <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
+                    <div className="container mx-auto px-6">
+                        <motion.div
+                            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="pointer-events-auto"
+                        >
+                            <Link href="/services" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
+                                    <ArrowLeft className="w-4 h-4" />
+                                </div>
+                                {t("services.back")}
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
+
                 <div className="container relative z-10 px-6 mx-auto pb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -73,12 +91,6 @@ export default function ServiceDetails() {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-4xl mx-auto text-center flex flex-col items-center"
                     >
-                        <Link href="/services" className="group inline-flex items-center gap-3 text-white/60 hover:text-white mb-10 transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-                            <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
-                                <ArrowLeft className="w-4 h-4" />
-                            </div>
-                            {t("services.back", "Back to Services")}
-                        </Link>
 
                         <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
                             <motion.div
@@ -88,7 +100,7 @@ export default function ServiceDetails() {
                             >
                                 <Badge variant="outline" className="text-accent border-accent/30 bg-accent/10 px-5 py-2 text-sm backdrop-blur-md flex items-center justify-center gap-2">
                                     <Sparkles className="w-3.5 h-3.5" />
-                                    {service.type || "Specialized Service"}
+                                    {service.type || t("services.specialized")}
                                 </Badge>
                             </motion.div>
                         </div>
@@ -106,7 +118,7 @@ export default function ServiceDetails() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
+                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold">{t("common.scroll")}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -131,7 +143,7 @@ export default function ServiceDetails() {
                         >
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="h-px w-12 bg-accent/50" />
-                                <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-accent">{t("services.overview", "Service Overview")}</h2>
+                                <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-accent">{t("services.overview")}</h2>
                             </div>
 
                             <div className="prose prose-lg md:prose-xl dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
@@ -159,16 +171,16 @@ export default function ServiceDetails() {
                                 <div className="p-8 relative z-10">
                                     <h3 className="text-2xl font-display font-bold mb-8 text-foreground flex items-center gap-3">
                                         <div className="w-2 h-8 bg-primary rounded-full" />
-                                        {t("services.details", "Service Details")}
+                                        {t("services.details")}
                                     </h3>
 
                                     <div className="space-y-8">
                                         <div className="group">
                                             <span className="flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2 font-semibold">
                                                 <Tag className="w-3.5 h-3.5 group-hover:text-primary transition-colors" />
-                                                {t("services.type", "Type")}
+                                                {t("services.type")}
                                             </span>
-                                            <span className="text-lg font-medium text-foreground">{service.type || "Specialized Service"}</span>
+                                            <span className="text-lg font-medium text-foreground">{service.type || t("services.specialized")}</span>
                                         </div>
 
                                         <div className="w-full h-px bg-border/50" />
@@ -176,17 +188,17 @@ export default function ServiceDetails() {
                                         <div className="group">
                                             <span className="flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-[0.15em] mb-2 font-semibold">
                                                 <Activity className="w-3.5 h-3.5 group-hover:text-primary transition-colors" />
-                                                {t("services.status_label", "Status")}
+                                                {t("services.status_label")}
                                             </span>
                                             <span className="text-lg font-medium capitalize text-foreground">
-                                                {service.published ? t("services.status_active", "Active") : t("services.status_inactive", "Inactive")}
+                                                {service.published ? t("services.status_active") : t("services.status_inactive")}
                                             </span>
                                         </div>
                                     </div>
 
                                     <div className="mt-12">
                                         <Link href="/contact" className="w-full inline-flex justify-center items-center py-4 rounded-full bg-foreground text-background font-bold tracking-wide hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-primary/20">
-                                            {t("services.inquire", "Inquire About Service")}
+                                            {t("services.inquire")}
                                         </Link>
                                     </div>
                                 </div>

@@ -256,6 +256,9 @@
     "explore_services": "Explore Services",
     "core_capabilities": "Core Capabilities",
     "view_all_services": "View All Services",
+    "view_all_projects": "View All Projects",
+    "view_service": "View Service",
+    "view_project": "View Project",
     "home": {
         "services": {
             "badge": "Expertise",
@@ -357,11 +360,23 @@
         "industries": {
             "title": "Industries",
             "description": "We provide specialized digital solutions tailored to the unique challenges and opportunities of various sectors.",
-            "learn_more": "Learn more"
+            "learn_more": "Learn more",
+            "not_found": "Industry not found",
+            "not_found_desc": "The industry you are looking for does not exist or has been removed.",
+            "back_to_industries": "Back to Industries",
+            "industry": "Industry",
+            "overview": "Industry Overview",
+            "details": "Industry Details"
         },
         "solutions": {
             "title": "Solutions",
-            "description": "Strategic digital solutions designed to drive business outcomes and accelerate transformation."
+            "description": "Strategic digital solutions designed to drive business outcomes and accelerate transformation.",
+            "strategic_impact": "Strategic Impact",
+            "cta": {
+                "title": "Ready for transformation?",
+                "description": "Unlock new dimensions of growth with our strategic technology solutions.",
+                "button": "Partner for growth"
+            }
         },
         "results": {
             "badge": "Our Impact",
@@ -458,7 +473,21 @@
             "crm_solutions": "CRM Solutions",
             "enterprise_integration": "Enterprise Integration",
             "security_solutions": "Security Solutions"
-        }
+        },
+        "cta": {
+            "title": "Ready to innovate?",
+            "description": "Let's discuss how we can help you build your digital future.",
+            "button": "Get in Touch"
+        },
+        "back": "Back to Services",
+        "overview": "Service Overview",
+        "details": "Service Details",
+        "type": "Type",
+        "status_label": "Status",
+        "status_active": "Active",
+        "status_inactive": "Inactive",
+        "inquire": "Inquire About Service",
+        "specialized": "Specialized Service"
     },
     "portfolio": {
         "subtitle": "Our Work",
@@ -498,6 +527,12 @@
                 "made": "Completed",
                 "making": "In Progress",
                 "will_make": "Upcoming"
+            },
+            "timeline": "Timeline",
+            "cta": {
+                "title": "Start your project?",
+                "description": "Let's architect the next milestone in your digital history.",
+                "button": "Discuss Project"
             }
         }
     },
@@ -505,6 +540,7 @@
         "subtitle": "Who We Are",
         "title": "Our Heritage & Future",
         "description": "Shoka is a global technology consultancy rooted in the rich history of innovation. We believe that true intelligence comes from understanding where we come from while looking boldly ahead.",
+        "heritage": "Heritage",
         "legacy_title": "A Legacy of Innovation",
         "legacy_p1": "Founded in Baghdad with a global vision, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
         "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
@@ -526,7 +562,9 @@
         },
         "team": {
             "badge": "Our Team",
-            "title": "Meet Our Experts"
+            "title": "Meet Our Experts",
+            "profile": "Profile",
+            "portfolio": "Portfolio"
         },
         "events": {
             "badge": "Our Events",
@@ -562,6 +600,12 @@
                     "desc": "Recognized as a leading partner for large-scale digital transformation projects."
                 }
             }
+        },
+        "cta": {
+            "title": "Grow with us.",
+            "description": "We're more than a platform. We are your partner in the long-term digital evolution of Iraq.",
+            "contact": "Contact Us",
+            "news": "Latest News"
         }
     },
     "contact": {
@@ -652,7 +696,11 @@
     },
     "common": {
         "loading": "Loading...",
-        "explore_all": "Explore All"
+        "explore_all": "Explore All",
+        "explore": "Explore",
+        "scroll": "Scroll",
+        "discover": "Discover",
+        "explore_content": "Explore Content"
     },
     "industries": {
         "categories": {
@@ -698,6 +746,11 @@
             "streaming": "Streaming Platforms",
             "gaming": "Gaming Tech",
             "social_media": "Social Media"
+        },
+        "cta": {
+            "title": "Build for your industry",
+            "description": "Localized expertise for global digital excellence.",
+            "button": "Partner with us"
         }
     }
 }

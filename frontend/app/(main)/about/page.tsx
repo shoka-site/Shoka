@@ -75,7 +75,7 @@ export default function About() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Heritage</span>
+          <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{t('about.heritage')}</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -287,12 +287,12 @@ export default function About() {
                       <div className="flex gap-4">
                         {member.resumeUrl && (
                           <Link href={member.resumeUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2">
-                            Profile <ArrowRight className="w-3 h-3" />
+                            {t('about.team.profile')} <ArrowRight className="w-3 h-3" />
                           </Link>
                         )}
                         {member.portfolioUrl && (
                           <Link href={member.portfolioUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2">
-                            Portfolio <ArrowRight className="w-3 h-3" />
+                            {t('about.team.portfolio')} <ArrowRight className="w-3 h-3" />
                           </Link>
                         )}
                       </div>
@@ -318,18 +318,18 @@ export default function About() {
             <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
             <h2 className="text-5xl font-display font-black text-foreground mb-8 tracking-tight">
-              Grow with us.
+              {t('about.cta.title')}
             </h2>
             <p className="text-xl text-muted-foreground mb-12 font-light max-w-2xl mx-auto">
-              We're more than a platform. We are your partner in the long-term digital evolution of Iraq.
+              {t('about.cta.description')}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/contact" className="inline-flex items-center gap-3 px-12 py-6 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-2xl hover:shadow-primary/20">
-                Contact Us
+                {t('about.cta.contact')}
                 <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
               </Link>
               <Link href="/news" className="inline-flex items-center gap-3 px-12 py-6 bg-background text-foreground border border-border font-black uppercase tracking-widest rounded-full hover:bg-muted transition-all">
-                Latest News
+                {t('about.cta.news')}
               </Link>
             </div>
           </motion.div>

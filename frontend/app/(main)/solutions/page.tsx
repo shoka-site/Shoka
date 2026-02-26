@@ -84,7 +84,7 @@ export default function Solutions() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Explore Content</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{t('common.explore_content')}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -131,7 +131,7 @@ export default function Solutions() {
 
                                                 <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/50">
                                                     <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary/70">
-                                                        Strategic Impact
+                                                        {t('home.solutions.strategic_impact')}
                                                     </span>
                                                     <div className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all duration-500 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary ${isRtl ? 'rotate-180' : ''}`}>
                                                         <ArrowRight className="w-5 h-5 opacity-40" />
@@ -157,13 +157,13 @@ export default function Solutions() {
                         className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
                     >
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
-                            Ready for transformation?
+                            {t('home.solutions.cta.title')}
                         </h2>
                         <p className="text-xl text-muted-foreground mb-10 font-light">
-                            Unlock new dimensions of growth with our strategic technology solutions.
+                            {t('home.solutions.cta.description')}
                         </p>
                         <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
-                            Partner for growth
+                            {t('home.solutions.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>
                     </motion.div>

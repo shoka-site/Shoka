@@ -555,7 +555,7 @@ export default function Home() {
               </div>
               <Link href="/services">
                 <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
-                  {t("View All Services")}
+                  {t("view_all_services")}
                   <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
                 </span>
               </Link>
@@ -575,9 +575,9 @@ export default function Home() {
                 >
                   <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
-                  <Link href="/services">
+                  <Link href={`/services/${service.id}`}>
                     <span className="text-primary text-sm font-medium hover:underline inline-flex items-center cursor-pointer">
-                      {t("home.services.learn_more")}
+                      {t("view_service")}
                       <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"}`} />
                     </span>
                   </Link>
@@ -659,7 +659,7 @@ export default function Home() {
                           size="lg"
                           className="rounded-full bg-white/5 border-white/20 text-white backdrop-blur-md hover:bg-accent hover:text-black hover:border-accent transition-all duration-500 pointer-events-none"
                         >
-                          {t("View Project")}
+                          {t("view_project")}
                           <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"}`} />
                         </Button>
                       </div>
@@ -684,7 +684,7 @@ export default function Home() {
                 size="lg"
                 className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
               >
-                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("View All Projects")}</span>
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("view_all_projects")}</span>
                 <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
               </Button>
             </Link>
