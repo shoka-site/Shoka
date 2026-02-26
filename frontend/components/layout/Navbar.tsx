@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy, History, Rocket } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy, History, Rocket, Building2, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -48,11 +48,24 @@ export default function Navbar() {
     { title_key: "navbar.menu.solutions.risk.title", href: "/solutions", desc_key: "navbar.menu.solutions.risk.desc", icon: ShieldCheck }
   ];
 
-  const aboutLinks = [
-    { title_key: "navbar.menu.about.story", href: "/about", desc_key: "navbar.menu.about.story_desc" },
-    { title_key: "navbar.menu.about.team", href: "/about", desc_key: "navbar.menu.about.team_desc" },
-    { title_key: "navbar.menu.about.careers", href: "/about", desc_key: "navbar.menu.about.careers_desc" },
-    { title_key: "navbar.menu.about.contact", href: "/contact", desc_key: "navbar.menu.about.contact_desc" }
+  const aboutCategories = [
+    {
+      title: "navbar.menu.about.company_title",
+      icon: Building2,
+      items: [
+        { name: "navbar.menu.about.story", href: "/about" },
+        { name: "navbar.menu.about.team", href: "/about" },
+        { name: "navbar.menu.about.careers", href: "/about" },
+      ]
+    },
+    {
+      title: "navbar.menu.about.connect_title",
+      icon: Users,
+      items: [
+        { name: "navbar.menu.about.contact", href: "/contact" },
+        { name: "navbar.menu.about.news", href: "/news" },
+      ]
+    }
   ];
 
   const projectCategories = [
@@ -144,27 +157,32 @@ export default function Navbar() {
                     description={t("home.industries.description")}
                     icon={LayoutGrid}
                     href="/industries"
-                    layout="grid"
+                    layout="columns"
                   >
-                    <div className="grid grid-cols-3 gap-6">
+                    <div className="grid grid-cols-4 gap-x-10 gap-y-10">
                       {industryCategories.map((cat, idx) => (
                         <motion.div
                           key={cat.title}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.05 }}
+                          className="space-y-4"
                         >
-                          <Link href={cat.items[0]?.href || "/industries"} className={`group block p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'text-right' : 'text-left'}`}>
-                            <div className={`flex items-center gap-3 mb-2 group-hover:text-primary transition-colors ${isRtl ? 'flex-row-reverse' : ''}`}>
-                              <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
-                                <cat.icon className="w-5 h-5" />
-                              </div>
-                              <span className="font-black text-sm uppercase tracking-tight">{t(cat.title)}</span>
+                          <div className={`flex items-center gap-3 text-white font-black uppercase tracking-widest text-xs ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                              <cat.icon className="w-4 h-4" />
                             </div>
-                            <p className={`text-xs text-white/40 line-clamp-2 ${isRtl ? 'pr-12' : 'pl-12'}`}>
-                              {cat.items.slice(0, 2).map(i => t(i.name)).join(", ")}...
-                            </p>
-                          </Link>
+                            <span>{t(cat.title)}</span>
+                          </div>
+                          <ul className="space-y-1">
+                            {cat.items.map(item => (
+                              <li key={item.name}>
+                                <Link href={item.href} className={`block text-sm text-white/50 hover:text-primary transition-all py-1.5 ${isRtl ? 'pr-6 border-r text-right' : 'pl-6 border-l text-left'} border-white/5 hover:border-primary/40`}>
+                                  {t(item.name)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
                         </motion.div>
                       ))}
                     </div>
@@ -254,23 +272,35 @@ export default function Navbar() {
                     description={t("footer.desc")}
                     icon={Globe}
                     href="/about"
-                    layout="list"
+                    layout="columns"
                   >
-                    <ul className="grid grid-cols-2 gap-4">
-                      {aboutLinks.map((item, idx) => (
+                    <div className="grid grid-cols-2 gap-x-12">
+                      {aboutCategories.map((cat, idx) => (
                         <motion.div
-                          key={item.title_key}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
+                          key={cat.title}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.1 }}
+                          className="space-y-4"
                         >
-                          <Link href={item.href} className={`block p-6 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all group ${isRtl ? 'text-right' : ''}`}>
-                            <div className="font-black text-sm mb-2 text-white group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
-                            <div className="text-xs text-white/40 leading-relaxed italic">{t(item.desc_key)}</div>
-                          </Link>
+                          <div className={`flex items-center gap-3 text-white font-black uppercase tracking-widest text-xs ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                              <cat.icon className="w-4 h-4" />
+                            </div>
+                            <span>{t(cat.title)}</span>
+                          </div>
+                          <ul className="space-y-1">
+                            {cat.items.map(item => (
+                              <li key={item.name}>
+                                <Link href={item.href} className={`block text-sm text-white/50 hover:text-primary transition-all py-1.5 ${isRtl ? 'pr-6 border-r text-right' : 'pl-6 border-l text-left'} border-white/5 hover:border-primary/40`}>
+                                  {t(item.name)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
                         </motion.div>
                       ))}
-                    </ul>
+                    </div>
                   </MegaMenuSection>
                 </NavigationMenuContent>
               </NavigationMenuItem>

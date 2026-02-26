@@ -156,6 +156,8 @@
                 }
             },
             "about": {
+                "company_title": "Company",
+                "connect_title": "Connect",
                 "story": "Our Story",
                 "story_desc": "From inception to innovation leader.",
                 "team": "Team",
@@ -163,7 +165,9 @@
                 "careers": "Careers",
                 "careers_desc": "Join us in building the future.",
                 "contact": "Contact",
-                "contact_desc": "Get in touch with our support."
+                "contact_desc": "Get in touch with our support.",
+                "news": "News",
+                "news_desc": "Latest updates and insights."
             }
         }
     },
