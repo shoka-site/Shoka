@@ -546,7 +546,7 @@
         "description": "Shoka is a global technology consultancy rooted in the rich history of innovation. We believe that true intelligence comes from understanding where we come from while looking boldly ahead.",
         "heritage": "Heritage",
         "legacy_title": "A Legacy of Innovation",
-        "legacy_p1": "Founded in Baghdad with a global vision, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
+        "legacy_p1": "Founded in Turkey by two Iraqi engineers, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
         "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
         "stats": {
             "clients": "Enterprise Clients",
@@ -583,25 +583,17 @@
             "badge": "Our Story",
             "title": "Journey Through Time",
             "milestones": {
-                "2020": {
-                    "title": "Founding Vision",
-                    "desc": "Shoka was founded with a mission to bridge the gap between traditional industry and digital excellence."
-                },
-                "2021": {
-                    "title": "Regional Expansion",
-                    "desc": "Established our first international office and began serving enterprise clients across the Middle East."
-                },
-                "2022": {
-                    "title": "Innovation Lab",
-                    "desc": "Launched our dedicated R&D lab focused on AI and blockchain solutions for governance."
-                },
-                "2023": {
-                    "title": "Strategic Partnerships",
-                    "desc": "Formed alliances with global tech leaders to bring cutting-edge infrastructure to the region."
-                },
                 "2024": {
-                    "title": "Digital Transformation Hub",
-                    "desc": "Recognized as a leading partner for large-scale digital transformation projects."
+                    "title": "Planning Shoka",
+                    "desc": "We started planning to shoka from 2024 but because of some struggles we get late."
+                },
+                "2025": {
+                    "title": "Market Study",
+                    "desc": "We studied the market at 2025."
+                },
+                "2026": {
+                    "title": "Deployment",
+                    "desc": "We deployed it at 2026 and it will be standing for so many years."
                 }
             }
         },
@@ -610,6 +602,18 @@
             "description": "We're more than a platform. We are your partner in the long-term digital evolution of Iraq.",
             "contact": "Contact Us",
             "news": "Latest News"
+        }
+    },
+    "news": {
+        "subtitle": "News & Events",
+        "title": "Our Achievements",
+        "description": "Stay up to date with our latest achievements, articles, and upcoming events as we continue to innovate the digital future.",
+        "no_articles_title": "No updates yet",
+        "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Shoka.",
+        "cta": {
+            "title": "Stay Connected",
+            "description": "Get in touch to learn more about our innovations and how we can elevate your systems.",
+            "button": "Contact Us"
         }
     },
     "contact": {
@@ -621,8 +625,8 @@
         "visit_us": "Visit Us",
         "mon_fri": "Mon-Fri from 9am to 6pm",
         "address": {
-            "line1": "Al-Mansour District",
-            "line2": "Baghdad, Iraq"
+            "line1": "Kizalie",
+            "line2": "Ankara | Turkey"
         },
         "form": {
             "title": "Send a Message",

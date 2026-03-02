@@ -24,7 +24,7 @@ export default function About() {
   const events = updates.filter(u => u.type === 'event').slice(0, 3);
   const awards = updates.filter(u => u.type === 'achievement').slice(0, 4);
 
-  const milestones = ["2020", "2021", "2022", "2023", "2024"];
+  const milestones = ["2024", "2025", "2026"];
 
   return (
     <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">
@@ -165,8 +165,8 @@ export default function About() {
 
               <div className="grid grid-cols-2 gap-10">
                 {[
-                  { val: "50+", label: t('about.stats.clients') },
-                  { val: "12", label: t('about.stats.countries') },
+                  { val: "20+", label: t('about.stats.clients') },
+                  { val: "3", label: t('about.stats.countries') },
                   { val: "100%", label: t('about.stats.delivery') },
                   { val: "24/7", label: t('about.stats.support') }
                 ].map((stat, i) => (

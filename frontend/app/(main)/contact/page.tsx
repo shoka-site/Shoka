@@ -97,7 +97,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold font-display">{t('contact.call_us')}</h3>
-                  <p className="text-muted-foreground">+964 770 123 4567</p>
+                  <p className="text-muted-foreground">+90 543 106 1211</p>
                   <p className="text-muted-foreground">{t('contact.mon_fri')}</p>
                 </div>
               </div>

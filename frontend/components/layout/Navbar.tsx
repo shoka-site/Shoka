@@ -19,6 +19,7 @@ import {
 import React from "react";
 import { serviceCategories } from "@/lib/data/services";
 import { industryCategories } from "@/lib/data/industries";
+import { useProjects } from "@/hooks/use-content";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -27,6 +28,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const isRtl = i18n.dir() === 'rtl';
+  const { data: projects = [] } = useProjects(true);
 
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
@@ -238,26 +240,57 @@ export default function Navbar() {
                     href="/projects"
                     layout="list"
                   >
-                    <ul className="grid grid-cols-3 gap-6">
-                      {projectCategories.map((item, idx) => (
-                        <motion.div
-                          key={item.title_key}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                        >
-                          <Link href={item.href} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                              <item.icon className="w-6 h-6" />
-                            </div>
-                            <div>
-                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
-                              <div className="text-xs text-white/50 mt-1 leading-relaxed">{t(item.desc_key)}</div>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </ul>
+                    <div className="space-y-8">
+                      <ul className="grid grid-cols-3 gap-6">
+                        {projectCategories.map((item, idx) => (
+                          <motion.div
+                            key={item.title_key}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                          >
+                            <Link href={item.href} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                                <item.icon className="w-6 h-6" />
+                              </div>
+                              <div>
+                                <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
+                                <div className="text-xs text-white/50 mt-1 leading-relaxed">{t(item.desc_key)}</div>
+                              </div>
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </ul>
+
+                      {projects.length > 0 && (
+                        <>
+                          <ul className="grid grid-cols-3 gap-6">
+                            {projects.slice(0, 3).map((project, idx) => (
+                              <motion.div
+                                key={project.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: (idx + 3) * 0.1 }}
+                              >
+                                <Link href={`/projects/${project.id}`} className={`group flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                                    {project.imageUrl ? (
+                                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                                    ) : (
+                                      <LayoutGrid className="w-6 h-6" />
+                                    )}
+                                  </div>
+                                  <div>
+                                    <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-1">{project.title}</div>
+                                    <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{project.description}</div>
+                                  </div>
+                                </Link>
+                              </motion.div>
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                    </div>
                   </MegaMenuSection>
                 </NavigationMenuContent>
               </NavigationMenuItem>
