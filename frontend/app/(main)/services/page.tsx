@@ -68,7 +68,7 @@ export default function Services() {
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
-                {t("services.back", "Back")}
+                {isRtl ? "العودة إلى الصفحة الرئيسية" : "Back to the home page"}
               </Link>
             </motion.div>
           </div>
