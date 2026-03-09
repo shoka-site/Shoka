@@ -103,7 +103,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden xl:flex items-center gap-8">
           <NavigationMenu className="static">
             <NavigationMenuList className="gap-2">
 
@@ -396,7 +396,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden text-white p-3 hover:bg-white/10 rounded-2xl transition-all"
+          className="xl:hidden text-white p-3 hover:bg-white/10 rounded-2xl transition-all"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
