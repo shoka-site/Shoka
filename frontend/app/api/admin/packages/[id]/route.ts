@@ -1,10 +1,14 @@
 import { storage } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+    req: NextRequest, 
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
+        const { id } = await params;
         const body = await req.json();
-        const pkg = await storage.updatePackage(params.id, body);
+        const pkg = await storage.updatePackage(id, body);
         if (!pkg) return NextResponse.json({ error: "Package not found" }, { status: 404 });
         return NextResponse.json(pkg);
     } catch (error) {
@@ -13,9 +17,13 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+    _req: NextRequest, 
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
-        const success = await storage.deletePackage(params.id);
+        const { id } = await params;
+        const success = await storage.deletePackage(id);
         if (!success) return NextResponse.json({ error: "Package not found" }, { status: 404 });
         return NextResponse.json({ success: true });
     } catch (error) {

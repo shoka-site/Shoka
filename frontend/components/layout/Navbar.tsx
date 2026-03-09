@@ -19,7 +19,6 @@ import {
 import React from "react";
 import { serviceCategories } from "@/lib/data/services";
 import { industryCategories } from "@/lib/data/industries";
-import { industryCategories } from "@/lib/data/industries";
 import { useProjects, useIndustries } from "@/hooks/use-content";
 
 export default function Navbar() {
