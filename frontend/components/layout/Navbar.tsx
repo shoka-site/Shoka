@@ -25,6 +25,7 @@ export default function Navbar() {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuValue, setMenuValue] = useState("");
   const pathname = usePathname();
   const router = useRouter();
   const isRtl = i18n.dir() === 'rtl';
@@ -106,8 +107,15 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex flex-none items-center justify-center">
-          <NavigationMenu className="static">
-            <NavigationMenuList className="gap-1 xl:gap-2">
+          <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
+            <NavigationMenuList 
+              className="gap-1 xl:gap-2" 
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('a')) {
+                  setMenuValue("");
+                }
+              }}
+            >
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
