@@ -4,7 +4,7 @@ import Section from "@/components/layout/Section";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowRight, Sparkles, ChevronDown, ArrowLeft } from "lucide-react";
 import { useIndustries } from "@/hooks/use-content";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -42,6 +42,24 @@ export default function Industries() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,164,92,0.12)_0%,transparent_50%)] mix-blend-screen" />
                     <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
                 </motion.div>
+
+                <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
+                    <div className="container mx-auto px-6">
+                        <motion.div
+                            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="pointer-events-auto"
+                        >
+                            <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
+                                    <ArrowLeft className="w-4 h-4" />
+                                </div>
+                                {isRtl ? "العودة إلى الصفحة الرئيسية" : "Back to the home page"}
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
 
                 <div className="container relative z-10 px-6 mx-auto">
                     <motion.div
