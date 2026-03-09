@@ -129,6 +129,7 @@ model TeamMember {
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
   portfolioUrl  String?  @map("portfolio_url")
+  linkedinUrl   String?  @map("linkedin_url")
 
   @@map("our_team")
 }

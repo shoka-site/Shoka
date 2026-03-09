@@ -4,7 +4,7 @@ import Section from "@/components/layout/Section";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Award, Users, Globe, Target, Calendar, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft } from "lucide-react";
+import { Award, Users, Globe, Target, Calendar, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTeamMembers, usePlatformUpdates } from "@/hooks/use-content";
 import { Button } from "@/components/ui/button";
@@ -311,6 +311,11 @@ export default function About() {
                         {member.portfolioUrl && (
                           <Link href={member.portfolioUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2">
                             {t('about.team.portfolio')} <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        )}
+                        {member.linkedinUrl && (
+                          <Link href={member.linkedinUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-blue-500 transition-colors flex items-center gap-2">
+                            {t('about.team.linkedin')} <Linkedin className="w-3.5 h-3.5" />
                           </Link>
                         )}
                       </div>

@@ -171,6 +171,7 @@ export interface TeamMember {
     imageUrl: string;
     resumeUrl?: string;
     portfolioUrl?: string;
+    linkedinUrl?: string;
     published: boolean;
 }
 

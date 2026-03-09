@@ -127,6 +127,7 @@ export const teamMemberSchema = z.object({
     imageUrl: z.string(),
     resumeUrl: z.string().optional().nullable(),
     portfolioUrl: z.string().optional().nullable(),
+    linkedinUrl: z.string().optional().nullable(),
     published: z.boolean().default(true),
     createdAt: z.date(),
     updatedAt: z.date(),

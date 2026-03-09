@@ -28,6 +28,7 @@ export default function AdminTeam() {
         imageUrl: "",
         resumeUrl: "",
         portfolioUrl: "",
+        linkedinUrl: "",
         order: 1,
         published: true,
     });
@@ -95,6 +96,7 @@ export default function AdminTeam() {
             imageUrl: "",
             resumeUrl: "",
             portfolioUrl: "",
+            linkedinUrl: "",
             order: 1,
             published: true,
         });
@@ -174,6 +176,7 @@ export default function AdminTeam() {
             imageUrl: member.imageUrl,
             resumeUrl: member.resumeUrl || "",
             portfolioUrl: member.portfolioUrl || "",
+            linkedinUrl: member.linkedinUrl || "",
             order: member.order,
             published: member.published,
         });
@@ -247,6 +250,14 @@ export default function AdminTeam() {
                                     placeholder="https://portfolio.com"
                                     value={formData.portfolioUrl}
                                     onChange={(e) => setFormData({ ...formData, portfolioUrl: e.target.value })}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium mb-1 block">LinkedIn URL</label>
+                                <Input
+                                    placeholder="https://linkedin.com/in/username"
+                                    value={formData.linkedinUrl}
+                                    onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
                                 />
                             </div>
                             <div className="space-y-2">
