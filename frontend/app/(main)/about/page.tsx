@@ -58,11 +58,11 @@ export default function About() {
               </motion.div>
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
               {t('about.title')}
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
               {t('about.description')}
             </p>
           </motion.div>
@@ -90,15 +90,15 @@ export default function About() {
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {/* History Section */}
-        <Section className="py-24">
+        <Section className="py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-16 text-center max-w-3xl mx-auto"
+            className="mb-12 md:mb-16 text-center max-w-3xl mx-auto"
           >
-            <span className="text-accent uppercase tracking-widest text-xs font-bold mb-4 block">{t('about.history.badge')}</span>
-            <h2 className="text-5xl font-display font-black mb-6 tracking-tight">{t('about.history.title')}</h2>
+            <span className="text-accent uppercase tracking-widest text-xs font-bold mb-3 md:mb-4 block">{t('about.history.badge')}</span>
+            <h2 className="text-4xl md:text-5xl font-display font-black mb-4 md:mb-6 tracking-tight">{t('about.history.title')}</h2>
           </motion.div>
 
           <div className="relative">
@@ -127,8 +127,8 @@ export default function About() {
         </Section>
 
         {/* Legacy Section */}
-        <Section background="muted" className="py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <Section background="muted" className="py-16 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -153,12 +153,12 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-5xl font-display font-black mb-8 leading-tight tracking-tight">{t('about.legacy_title')}</h2>
-              <div className="space-y-6 mb-12">
-                <p className="text-xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/20 pl-6">
+              <h2 className="text-4xl md:text-5xl font-display font-black mb-6 md:mb-8 leading-tight tracking-tight">{t('about.legacy_title')}</h2>
+              <div className="space-y-6 mb-10 md:mb-12">
+                <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed italic border-l-4 border-primary/20 pl-4 md:pl-6">
                   {t('about.legacy_p1')}
                 </p>
-                <p className="text-lg text-muted-foreground font-light leading-relaxed">
+                <p className="text-base md:text-lg text-muted-foreground font-light leading-relaxed">
                   {t('about.legacy_p2')}
                 </p>
               </div>
@@ -317,18 +317,18 @@ export default function About() {
             <div className="absolute -top-32 -left-32 w-80 h-80 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <h2 className="text-5xl font-display font-black text-foreground mb-8 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-foreground mb-6 md:mb-8 tracking-tight">
               {t('about.cta.title')}
             </h2>
-            <p className="text-xl text-muted-foreground mb-12 font-light max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 md:mb-12 font-light max-w-2xl mx-auto">
               {t('about.cta.description')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href="/contact" className="inline-flex items-center gap-3 px-12 py-6 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-2xl hover:shadow-primary/20">
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center">
+              <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-12 py-5 md:py-6 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-2xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
                 {t('about.cta.contact')}
                 <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
               </Link>
-              <Link href="/news" className="inline-flex items-center gap-3 px-12 py-6 bg-background text-foreground border border-border font-black uppercase tracking-widest rounded-full hover:bg-muted transition-all">
+              <Link href="/news" className="inline-flex justify-center items-center gap-3 px-8 md:px-12 py-5 md:py-6 bg-background text-foreground border border-border font-black uppercase tracking-widest rounded-full hover:bg-muted transition-all">
                 {t('about.cta.news')}
               </Link>
             </div>

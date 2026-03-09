@@ -70,11 +70,11 @@ export default function Projects() {
                             </motion.div>
                         </div>
 
-                        <h1 className="text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
+                        <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
                             {t('portfolio.projects.title')}
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+                        <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
                             {t('portfolio.projects.description')}
                         </p>
                     </motion.div>
@@ -152,17 +152,17 @@ export default function Projects() {
                                                     <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
                                                 </div>
 
-                                                <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
+                                                <div className="absolute inset-0 z-10 p-6 md:p-12 flex flex-col justify-end">
                                                     <motion.div className="flex items-center gap-3 mb-4">
                                                         <span className="w-8 h-[1px] bg-accent/60"></span>
                                                         <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
                                                     </motion.div>
 
-                                                    <h3 className="text-3xl md:text-4xl font-display font-black text-foreground mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
+                                                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-black text-foreground mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
                                                         {project.title}
                                                     </h3>
 
-                                                    <p className="text-muted-foreground text-lg max-w-lg mb-8 line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                                                    <p className="text-muted-foreground text-base sm:text-lg max-w-lg mb-6 md:mb-8 line-clamp-2 md:line-clamp-3 lg:line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
                                                         {project.description}
                                                     </p>
 
@@ -194,15 +194,15 @@ export default function Projects() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
+                        className="max-w-3xl mx-auto p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
                     >
-                        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
                             {t('portfolio.projects.cta.title')}
                         </h2>
-                        <p className="text-xl text-muted-foreground mb-10 font-light">
+                        <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
                             {t('portfolio.projects.cta.description')}
                         </p>
-                        <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
+                        <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
                             {t('portfolio.projects.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>

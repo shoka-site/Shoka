@@ -411,7 +411,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-0 z-[49] bg-black backdrop-blur-3xl flex flex-col pt-32 p-8"
+            className="fixed inset-0 top-0 z-[49] bg-black backdrop-blur-3xl flex flex-col pt-28 px-6 pb-8 md:pt-32 md:p-8 overflow-y-auto"
           >
             {/* Subtle grid pattern for mobile menu */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -432,7 +432,7 @@ export default function Navbar() {
                   transition={{ delay: idx * 0.05 + 0.2 }}
                 >
                   <Link href={link.href} onClick={() => setIsOpen(false)}>
-                    <span className="text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary transition-all block py-4 lowercase tracking-tighter">
+                    <span className="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary transition-all block py-3 md:py-4 lowercase tracking-tighter">
                       {link.name}
                     </span>
                   </Link>
@@ -446,7 +446,7 @@ export default function Navbar() {
                 className="pt-12 flex flex-col gap-6"
               >
                 <Link href="/contact" onClick={() => setIsOpen(false)}>
-                  <span className="block w-full bg-white text-black text-center py-5 rounded-[2rem] text-xl font-black uppercase tracking-widest shadow-2xl">
+                  <span className="block w-full bg-white text-black text-center py-4 md:py-5 rounded-full text-base md:text-xl font-black uppercase tracking-widest shadow-2xl">
                     {t("navbar.book_consultation")}
                   </span>
                 </Link>

@@ -67,11 +67,11 @@ export default function Solutions() {
                             </motion.div>
                         </div>
 
-                        <h1 className="text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
+                        <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
                             {t("home.solutions.title")}
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+                        <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
                             {t("home.solutions.description")}
                         </p>
                     </motion.div>
@@ -115,17 +115,17 @@ export default function Solutions() {
                                             {/* Glow Overlay on Hover */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                                            <CardHeader className="relative z-10 pb-4 pt-8 px-8 flex flex-row items-center gap-6">
+                                            <CardHeader className={`relative z-10 pb-4 pt-6 md:pt-8 px-6 md:px-8 flex items-start sm:items-center gap-4 md:gap-6 ${isRtl ? 'flex-col sm:flex-row-reverse text-right' : 'flex-col sm:flex-row text-left'}`}>
                                                 <div className="text-primary p-4 bg-primary/5 rounded-2xl shadow-sm border border-primary/10">
-                                                    <Icon className="w-10 h-10" />
+                                                    <Icon className="w-8 h-8 md:w-10 md:h-10" />
                                                 </div>
-                                                <CardTitle className="text-3xl font-display font-bold text-foreground leading-tight tracking-tight">
+                                                <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight tracking-tight">
                                                     {solution.title}
                                                 </CardTitle>
                                             </CardHeader>
 
-                                            <CardContent className="flex-grow flex flex-col relative z-10 px-8 pb-8">
-                                                <CardDescription className="text-lg text-muted-foreground mb-10 font-light leading-relaxed">
+                                            <CardContent className="flex-grow flex flex-col relative z-10 px-6 md:px-8 pb-6 md:pb-8">
+                                                <CardDescription className="text-base md:text-lg text-muted-foreground mb-10 font-light leading-relaxed">
                                                     {solution.description}
                                                 </CardDescription>
 
@@ -154,15 +154,15 @@ export default function Solutions() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
+                        className="max-w-3xl mx-auto p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
                     >
-                        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
                             {t('home.solutions.cta.title')}
                         </h2>
-                        <p className="text-xl text-muted-foreground mb-10 font-light">
+                        <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
                             {t('home.solutions.cta.description')}
                         </p>
-                        <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
+                        <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
                             {t('home.solutions.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>

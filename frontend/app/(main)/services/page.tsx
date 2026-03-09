@@ -76,11 +76,11 @@ export default function Services() {
               </motion.div>
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
               {t('services.title')}
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
               {t('services.description')}
             </p>
           </motion.div>
@@ -131,16 +131,16 @@ export default function Services() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
-                  className="flex items-center gap-6 mb-16"
+                  className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 mb-12 md:mb-16"
                 >
-                  <div className={`p-4 rounded-2xl bg-background border border-border shadow-xl text-primary flex items-center justify-center`}>
-                    <CategoryIcon className="w-10 h-10" />
+                  <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl bg-background border border-border shadow-md md:shadow-xl text-primary flex items-center justify-center`}>
+                    <CategoryIcon className="w-8 h-8 md:w-10 md:h-10" />
                   </div>
                   <div>
-                    <h2 className="text-4xl font-display font-bold text-foreground tracking-tight">
+                    <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground tracking-tight">
                       {categoryName.includes('.') ? t(categoryName) : categoryName}
                     </h2>
-                    <div className="w-16 h-1 bg-primary mt-4 rounded-full" />
+                    <div className="w-12 md:w-16 h-1 bg-primary mt-3 md:mt-4 rounded-full" />
                   </div>
                 </motion.div>
 
@@ -158,14 +158,14 @@ export default function Services() {
                           {/* Glow Overlay on Hover */}
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                          <CardHeader className="relative z-10 pb-4 pt-10 px-8">
-                            <CardTitle className="text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
+                          <CardHeader className="relative z-10 pb-4 pt-8 md:pt-10 px-6 md:px-8">
+                            <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
                               {service.title}
                             </CardTitle>
                           </CardHeader>
 
-                          <CardContent className="flex-grow flex flex-col relative z-10 px-8 pb-10">
-                            <CardDescription className="text-lg text-muted-foreground mb-8 line-clamp-3 flex-grow font-light leading-relaxed">
+                          <CardContent className="flex-grow flex flex-col relative z-10 px-6 md:px-8 pb-8 md:pb-10">
+                            <CardDescription className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 line-clamp-3 flex-grow font-light leading-relaxed">
                               {service.description}
                             </CardDescription>
 
@@ -196,18 +196,18 @@ export default function Services() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
+            className="max-w-3xl mx-auto p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
           >
             <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
               {t('services.cta.title')}
             </h2>
-            <p className="text-xl text-muted-foreground mb-10 font-light">
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
               {t('services.cta.description')}
             </p>
-            <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
+            <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
               {t('services.cta.button')}
               <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
             </Link>

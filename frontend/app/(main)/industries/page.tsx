@@ -63,11 +63,11 @@ export default function Industries() {
                             </motion.div>
                         </div>
 
-                        <h1 className="text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
+                        <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
                             {t("home.industries.title")}
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+                        <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
                             {t("home.industries.description")}
                         </p>
                     </motion.div>
@@ -117,14 +117,14 @@ export default function Industries() {
                                                 {/* Slim accent top bar */}
                                                 <div className="h-1.5 w-full bg-gradient-to-r from-primary/60 via-primary/20 to-transparent rounded-t-[2.5rem] group-hover:from-primary group-hover:via-primary/40 transition-all duration-700" />
 
-                                                <CardHeader className="relative z-10 pb-4 pt-8 px-8">
-                                                    <CardTitle className="text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
+                                                <CardHeader className="relative z-10 pb-4 pt-6 md:pt-8 px-6 md:px-8">
+                                                    <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
                                                         {industry.title}
                                                     </CardTitle>
                                                 </CardHeader>
 
-                                                <CardContent className="flex-grow flex flex-col relative z-10 px-8 pb-10">
-                                                    <CardDescription className="text-lg text-muted-foreground mb-8 line-clamp-3 flex-grow font-light leading-relaxed">
+                                                <CardContent className="flex-grow flex flex-col relative z-10 px-6 md:px-8 pb-8 md:pb-10">
+                                                    <CardDescription className="text-base md:text-lg text-muted-foreground mb-8 line-clamp-3 flex-grow font-light leading-relaxed">
                                                         {industry.description}
                                                     </CardDescription>
 
@@ -154,18 +154,18 @@ export default function Industries() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="max-w-3xl mx-auto p-12 rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
+                        className="max-w-3xl mx-auto p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] bg-muted/20 border border-border relative overflow-hidden"
                     >
                         <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
                         <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
-                        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
                             {t('industries.cta.title')}
                         </h2>
-                        <p className="text-xl text-muted-foreground mb-10 font-light">
+                        <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
                             {t('industries.cta.description')}
                         </p>
-                        <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
+                        <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
                             {t('industries.cta.button')}
                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                         </Link>

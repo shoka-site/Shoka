@@ -73,9 +73,9 @@ export default function Contact() {
 
           {/* Contact Info */}
           <div>
-            <span className="text-accent uppercase tracking-widest text-sm font-semibold mb-2 block">{t('contact.subtitle')}</span>
-            <h1 className="text-5xl font-display font-bold mb-8">{t('contact.title')}</h1>
-            <p className="text-xl text-muted-foreground mb-12">
+            <span className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-2 md:mb-4 block">{t('contact.subtitle')}</span>
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 md:mb-8">{t('contact.title')}</h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
               {t('contact.description')}
             </p>
 
@@ -116,7 +116,7 @@ export default function Contact() {
           </div>
 
           {/* Contact Form */}
-          <Card className="p-8 shadow-xl border-border/60">
+          <Card className="p-6 md:p-8 shadow-xl border-border/60">
             <h2 className="text-2xl font-display font-bold mb-6">{t('contact.form.title')}</h2>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

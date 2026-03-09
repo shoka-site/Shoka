@@ -70,10 +70,10 @@ export default function PackagesPage() {
                             </Badge>
                         </motion.div>
 
-                        <h1 className="text-6xl md:text-8xl font-display font-black mb-6 leading-[1.05] tracking-tight text-white">
+                        <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 leading-[1.05] tracking-tight text-white">
                             {isRtl ? "باقاتنا" : "Our Packages"}
                         </h1>
-                        <p className="text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+                        <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
                             {isRtl
                                 ? "حلول مجمّعة ومصممة لحاجات أعمال محددة — كل باقة تحل مشكلة حقيقية."
                                 : "Pre-built solution bundles designed around specific business needs — each package solves a real problem."}
@@ -93,7 +93,7 @@ export default function PackagesPage() {
             </div>
 
             {/* Search + Table */}
-            <div className="container mx-auto px-6 py-16">
+            <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
                 {/* Search bar */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
@@ -134,24 +134,36 @@ export default function PackagesPage() {
                                 {/* Row header — always visible */}
                                 <button
                                     onClick={() => setExpandedId(isExpanded ? null : pkg.id)}
-                                    className={`w-full flex items-center gap-6 px-8 py-6 text-left hover:bg-muted/20 transition-colors ${isRtl ? "flex-row-reverse text-right" : ""}`}
+                                    className={`w-full flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 px-5 sm:px-6 md:px-8 py-5 md:py-6 text-left hover:bg-muted/20 transition-colors ${isRtl ? "md:flex-row-reverse text-right" : ""}`}
                                 >
-                                    {/* Icon */}
-                                    <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                                        <Package className="w-7 h-7" />
+                                    {/* Top Row for Mobile / Left for Desktop */}
+                                    <div className={`flex items-center justify-between w-full md:w-auto ${isRtl ? "flex-row-reverse" : ""}`}>
+                                        <div className="flex items-center gap-4 md:gap-6">
+                                            {/* Icon */}
+                                            <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                                                <Package className="w-6 h-6 md:w-7 md:h-7" />
+                                            </div>
+                                            <h3 className="text-lg md:text-xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight md:hidden">
+                                                {pkg.title}
+                                            </h3>
+                                        </div>
+                                        {/* Mobile Expand Button */}
+                                        <div className={`md:hidden w-8 h-8 rounded-full border border-border flex items-center justify-center transition-all ${isExpanded ? "bg-primary border-primary text-primary-foreground rotate-180" : "hover:border-primary/40"}`}>
+                                            <ChevronDown className="w-4 h-4" />
+                                        </div>
                                     </div>
 
-                                    {/* Title + teaser */}
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">
+                                    {/* Title + teaser (Desktop Title, Mobile Teaser) */}
+                                    <div className="flex-1 min-w-0 w-full md:w-auto mt-2 md:mt-0">
+                                        <h3 className="hidden md:block text-xl font-black text-foreground group-hover:text-primary transition-colors tracking-tight">
                                             {pkg.title}
                                         </h3>
-                                        <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{pkg.problem}</p>
+                                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2 md:line-clamp-1">{pkg.problem}</p>
                                     </div>
 
-                                    {/* Services badge + expand */}
-                                    <div className={`flex items-center gap-4 flex-shrink-0 ${isRtl ? "flex-row-reverse" : ""}`}>
-                                        <span className="hidden md:block text-xs text-muted-foreground bg-muted/60 border border-border px-3 py-1.5 rounded-full line-clamp-1 max-w-[200px]">
+                                    {/* Services badge + expand (Desktop Expand) */}
+                                    <div className={`hidden md:flex items-center gap-4 flex-shrink-0 ${isRtl ? "flex-row-reverse" : ""}`}>
+                                        <span className="text-xs text-muted-foreground bg-muted/60 border border-border px-3 py-1.5 rounded-full line-clamp-1 max-w-[200px]">
                                             {pkg.servicesUsed}
                                         </span>
                                         <div className={`w-8 h-8 rounded-full border border-border flex items-center justify-center transition-all ${isExpanded ? "bg-primary border-primary text-primary-foreground rotate-180" : "hover:border-primary/40"}`}>
@@ -170,7 +182,7 @@ export default function PackagesPage() {
                                             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                             className="overflow-hidden"
                                         >
-                                            <div className="border-t border-border bg-muted/10 px-8 py-8">
+                                            <div className="border-t border-border bg-muted/10 px-5 sm:px-6 md:px-8 py-6 md:py-8">
                                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                                     {SECTION_CONFIG.map((section, sIdx) => {
                                                         const Icon = section.icon;
@@ -208,11 +220,11 @@ export default function PackagesPage() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="mt-20 text-center p-12 rounded-[3rem] border border-border bg-muted/10 relative overflow-hidden"
+                        className="mt-12 md:mt-20 text-center p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-border bg-muted/10 relative overflow-hidden"
                     >
                         <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
                         <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-                        <h2 className="text-4xl font-display font-black mb-4 tracking-tight">
+                        <h2 className="text-3xl md:text-4xl font-display font-black mb-4 tracking-tight">
                             {isRtl ? "مو لاگيت الباقة المناسبة؟" : "Can't find the right package?"}
                         </h2>
                         <p className="text-muted-foreground mb-8 text-lg font-light">

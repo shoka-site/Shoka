@@ -498,22 +498,22 @@ export default function Home() {
 
       {/* ── WHY US — title banner ─────────────────────────────────── */}
       <div className="border-b border-border/40 bg-background">
-        <div className="container mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-28">
+        <div className="container mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-28">
           <FadeInSection>
-            <p className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-4 text-center">
+            <p className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 text-center">
               {t("home.why_us.badge")}
             </p>
           </FadeInSection>
           <FadeInSection delay={0.08}>
             <h2
               className="text-center font-display font-black text-foreground leading-[1.0]"
-              style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
+              style={{ fontSize: "clamp(2.5rem, 8vw, 7.5rem)" }}
             >
               {t("home.why_us.title")}
             </h2>
           </FadeInSection>
           <FadeInSection delay={0.14}>
-            <p className="text-center text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mt-6 leading-relaxed font-light">
+            <p className="text-center text-base md:text-xl text-muted-foreground max-w-2xl mx-auto mt-6 leading-relaxed font-light">
               {t("home.why_us.description")}
             </p>
           </FadeInSection>
@@ -545,11 +545,11 @@ export default function Home() {
       {!loadingServices && services.length > 0 && (
         <Section background="muted">
           <FadeInSection>
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16">
               <div className="max-w-xl">
-                <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.services.badge")}</span>
-                <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{t("home.services.title")}</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
+                <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.services.badge")}</span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.services.title")}</h2>
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
                   {t("home.services.description")}
                 </p>
               </div>
@@ -590,13 +590,13 @@ export default function Home() {
 
       {/* ── 3. PROJECTS — proof of work ───────────────────────────── */}
       {!loadingProjects && projects.length > 0 && (
-        <Section background="default" className="py-24 md:py-32">
-          <FadeInSection className="text-center mb-20">
-            <span className="text-accent tracking-[0.4em] uppercase text-xs font-bold mb-4 block opacity-80">{t("home.projects.badge")}</span>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
+        <Section background="default" className="py-20 md:py-32">
+          <FadeInSection className="text-center mb-16 md:mb-20">
+            <span className="text-accent tracking-[0.4em] uppercase text-[10px] md:text-xs font-bold mb-3 md:mb-4 block opacity-80">{t("home.projects.badge")}</span>
+            <h2 className="text-3xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
               {t("home.projects.title")}
             </h2>
-            <p className="text-muted-foreground text-lg md:text-xl mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-xl mt-4 md:mt-6 max-w-2xl mx-auto font-light leading-relaxed">
               {t("home.projects.description")}
             </p>
           </FadeInSection>
@@ -634,22 +634,22 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
                     </div>
 
-                    <div className="absolute inset-0 z-10 p-8 md:p-12 flex flex-col justify-end">
+                    <div className="absolute inset-0 z-10 p-6 md:p-12 flex flex-col justify-end">
                       <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 + index * 0.1 }}
-                        className="flex items-center gap-3 mb-4"
+                        className="flex items-center gap-3 mb-3 md:mb-4"
                       >
                         <span className="w-8 h-[1px] bg-accent/60"></span>
-                        <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
+                        <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
                       </motion.div>
 
-                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-display font-black text-white mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
+                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-white mb-3 md:mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
                         {project.title}
                       </h3>
 
-                      <p className="text-white/60 text-base md:text-lg max-w-lg mb-8 line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                      <p className="text-white/60 text-sm md:text-lg max-w-lg mb-6 md:mb-8 line-clamp-2 md:line-clamp-3 lg:line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
                         {project.description}
                       </p>
 
@@ -697,10 +697,10 @@ export default function Home() {
       {/* ── 4. PROCESS — how easy it is to work with us ───────────── */}
 
       <Section background="muted">
-        <FadeInSection className="text-center mb-16">
-          <span className="text-accent tracking-widest uppercase text-sm font-medium">{t("home.process.badge")}</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">{t("home.process.title")}</h2>
-          <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+        <FadeInSection className="text-center mb-12 md:mb-16">
+          <span className="text-accent tracking-widest uppercase text-xs md:text-sm font-medium">{t("home.process.badge")}</span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mt-3 md:mt-4">{t("home.process.title")}</h2>
+          <p className="text-muted-foreground text-base md:text-lg mt-3 md:mt-4 max-w-xl mx-auto">
             {t("home.process.description")}
           </p>
         </FadeInSection>
@@ -729,11 +729,11 @@ export default function Home() {
 
       {/* ── 5. TESTIMONIALS — don't take our word for it ──────────── */}
       {!loadingTestimonials && testimonials.length > 0 && (
-        <Section background="default">
+        <Section background="default" className="py-20 md:py-24">
           <FadeInSection className="text-center">
-            <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.trust.badge")}</span>
+            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.trust.badge")}</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">{t("home.trust.title")}</h2>
-            <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
+            <p className="text-muted-foreground text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto">
               {t("home.trust.description")}
             </p>
           </FadeInSection>
@@ -780,11 +780,11 @@ export default function Home() {
       )}
 
       {/* ── 6. PHILOSOPHY — our values & what we stand for ────────── */}
-      <Section background="muted">
-        <FadeInSection className="text-center mb-16">
-          <span className="text-accent text-xs font-bold uppercase tracking-[0.35em] mb-3 block">{t("home.philosophy.badge")}</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
-          <p className="text-muted-foreground text-lg mt-4 max-w-xl mx-auto">
+      <Section background="muted" className="py-20 md:py-24">
+        <FadeInSection className="text-center mb-12 md:mb-16">
+          <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.philosophy.badge")}</span>
+          <h2 className="text-3xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
+          <p className="text-muted-foreground text-base md:text-lg mt-3 md:mt-4 max-w-xl mx-auto">
             {t("home.philosophy.description")}
           </p>
         </FadeInSection>
