@@ -146,3 +146,25 @@ model Consultation {
 
   @@map("consultations")
 }
+
+model Package {
+  id               String   @id @default(uuid())
+  order            Int
+  titleEn          String   @map("title_en")
+  titleAr          String   @map("title_ar")
+  problemEn        String   @map("problem_en")
+  problemAr        String   @map("problem_ar")
+  solutionsEn      String   @map("solutions_en")
+  solutionsAr      String   @map("solutions_ar")
+  techStackEn      String   @map("tech_stack_en")
+  techStackAr      String   @map("tech_stack_ar")
+  servicesUsedEn   String   @map("services_used_en")
+  servicesUsedAr   String   @map("services_used_ar")
+  valueEn          String   @map("value_en")
+  valueAr          String   @map("value_ar")
+  published        Boolean  @default(true)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("packages")
+}

@@ -9,7 +9,8 @@ export async function GET() {
             testimonials,
             updates,
             industries,
-            solutions
+            solutions,
+            packages
         ] = await Promise.all([
             storage.getServiceCount(),
             storage.getProjectCount(),
@@ -17,6 +18,7 @@ export async function GET() {
             storage.getPlatformUpdateCount(),
             storage.getIndustryCount(),
             storage.getSolutionCount(),
+            storage.getPackageCount(),
         ]);
 
         return NextResponse.json({
@@ -25,7 +27,8 @@ export async function GET() {
             testimonials,
             updates,
             industries,
-            solutions
+            solutions,
+            packages
         });
     } catch (error) {
         console.error("Error fetching dashboard stats:", error);

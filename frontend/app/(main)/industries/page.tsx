@@ -4,7 +4,7 @@ import Section from "@/components/layout/Section";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { ArrowRight, Building2, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 import { useIndustries } from "@/hooks/use-content";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -101,7 +101,6 @@ export default function Industries() {
                     <div className="container mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {industries.map((industry, index) => {
-                                const Icon = Building2;
                                 return (
                                     <motion.div
                                         key={industry.id}
@@ -115,17 +114,10 @@ export default function Industries() {
                                                 {/* Glow Overlay on Hover */}
                                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                                                <div className="h-48 overflow-hidden relative">
-                                                    <div className="w-full h-full bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                                                        <Icon className="w-16 h-16 text-primary/20" />
-                                                    </div>
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                                                    <div className="absolute bottom-4 left-6 text-primary p-3 bg-background/90 backdrop-blur-sm rounded-2xl shadow-sm border border-border/50 group-hover:border-primary/30 transition-colors">
-                                                        <Icon className="w-6 h-6" />
-                                                    </div>
-                                                </div>
+                                                {/* Slim accent top bar */}
+                                                <div className="h-1.5 w-full bg-gradient-to-r from-primary/60 via-primary/20 to-transparent rounded-t-[2.5rem] group-hover:from-primary group-hover:via-primary/40 transition-all duration-700" />
 
-                                                <CardHeader className="relative z-10 pb-4 pt-6 px-8">
+                                                <CardHeader className="relative z-10 pb-4 pt-8 px-8">
                                                     <CardTitle className="text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
                                                         {industry.title}
                                                     </CardTitle>

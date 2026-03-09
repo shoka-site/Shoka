@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Service, type Project, type Testimonial, type PlatformUpdate, type Industry, type Solution, type TeamMember, type Consultation, type InsertConsultation } from "@shared/schema";
+import { type User, type InsertUser, type Service, type Project, type Testimonial, type PlatformUpdate, type Industry, type Solution, type TeamMember, type Consultation, type InsertConsultation, type Package } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -66,7 +66,12 @@ export interface IStorage {
   updateConsultation(id: string, consultation: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined>;
   deleteConsultation(id: string): Promise<boolean>;
 
-
+  // Packages
+  getPackages(published?: boolean): Promise<Package[]>;
+  getPackage(id: string): Promise<Package | undefined>;
+  createPackage(pkg: Omit<Package, 'id' | 'createdAt' | 'updatedAt'>): Promise<Package>;
+  updatePackage(id: string, pkg: Partial<Omit<Package, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Package | undefined>;
+  deletePackage(id: string): Promise<boolean>;
 
   // Count methods for dashboard
   getServiceCount(): Promise<number>;
@@ -76,6 +81,7 @@ export interface IStorage {
   getIndustryCount(): Promise<number>;
   getSolutionCount(): Promise<number>;
   getTeamMemberCount(): Promise<number>;
+  getPackageCount(): Promise<number>;
 }
 
 export class PrismaStorage implements IStorage {
@@ -394,6 +400,42 @@ export class PrismaStorage implements IStorage {
     return await prisma.teamMember.count();
   }
 
-}
+  // Packages
+  async getPackages(published?: boolean): Promise<Package[]> {
+    return await prisma.package.findMany({
+      where: published !== undefined ? { published } : undefined,
+      orderBy: { order: 'asc' },
+    });
+  }
 
+  async getPackage(id: string): Promise<Package | undefined> {
+    return await prisma.package.findUnique({ where: { id } }) || undefined;
+  }
+
+  async createPackage(pkg: Omit<Package, 'id' | 'createdAt' | 'updatedAt'>): Promise<Package> {
+    return await prisma.package.create({ data: pkg });
+  }
+
+  async updatePackage(id: string, updates: Partial<Omit<Package, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Package | undefined> {
+    try {
+      return await prisma.package.update({ where: { id }, data: updates });
+    } catch (e) {
+      return undefined;
+    }
+  }
+
+  async deletePackage(id: string): Promise<boolean> {
+    try {
+      await prisma.package.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async getPackageCount(): Promise<number> {
+    return await prisma.package.count();
+  }
+
+}
 export const storage = new PrismaStorage();

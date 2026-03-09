@@ -182,3 +182,36 @@ export function useTeamMembers() {
         queryFn: () => fetchContent<TeamMember[]>('team', language),
     });
 }
+
+// Packages
+export interface Package {
+    id: string;
+    order: number;
+    title: string;
+    problem: string;
+    solutions: string;
+    techStack: string;
+    servicesUsed: string;
+    value: string;
+    published: boolean;
+    createdAt?: string | Date;
+}
+
+export function usePackages() {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<Package[]>({
+        queryKey: ['packages', language],
+        queryFn: () => fetchContent<Package[]>('packages', language),
+    });
+}
+
+export function usePackage(id: string) {
+    const { i18n } = useTranslation();
+    const language = i18n.language as 'en' | 'ar';
+    return useQuery<Package>({
+        queryKey: ['package', id, language],
+        queryFn: () => fetchContent<Package>(`packages/${id}`, language),
+        enabled: !!id,
+    });
+}

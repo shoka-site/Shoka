@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, LogOut, Users, Mail } from "lucide-react";
+import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, LogOut, Users, Mail, Package } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -11,6 +11,7 @@ import ProtectedRoute from "@/components/admin/ProtectedRoute";
 const navItems = [
     { icon: Briefcase, label: "Services", path: "/admin/services" },
     { icon: FileText, label: "Projects", path: "/admin/projects" },
+    { icon: Package, label: "Packages", path: "/admin/packages" },
     { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials" },
     { icon: GitBranch, label: "Updates", path: "/admin/platform-updates" },
     { icon: Target, label: "Industries", path: "/admin/industries" },

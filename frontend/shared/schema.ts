@@ -148,4 +148,26 @@ export type Consultation = z.infer<typeof consultationSchema>;
 export const insertConsultationSchema = consultationSchema.omit({ id: true, status: true, createdAt: true, updatedAt: true });
 export type InsertConsultation = z.infer<typeof insertConsultationSchema>;
 
-
+// Package schema
+export const packageSchema = z.object({
+    id: z.string().uuid(),
+    order: z.number(),
+    titleEn: z.string(),
+    titleAr: z.string(),
+    problemEn: z.string(),
+    problemAr: z.string(),
+    solutionsEn: z.string(),
+    solutionsAr: z.string(),
+    techStackEn: z.string(),
+    techStackAr: z.string(),
+    servicesUsedEn: z.string(),
+    servicesUsedAr: z.string(),
+    valueEn: z.string(),
+    valueAr: z.string(),
+    published: z.boolean().default(true),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
+export type Package = z.infer<typeof packageSchema>;
+export const insertPackageSchema = packageSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertPackage = z.infer<typeof insertPackageSchema>;

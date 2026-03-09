@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useIndustry } from "@/hooks/use-content";
-import Section from "@/components/ui/section";
+import Section from "@/components/layout/Section";
 import Link from "next/link";
 import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";

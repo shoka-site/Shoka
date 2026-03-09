@@ -2,13 +2,14 @@
 
 import AdminLayout from "@/components/admin/AdminLayout";
 import Link from "next/link";
-import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb } from "lucide-react";
+import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, Package } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 
 interface DashboardStats {
     services: number;
     projects: number;
+    packages: number;
     testimonials: number;
     updates: number;
     industries: number;
@@ -27,6 +28,7 @@ export default function AdminDashboard() {
     const contentTypes = [
         { icon: Briefcase, label: "Services", path: "/admin/services", key: "services" },
         { icon: FileText, label: "Projects", path: "/admin/projects", key: "projects" },
+        { icon: Package, label: "Packages", path: "/admin/packages", key: "packages" },
         { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials", key: "testimonials" },
         { icon: GitBranch, label: "Platform Updates", path: "/admin/platform-updates", key: "updates" },
         { icon: Target, label: "Industries", path: "/admin/industries", key: "industries" },

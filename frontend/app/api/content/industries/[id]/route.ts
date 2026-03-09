@@ -1,4 +1,5 @@
 import { storage } from "@/lib/storage";
+import { transformForLanguage } from "@/lib/api-utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -7,11 +8,14 @@ export async function GET(
 ) {
     try {
         const { id } = await params;
+        const { searchParams } = new URL(req.url);
+        const requestedLang = searchParams.get("lang") || "en";
+        const lang = requestedLang.split("-")[0] as "en" | "ar";
         const industry = await storage.getIndustry(id);
         if (!industry) {
             return NextResponse.json({ error: "Industry not found" }, { status: 404 });
         }
-        return NextResponse.json(industry);
+        return NextResponse.json(transformForLanguage(industry, lang));
     } catch (error) {
         console.error("Error fetching industry:", error);
         return NextResponse.json({ error: "Failed to fetch industry" }, { status: 500 });

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy, History, Rocket, Building2, Users } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy, History, Rocket, Building2, Users, Package } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,7 +19,8 @@ import {
 import React from "react";
 import { serviceCategories } from "@/lib/data/services";
 import { industryCategories } from "@/lib/data/industries";
-import { useProjects } from "@/hooks/use-content";
+import { industryCategories } from "@/lib/data/industries";
+import { useProjects, useIndustries } from "@/hooks/use-content";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -29,6 +30,7 @@ export default function Navbar() {
   const router = useRouter();
   const isRtl = i18n.dir() === 'rtl';
   const { data: projects = [] } = useProjects(true);
+  const { data: industries = [] } = useIndustries();
 
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
@@ -159,32 +161,67 @@ export default function Navbar() {
                     description={t("home.industries.description")}
                     icon={LayoutGrid}
                     href="/industries"
-                    layout="columns"
+                    layout="list"
                   >
-                    <div className="grid grid-cols-4 gap-x-10 gap-y-10">
-                      {industryCategories.map((cat, idx) => (
+                    <ul className="grid grid-cols-2 gap-6">
+                      {industries.map((industry, idx) => (
                         <motion.div
-                          key={cat.title}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          key={industry.id}
+                          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                          animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: idx * 0.05 }}
-                          className="space-y-4"
                         >
-                          <div className={`flex items-center gap-3 text-white font-black uppercase tracking-widest text-xs ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                              <cat.icon className="w-4 h-4" />
+                          <Link href={`/industries/${industry.id}`} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                              <Building2 className="w-6 h-6" />
                             </div>
-                            <span>{t(cat.title)}</span>
+                            <div>
+                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{industry.title}</div>
+                              <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{industry.description}</div>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </ul>
+                  </MegaMenuSection>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                  {t("navbar.packages")}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <MegaMenuSection
+                    title={t("navbar.packages")}
+                    description={isRtl
+                      ? "باقات مجمّعة مصممة لحاجات أعمال محددة — كل باقة تحل مشكلة حقيقية."
+                      : "Pre-built solution bundles designed around specific business needs."}
+                    icon={Package}
+                    href="/packages"
+                    layout="list"
+                  >
+                    <div className={`flex flex-col gap-4 ${isRtl ? 'text-right' : ''}`}>
+                      {[
+                        { icon: Zap, label: isRtl ? "حلول جاهزة وسريعة التنفيذ" : "Ready-to-deploy solutions", desc: isRtl ? "لا تبدأ من الصفر" : "No starting from scratch" },
+                        { icon: Building2, label: isRtl ? "مصممة لاحتياجات الأعمال" : "Built for business needs", desc: isRtl ? "كل باقة تحل مشكلة حقيقية" : "Each bundle solves a real problem" },
+                        { icon: BarChart3, label: isRtl ? "قيمة واضحة وقابلة للقياس" : "Clear, measurable value", desc: isRtl ? "تعرف ليش تستثمر" : "Know exactly why you're investing" },
+                      ].map((item, idx) => (
+                        <motion.div
+                          key={item.label}
+                          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                        >
+                          <div className={`flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse' : ''}`}>
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                              <item.icon className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-black text-white uppercase tracking-tight">{item.label}</div>
+                              <div className="text-xs text-white/50 mt-1">{item.desc}</div>
+                            </div>
                           </div>
-                          <ul className="space-y-1">
-                            {cat.items.map(item => (
-                              <li key={item.name}>
-                                <Link href={item.href} className={`block text-sm text-white/50 hover:text-primary transition-all py-1.5 ${isRtl ? 'pr-6 border-r text-right' : 'pl-6 border-l text-left'} border-white/5 hover:border-primary/40`}>
-                                  {t(item.name)}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
                         </motion.div>
                       ))}
                     </div>
@@ -383,6 +420,7 @@ export default function Navbar() {
               {[
                 { name: t("navbar.services"), href: "/services" },
                 { name: t("navbar.industries"), href: "/industries" },
+                { name: t("navbar.packages"), href: "/packages" },
                 { name: t("navbar.recent_work"), href: "/solutions" },
                 { name: t("navbar.projects"), href: "/projects" },
                 { name: t("navbar.about"), href: "/about" },
