@@ -205,7 +205,7 @@ export default function AdminPackages() {
                     {packages.length === 0 ? (
                         <div className="px-6 py-12 text-center text-muted-foreground">
                             <Package className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                            <p className="text-sm">No packages yet. Click "Add Package" to create one.</p>
+                            <p className="text-sm">No packages yet. Click &quot;Add Package&quot; to create one.</p>
                         </div>
                     ) : (
                         packages.map((pkg: any) => (

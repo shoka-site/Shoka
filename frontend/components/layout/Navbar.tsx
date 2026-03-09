@@ -310,11 +310,12 @@ export default function Navbar() {
                                 transition={{ delay: (idx + 3) * 0.1 }}
                               >
                                 <Link href={`/projects/${project.id}`} className={`group flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                                    {project.imageUrl ? (
-                                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
-                                    ) : (
-                                      <LayoutGrid className="w-6 h-6" />
+                                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                                      {project.imageUrl ? (
+                                        /* eslint-disable-next-line @next/next/no-img-element */
+                                        <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                                      ) : (
+                                        <LayoutGrid className="w-6 h-6" />
                                     )}
                                   </div>
                                   <div>
