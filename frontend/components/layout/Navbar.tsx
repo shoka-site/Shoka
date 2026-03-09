@@ -103,12 +103,12 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden xl:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-4 xl:gap-8">
           <NavigationMenu className="static">
-            <NavigationMenuList className="gap-2">
+            <NavigationMenuList className="gap-1 xl:gap-2">
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.services")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -151,7 +151,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.industries")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -187,7 +187,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.packages")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -229,7 +229,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.recent_work")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -265,7 +265,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.projects")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -333,7 +333,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-5 text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
                   {t("navbar.about")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -378,16 +378,16 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          <div className="flex items-center gap-4 pl-4 border-l border-white/10">
+          <div className="flex items-center gap-2 xl:gap-4 pl-2 xl:pl-4 border-l border-white/10">
             <button
               onClick={toggleLanguage}
-              className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10"
+              className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10"
               aria-label="Toggle Language"
             >
-              <Globe className="w-5 h-5" />
+              <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
             </button>
             <Link href="/contact">
-              <span className="bg-white text-black px-6 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-black hover:scale-105 transition-all cursor-pointer shadow-[0_10px_30px_rgba(255,255,255,0.25)]">
+              <span className="bg-white text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-black hover:scale-105 transition-all cursor-pointer shadow-[0_10px_30px_rgba(255,255,255,0.25)] whitespace-nowrap">
                 {t("navbar.book_consultation")}
               </span>
             </Link>
@@ -396,7 +396,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="xl:hidden text-white p-3 hover:bg-white/10 rounded-2xl transition-all"
+          className="lg:hidden text-white p-3 hover:bg-white/10 rounded-2xl transition-all"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
