@@ -28,7 +28,7 @@ export default function AdminPlatformUpdates() {
     const { data: updates = [], isLoading } = useQuery<PlatformUpdate[]>({
         queryKey: ["admin-platform-updates"],
         queryFn: async () => {
-            const res = await fetch("/api/content/platform-updates?lang=en");
+            const res = await fetch("/api/content/en/platform-updates");
             return res.json();
         },
     });

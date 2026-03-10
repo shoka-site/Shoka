@@ -16,7 +16,7 @@ export default function AdminProjects() {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
-        imageUrl: "",
+        images: [] as string[],
         categoryEn: "",
         categoryAr: "",
         titleEn: "",
@@ -31,7 +31,7 @@ export default function AdminProjects() {
     const { data: projects = [], isLoading } = useQuery<Project[]>({
         queryKey: ["admin-projects"],
         queryFn: async () => {
-            const res = await fetch("/api/content/projects?lang=en");
+            const res = await fetch("/api/content/en/projects");
             return res.json();
         },
     });
@@ -80,7 +80,7 @@ export default function AdminProjects() {
 
     const resetForm = () => {
         setFormData({
-            imageUrl: "",
+            images: [],
             categoryEn: "",
             categoryAr: "",
             titleEn: "",
@@ -97,8 +97,8 @@ export default function AdminProjects() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.imageUrl) {
-            alert("Please select an image");
+        if (!formData.images || formData.images.length === 0) {
+            alert("Please select at least one image");
             return;
         }
         if (editingId) {
@@ -123,7 +123,7 @@ export default function AdminProjects() {
             });
             const data = await res.json();
             if (data.url) {
-                setFormData((prev) => ({ ...prev, imageUrl: data.url }));
+                setFormData((prev) => ({ ...prev, images: [...prev.images, data.url] }));
             }
         } catch (error) {
             console.error("Upload error:", error);
@@ -135,7 +135,7 @@ export default function AdminProjects() {
 
     const handleEdit = (project: any) => {
         setFormData({
-            imageUrl: project.imageUrl,
+            images: project.images || (project.imageUrl ? [project.imageUrl] : []),
             categoryEn: project.categoryEn || project.category,
             categoryAr: project.categoryAr || project.category,
             titleEn: project.titleEn || project.title,
@@ -176,18 +176,26 @@ export default function AdminProjects() {
                                     className="cursor-pointer"
                                 />
                                 {isUploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
-                                {formData.imageUrl && (
-                                    <div className="flex flex-col gap-1">
-                                        <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
-                                            Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
-                                        </p>
-                                        <Image
-                                            src={formData.imageUrl || ""}
-                                            alt="Preview"
-                                            width={128}
-                                            height={64}
-                                            className="h-16 w-32 object-cover rounded"
-                                        />
+                                {formData.images.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {formData.images.map((img, idx) => (
+                                            <div key={idx} className="relative group">
+                                                <Image
+                                                    src={img}
+                                                    alt={`Preview ${idx + 1}`}
+                                                    width={128}
+                                                    height={64}
+                                                    className="h-16 w-32 object-cover rounded"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setFormData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))}
+                                                    className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <Trash2 className="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
                             </div>
@@ -289,7 +297,7 @@ export default function AdminProjects() {
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{project.title || project.titleEn}</h3>
                                 <p className="text-sm mb-2">{project.description || project.descriptionEn}</p>
-                                <p className="text-xs text-muted-foreground">Image: {project.imageUrl}</p>
+                                <p className="text-xs text-muted-foreground">Images: {project.images?.length || 0}</p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(project)}>

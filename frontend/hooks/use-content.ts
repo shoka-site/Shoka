@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 const API_BASE = '';
 
 async function fetchContent<T>(endpoint: string, lang: string): Promise<T> {
-    const response = await fetch(`${API_BASE}/api/content/${endpoint}?lang=${lang}`);
+    const response = await fetch(`${API_BASE}/api/content/${lang}/${endpoint}`);
     if (!response.ok) throw new Error(`Failed to fetch ${endpoint}`);
     return response.json();
 }
@@ -17,12 +17,16 @@ export interface Service {
     type: string;
     published: boolean;
     createdAt?: string | Date;
+    packageId?: string | null;
+    package?: Package | null;
 }
 
 export function useServices() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Service[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['services', language],
         queryFn: () => fetchContent<Service[]>('services', language),
     });
@@ -32,6 +36,8 @@ export function useService(id: string) {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Service>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['service', id, language],
         queryFn: () => fetchContent<Service>(`services/${id}`, language),
         enabled: !!id,
@@ -41,7 +47,7 @@ export function useService(id: string) {
 export interface Project {
     id: string;
     order: number;
-    imageUrl: string;
+    images?: string[];
     category: string;
     title: string;
     description: string;
@@ -54,10 +60,14 @@ export interface Project {
 export function useProjects(featured?: boolean) {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
-    const endpoint = featured ? `projects?featured=true` : 'projects';
     return useQuery<Project[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['projects', language, featured],
-        queryFn: () => fetchContent<Project[]>(endpoint, language),
+        queryFn: async () => {
+            const all = await fetchContent<Project[]>('projects', language);
+            return featured ? all.filter(p => p.featured) : all;
+        },
     });
 }
 
@@ -65,6 +75,8 @@ export function useProject(id: string) {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Project>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['project', id, language],
         queryFn: () => fetchContent<Project>(`projects/${id}`, language),
         enabled: !!id,
@@ -85,6 +97,8 @@ export function useTestimonials() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Testimonial[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['testimonials', language],
         queryFn: () => fetchContent<Testimonial[]>('testimonials', language),
     });
@@ -105,6 +119,8 @@ export function usePlatformUpdates() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<PlatformUpdate[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['platformUpdates', language],
         queryFn: () => fetchContent<PlatformUpdate[]>('platform-updates', language),
     });
@@ -119,12 +135,15 @@ export interface Industry {
     description: string;
     published: boolean;
     createdAt?: string | Date;
+    solutions?: Solution[];
 }
 
 export function useIndustries() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Industry[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['industries', language],
         queryFn: () => fetchContent<Industry[]>('industries', language),
     });
@@ -134,6 +153,8 @@ export function useIndustry(id: string) {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Industry>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['industry', id, language],
         queryFn: () => fetchContent<Industry>(`industries/${id}`, language),
         enabled: !!id,
@@ -148,12 +169,15 @@ export interface Solution {
     title: string;
     description: string;
     published: boolean;
+    industryId?: string | null;
 }
 
 export function useSolutions() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Solution[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['solutions', language],
         queryFn: () => fetchContent<Solution[]>('solutions', language),
     });
@@ -179,6 +203,8 @@ export function useTeamMembers() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<TeamMember[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['teamMembers', language],
         queryFn: () => fetchContent<TeamMember[]>('team', language),
     });
@@ -189,19 +215,18 @@ export interface Package {
     id: string;
     order: number;
     title: string;
-    problem: string;
-    solutions: string;
-    techStack: string;
-    servicesUsed: string;
-    value: string;
+    description?: string;
     published: boolean;
     createdAt?: string | Date;
+    services?: Service[];
 }
 
 export function usePackages() {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Package[]>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['packages', language],
         queryFn: () => fetchContent<Package[]>('packages', language),
     });
@@ -211,8 +236,11 @@ export function usePackage(id: string) {
     const { i18n } = useTranslation();
     const language = i18n.language as 'en' | 'ar';
     return useQuery<Package>({
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
         queryKey: ['package', id, language],
         queryFn: () => fetchContent<Package>(`packages/${id}`, language),
         enabled: !!id,
     });
 }
+

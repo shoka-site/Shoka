@@ -2,13 +2,12 @@
 
 import Section from "@/components/layout/Section";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Cloud, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, LayoutGrid, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useServices } from "@/hooks/use-content";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { serviceCategories } from "@/lib/data/services";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Services() {
   const { t, i18n } = useTranslation();
@@ -33,13 +32,11 @@ export default function Services() {
     );
   }
 
-  // Group services dynamically
-  const groupedServices = services.reduce((acc, service) => {
-    const category = service.type || "Other Services";
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(service);
+  // Group services by their `type` or explicitly put them in an "Other" category if none exist
+  const groupedServices = services.reduce((acc, s) => {
+    const type = s.type || 'Other';
+    if (!acc[type]) acc[type] = [];
+    acc[type].push(s);
     return acc;
   }, {} as Record<string, typeof services>);
 
@@ -52,7 +49,6 @@ export default function Services() {
           className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-black via-zinc-900 to-black"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,164,92,0.12)_0%,transparent_50%)] mix-blend-screen" />
-          {/* Subtle grid pattern for texture */}
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         </motion.div>
 
@@ -89,17 +85,17 @@ export default function Services() {
               >
                 <Badge variant="outline" className="text-accent border-accent/40 bg-accent/10 px-5 py-2 text-xs backdrop-blur-md flex items-center justify-center gap-2 font-bold uppercase tracking-widest">
                   <Sparkles className="w-3.5 h-3.5" />
-                  {t('navbar.services')}
+                  {t('navbar.services', 'Services')}
                 </Badge>
               </motion.div>
             </div>
 
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
-              {t('services.title')}
+              {t('services.title', 'Our Services')}
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
-              {t('services.description')}
+              {t('services.description', 'Explore our comprehensive expertise designed specifically to elevate your business.')}
             </p>
           </motion.div>
         </div>
@@ -122,92 +118,73 @@ export default function Services() {
       </div>
 
       <div className="relative">
-        {/* Horizontal separator */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-        {Object.entries(groupedServices).map(([categoryName, categoryServices], catIndex) => {
-          const matchedStaticCategory = serviceCategories.find(c =>
-            c.title === categoryName ||
-            t(c.title).toLowerCase() === categoryName.toLowerCase() ||
-            categoryName.toLowerCase().includes(t(c.title).toLowerCase())
-          );
-
-          const CategoryIcon = matchedStaticCategory ? matchedStaticCategory.icon : Cloud;
-
-          return (
-            <Section
-              key={categoryName}
-              background={catIndex % 2 === 1 ? "muted" : "default"}
-              className={`py-24 relative overflow-hidden`}
-            >
-              {/* Decorative accent for each section */}
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_bottom_right,rgba(var(--primary),0.02)_0%,transparent_70%)] pointer-events-none" />
-
-              <div className="container mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
-                  className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 mb-12 md:mb-16"
-                >
-                  <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl bg-background border border-border shadow-md md:shadow-xl text-primary flex items-center justify-center`}>
-                    <CategoryIcon className="w-8 h-8 md:w-10 md:h-10" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground tracking-tight">
-                      {categoryName.includes('.') ? t(categoryName) : categoryName}
-                    </h2>
-                    <div className="w-12 md:w-16 h-1 bg-primary mt-3 md:mt-4 rounded-full" />
-                  </div>
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {categoryServices.map((service, index) => (
-                    <motion.div
-                      key={service.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
-                    >
-                      <Link href={`/services/${service.id}`} className="block h-full group">
-                        <Card className="h-full border-border/40 group-hover:border-primary/30 transition-all duration-700 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative rounded-[2.5rem] shadow-sm hover:shadow-2xl">
-                          {/* Glow Overlay on Hover */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-                          <CardHeader className="relative z-10 pb-4 pt-8 md:pt-10 px-6 md:px-8">
-                            <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors flex items-start justify-between leading-tight tracking-tight">
-                              {service.title}
-                            </CardTitle>
-                          </CardHeader>
-
-                          <CardContent className="flex-grow flex flex-col relative z-10 px-6 md:px-8 pb-8 md:pb-10">
-                            <CardDescription className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 line-clamp-3 flex-grow font-light leading-relaxed">
-                              {service.description}
-                            </CardDescription>
-
-                            <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/50 group-hover:border-primary/20 transition-colors">
-                              <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary/70 group-hover:text-primary transition-all">
-                                {t('services.learn_more')}
-                              </span>
-                              <div className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all duration-500 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary ${isRtl ? 'rotate-180' : ''}`}>
-                                <ArrowRight className="w-5 h-5" />
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    </motion.div>
-                  ))}
+        <Section className="py-24 relative overflow-hidden">
+          <div className="container mx-auto">
+            <div className="space-y-24">
+              {Object.keys(groupedServices).length === 0 ? (
+                <div className="text-center text-muted-foreground">
+                  {t('services.empty', 'No services found.')}
                 </div>
-              </div>
-            </Section>
-          );
-        })}
+              ) : (
+                Object.entries(groupedServices).map(([type, svcs], index) => (
+                  <motion.div
+                    key={type}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="space-y-8"
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <LayoutGrid className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                          {type}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {svcs.map((service, sIdx) => (
+                        <Link href={`/services/${service.id}`} key={service.id}>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: sIdx * 0.05, duration: 0.3 }}
+                          >
+                            <Card className="h-full border-border/40 hover:border-primary/30 transition-all duration-300 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative shadow-sm hover:shadow-md group cursor-pointer">
+                              <CardHeader className="relative z-10 pb-2 pt-6 px-6">
+                                <CardTitle className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
+                                  {service.title || (service as any).titleEn}
+                                </CardTitle>
+                              </CardHeader>
+                              <CardContent className="flex-grow relative z-10 px-6 pb-6 mt-2 flex flex-col">
+                                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-6">
+                                  {service.description || (service as any).descriptionEn}
+                                </p>
+                                <div className="mt-auto inline-flex items-center text-primary text-sm font-semibold group-hover:underline">
+                                  {t('home.packages.learn_more', "Learn more")}
+                                  <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </motion.div>
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))
+              )}
+            </div>
+          </div>
+        </Section>
       </div>
 
-      {/* CTA Section */}
       <Section background="default" className="py-24 border-t border-border">
         <div className="container mx-auto px-6 text-center">
           <motion.div
@@ -220,15 +197,19 @@ export default function Services() {
             <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
             <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">
-              {t('services.cta.title')}
+              {t('services.cta.title', 'Looking for tailored solutions?')}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
-              {t('services.cta.description')}
+              {t('services.cta.description', 'Check out our pre-built packages or contact us for a custom approach.')}
             </p>
-            <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? 'flex-row-reverse' : ''}`}>
-              {t('services.cta.button')}
-              <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
-            </Link>
+            <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRtl ? 'sm:flex-row-reverse' : ''}`}>
+              <Link href="/packages" className="w-full sm:w-auto px-8 py-4 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20">
+                {t('navbar.packages', 'Packages')}
+              </Link>
+              <Link href="/contact" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-border text-foreground font-black uppercase tracking-widest rounded-full hover:bg-muted/50 transition-all">
+                {t('services.cta.contact', 'Contact Us')}
+              </Link>
+            </div>
           </motion.div>
         </div>
       </Section>

@@ -25,7 +25,7 @@ export default function AdminIndustries() {
     const { data: industries = [], isLoading } = useQuery<Industry[]>({
         queryKey: ["admin-industries"],
         queryFn: async () => {
-            const res = await fetch("/api/content/industries?lang=en");
+            const res = await fetch("/api/content/en/industries");
             return res.json();
         },
     });

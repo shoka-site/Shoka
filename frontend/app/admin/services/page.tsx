@@ -14,7 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import type { Service } from "@/hooks/use-content";
+import { type Service, usePackages } from "@/hooks/use-content";
 
 export default function AdminServices() {
     const queryClient = useQueryClient();
@@ -28,12 +28,13 @@ export default function AdminServices() {
         descriptionAr: "",
         order: 1,
         published: true,
+        packageId: null as string | null,
     });
 
     const { data: services = [], isLoading } = useQuery<Service[]>({
         queryKey: ["admin-services"],
         queryFn: async () => {
-            const res = await fetch("/api/content/services?lang=en");
+            const res = await fetch("/api/admin/services");
             return res.json();
         },
     });
@@ -80,6 +81,8 @@ export default function AdminServices() {
         },
     });
 
+    const { data: packages = [] } = usePackages();
+
     const resetForm = () => {
         setFormData({
             type: "Other",
@@ -89,6 +92,7 @@ export default function AdminServices() {
             descriptionAr: "",
             order: 1,
             published: true,
+            packageId: null,
         });
         setIsEditing(false);
         setEditingId(null);
@@ -112,6 +116,7 @@ export default function AdminServices() {
             descriptionAr: service.descriptionAr || service.description,
             order: service.order,
             published: service.published,
+            packageId: service.packageId || null,
         });
         setEditingId(service.id);
         setIsEditing(true);
@@ -144,14 +149,12 @@ export default function AdminServices() {
                                             <SelectValue placeholder="Select type" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="AI & ML">AI & ML</SelectItem>
-                                            <SelectItem value="Cloud">Cloud</SelectItem>
-                                            <SelectItem value="Full Stack">Full Stack</SelectItem>
-                                            <SelectItem value="Automation">Automation</SelectItem>
-                                            <SelectItem value="Cybersecurity">Cybersecurity</SelectItem>
-                                            <SelectItem value="Data">Data</SelectItem>
-                                            <SelectItem value="Consulting">Consulting</SelectItem>
                                             <SelectItem value="Other">Other</SelectItem>
+                                            {packages.map((pkg: any) => (
+                                                <SelectItem key={`type-${pkg.id}`} value={pkg.title || "Unnamed Package"}>
+                                                    {pkg.title || "Unnamed Package"}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -164,6 +167,25 @@ export default function AdminServices() {
                                         onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
                                         required
                                     />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium">Link to Package (Optional)</label>
+                                    <Select
+                                        value={formData.packageId || "none"}
+                                        onValueChange={(value) => setFormData({ ...formData, packageId: value === "none" ? null : value })}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="No Package" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="none">No Package</SelectItem>
+                                            {packages.map((pkg) => (
+                                                <SelectItem key={pkg.id} value={pkg.id}>
+                                                    {pkg.title}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                         </div>
@@ -225,6 +247,9 @@ export default function AdminServices() {
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
                                     <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">Type: {service.type}</span>
+                                    {service.package && (
+                                        <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Package: {service.package.titleEn}</span>
+                                    )}
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{service.title || service.titleEn}</h3>
                                 <p className="text-sm">{service.description || service.descriptionEn}</p>

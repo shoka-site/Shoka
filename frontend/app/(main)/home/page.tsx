@@ -13,6 +13,7 @@ import {
   useProjects,
   useTestimonials,
   usePlatformUpdates,
+  usePackages,
 } from "@/hooks/use-content";
 import { CountUp } from "@/components/ui/count-up";
 
@@ -350,7 +351,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
                   {t("hero.updates.cta_talk")}
                 </Button>
               </Link>
-              <Link href="/services">
+              <Link href="/packages">
                 <Button
                   variant="outline"
                   size="lg"
@@ -450,6 +451,7 @@ export default function Home() {
   const { data: services = [], isLoading: loadingServices } = useServices();
   const { data: projects = [], isLoading: loadingProjects } = useProjects(true);
   const { data: testimonials = [], isLoading: loadingTestimonials } = useTestimonials();
+  const { data: packages = [], isLoading: loadingPackages } = usePackages();
 
   // Static Data for Stats
   const stats = [
@@ -541,7 +543,86 @@ export default function Home() {
         </FadeInSection>
       </Section>
 
-      {/* ── 2. SERVICES — what we offer ───────────────────────────── */}
+      {/* ── 2. OUR PACKAGES ────────────────────────────────────────── */}
+      {!loadingPackages && packages.length > 0 && (
+        <Section background="default" className="py-20 md:py-32">
+          <FadeInSection className="text-center mb-16 md:mb-20">
+            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 block">
+              {t("home.packages.badge", "What We Offer")}
+            </span>
+            <h2 className="text-3xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
+              {t("home.packages.title", "Our Packages")}
+            </h2>
+            <p className="text-muted-foreground text-base md:text-xl mt-4 md:mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+              {t("home.packages.description", "Tailored service bundles designed to match your business needs and scale with your ambitions.")}
+            </p>
+          </FadeInSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {packages.map((pkg, index) => (
+              <motion.div
+                key={pkg.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: index * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -8, transition: { duration: 0.25 } }}
+                className="group relative flex flex-col bg-background border border-border/60 rounded-3xl overflow-hidden hover:border-accent/40 hover:shadow-2xl transition-all duration-500"
+              >
+                {/* Top accent line */}
+                <div
+                  className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
+                />
+
+                <div className="flex flex-col flex-1 p-8 md:p-10">
+                  {/* Order badge */}
+                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6 self-start">
+                    {String(pkg.order).padStart(2, "0")}
+                  </span>
+
+                  <h3 className="text-2xl font-display font-black mb-4 group-hover:text-accent transition-colors duration-300">
+                    {pkg.title}
+                  </h3>
+
+                  {pkg.description ? (
+                    <p className="text-muted-foreground leading-relaxed text-base flex-1">
+                      {pkg.description}
+                    </p>
+                  ) : (
+                    <p className="text-muted-foreground/40 leading-relaxed text-base italic flex-1">
+                      {t("home.packages.no_description", "A tailored bundle of services designed to help you succeed.")}
+                    </p>
+                  )}
+
+                  <Link href="/packages" className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline">
+                    {t("home.packages.learn_more", "Learn more")}
+                    <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* View all packages CTA */}
+          <div className="mt-16 text-center">
+            <Link href="/packages">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
+              >
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">
+                  {t("home.packages.view_all", "View All Packages")}
+                </span>
+                <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
+              </Button>
+            </Link>
+          </div>
+        </Section>
+      )}
+
+      {/* ── 3. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
         <Section background="muted">
           <FadeInSection>
@@ -553,7 +634,7 @@ export default function Home() {
                   {t("home.services.description")}
                 </p>
               </div>
-              <Link href="/services">
+              <Link href="/packages">
                 <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
                   {t("view_all_services")}
                   <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
@@ -575,7 +656,7 @@ export default function Home() {
                 >
                   <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
-                  <Link href={`/services/${service.id}`}>
+                  <Link href={`/packages/${service.id}`}>
                     <span className="text-primary text-sm font-medium hover:underline inline-flex items-center cursor-pointer">
                       {t("view_service")}
                       <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"}`} />
@@ -624,13 +705,15 @@ export default function Home() {
                     transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="group relative min-h-[400px] md:min-h-[500px] h-full rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30 block"
                   >
-                    <div className="absolute inset-0 z-0">
-                      <Image
-                        src={project.imageUrl || ""}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
-                      />
+                    <div className="relative aspect-video w-full rounded-lg overflow-hidden shrink-0">
+                        {project.images && project.images.length > 0 && (
+                            <Image
+                                src={project.images[0]}
+                                alt={project.title}
+                                fill
+                                className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
+                            />
+                        )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
                     </div>
 
@@ -928,7 +1011,7 @@ export default function Home() {
                     {t("home.cta.primary")}
                   </Button>
                 </Link>
-                <Link href="/services">
+                <Link href="/packages">
                   <Button
                     variant="outline"
                     size="lg"

@@ -28,7 +28,7 @@ export default function AdminTestimonials() {
     const { data: testimonials = [], isLoading } = useQuery<Testimonial[]>({
         queryKey: ["admin-testimonials"],
         queryFn: async () => {
-            const res = await fetch("/api/content/testimonials?lang=en");
+            const res = await fetch("/api/content/en/testimonials");
             return res.json();
         },
     });

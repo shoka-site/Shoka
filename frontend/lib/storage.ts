@@ -103,11 +103,15 @@ export class PrismaStorage implements IStorage {
     return await prisma.service.findMany({
       where: published !== undefined ? { published } : undefined,
       orderBy: { order: 'asc' },
-    });
+      include: { package: true },
+    }) as Service[];
   }
 
   async getService(id: string): Promise<Service | undefined> {
-    return await prisma.service.findUnique({ where: { id } }) || undefined;
+    return await prisma.service.findUnique({ 
+        where: { id },
+        include: { package: true } 
+    }) as Service | undefined || undefined;
   }
 
   async createService(service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<Service> {
@@ -239,11 +243,15 @@ export class PrismaStorage implements IStorage {
     return await prisma.industry.findMany({
       where: published !== undefined ? { published } : undefined,
       orderBy: { order: 'asc' },
-    });
+      include: { solutions: true },
+    }) as Industry[];
   }
 
   async getIndustry(id: string): Promise<Industry | undefined> {
-    return await prisma.industry.findUnique({ where: { id } }) || undefined;
+    return await prisma.industry.findUnique({ 
+      where: { id },
+      include: { solutions: true }
+    }) as Industry | undefined || undefined;
   }
 
   async createIndustry(industry: Omit<Industry, 'id' | 'createdAt' | 'updatedAt'>): Promise<Industry> {
@@ -405,11 +413,15 @@ export class PrismaStorage implements IStorage {
     return await prisma.package.findMany({
       where: published !== undefined ? { published } : undefined,
       orderBy: { order: 'asc' },
-    });
+      include: { services: true }
+    }) as Package[];
   }
 
   async getPackage(id: string): Promise<Package | undefined> {
-    return await prisma.package.findUnique({ where: { id } }) || undefined;
+    return await prisma.package.findUnique({
+      where: { id },
+      include: { services: true }
+    }) as Package | undefined || undefined;
   }
 
   async createPackage(pkg: Omit<Package, 'id' | 'createdAt' | 'updatedAt'>): Promise<Package> {

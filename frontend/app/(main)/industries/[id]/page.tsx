@@ -4,10 +4,15 @@ import { useParams } from "next/navigation";
 import { useIndustry } from "@/hooks/use-content";
 import Section from "@/components/layout/Section";
 import Link from "next/link";
-import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2 } from "lucide-react";
+import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2, TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone, ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
+const iconMap: Record<string, any> = {
+    TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone
+};
 
 export default function IndustryDetails() {
     const params = useParams();
@@ -91,11 +96,6 @@ export default function IndustryDetails() {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-4xl mx-auto text-center flex flex-col items-center"
                     >
-
-                        <Link href="/industries" className="group inline-flex items-center gap-3 text-white/50 hover:text-white mb-8 transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-                            <ArrowLeft className={`w-4 h-4 transition-transform group-hover:-translate-x-1 ${isRtl ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-                            {t("home.industries.back_to_industries")}
-                        </Link>
 
                         <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
                             <motion.div
@@ -211,6 +211,71 @@ export default function IndustryDetails() {
                     </div>
                 </div>
             </Section>
+
+            {/* Industry Solutions / Use Cases Section */}
+            {industry.solutions && industry.solutions.length > 0 && (
+                <div className="relative">
+                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                    <Section className="py-24 relative overflow-hidden bg-muted/10">
+                        <div className="container mx-auto">
+                            <div className="flex flex-col items-center justify-center text-center mb-16">
+                                <Badge variant="outline" className="text-primary border-primary/30 bg-primary/5 px-5 py-2 text-sm backdrop-blur-md flex items-center gap-2 mb-6">
+                                    <Sparkles className="w-3.5 h-3.5" />
+                                    {t("navbar.recent_work", "Use Cases")}
+                                </Badge>
+                                <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-4">
+                                    {t("home.solutions.title", "Strategic Solutions")}
+                                </h2>
+                                <p className="text-muted-foreground max-w-2xl mx-auto">
+                                    {t("home.solutions.description", "Explore how we solve specialized problems in this industry.")}
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {industry.solutions.map((solution: any, index: number) => {
+                                    const Icon = iconMap[solution.iconName] || Zap;
+                                    return (
+                                        <motion.div
+                                            key={solution.id}
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, margin: "-50px" }}
+                                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                                        >
+                                            <Card className="h-full border-border/40 hover:border-primary/30 transition-all duration-700 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative rounded-[2.5rem] shadow-sm hover:shadow-2xl p-4">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                                <CardHeader className={`relative z-10 pb-4 pt-6 md:pt-8 px-6 md:px-8 flex items-start sm:items-center gap-4 md:gap-6 ${isRtl ? 'flex-col sm:flex-row-reverse text-right' : 'flex-col sm:flex-row text-left'}`}>
+                                                    <div className="text-primary p-4 bg-primary/5 rounded-2xl shadow-sm border border-primary/10">
+                                                        <Icon className="w-8 h-8 md:w-10 md:h-10" />
+                                                    </div>
+                                                    <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight tracking-tight">
+                                                        {solution.title}
+                                                    </CardTitle>
+                                                </CardHeader>
+
+                                                <CardContent className="flex-grow flex flex-col relative z-10 px-6 md:px-8 pb-6 md:pb-8">
+                                                    <CardDescription className="text-base md:text-lg text-muted-foreground mb-10 font-light leading-relaxed">
+                                                        {solution.description}
+                                                    </CardDescription>
+
+                                                    <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/50">
+                                                        <span className="text-sm font-bold uppercase tracking-[0.2em] text-primary/70">
+                                                            {t('home.solutions.strategic_impact', 'Strategic Impact')}
+                                                        </span>
+                                                        <Link href="/contact" className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all duration-500 hover:bg-primary hover:text-primary-foreground hover:border-primary ${isRtl ? 'rotate-180' : ''}`}>
+                                                            <ArrowRight className="w-5 h-5 opacity-40 hover:opacity-100" />
+                                                        </Link>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </Section>
+                </div>
+            )}
         </div>
     );
 }

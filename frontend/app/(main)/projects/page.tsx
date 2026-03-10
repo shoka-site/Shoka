@@ -160,13 +160,14 @@ export default function Projects() {
                                                 transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                                                 className="group relative h-full min-h-[500px] rounded-[2.5rem] overflow-hidden bg-background border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700"
                                             >
-                                                <div className="absolute inset-0 z-0">
-                                                    <Image
-                                                        src={project.imageUrl || ""}
-                                                        alt={project.title}
-                                                        fill
-                                                        className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1 grayscale group-hover:grayscale-0"
-                                                    />
+                                                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-border/10">
+                                                    {project.images && project.images.length > 0 && (
+                                                        <Image
+                                                            src={project.images[0]}
+                                                            alt={project.title || ""}                                                      fill
+                                                            className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1 grayscale group-hover:grayscale-0"
+                                                        />
+                                                    )}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
                                                 </div>
 

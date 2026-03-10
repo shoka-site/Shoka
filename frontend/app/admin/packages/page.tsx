@@ -13,16 +13,8 @@ const EMPTY_FORM = {
     order: 1,
     titleEn: "",
     titleAr: "",
-    problemEn: "",
-    problemAr: "",
-    solutionsEn: "",
-    solutionsAr: "",
-    techStackEn: "",
-    techStackAr: "",
-    servicesUsedEn: "",
-    servicesUsedAr: "",
-    valueEn: "",
-    valueAr: "",
+    descriptionEn: "",
+    descriptionAr: "",
     published: true,
 };
 
@@ -36,7 +28,7 @@ export default function AdminPackages() {
     const { data: packages = [], isLoading } = useQuery<any[]>({
         queryKey: ["admin-packages"],
         queryFn: async () => {
-            const res = await fetch("/api/content/packages?lang=en&published=false");
+            const res = await fetch("/api/admin/packages");
             return res.json();
         },
     });
@@ -88,44 +80,13 @@ export default function AdminPackages() {
             order: pkg.order,
             titleEn: pkg.titleEn || pkg.title || "",
             titleAr: pkg.titleAr || "",
-            problemEn: pkg.problemEn || pkg.problem || "",
-            problemAr: pkg.problemAr || "",
-            solutionsEn: pkg.solutionsEn || pkg.solutions || "",
-            solutionsAr: pkg.solutionsAr || "",
-            techStackEn: pkg.techStackEn || pkg.techStack || "",
-            techStackAr: pkg.techStackAr || "",
-            servicesUsedEn: pkg.servicesUsedEn || pkg.servicesUsed || "",
-            servicesUsedAr: pkg.servicesUsedAr || "",
-            valueEn: pkg.valueEn || pkg.value || "",
-            valueAr: pkg.valueAr || "",
+            descriptionEn: pkg.descriptionEn || "",
+            descriptionAr: pkg.descriptionAr || "",
             published: pkg.published,
         });
         setEditingId(pkg.id);
         setIsEditing(true);
     };
-
-    const Field = ({ label, enKey, arKey }: { label: string; enKey: keyof typeof EMPTY_FORM; arKey: keyof typeof EMPTY_FORM }) => (
-        <div className="space-y-2">
-            <label className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{label}</label>
-            <div className="grid grid-cols-2 gap-3">
-                <Textarea
-                    placeholder={`${label} (English)`}
-                    value={formData[enKey] as string}
-                    onChange={(e) => setFormData({ ...formData, [enKey]: e.target.value })}
-                    className="min-h-[80px] text-sm"
-                    required
-                />
-                <Textarea
-                    placeholder={`${label} (العربية)`}
-                    value={formData[arKey] as string}
-                    onChange={(e) => setFormData({ ...formData, [arKey]: e.target.value })}
-                    className="min-h-[80px] text-sm text-right"
-                    dir="rtl"
-                    required
-                />
-            </div>
-        </div>
-    );
 
     if (isLoading) return <AdminLayout><div className="p-8 text-muted-foreground">Loading packages...</div></AdminLayout>;
 
@@ -160,15 +121,46 @@ export default function AdminPackages() {
                                 <label className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Order</label>
                                 <Input type="number" value={formData.order} onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })} required />
                             </div>
-                            <Field label="Package Name" enKey="titleEn" arKey="titleAr" />
+                            <div className="space-y-2">
+                                <label className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Package Name</label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <Textarea
+                                        placeholder="Package Name (English)"
+                                        value={formData.titleEn as string}
+                                        onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                                        className="min-h-[80px] text-sm"
+                                        required
+                                    />
+                                    <Textarea
+                                        placeholder="Package Name (العربية)"
+                                        value={formData.titleAr as string}
+                                        onChange={(e) => setFormData({ ...formData, titleAr: e.target.value })}
+                                        className="min-h-[80px] text-sm text-right"
+                                        dir="rtl"
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="border-t border-border pt-4 space-y-5">
-                            <Field label="Problem It Solves" enKey="problemEn" arKey="problemAr" />
-                            <Field label="Possible Solutions" enKey="solutionsEn" arKey="solutionsAr" />
-                            <Field label="Tech Stack" enKey="techStackEn" arKey="techStackAr" />
-                            <Field label="Services Used" enKey="servicesUsedEn" arKey="servicesUsedAr" />
-                            <Field label="Value Provided" enKey="valueEn" arKey="valueAr" />
+                        {/* Description */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Description</label>
+                            <div className="grid grid-cols-2 gap-3">
+                                <Textarea
+                                    placeholder="Description (English)"
+                                    value={formData.descriptionEn as string}
+                                    onChange={(e) => setFormData({ ...formData, descriptionEn: e.target.value })}
+                                    className="min-h-[100px] text-sm"
+                                />
+                                <Textarea
+                                    placeholder="الوصف (العربية)"
+                                    value={formData.descriptionAr as string}
+                                    onChange={(e) => setFormData({ ...formData, descriptionAr: e.target.value })}
+                                    className="min-h-[100px] text-sm text-right"
+                                    dir="rtl"
+                                />
+                            </div>
                         </div>
 
                         <div className="flex items-center justify-between pt-2 border-t border-border">
@@ -194,10 +186,8 @@ export default function AdminPackages() {
                 {/* Data Table */}
                 <div className="border border-border rounded-2xl overflow-hidden">
                     {/* Table Header */}
-                    <div className="grid grid-cols-[3fr_2fr_2fr_auto] gap-4 px-6 py-3 bg-muted/30 border-b border-border text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    <div className="grid grid-cols-[1fr_auto] gap-4 px-6 py-3 bg-muted/30 border-b border-border text-xs font-bold uppercase tracking-widest text-muted-foreground">
                         <span>Package Name</span>
-                        <span>Tech Stack</span>
-                        <span>Services Used</span>
                         <span>Actions</span>
                     </div>
 
@@ -211,21 +201,20 @@ export default function AdminPackages() {
                         packages.map((pkg: any) => (
                             <div key={pkg.id} className="border-b border-border last:border-0">
                                 {/* Main row */}
-                                <div className="grid grid-cols-[3fr_2fr_2fr_auto] gap-4 px-6 py-4 items-center hover:bg-muted/20 transition-colors">
+                                <div className="grid grid-cols-[1fr_auto] gap-4 px-6 py-4 items-center hover:bg-muted/20 transition-colors">
                                     <div>
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="text-xs text-muted-foreground">#{pkg.order}</span>
                                             {pkg.published && <span className="text-xs bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full">Published</span>}
                                         </div>
                                         <p className="font-semibold text-sm">{pkg.title || pkg.titleEn}</p>
-                                        <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{pkg.problem || pkg.problemEn}</p>
+                                        {(pkg.descriptionEn || pkg.descriptionAr) && (
+                                            <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+                                                {pkg.descriptionEn || pkg.descriptionAr}
+                                            </p>
+                                        )}
                                     </div>
-                                    <p className="text-xs text-muted-foreground line-clamp-2">{pkg.techStack || pkg.techStackEn}</p>
-                                    <p className="text-xs text-muted-foreground line-clamp-2">{pkg.servicesUsed || pkg.servicesUsedEn}</p>
                                     <div className="flex items-center gap-2">
-                                        <Button variant="ghost" size="sm" onClick={() => setExpandedId(expandedId === pkg.id ? null : pkg.id)}>
-                                            {expandedId === pkg.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                                        </Button>
                                         <Button variant="outline" size="sm" onClick={() => { handleEdit(pkg); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
                                             <Edit className="w-4 h-4" />
                                         </Button>
@@ -234,24 +223,6 @@ export default function AdminPackages() {
                                         </Button>
                                     </div>
                                 </div>
-
-                                {/* Expanded row */}
-                                {expandedId === pkg.id && (
-                                    <div className="px-6 pb-5 bg-muted/10 border-t border-border grid grid-cols-3 gap-6 pt-4">
-                                        <div>
-                                            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Solutions</p>
-                                            <p className="text-sm">{pkg.solutions || pkg.solutionsEn}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Value Provided</p>
-                                            <p className="text-sm">{pkg.value || pkg.valueEn}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Problem</p>
-                                            <p className="text-sm">{pkg.problem || pkg.problemEn}</p>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         ))
                     )}

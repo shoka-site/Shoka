@@ -413,6 +413,25 @@
             "description": "Let's discuss how we can help you build your digital future — free first consultation, no commitment required.",
             "primary": "Contact Us",
             "secondary": "Explore Services"
+        },
+        "packages": {
+            "no_description": "A tailored bundle of services designed to help you succeed."
+        }
+    },
+    "packages": {
+        "title": "Our Packages",
+        "description": "Comprehensive solutions tailored to meet your business needs.",
+        "empty": "No packages found.",
+        "back": "Back to Packages",
+        "included_services": "Included Services",
+        "cta": {
+            "title": "Ready to Get Started?",
+            "description": "Contact us to learn more about our packages and how we can help your business.",
+            "button": "Get in Touch"
+        },
+        "cta_sidebar": {
+            "title": "Interested in this Package?",
+            "desc": "Contact us to start your journey and supercharge your business."
         }
     },
     "services": {
@@ -534,6 +553,15 @@
                 "will_make": "Upcoming"
             },
             "timeline": "Timeline",
+            "back": "Project Library",
+            "not_found": "Project not found",
+            "not_found_desc": "The project you are looking for does not exist or has been removed.",
+            "overview": "Project Overview",
+            "details": "Details",
+            "category": "Category",
+            "status_label": "Status",
+            "deliverance": "Deliverance",
+            "inquire": "Initiate Inquiry",
             "cta": {
                 "title": "Start your project?",
                 "description": "Let's architect the next milestone in your digital history.",

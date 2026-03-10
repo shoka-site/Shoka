@@ -17,7 +17,12 @@ export function transformForLanguage<T extends Record<string, any>>(content: T |
             transformed[key.replace('Ar', '')] = content[key] || content[enKey];
         } else if (!key.endsWith('En') && !key.endsWith('Ar')) {
             // Include non-language-specific fields (id, order, published, etc.)
-            transformed[key] = content[key];
+            // Recursively transform nested arrays and objects
+            if (content[key] && typeof content[key] === 'object' && !(content[key] instanceof Date)) {
+                transformed[key] = transformForLanguage(content[key], lang);
+            } else {
+                transformed[key] = content[key];
+            }
         }
     });
 

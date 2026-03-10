@@ -21,12 +21,21 @@ export default function AdminSolutions() {
         descriptionAr: "",
         order: 1,
         published: true,
+        industryId: "",
     });
 
     const { data: solutions = [], isLoading } = useQuery<Solution[]>({
         queryKey: ["admin-solutions"],
         queryFn: async () => {
-            const res = await fetch("/api/content/solutions?lang=en");
+            const res = await fetch("/api/content/en/solutions");
+            return res.json();
+        },
+    });
+
+    const { data: industries = [] } = useQuery({
+        queryKey: ["admin-industries"],
+        queryFn: async () => {
+            const res = await fetch("/api/content/en/industries");
             return res.json();
         },
     });
@@ -82,6 +91,7 @@ export default function AdminSolutions() {
             descriptionAr: "",
             order: 1,
             published: true,
+            industryId: "",
         });
         setIsEditing(false);
         setEditingId(null);
@@ -105,6 +115,7 @@ export default function AdminSolutions() {
             descriptionAr: solution.descriptionAr || solution.description,
             order: solution.order,
             published: solution.published,
+            industryId: solution.industryId || "",
         });
         setEditingId(solution.id);
         setIsEditing(true);
@@ -180,6 +191,19 @@ export default function AdminSolutions() {
                                 />
                                 Published
                             </label>
+
+                            <select
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                value={formData.industryId}
+                                onChange={(e) => setFormData({ ...formData, industryId: e.target.value })}
+                            >
+                                <option value="">No Industry (Global)</option>
+                                {industries.map((industry: any) => (
+                                    <option key={industry.id} value={industry.id}>
+                                        {industry.titleEn || industry.title}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>

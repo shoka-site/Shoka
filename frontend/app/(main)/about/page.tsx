@@ -302,7 +302,7 @@ export default function About() {
                     <p className="text-sm text-muted-foreground font-light leading-relaxed line-clamp-4">{member.bio}</p>
 
                     <div className="mt-10 pt-6 border-t border-border/50 flex flex-col gap-3">
-                      <div className="flex gap-4">
+                      <div className="flex items-center gap-4">
                         {member.resumeUrl && (
                           <Link href={member.resumeUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors flex items-center gap-2">
                             {t('about.team.profile')} <ArrowRight className="w-3 h-3" />
@@ -314,8 +314,8 @@ export default function About() {
                           </Link>
                         )}
                         {member.linkedinUrl && (
-                          <Link href={member.linkedinUrl} target="_blank" className="text-xs font-bold uppercase tracking-widest hover:text-blue-500 transition-colors flex items-center gap-2">
-                            {t('about.team.linkedin')} <Linkedin className="w-3.5 h-3.5" />
+                          <Link href={member.linkedinUrl} target="_blank" className="ml-auto text-muted-foreground hover:text-[#0A66C2] transition-colors p-1 rounded-full hover:bg-[#0A66C2]/10">
+                            <Linkedin className="w-4 h-4" />
                           </Link>
                         )}
                       </div>

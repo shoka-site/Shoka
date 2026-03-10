@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, ChevronDown, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, Server, Code2, Cpu, LayoutGrid, Smartphone, LifeBuoy, History, Rocket, Building2, Users, Package } from "lucide-react";
+import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,12 +14,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import React from "react";
-import { serviceCategories } from "@/lib/data/services";
-import { industryCategories } from "@/lib/data/industries";
-import { useProjects, useIndustries } from "@/hooks/use-content";
+import { useProjects, useIndustries, useServices } from "@/hooks/use-content";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -31,6 +28,7 @@ export default function Navbar() {
   const isRtl = i18n.dir() === 'rtl';
   const { data: projects = [] } = useProjects(true);
   const { data: industries = [] } = useIndustries();
+  const { data: services = [] } = useServices();
 
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
@@ -117,48 +115,6 @@ export default function Navbar() {
               }}
             >
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
-                  {t("navbar.services")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.services")}
-                    description={t("navbar.recent_work_desc")}
-                    icon={Cpu}
-                    href="/services"
-                    layout="columns"
-                  >
-                    <div className="grid grid-cols-3 gap-x-12 gap-y-10">
-                      {serviceCategories.map((category, idx) => (
-                        <motion.div
-                          key={category.title}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                          className="space-y-4"
-                        >
-                          <div className={`flex items-center gap-3 text-white font-black uppercase tracking-widest text-xs ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                              <category.icon className="w-4 h-4" />
-                            </div>
-                            <span>{t(category.title)}</span>
-                          </div>
-                          <ul className="space-y-1">
-                            {category.items.map(item => (
-                              <li key={item.name}>
-                                <Link href={item.href} className={`block text-sm text-white/50 hover:text-primary transition-all py-1.5 ${isRtl ? 'pr-6 border-r text-right' : 'pl-6 border-l text-left'} border-white/5 hover:border-primary/40`}>
-                                  {t(item.name)}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
@@ -187,6 +143,44 @@ export default function Navbar() {
                             <div>
                               <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{industry.title}</div>
                               <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{industry.description}</div>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </ul>
+                  </MegaMenuSection>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                  {t("navbar.services", "Services")}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <MegaMenuSection
+                    title={t("navbar.services", "Services")}
+                    description={isRtl 
+                      ? "برمجة وبناء وتطوير واجهات ونظم مخصصة بجودة وأداء عالي"
+                      : "Custom software architecture, full-stack development, and performance optimization."}
+                    icon={LayoutGrid}
+                    href="/services"
+                    layout="list"
+                  >
+                    <ul className="grid grid-cols-2 gap-6">
+                      {services.slice(0, 6).map((service, idx) => (
+                        <motion.div
+                          key={service.id}
+                          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.05 }}
+                        >
+                          <Link href="/services" className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                              <Zap className="w-6 h-6" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{service.title || (service as any).titleEn}</div>
+                              <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{service.description || (service as any).descriptionEn}</div>
                             </div>
                           </Link>
                         </motion.div>
@@ -238,41 +232,7 @@ export default function Navbar() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
-                  {t("navbar.recent_work")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.menu.solutions.risk.title")}
-                    description={t("navbar.menu.solutions.risk.desc")}
-                    icon={Sparkles}
-                    href="/solutions"
-                    layout="list"
-                  >
-                    <ul className="grid grid-cols-2 gap-6">
-                      {solutions.map((item, idx) => (
-                        <motion.div
-                          key={item.title_key}
-                          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                        >
-                          <Link href={item.href} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                              <item.icon className="w-6 h-6" />
-                            </div>
-                            <div>
-                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
-                              <div className="text-xs text-white/50 mt-1 leading-relaxed">{t(item.desc_key)}</div>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </ul>
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
@@ -320,9 +280,9 @@ export default function Navbar() {
                               >
                                 <Link href={`/projects/${project.id}`} className={`group flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                                      {project.imageUrl ? (
+                                      {project.images && project.images.length > 0 ? (
                                         /* eslint-disable-next-line @next/next/no-img-element */
-                                        <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                                        <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" />
                                       ) : (
                                         <LayoutGrid className="w-6 h-6" />
                                     )}
@@ -431,10 +391,9 @@ export default function Navbar() {
 
             <nav className="container mx-auto flex flex-col space-y-2 relative z-10">
               {[
-                { name: t("navbar.services"), href: "/services" },
                 { name: t("navbar.industries"), href: "/industries" },
+                { name: t("navbar.services", "Services"), href: "/services" },
                 { name: t("navbar.packages"), href: "/packages" },
-                { name: t("navbar.recent_work"), href: "/solutions" },
                 { name: t("navbar.projects"), href: "/projects" },
                 { name: t("navbar.about"), href: "/about" },
               ].map((link, idx) => (

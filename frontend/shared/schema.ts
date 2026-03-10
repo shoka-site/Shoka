@@ -25,6 +25,7 @@ export const serviceSchema = z.object({
     published: z.boolean().default(true),
     createdAt: z.date(),
     updatedAt: z.date(),
+    packageId: z.string().uuid().nullable().optional(),
 });
 export type Service = z.infer<typeof serviceSchema>;
 
@@ -32,7 +33,7 @@ export type Service = z.infer<typeof serviceSchema>;
 export const projectSchema = z.object({
     id: z.string().uuid(),
     order: z.number(),
-    imageUrl: z.string(),
+    images: z.array(z.string()).default([]),
     categoryEn: z.string(),
     categoryAr: z.string(),
     titleEn: z.string(),
@@ -109,6 +110,7 @@ export const solutionSchema = z.object({
     published: z.boolean().default(true),
     createdAt: z.date(),
     updatedAt: z.date(),
+    industryId: z.string().uuid().nullable().optional(),
 });
 export type Solution = z.infer<typeof solutionSchema>;
 
@@ -155,16 +157,6 @@ export const packageSchema = z.object({
     order: z.number(),
     titleEn: z.string(),
     titleAr: z.string(),
-    problemEn: z.string(),
-    problemAr: z.string(),
-    solutionsEn: z.string(),
-    solutionsAr: z.string(),
-    techStackEn: z.string(),
-    techStackAr: z.string(),
-    servicesUsedEn: z.string(),
-    servicesUsedAr: z.string(),
-    valueEn: z.string(),
-    valueAr: z.string(),
     published: z.boolean().default(true),
     createdAt: z.date(),
     updatedAt: z.date(),

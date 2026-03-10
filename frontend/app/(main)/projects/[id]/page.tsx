@@ -75,6 +75,24 @@ export default function ProjectDetails() {
                     <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
                 </motion.div>
 
+                <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
+                    <div className="container mx-auto px-6">
+                        <motion.div
+                            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="pointer-events-auto"
+                        >
+                            <Link href="/projects" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
+                                    <ArrowLeft className="w-4 h-4" />
+                                </div>
+                                {t("portfolio.projects.back", "Project Library")}
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
+
                 <div className="container relative z-10 px-6 mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -82,12 +100,6 @@ export default function ProjectDetails() {
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-4xl mx-auto flex flex-col items-center text-center"
                     >
-                        <Link href="/projects" className="group inline-flex items-center gap-3 text-white/40 hover:text-white mb-10 transition-colors text-[10px] uppercase tracking-[0.3em] font-black">
-                            <div className={`p-2 rounded-full border border-white/10 group-hover:bg-white/10 transition-all ${isRtl ? 'rotate-180' : ''}`}>
-                                <ArrowLeft className="w-3.5 h-3.5" />
-                            </div>
-                            {t("portfolio.projects.back", "Project Library")}
-                        </Link>
 
                         <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
                             <motion.div
@@ -127,7 +139,7 @@ export default function ProjectDetails() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1, duration: 1 }}
                 >
-                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">Discover</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] font-bold">{t("common.discover", "Discover")}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -178,14 +190,12 @@ export default function ProjectDetails() {
                             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8"
                         >
-                            <div className="relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700">
-                                <Image src={project.imageUrl} alt="Gallery 1" fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                            </div>
-                            <div className="relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 md:mt-20">
-                                <Image src={project.imageUrl} alt="Gallery 2" fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                            </div>
+                            {project.images && project.images.map((img, idx) => (
+                                <div key={idx} className={`relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}>
+                                    <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                </div>
+                            ))}
                         </motion.div>
                     </div>
 
@@ -232,7 +242,7 @@ export default function ProjectDetails() {
                                         <div className="group">
                                             <span className="flex items-center gap-3 text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-3 font-black">
                                                 <Calendar className="w-3.5 h-3.5 group-hover:text-primary transition-colors text-primary/50" />
-                                                Deliverance
+                                                {t("portfolio.projects.deliverance", "Deliverance")}
                                             </span>
                                             <span className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
                                                 {project.createdAt ? new Date(project.createdAt).getFullYear() : new Date().getFullYear()}
@@ -242,7 +252,7 @@ export default function ProjectDetails() {
 
                                     <div className="mt-12">
                                         <button className="w-full py-5 rounded-full bg-foreground text-background font-black uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-primary/20 flex items-center justify-center gap-3">
-                                            Initiate Inquiry
+                                            {t("portfolio.projects.inquire", "Initiate Inquiry")}
                                             <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
                                         </button>
                                     </div>
