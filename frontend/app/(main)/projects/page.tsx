@@ -161,9 +161,9 @@ export default function Projects() {
                                                 className="group relative h-full min-h-[500px] rounded-[2.5rem] overflow-hidden bg-background border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700"
                                             >
                                                 <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-border/10">
-                                                    {project.images && project.images.length > 0 && (
+                                                    {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") && (
                                                         <Image
-                                                            src={project.images[0]}
+                                                            src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
                                                             alt={project.title || ""}                                                      fill
                                                             className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1 grayscale group-hover:grayscale-0"
                                                         />

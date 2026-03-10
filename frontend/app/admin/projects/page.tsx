@@ -180,13 +180,20 @@ export default function AdminProjects() {
                                     <div className="flex flex-wrap gap-2 mt-2">
                                         {formData.images.map((img, idx) => (
                                             <div key={idx} className="relative group">
-                                                <Image
-                                                    src={img}
-                                                    alt={`Preview ${idx + 1}`}
-                                                    width={128}
-                                                    height={64}
-                                                    className="h-16 w-32 object-cover rounded"
-                                                />
+                                                {img ? (
+                                                    <Image
+                                                        src={img}
+                                                        alt={`Preview ${idx + 1}`}
+                                                        width={128}
+                                                        height={64}
+                                                        className="h-16 w-32 object-cover rounded"
+                                                    />
+                                                ) : (
+                                                    <div className="h-16 w-32 bg-muted flex flex-col items-center justify-center rounded border border-dashed text-xs text-muted-foreground p-1 text-center">
+                                                        <span>Invalid</span>
+                                                        <span>Image</span>
+                                                    </div>
+                                                )}
                                                 <button
                                                     type="button"
                                                     onClick={() => setFormData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))}

@@ -5,11 +5,11 @@ import { useProject } from "@/hooks/use-content";
 import Section from "@/components/layout/Section";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown, X } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function ProjectDetails() {
     const params = useParams();
@@ -21,6 +21,8 @@ export default function ProjectDetails() {
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     if (isLoading) {
         return (
@@ -55,6 +57,27 @@ export default function ProjectDetails() {
             </div>
         );
     }
+
+    const validImages: string[] = project.images?.filter((img: any) => typeof img === 'string' && img.trim() !== "") || [];
+    const selectedIndex = selectedImage ? validImages.indexOf(selectedImage) : -1;
+
+    const handlePrev = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (selectedIndex > 0) {
+            setSelectedImage(validImages[selectedIndex - 1]);
+        } else if (validImages.length > 0) {
+            setSelectedImage(validImages[validImages.length - 1]);
+        }
+    };
+
+    const handleNext = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (selectedIndex < validImages.length - 1) {
+            setSelectedImage(validImages[selectedIndex + 1]);
+        } else if (validImages.length > 0) {
+            setSelectedImage(validImages[0]);
+        }
+    };
 
     const mapStatus = (status: string) => {
         if (status === 'past') return t("portfolio.projects.status.made", "Completed");
@@ -190,10 +213,10 @@ export default function ProjectDetails() {
                             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8"
                         >
-                            {project.images && project.images.map((img, idx) => (
-                                <div key={idx} className={`relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}>
+                            {project.images && project.images.filter((img: any) => typeof img === 'string' && img.trim() !== "").map((img: string, idx: number) => (
+                                <div key={idx} onClick={() => setSelectedImage(img)} className={`cursor-pointer relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}>
                                     <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                                 </div>
                             ))}
                         </motion.div>
@@ -262,6 +285,62 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </Section>
+
+            {/* Full Screen Image Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImage(null)}
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 sm:p-8 cursor-zoom-out"
+                    >
+                        <button
+                            onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+                            className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 hover:scale-110 transition-all z-[101]"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                        
+                        {validImages.length > 1 && (
+                            <>
+                                <button
+                                    onClick={handlePrev}
+                                    className={`absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md transition-all z-[101] flex items-center justify-center`}
+                                >
+                                    <ArrowLeft className={`w-6 h-6 sm:w-8 sm:h-8 ${isRtl ? 'rotate-180' : ''}`} />
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    className={`absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md transition-all z-[101] flex items-center justify-center`}
+                                >
+                                    <ArrowRight className={`w-6 h-6 sm:w-8 sm:h-8 ${isRtl ? 'rotate-180' : ''}`} />
+                                </button>
+                            </>
+                        )}
+                        
+                        <motion.div
+                            key={selectedImage}
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="relative w-full h-full max-w-7xl max-h-[90vh] rounded-lg overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Image
+                                src={selectedImage}
+                                alt="Full screen preview"
+                                fill
+                                className="object-contain"
+                                quality={100}
+                                priority
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

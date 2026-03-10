@@ -122,6 +122,7 @@ export class PrismaStorage implements IStorage {
     try {
       return await prisma.service.update({ where: { id }, data: updates });
     } catch (e) {
+      console.error("Prisma update error:", e);
       return undefined;
     }
   }
@@ -158,6 +159,7 @@ export class PrismaStorage implements IStorage {
     try {
       return await prisma.project.update({ where: { id }, data: updates });
     } catch (e) {
+      console.error("Prisma update error:", e);
       return undefined;
     }
   }

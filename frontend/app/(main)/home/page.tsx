@@ -706,9 +706,9 @@ export default function Home() {
                     className="group relative min-h-[400px] md:min-h-[500px] h-full rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30 block"
                   >
                     <div className="relative aspect-video w-full rounded-lg overflow-hidden shrink-0">
-                        {project.images && project.images.length > 0 && (
+                        {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") && (
                             <Image
-                                src={project.images[0]}
+                                src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
                                 alt={project.title}
                                 fill
                                 className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"

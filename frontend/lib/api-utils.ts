@@ -1,5 +1,5 @@
 export function transformForLanguage<T extends Record<string, any>>(content: T | T[], lang: 'en' | 'ar'): any {
-    if (!content) return content;
+    if (!content || typeof content !== 'object' || content instanceof Date) return content;
 
     // If it's an array, transform each item
     if (Array.isArray(content)) {
