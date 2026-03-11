@@ -32,7 +32,7 @@ export default function AdminDashboard() {
         { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials", key: "testimonials" },
         { icon: GitBranch, label: "Platform Updates", path: "/admin/platform-updates", key: "updates" },
         { icon: Target, label: "Industries", path: "/admin/industries", key: "industries" },
-        { icon: LayoutDashboard, label: "Solutions", path: "/admin/solutions", key: "solutions" },
+        { icon: LayoutDashboard, label: "Use Case", path: "/admin/solutions", key: "solutions" },
     ];
 
     return (

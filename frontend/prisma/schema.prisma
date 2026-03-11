@@ -28,8 +28,7 @@ model Service {
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
   type          String   @default("Other")
   
-  packageId     String?  @map("package_id")
-  package       Package? @relation(fields: [packageId], references: [id], onDelete: SetNull)
+
 
   @@map("services")
 }
@@ -165,7 +164,7 @@ model Package {
   published        Boolean  @default(true)
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
-  services         Service[]
+
 
   @@map("packages")
 }

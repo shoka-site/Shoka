@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 export default function AdminConsultations() {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
+    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     const { data: consultations = [], isLoading } = useQuery<any[]>({
         queryKey: ["admin-consultations"],
@@ -88,8 +89,13 @@ export default function AdminConsultations() {
                 </div>
 
                 <div className="space-y-4">
-                    {consultations.map((consultation: any) => (
-                        <Card key={consultation.id} className="hover:shadow-md transition-shadow">
+                    {consultations.map((consultation: any) => {
+                        const isExpanded = expandedId === consultation.id;
+                        return (
+                        <Card 
+                            key={consultation.id} 
+                            className="hover:shadow-md transition-shadow"
+                        >
                             <CardContent className="p-6">
                                 <div className="flex items-start justify-between gap-4">
                                     <div className="flex-1 min-w-0">
@@ -112,10 +118,15 @@ export default function AdminConsultations() {
                                             )}
                                         </div>
 
-                                        <div className="ml-13 pl-13">
-                                            <div className="flex items-start gap-2 mb-2">
-                                                <MessageSquare className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
-                                                <p className="text-sm">{consultation.message}</p>
+                                        <div 
+                                            className="ml-13 pl-13 cursor-pointer group"
+                                            onClick={() => setExpandedId(isExpanded ? null : consultation.id)}
+                                        >
+                                            <div className="flex items-start gap-2 mb-2 p-2 -ml-2 rounded-md hover:bg-muted/50 transition-colors">
+                                                <MessageSquare className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-primary transition-colors" />
+                                                <p className={`text-sm transition-all duration-200 ${isExpanded ? "whitespace-pre-wrap" : "line-clamp-2"}`}>
+                                                    {consultation.message}
+                                                </p>
                                             </div>
                                         </div>
 
@@ -135,7 +146,10 @@ export default function AdminConsultations() {
                                                     size="sm"
                                                     variant="outline"
                                                     className="w-full"
-                                                    onClick={() => updateStatusMutation.mutate({ id: consultation.id, status: "responded" })}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        updateStatusMutation.mutate({ id: consultation.id, status: "responded" });
+                                                    }}
                                                     disabled={updateStatusMutation.isPending}
                                                 >
                                                     <Check className="w-3 h-3 mr-1" />
@@ -145,7 +159,10 @@ export default function AdminConsultations() {
                                                     size="sm"
                                                     variant="outline"
                                                     className="w-full"
-                                                    onClick={() => updateStatusMutation.mutate({ id: consultation.id, status: "closed" })}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        updateStatusMutation.mutate({ id: consultation.id, status: "closed" });
+                                                    }}
                                                     disabled={updateStatusMutation.isPending}
                                                 >
                                                     <X className="w-3 h-3 mr-1" />
@@ -157,7 +174,10 @@ export default function AdminConsultations() {
                                             size="sm"
                                             variant="destructive"
                                             className="w-full"
-                                            onClick={() => deleteMutation.mutate(consultation.id)}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                deleteMutation.mutate(consultation.id);
+                                            }}
                                             disabled={deleteMutation.isPending}
                                         >
                                             <Trash2 className="w-3 h-3 mr-1" />
@@ -167,7 +187,7 @@ export default function AdminConsultations() {
                                 </div>
                             </CardContent>
                         </Card>
-                    ))}
+                    )})}
 
                     {consultations.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">

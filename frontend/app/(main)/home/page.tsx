@@ -449,7 +449,7 @@ export default function Home() {
   const isRtl = i18n.dir() === "rtl";
 
   const { data: services = [], isLoading: loadingServices } = useServices();
-  const { data: projects = [], isLoading: loadingProjects } = useProjects(true);
+  const { data: projects = [], isLoading: loadingProjects } = useProjects();
   const { data: testimonials = [], isLoading: loadingTestimonials } = useTestimonials();
   const { data: packages = [], isLoading: loadingPackages } = usePackages();
 
@@ -672,95 +672,84 @@ export default function Home() {
       {/* ── 3. PROJECTS — proof of work ───────────────────────────── */}
       {!loadingProjects && projects.length > 0 && (
         <Section background="default" className="py-20 md:py-32">
-          <FadeInSection className="text-center mb-16 md:mb-20">
-            <span className="text-accent tracking-[0.4em] uppercase text-[10px] md:text-xs font-bold mb-3 md:mb-4 block opacity-80">{t("home.projects.badge")}</span>
-            <h2 className="text-3xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
-              {t("home.projects.title")}
-            </h2>
-            <p className="text-muted-foreground text-base md:text-xl mt-4 md:mt-6 max-w-2xl mx-auto font-light leading-relaxed">
-              {t("home.projects.description")}
-            </p>
+          <FadeInSection>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16">
+              <div className="max-w-xl">
+                <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.projects.badge")}</span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.projects.title")}</h2>
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                  {t("home.projects.description")}
+                </p>
+              </div>
+              <Link href="/projects">
+                <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
+                  {t("view_all_projects")}
+                  <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
+                </span>
+              </Link>
+            </div>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
-            {projects.map((project, index) => {
-              // Create an asymmetrical staggered layout
-              // Pattern: 7/5, 5/7, 8/4, 4/8, etc.
-              const isLarge = project.featured;
-              const colSpan = isLarge
-                ? "md:col-span-7 lg:col-span-8"
-                : "md:col-span-5 lg:col-span-4";
-
-              const isAlternate = Math.floor(index / 2) % 2 === 1;
-              const finalColSpan = isAlternate
-                ? (isLarge ? "md:col-span-5 lg:col-span-4" : "md:col-span-7 lg:col-span-8")
-                : colSpan;
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {projects.slice(0, 4).map((project, index) => {
               return (
-                <Link key={project.id} href={`/projects/${project.id}`} className={finalColSpan}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="group relative min-h-[400px] md:min-h-[500px] h-full rounded-[2.5rem] overflow-hidden bg-muted/20 border border-white/5 shadow-2xl transition-all duration-700 hover:border-accent/30 block"
-                  >
-                    <div className="relative aspect-video w-full rounded-lg overflow-hidden shrink-0">
-                        {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") && (
-                            <Image
-                                src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
-                                alt={project.title}
-                                fill
-                                className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1"
-                            />
-                        )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-700" />
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                  className="bg-background/60 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer flex flex-col overflow-hidden"
+                >
+                  <Link href={`/projects/${project.id}`} className="flex flex-col h-full">
+                    {/* Project Thumbnail */}
+                    <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0 border-b border-border/20">
+                      {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") ? (
+                        <Image
+                          src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-muted/50 flex items-center justify-center">
+                          <Layers className="w-8 h-8 text-muted-foreground/30" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Inner Category Badge */}
+                      <div className="absolute top-4 left-4 z-10 transition-transform duration-300 group-hover:-translate-y-1">
+                        <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 bg-background/80 backdrop-blur-md rounded-full">
+                          {project.category}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="absolute inset-0 z-10 p-6 md:p-12 flex flex-col justify-end">
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 + index * 0.1 }}
-                        className="flex items-center gap-3 mb-3 md:mb-4"
-                      >
-                        <span className="w-8 h-[1px] bg-accent/60"></span>
-                        <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
-                      </motion.div>
-
-                      <h3 className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-white mb-3 md:mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
+                    {/* Card Content */}
+                    <div className="p-6 md:p-8 flex flex-col flex-1">
+                      <h3 className="text-xl font-display font-bold mb-3 line-clamp-2 md:line-clamp-none transition-colors group-hover:text-primary">
                         {project.title}
                       </h3>
-
-                      <p className="text-white/60 text-sm md:text-lg max-w-lg mb-6 md:mb-8 line-clamp-2 md:line-clamp-3 lg:line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                      <p className="text-muted-foreground leading-relaxed mb-6 line-clamp-3 text-sm flex-1">
                         {project.description}
                       </p>
-
-                      <div className="flex items-center gap-4 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-                        <Button
-                          variant="outline"
-                          size="lg"
-                          className="rounded-full bg-white/5 border-white/20 text-white backdrop-blur-md hover:bg-accent hover:text-black hover:border-accent transition-all duration-500 pointer-events-none"
-                        >
+                      
+                      <div className="mt-auto">
+                        <span className="text-primary text-sm font-medium inline-flex items-center">
                           {t("view_project")}
-                          <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"}`} />
-                        </Button>
+                          <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${isRtl ? "mr-2 rotate-180 group-hover:-translate-x-1" : "ml-2 group-hover:translate-x-1"}`} />
+                        </span>
                       </div>
                     </div>
-
-                    {/* Corner Accent */}
-                    <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                      <div className="w-12 h-12 rounded-full border border-accent/30 flex items-center justify-center backdrop-blur-sm bg-accent/10">
-                        <ArrowRight className={`w-5 h-5 text-accent ${isRtl ? "rotate-[225deg]" : "-rotate-45"}`} />
-                      </div>
-                    </div>
-                  </motion.div>
-                </Link>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
 
-          <div className="mt-20 text-center">
+          <div className="mt-16 md:mt-20 text-center">
             <Link href="/projects">
               <Button
                 variant="ghost"

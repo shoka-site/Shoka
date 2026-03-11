@@ -141,43 +141,7 @@ export default function PackageDetails() {
               
               {/* Left Column: Details */}
               <div className="lg:col-span-2 space-y-16">
-                {pkg.services && pkg.services.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                  >
-                    <h3 className="text-3xl font-display font-bold mb-8 flex items-center gap-4">
-                      <span className="w-8 h-1 bg-primary rounded-full" />
-                      {t("packages.included_services", "Included Services")}
-                    </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {pkg.services.map((service, index) => (
-                        <motion.div
-                          key={service.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: index * 0.1, duration: 0.5 }}
-                        >
-                          <Card className="h-full bg-muted/20 border-border/50 hover:border-primary/30 transition-colors">
-                            <CardContent className="p-6">
-                              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                                <CheckCircle2 className="w-5 h-5 text-primary" />
-                              </div>
-                              <h4 className="font-bold text-lg mb-2">{service.title}</h4>
-                              <p className="text-muted-foreground text-sm leading-relaxed">
-                                {service.description}
-                              </p>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
               </div>
 
               {/* Right Column: Floating Sidebar */}

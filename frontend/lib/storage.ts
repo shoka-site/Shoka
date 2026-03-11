@@ -102,15 +102,13 @@ export class PrismaStorage implements IStorage {
   async getServices(published?: boolean): Promise<Service[]> {
     return await prisma.service.findMany({
       where: published !== undefined ? { published } : undefined,
-      orderBy: { order: 'asc' },
-      include: { package: true },
+      orderBy: { order: 'asc' }
     }) as Service[];
   }
 
   async getService(id: string): Promise<Service | undefined> {
     return await prisma.service.findUnique({ 
-        where: { id },
-        include: { package: true } 
+        where: { id }
     }) as Service | undefined || undefined;
   }
 
@@ -414,15 +412,13 @@ export class PrismaStorage implements IStorage {
   async getPackages(published?: boolean): Promise<Package[]> {
     return await prisma.package.findMany({
       where: published !== undefined ? { published } : undefined,
-      orderBy: { order: 'asc' },
-      include: { services: true }
+      orderBy: { order: 'asc' }
     }) as Package[];
   }
 
   async getPackage(id: string): Promise<Package | undefined> {
     return await prisma.package.findUnique({
-      where: { id },
-      include: { services: true }
+      where: { id }
     }) as Package | undefined || undefined;
   }
 

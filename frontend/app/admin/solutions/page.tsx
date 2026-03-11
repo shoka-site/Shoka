@@ -196,8 +196,9 @@ export default function AdminSolutions() {
                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 value={formData.industryId}
                                 onChange={(e) => setFormData({ ...formData, industryId: e.target.value })}
+                                required
                             >
-                                <option value="">No Industry (Global)</option>
+                                <option value="" disabled>Select an Industry</option>
                                 {industries.map((industry: any) => (
                                     <option key={industry.id} value={industry.id}>
                                         {industry.titleEn || industry.title}
@@ -222,6 +223,11 @@ export default function AdminSolutions() {
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
                                     <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {solution.iconName}</span>
+                                    {solution.industryId && (
+                                        <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">
+                                            Industry: {industries.find((i: any) => i.id === solution.industryId)?.titleEn || "Unknown"}
+                                        </span>
+                                    )}
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">{solution.title || solution.titleEn}</h3>
                                 <p className="text-sm">{solution.description || solution.descriptionEn}</p>

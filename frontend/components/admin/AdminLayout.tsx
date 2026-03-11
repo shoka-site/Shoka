@@ -15,7 +15,7 @@ const navItems = [
     { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials" },
     { icon: GitBranch, label: "Updates", path: "/admin/platform-updates" },
     { icon: Target, label: "Industries", path: "/admin/industries" },
-    { icon: LayoutDashboard, label: "Solutions", path: "/admin/solutions" },
+    { icon: LayoutDashboard, label: "Use Case", path: "/admin/solutions" },
     { icon: Users, label: "Our Team", path: "/admin/team" },
     { icon: Mail, label: "Consultations", path: "/admin/consultations" },
 ];

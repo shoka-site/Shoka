@@ -17,8 +17,7 @@ export interface Service {
     type: string;
     published: boolean;
     createdAt?: string | Date;
-    packageId?: string | null;
-    package?: Package | null;
+
 }
 
 export function useServices() {
@@ -218,7 +217,7 @@ export interface Package {
     description?: string;
     published: boolean;
     createdAt?: string | Date;
-    services?: Service[];
+
 }
 
 export function usePackages() {
