@@ -20,19 +20,7 @@ export default function ServiceDetail({ params }: { params: Promise<{ id: string
   const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-  if (isLoading) {
-    return (
-      <div className="pt-32 pb-24 min-h-screen flex items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-6">
-          <div className="relative w-16 h-16">
-            <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-            <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <span className="text-muted-foreground text-xs font-bold uppercase tracking-[0.3em]">{t('common.loading')}</span>
-        </div>
-      </div>
-    );
-  }
+
 
   if (error || !service) {
     return notFound();

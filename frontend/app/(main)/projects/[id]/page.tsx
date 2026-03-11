@@ -24,18 +24,7 @@ export default function ProjectDetails() {
 
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    if (isLoading) {
-        return (
-            <div className="pt-32 pb-24 min-h-screen flex items-center justify-center bg-background">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="relative w-16 h-16">
-                        <div className="absolute inset-0 border-4 border-primary/20 rounded-full"></div>
-                        <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+
 
     if (!project) {
         return (

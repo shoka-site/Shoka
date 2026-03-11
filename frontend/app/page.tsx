@@ -6,6 +6,7 @@ import { ChevronRight, Sparkles, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
+import Image from "next/image";
 
 
 export default function WelcomeV3() {
@@ -136,8 +137,17 @@ export default function WelcomeV3() {
                     </div>
                 </motion.div>
 
-                {/* Shimmering Brand Title */}
-                <div className="relative mb-6">
+                {/* Logo and Shimmering Brand Title */}
+                <div className="relative flex flex-col items-center mb-6">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
+                        className="mb-8 drop-shadow-[0_0_25px_rgba(194,164,92,0.5)]"
+                    >
+                        <Image src="/logo.png" alt="Iraqi Platform Logo" width={240} height={240} className="object-contain" priority />
+                    </motion.div>
+
                     <motion.h1
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -235,12 +245,6 @@ export default function WelcomeV3() {
                         </div>
                     </Link>
 
-                    {/* Quick Navigation Links */}
-                    <div className="flex gap-12 text-xs uppercase tracking-[0.3em] font-bold text-white/30">
-                        <Link href="/services" className="hover:text-accent transition-colors">{t("welcome.nav.expertise")}</Link>
-                        <Link href="/projects" className="hover:text-accent transition-colors">{t("welcome.nav.portfolio")}</Link>
-                        <Link href="/contact" className="hover:text-accent transition-colors">{t("welcome.nav.discuss")}</Link>
-                    </div>
                 </motion.div>
 
                 {/* News Ticker Integration */}

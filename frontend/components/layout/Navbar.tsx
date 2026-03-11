@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package } from "lucide-react";
@@ -91,12 +92,9 @@ export default function Navbar() {
           <Link href="/home" className="group relative z-50">
             <span className={`text-2xl font-display font-black text-white tracking-tighter group-hover:opacity-80 transition-all flex items-center gap-2 uppercase`}>
               <motion.div
-                initial={{ rotate: 0 }}
-                animate={{ rotate: scrolled ? 360 : 0 }}
-                transition={{ duration: 1 }}
-                className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                className="w-14 h-14 xl:w-16 xl:h-16 flex items-center justify-center drop-shadow-[0_0_15px_rgba(194,164,92,0.4)]"
               >
-                <Sparkles className="w-6 h-6" />
+                <Image src="/logo.png" alt="Logo" width={64} height={64} className="object-contain" />
               </motion.div>
               {t("navbar.brand")}
             </span>
