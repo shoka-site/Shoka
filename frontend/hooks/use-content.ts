@@ -209,7 +209,7 @@ export function useTeamMembers() {
     });
 }
 
-// Packages
+// Packages - API returns transformed data with title and description (already language-specific)
 export interface Package {
     id: string;
     order: number;
@@ -217,7 +217,6 @@ export interface Package {
     description?: string;
     published: boolean;
     createdAt?: string | Date;
-
 }
 
 export function usePackages() {

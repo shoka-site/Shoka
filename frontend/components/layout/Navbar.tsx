@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package, Code2, Database, Cloud, Brain, Smartphone, Shield, Workflow, Server } from "lucide-react";
+import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package, Code2, Database, Cloud, Brain, Smartphone, Shield, Workflow, Server, Newspaper, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,19 +17,29 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import React from "react";
-import { useProjects, useIndustries, useServices } from "@/hooks/use-content";
+import { useProjects, useIndustries, useServices, usePackages, usePlatformUpdates, useTeamMembers } from "@/hooks/use-content";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuValue, setMenuValue] = useState("");
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
   const isRtl = i18n.dir() === 'rtl';
   const { data: projects = [] } = useProjects(true);
   const { data: industries = [] } = useIndustries();
   const { data: services = [] } = useServices();
+  const { data: packages = [] } = usePackages();
+  const { data: platformUpdates = [] } = usePlatformUpdates();
+  const { data: teamMembers = [] } = useTeamMembers();
+
+  // Close navbar functions
+  const closeMenu = () => {
+    setIsOpen(false);
+    setMenuValue("");
+  };
 
   const serviceTypeIcons: Record<string, React.ElementType> = {
     software_development: Code2,
@@ -59,11 +69,16 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Close navbar on any scroll (up or down)
+      if (isOpen || menuValue) {
+        closeMenu();
+      }
       setScrolled(window.scrollY > 20);
+      setLastScrollPosition(window.scrollY);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isOpen, menuValue]);
 
   const solutions = [
     { title_key: "navbar.menu.solutions.efficiency.title", href: "/solutions", desc_key: "navbar.menu.solutions.efficiency.desc", icon: Zap },
@@ -103,19 +118,37 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
         scrolled
-          ? "bg-black/90 backdrop-blur-2xl border-b border-white/5 py-4 shadow-2xl"
-          : "bg-transparent py-6"
+          ? "bg-black/80 backdrop-blur-2xl border-b border-primary/20 py-3 shadow-2xl"
+          : "bg-transparent py-5"
       )}
+      onClick={() => {
+        // Close desktop dropdown menu when clicking anywhere in header
+        if (menuValue) {
+          setMenuValue("");
+        }
+      }}
     >
+      {/* Subtle gradient line at bottom */}
+      <div className={cn(
+        "absolute bottom-0 left-0 right-0 h-[1px] transition-all duration-500",
+        scrolled 
+          ? "bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-100" 
+          : "bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-0"
+      )} />
+      
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-1 items-center justify-start">
           <Link href="/home" className="group relative z-50">
             <span className={`text-2xl font-display font-black text-white tracking-tighter group-hover:opacity-80 transition-all flex items-center gap-2 uppercase`}>
               <motion.div
-                className="w-14 h-14 xl:w-16 xl:h-16 flex items-center justify-center drop-shadow-[0_0_15px_rgba(194,164,92,0.4)]"
+                className="w-14 h-14 xl:w-16 xl:h-16 flex items-center justify-center relative"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <Image src="/logo.png" alt="Logo" width={64} height={64} className="object-contain" />
+                {/* Glow effect behind logo */}
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Image src="/logo.png" alt="Logo" width={64} height={64} className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]" />
               </motion.div>
               {t("navbar.brand")}
             </span>
@@ -125,18 +158,13 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden lg:flex flex-none items-center justify-center">
           <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
-            <NavigationMenuList 
-              className="gap-1 xl:gap-2" 
-              onClick={(e) => {
-                if ((e.target as HTMLElement).closest('a')) {
-                  setMenuValue("");
-                }
-              }}
-            >
+            <NavigationMenuList className="gap-1 xl:gap-2">
 
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden">
+                  {/* Hover shine effect */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                   {t("navbar.industries")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -172,7 +200,9 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden">
+                  {/* Hover shine effect */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                   {t("navbar.services", "Services")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -213,43 +243,51 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden">
+                  {/* Hover shine effect */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                   {t("navbar.packages")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <MegaMenuSection
                     title={t("navbar.packages")}
                     description={isRtl
-                      ? "باقات مجمّعة مصممة لحاجات أعمال محددة — كل باقة تحل مشكلة حقيقية."
+                      ? "باقات مجمّعة مصممة لاحتياجات أعمال محددة — كل باقة تحل مشكلة حقيقية."
                       : "Pre-built solution bundles designed around specific business needs."}
                     icon={Package}
                     href="/packages"
-                    layout="list"
+                    layout="grid"
                   >
-                    <div className={`flex flex-col gap-4 ${isRtl ? 'text-right' : ''}`}>
-                      {[
-                        { icon: Zap, label: isRtl ? "حلول جاهزة وسريعة التنفيذ" : "Ready-to-deploy solutions", desc: isRtl ? "لا تبدأ من الصفر" : "No starting from scratch" },
-                        { icon: Building2, label: isRtl ? "مصممة لاحتياجات الأعمال" : "Built for business needs", desc: isRtl ? "كل باقة تحل مشكلة حقيقية" : "Each bundle solves a real problem" },
-                        { icon: BarChart3, label: isRtl ? "قيمة واضحة وقابلة للقياس" : "Clear, measurable value", desc: isRtl ? "تعرف ليش تستثمر" : "Know exactly why you're investing" },
-                      ].map((item, idx) => (
+                    <ul className="grid grid-cols-2 gap-4">
+                      {packages.slice(0, 4).map((pkg, idx) => (
                         <motion.div
-                          key={item.label}
+                          key={pkg.id}
                           initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: idx * 0.1 }}
                         >
-                          <div className={`flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse' : ''}`}>
-                            <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                              <item.icon className="w-5 h-5" />
+                          <Link href={`/packages/${pkg.id}`} className={`group flex items-start gap-4 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                              <Package className="w-6 h-6" />
                             </div>
                             <div>
-                              <div className="text-sm font-black text-white uppercase tracking-tight">{item.label}</div>
-                              <div className="text-xs text-white/50 mt-1">{item.desc}</div>
+                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{pkg.title}</div>
+                              {pkg.description && (
+                                <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{pkg.description}</div>
+                              )}
                             </div>
-                          </div>
+                          </Link>
                         </motion.div>
                       ))}
-                    </div>
+                    </ul>
+                    {packages.length > 4 && (
+                      <div className="mt-6 pt-6 border-t border-white/5">
+                        <Link href="/packages" className={`inline-flex items-center text-sm text-white/60 hover:text-primary transition-colors ${isRtl ? 'flex-row-reverse' : ''}`}>
+                          {isRtl ? `عرض جميع الباقات (${packages.length})` : `View all packages (${packages.length})`}
+                          <ArrowRight className={`w-4 h-4 ${isRtl ? 'mr-2 rotate-180' : 'ml-2'}`} />
+                        </Link>
+                      </div>
+                    )}
                   </MegaMenuSection>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -257,7 +295,9 @@ export default function Navbar() {
 
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden">
+                  {/* Hover shine effect */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                   {t("navbar.projects")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -325,7 +365,9 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white h-10 px-3 xl:px-5 text-xs xl:text-sm font-bold transition-all hover:bg-white/5 rounded-full uppercase tracking-widest">
+                <NavigationMenuTrigger className="group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden">
+                  {/* Hover shine effect */}
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                   {t("navbar.about")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -374,13 +416,13 @@ export default function Navbar() {
         {/* Desktop Right Actions */}
         <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-4">
           <button
-            onClick={toggleLanguage}
+            onClick={() => { toggleLanguage(); closeMenu(); }}
             className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10"
             aria-label="Toggle Language"
           >
             <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
           </button>
-          <Link href="/contact">
+          <Link href="/contact" onClick={closeMenu}>
             <span className="bg-white text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-black hover:scale-105 transition-all cursor-pointer shadow-[0_10px_30px_rgba(255,255,255,0.25)] whitespace-nowrap">
               {t("navbar.book_consultation")}
             </span>
@@ -402,14 +444,31 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-0 z-[49] bg-black backdrop-blur-3xl flex flex-col pt-28 px-6 pb-8 md:pt-32 md:p-8 overflow-y-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 top-0 z-[49] bg-black flex flex-col pt-28 px-6 pb-8 md:pt-32 md:p-8 overflow-y-auto"
           >
-            {/* Subtle grid pattern for mobile menu */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+            {/* Animated gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-black to-black pointer-events-none" />
+            
+            {/* Animated orbs */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+              className="absolute top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none" 
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, repeat: Infinity, repeatType: "reverse", delay: 0.3 }}
+              className="absolute bottom-40 -left-20 w-48 h-48 bg-primary/10 rounded-full blur-[80px] pointer-events-none" 
+            />
+            
+            {/* Grid pattern */}
+            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
             <nav className="container mx-auto flex flex-col space-y-2 relative z-10">
               {[
@@ -440,19 +499,19 @@ export default function Navbar() {
                 className="pt-12 flex flex-col gap-6"
               >
                 <Link href="/contact" onClick={() => setIsOpen(false)}>
-                  <span className="block w-full bg-white text-black text-center py-4 md:py-5 rounded-full text-base md:text-xl font-black uppercase tracking-widest shadow-2xl">
+                  <span className="block w-full bg-white text-black text-center py-4 md:py-5 rounded-full text-base md:text-xl font-black uppercase tracking-widest shadow-2xl hover:bg-primary hover:text-black transition-all">
                     {t("navbar.book_consultation")}
                   </span>
                 </Link>
                 <div className="flex items-center justify-between gap-4">
                   <button
                     onClick={() => { toggleLanguage(); setIsOpen(false); }}
-                    className="flex-grow flex items-center justify-center gap-3 py-5 rounded-[2rem] border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/5 transition-all"
+                    className="flex-grow flex items-center justify-center gap-3 py-5 rounded-[2rem] border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 hover:border-primary/50 transition-all"
                   >
                     <Globe className="w-5 h-5" />
                     <span>{i18n.language.startsWith('ar') ? 'English' : 'العربية'}</span>
                   </button>
-                  <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center text-white/40">
+                  <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center text-white/40 bg-white/5">
                     <Sparkles className="w-6 h-6" />
                   </div>
                 </div>
@@ -483,32 +542,37 @@ function MegaMenuSection({ title, description, icon: Icon, href, children, layou
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`w-screen bg-black/95 backdrop-blur-[60px] border-y border-white/5 shadow-[0_50px_100px_rgba(0,0,0,0.8)] overflow-hidden ${isRtl ? 'rtl' : 'ltr'}`}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className={`w-screen bg-black/90 backdrop-blur-2xl border-y border-primary/10 shadow-[0_50px_100px_rgba(0,0,0,0.8),0_0_50px_rgba(194,164,92,0.05)] overflow-hidden ${isRtl ? 'rtl' : 'ltr'}`}
     >
-      <div className={`container mx-auto px-6 md:px-12 flex items-stretch ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+      
+      <div className={`container mx-auto px-6 md:px-12 flex items-stretch relative z-10 ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
         {/* Sidebar / Featured */}
-        <div className={`w-1/3 bg-white/[0.02] p-12 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-white/5`}>
+        <div className={`w-1/3 bg-gradient-to-b from-white/[0.03] to-transparent p-12 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-white/5`}>
           {/* Noise texture for sidebar */}
-          <div className="absolute inset-0 bg-grain opacity-[0.05] pointer-events-none" />
+          <div className="absolute inset-0 bg-grain opacity-[0.04] pointer-events-none" />
 
-          {/* Subtle gold spotlight in sidebar */}
-          <div className="absolute -top-32 -left-32 w-64 h-64 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+          {/* Animated gold orbs in sidebar */}
+          <div className="absolute -top-32 -left-32 w-80 h-80 bg-primary/15 rounded-full blur-[100px] pointer-events-none animate-pulse" />
+          <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
 
           <div className="relative z-10 flex flex-col h-full">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className={`w-16 h-16 rounded-[1.5rem] bg-primary/10 text-primary flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(var(--primary),0.15)]`}
+              transition={{ delay: 0.1, type: "spring", stiffness: 300, damping: 25 }}
+              className={`w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-primary/20 to-primary/5 text-primary flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(194,164,92,0.2)] border border-primary/20`}
             >
               <Icon className="w-8 h-8" />
             </motion.div>
             <motion.h3
               initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.15 }}
               className={`text-4xl font-display font-black text-white mb-4 tracking-tighter ${isRtl ? 'text-right' : 'text-left'}`}
             >
               {title}
@@ -516,22 +580,30 @@ function MegaMenuSection({ title, description, icon: Icon, href, children, layou
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className={`text-lg text-white/40 leading-relaxed font-light mb-12 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}
+              transition={{ delay: 0.2 }}
+              className={`text-lg text-white/50 leading-relaxed font-light mb-12 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}
             >
               {description}
             </motion.p>
-            <Link href={href} className={`inline-flex items-center px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-black transition-all group w-fit ${isRtl ? 'flex-row-reverse' : ''}`}>
-              {t("common.explore_all")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-3 rotate-180 group-hover:-translate-x-1' : 'ml-3 group-hover:translate-x-1'}`} />
-            </Link>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+            >
+              <Link href={href} className={`inline-flex items-center px-8 py-4 bg-gradient-to-r from-white/10 to-white/5 border border-white/10 rounded-full text-white text-xs font-black uppercase tracking-[0.2em] hover:from-primary hover:to-primary/80 hover:text-black hover:border-primary/50 hover:scale-105 transition-all group w-fit shadow-[0_10px_30px_rgba(0,0,0,0.3)] ${isRtl ? 'flex-row-reverse' : ''}`}>
+                {t("common.explore_all")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-3 rotate-180 group-hover:-translate-x-1' : 'ml-3 group-hover:translate-x-1'}`} />
+              </Link>
+            </motion.div>
           </div>
         </div>
 
         {/* Content Area */}
-        <div className="w-2/3 p-16 bg-gradient-to-br from-transparent to-white/[0.01] relative">
-          {/* Radial gold spotlight for the content area */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/[0.03] rounded-full blur-[150px] pointer-events-none" />
-          {children}
+        <div className="w-2/3 p-12 bg-gradient-to-br from-transparent via-white/[0.01] to-white/[0.02] relative">
+          {/* Animated radial gold spotlight for the content area */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-primary/[0.02] rounded-full blur-[120px] pointer-events-none animate-pulse" />
+          <div className="relative z-10">
+            {children}
+          </div>
         </div>
       </div>
     </motion.div>

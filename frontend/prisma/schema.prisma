@@ -31,6 +31,7 @@ model Service {
 
 
   @@map("services")
+  @@index([published, order])
 }
 
 model Project {
@@ -50,6 +51,7 @@ model Project {
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("projects")
+  @@index([published, featured, order])
 }
 
 model Testimonial {
@@ -67,6 +69,7 @@ model Testimonial {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("testimonials")
+  @@index([published, order])
 }
 
 model PlatformUpdate {
@@ -83,6 +86,7 @@ model PlatformUpdate {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("platform_updates")
+  @@index([published, date])
 }
 
 model Industry {
@@ -98,6 +102,7 @@ model Industry {
   solutions     Solution[]
 
   @@map("industries")
+  @@index([published, order])
 }
 
 model Solution {
@@ -116,6 +121,8 @@ model Solution {
   industry      Industry? @relation(fields: [industryId], references: [id], onDelete: SetNull)
 
   @@map("solutions")
+  @@index([published, order])
+  @@index([industryId])
 }
 
 model TeamMember {
@@ -138,6 +145,7 @@ model TeamMember {
   linkedinUrl   String?  @map("linkedin_url")
 
   @@map("our_team")
+  @@index([published, order])
 }
 
 
@@ -152,6 +160,7 @@ model Consultation {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("consultations")
+  @@index([status])
 }
 
 model Package {
@@ -167,4 +176,5 @@ model Package {
 
 
   @@map("packages")
+  @@index([published, order])
 }
