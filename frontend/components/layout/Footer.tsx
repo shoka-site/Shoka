@@ -29,10 +29,10 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-display font-semibold mb-6 text-accent">{t('footer.connect')}</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="text-white/60 hover:text-white transition-colors">{t('footer.social.linkedin')}</a></li>
+              <li><a href="https://www.linkedin.com/company/shoka-global/" className="text-white/60 hover:text-white transition-colors">{t('footer.social.linkedin')}</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors">{t('footer.social.twitter')}</a></li>
               <li><a href="#" className="text-white/60 hover:text-white transition-colors">{t('footer.social.instagram')}</a></li>
-              <li><a href="mailto:hello@shoka.com" className="text-white/60 hover:text-white transition-colors">hello@shoka.com</a></li>
+              <li><a href="mailto:global@shoka.site" className="text-white/60 hover:text-white transition-colors">global@shoka.site</a></li>
             </ul>
           </div>
         </div>

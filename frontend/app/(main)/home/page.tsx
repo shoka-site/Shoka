@@ -15,7 +15,9 @@ import {
   usePlatformUpdates,
   usePackages,
 } from "@/hooks/use-content";
+import { useAllDataReady } from "@/hooks/useDataReady";
 import { CountUp } from "@/components/ui/count-up";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 const iconMap: Record<string, any> = {
   Brain, Code, Database, Cloud, Target, Zap, Layers, Cpu, Lock,
@@ -152,27 +154,35 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const { data: raw = [] } = usePlatformUpdates();
   const items = raw.map(u => ({ id: u.id, type: u.type as UpdateType, title: u.title, summary: u.summary }));
 
+  // Early return BEFORE any hooks to maintain consistent hook order
+  // Return a placeholder instead of null to keep hooks consistent
+  if (items.length === 0) {
+    return (
+      <section 
+        className="relative h-screen flex items-center overflow-hidden"
+        style={{ backgroundColor: "#0f0a04" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#0f0a04]" />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 70% 40%, rgba(194,164,92,0.1) 0%, transparent 60%)' }} />
+      </section>
+    );
+  }
+
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Hooks must be called unconditionally - move before early return
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
     const timer = setInterval(() => {
       setDirection(1);
       setActiveIdx(p => (p + 1) % items.length);
-    }, 8000); // Slower interval for better readability
+    }, 8000);
     return () => clearInterval(timer);
   }, [items.length, isPaused]);
 
   const updateStyle = useUpdateStyle();
-
-  // Handle empty data case - after hooks are called
-  if (items.length === 0) {
-    return null;
-  }
 
   const goTo = (i: number) => { setDirection(i > activeIdx ? 1 : -1); setActiveIdx(i); };
   const prev = () => goTo((activeIdx - 1 + items.length) % items.length);
@@ -448,10 +458,30 @@ export default function Home() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
+  // ALL hooks must be called unconditionally - before any early returns
   const { data: services = [], isLoading: loadingServices } = useServices();
   const { data: projects = [], isLoading: loadingProjects } = useProjects();
   const { data: testimonials = [], isLoading: loadingTestimonials } = useTestimonials();
   const { data: packages = [], isLoading: loadingPackages } = usePackages();
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  // useAllDataReady hook
+  const isReady = useAllDataReady([loadingServices, loadingProjects, loadingTestimonials, loadingPackages]);
+
+  // Testimonials carousel effect - must be called unconditionally
+  useEffect(() => {
+    if (testimonials.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
+
+  // Show loading screen until all data is fetched
+  if (!isReady) {
+    return <InitialLoader />;
+  }
 
   // Static Data for Stats
   const stats = [
@@ -478,17 +508,6 @@ export default function Home() {
     { id: "step-4", stepNumber: "04", title: t("home.process.steps.launch.title"), description: t("home.process.steps.launch.desc") },
     { id: "step-5", stepNumber: "05", title: t("home.process.steps.scale.title"), description: t("home.process.steps.scale.desc") },
   ];
-
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-  useEffect(() => {
-    if (testimonials.length === 0) return;
-    const timer = setInterval(() => {
-      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 7000);
-    return () => clearInterval(timer);
-  }, [testimonials.length]);
-
   return (
     <div className="w-full">
 
@@ -559,7 +578,7 @@ export default function Home() {
           </FadeInSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {packages.map((pkg, index) => (
+            {packages.slice(0, 3).map((pkg, index) => (
               <motion.div
                 key={pkg.id}
                 initial={{ opacity: 0, y: 40 }}

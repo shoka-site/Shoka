@@ -8,8 +8,10 @@ import { ArrowRight, ArrowLeft, Newspaper, Trophy, Calendar, Sparkles, ChevronDo
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePlatformUpdates } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function News() {
     const { t, i18n } = useTranslation();
@@ -20,7 +22,13 @@ export default function News() {
     const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+    // Wait for data to be ready before showing the page
+    const isReady = useDataReady(isLoading);
 
+    // Show full-screen loading while data is being fetched
+    if (!isReady) {
+        return <InitialLoader />;
+    }
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString(isRtl ? 'ar-EG' : 'en-US', {

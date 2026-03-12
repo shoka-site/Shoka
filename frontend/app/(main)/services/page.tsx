@@ -6,8 +6,10 @@ import { ArrowLeft, ArrowRight, LayoutGrid, Sparkles, ChevronDown } from "lucide
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useServices } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function Services() {
   const { t, i18n } = useTranslation();
@@ -18,7 +20,13 @@ export default function Services() {
   const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+  // Wait for data to be ready before showing the page
+  const isReady = useDataReady(isLoading);
 
+  // Show full-screen loading while data is being fetched
+  if (!isReady) {
+    return <InitialLoader />;
+  }
 
   // Group services by their `type` or explicitly put them in an "Other" category if none exist
   const groupedServices = services.reduce((acc, s) => {

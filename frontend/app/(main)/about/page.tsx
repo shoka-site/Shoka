@@ -7,9 +7,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Award, Users, Globe, Target, Calendar, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTeamMembers, usePlatformUpdates } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function About() {
   const { t, i18n } = useTranslation();
@@ -21,10 +23,18 @@ export default function About() {
   const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+  // Wait for data to be ready before showing the page
+  const isReady = useDataReady(isLoadingTeam);
+
   const events = updates.filter(u => u.type === 'event').slice(0, 3);
   const awards = updates.filter(u => u.type === 'achievement').slice(0, 4);
 
   const milestones = ["2024", "2025", "2026"];
+
+  // Show full-screen loading while data is being fetched
+  if (!isReady) {
+    return <InitialLoader />;
+  }
 
   return (
     <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">
@@ -154,13 +164,12 @@ export default function About() {
               className="relative"
             >
               <div className="absolute -inset-10 bg-primary/5 rounded-[4rem] blur-3xl" />
-              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl bg-background border border-border/50">
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl bg-zinc-900 border border-border/50 aspect-[4/5]">
                 <Image
-                  src="/hero-pattern.png"
+                  src="/cuneiform-glyph.png"
                   alt="Legacy"
-                  width={800}
-                  height={1000}
-                  className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out scale-105 group-hover:scale-100"
+                  fill
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
               </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package } from "lucide-react";
+import { Menu, X, Globe, ArrowRight, Sparkles, Activity, BarChart3, ShieldCheck, Zap, LayoutGrid, History, Rocket, Building2, Users, Package, Code2, Database, Cloud, Brain, Smartphone, Shield, Workflow, Server } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,6 +30,27 @@ export default function Navbar() {
   const { data: projects = [] } = useProjects(true);
   const { data: industries = [] } = useIndustries();
   const { data: services = [] } = useServices();
+
+  const serviceTypeIcons: Record<string, React.ElementType> = {
+    software_development: Code2,
+    web_development: Code2,
+    mobile_apps: Smartphone,
+    data_analytics: Database,
+    cloud_solutions: Cloud,
+    ai_ml: Brain,
+    digital_transformation: Workflow,
+    enterprise_solutions: Building2,
+    security: Shield,
+    infrastructure: Server,
+    analytics: BarChart3,
+    default: Zap,
+  };
+
+  const getServiceIcon = (type?: string): React.ElementType => {
+    if (!type) return Zap;
+    const key = type.toLowerCase().replace(/[^a-z_]/g, '_');
+    return serviceTypeIcons[key] ?? serviceTypeIcons['default'];
+  };
 
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
@@ -165,24 +186,27 @@ export default function Navbar() {
                     layout="list"
                   >
                     <ul className="grid grid-cols-2 gap-6">
-                      {services.slice(0, 6).map((service, idx) => (
-                        <motion.div
-                          key={service.id}
-                          initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <Link href="/services" className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-                            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                              <Zap className="w-6 h-6" />
-                            </div>
-                            <div>
-                              <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{service.title || (service as any).titleEn}</div>
-                              <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{service.description || (service as any).descriptionEn}</div>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
+                      {services.slice(0, 6).map((service, idx) => {
+                        const ServiceIcon = getServiceIcon(service.type);
+                        return (
+                          <motion.div
+                            key={service.id}
+                            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                          >
+                            <Link href={`/services/${service.id}`} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+                              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
+                                <ServiceIcon className="w-6 h-6" />
+                              </div>
+                              <div>
+                                <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{service.title}</div>
+                                <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{service.description}</div>
+                              </div>
+                            </Link>
+                          </motion.div>
+                        );
+                      })}
                     </ul>
                   </MegaMenuSection>
                 </NavigationMenuContent>

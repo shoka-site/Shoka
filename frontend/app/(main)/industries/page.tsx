@@ -6,8 +6,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, Sparkles, ChevronDown, ArrowLeft } from "lucide-react";
 import { useIndustries } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function Industries() {
     const { t, i18n } = useTranslation();
@@ -18,7 +20,13 @@ export default function Industries() {
     const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+    // Wait for data to be ready before showing the page
+    const isReady = useDataReady(isLoading);
 
+    // Show full-screen loading while data is being fetched
+    if (!isReady) {
+        return <InitialLoader />;
+    }
 
     return (
         <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">

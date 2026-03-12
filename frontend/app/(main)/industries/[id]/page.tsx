@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useIndustry } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import Section from "@/components/layout/Section";
 import Link from "next/link";
 import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2, TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone, ArrowRight } from "lucide-react";
@@ -9,6 +10,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 const iconMap: Record<string, any> = {
     TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone
@@ -26,25 +28,48 @@ export default function IndustryDetails() {
     const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
     const opacity = useTransform(scrollY, [0, 600], [1, 0]);
 
+    // Wait for data to be ready before showing the page
+    const isReady = useDataReady(isLoading);
 
+    // Show full-screen loading while data is being fetched
+    if (!isReady) {
+        return <InitialLoader />;
+    }
 
+    // Only show the 404 UI after loading completes and industry is truly not found
     if (!industry) {
         return (
-            <div className="pt-32 pb-24 min-h-[80vh] flex flex-col items-center justify-center bg-background text-center px-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary),0.05)_0%,transparent_100%)] pointer-events-none" />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="relative z-10"
-                >
-                    <h1 className="text-6xl md:text-8xl font-display font-black mb-6 text-foreground/20">404</h1>
-                    <h2 className="text-3xl font-display font-bold mb-4">{t("home.industries.not_found", "Industry not found")}</h2>
-                    <p className="text-muted-foreground mb-10 max-w-md mx-auto">{t("home.industries.not_found_desc", "The industry you are looking for does not exist or has been removed.")}</p>
-                    <Link href="/industries" className="group relative flex items-center gap-4 px-8 py-4 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors overflow-hidden">
-                        <ArrowLeft className={`w-5 h-5 transition-transform group-hover:-translate-x-1 ${isRtl ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-                        <span className="relative z-10">{t("home.industries.back_to_industries", "Back to Industries")}</span>
-                    </Link>
-                </motion.div>
+            <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black overflow-hidden relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                <div className="container relative z-10 mx-auto px-6 max-w-2xl text-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2, duration: 0.8 }}
+                            className="w-24 h-24 mx-auto mb-8 bg-black/50 border border-primary/30 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(194,164,92,0.15)] relative backdrop-blur-3xl"
+                        >
+                            <motion.div className="absolute inset-2 border border-dashed border-primary/50 rounded-full" animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
+                            <Tag className="w-10 h-10 text-primary relative z-10" />
+                        </motion.div>
+                        <h1 className="text-7xl md:text-9xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 tracking-tighter mb-6">404</h1>
+                        <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-6">{t("home.industries.not_found", "Industry not found")}</h2>
+                        <p className="text-white/50 text-base md:text-xl max-w-md mx-auto mb-12 font-light leading-relaxed">{t("home.industries.not_found_desc", "The industry you are looking for does not exist or has been removed.")}</p>
+                        <Link href="/industries">
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <button className="bg-primary text-black hover:bg-white font-black tracking-widest uppercase transition-all shadow-xl flex gap-3 items-center rounded-full h-14 px-10 mx-auto">
+                                    <ArrowLeft className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
+                                    {t("home.industries.back_to_industries", "Back to Industries")}
+                                </button>
+                            </motion.div>
+                        </Link>
+                    </motion.div>
+                </div>
             </div>
         );
     }

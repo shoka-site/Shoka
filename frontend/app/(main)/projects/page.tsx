@@ -8,7 +8,9 @@ import { ArrowRight, History, Zap, Rocket, Sparkles, ChevronDown, ArrowLeft } fr
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useProjects } from "@/hooks/use-content";
+import { useDataReady } from "@/hooks/useDataReady";
 import { Button } from "@/components/ui/button";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function Projects() {
     const { t, i18n } = useTranslation();
@@ -19,13 +21,19 @@ export default function Projects() {
     const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
+    // Wait for data to be ready before showing the page
+    const isReady = useDataReady(isLoading);
+
+    // Show full-screen loading while data is being fetched
+    if (!isReady) {
+        return <InitialLoader />;
+    }
+
     const categories = [
         { key: "past", label: t("portfolio.projects.categories.made"), icon: History, color: "text-emerald-500", badge: t("portfolio.projects.status.made") },
         { key: "current", label: t("portfolio.projects.categories.making"), icon: Zap, color: "text-amber-500", badge: t("portfolio.projects.status.making") },
         { key: "future", label: t("portfolio.projects.categories.will_make"), icon: Rocket, color: "text-sky-500", badge: t("portfolio.projects.status.will_make") },
     ];
-
-
 
     return (
         <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">

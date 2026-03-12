@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useService } from "@/hooks/use-content";
 import { Badge } from "@/components/ui/badge";
 import { notFound } from "next/navigation";
+import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function ServiceDetail({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
@@ -22,6 +23,12 @@ export default function ServiceDetail({ params }: { params: Promise<{ id: string
 
 
 
+  // Show full-screen loading while data is being fetched
+  if (isLoading) {
+    return <InitialLoader />;
+  }
+
+  // Only trigger not-found once loading is complete with no result
   if (error || !service) {
     return notFound();
   }
