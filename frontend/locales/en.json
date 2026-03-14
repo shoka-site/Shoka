@@ -1,794 +1,440 @@
 {
-    "navbar": {
-        "brand": "SHOKA",
-        "services": "Services",
-        "portfolio": "Portfolio",
-        "about": "About",
-        "contact": "Contact",
-        "language": "Language",
-        "english": "English",
-        "arabic": "Arabic",
-        "book_consultation": "Book Consultation",
-        "recent_work": "Use Cases",
-        "packages": "Packages",
-        "projects": "Projects",
-        "industries": "Industries",
-        "recent_work_desc": "Explore how we help organizations transform their digital landscape.",
-        "menu_services": {
-            "ai": {
-                "title": "AI & Machine Learning",
-                "desc": "Custom algorithms that optimize operations and predict market trends."
-            },
-            "data": {
-                "title": "Data Systems",
-                "desc": "Scalable architecture for processing and securing mission-critical data."
-            },
-            "cloud": {
-                "title": "Cloud Infrastructure",
-                "desc": "Resilient, high-availability deployments on AWS, Azure, and GCP."
-            },
-            "security": {
-                "title": "Enterprise Security",
-                "desc": "Military-grade protection for your most valuable digital assets."
-            },
-            "fullstack": {
-                "title": "Full Stack",
-                "desc": "End-to-end development for robust web and mobile applications."
-            },
-            "backend": {
-                "title": "Backend Systems",
-                "desc": "Scalable and secure backend infrastructure for your digital products."
-            }
-        },
-        "menu": {
-            "services": {
-                "data": {
-                    "title": "Data Services",
-                    "desc": "Unlock the power of your data with our comprehensive analytics and engineering solutions.",
-                    "analyst": "Data Analyst",
-                    "science": "Data Science",
-                    "entries": "Data Entries",
-                    "engineering": "Data Engineering"
-                },
-                "ai": {
-                    "title": "AI Solutions",
-                    "desc": "Leverage cutting-edge artificial intelligence to automate and innovate.",
-                    "chatbot": "Chat Bot",
-                    "cv": "Computer Vision",
-                    "ml": "ML Models",
-                    "agentic": "Agentic AI"
-                },
-                "fullstack": {
-                    "title": "Full Stack",
-                    "desc": "End-to-end development for robust web and mobile applications.",
-                    "web": "Web Development",
-                    "app": "App Development",
-                    "platforms": "Platforms"
-                },
-                "backend": {
-                    "title": "Backend",
-                    "desc": "Scalable and secure backend infrastructure for your digital products.",
-                    "systems": "Systems",
-                    "iot": "IoT",
-                    "robotics": "Robotics"
-                },
-                "cloud": {
-                    "title": "Cloud",
-                    "desc": "Modern cloud solutions for storage, management, and scalability.",
-                    "dbm": "DBM",
-                    "storage": "Storage",
-                    "control": "Data Control"
-                }
-            },
-            "industries": {
-                "oil_gas": {
-                    "title": "Oil & Gas",
-                    "desc": "Intelligent solutions for the entire energy value chain.",
-                    "upstream": "Upstream",
-                    "downstream": "Downstream",
-                    "refining": "Refining"
-                },
-                "government": {
-                    "title": "Government",
-                    "desc": "Digital transformation for public sector efficiency.",
-                    "egov": "e-Government",
-                    "smart_city": "Smart City",
-                    "public_safety": "Public Safety"
-                },
-                "finance": {
-                    "title": "Finance",
-                    "desc": "Secure, scalable Fintech and Banking solutions.",
-                    "banking": "Digital Banking",
-                    "fintech": "FinTech",
-                    "insurance": "InsurTech"
-                },
-                "healthcare": {
-                    "title": "Healthcare",
-                    "desc": "AI-driven diagnostics and patient care systems.",
-                    "telehealth": "Telehealth",
-                    "hms": "HMS",
-                    "diagnostics": "AI Diagnostics"
-                },
-                "retail": {
-                    "title": "Retail",
-                    "desc": "Modern e-commerce and retail logic.",
-                    "ecommerce": "eCommerce",
-                    "logistics": "Logistics",
-                    "fashion": "Fashion"
-                },
-                "travel": {
-                    "title": "Travel",
-                    "desc": "Smart booking and hospitality platforms.",
-                    "aviation": "Aviation",
-                    "hospitality": "Hospitality",
-                    "agencies": "Travel Agencies"
-                },
-                "media": {
-                    "title": "Media",
-                    "desc": "High-performance digital publishing and streaming.",
-                    "video": "Video Business",
-                    "betting": "Sports Betting",
-                    "publishing": "Digital Publishing"
-                },
-                "education": {
-                    "title": "Education",
-                    "desc": "Empowering learning through advanced EdTech.",
-                    "platforms": "EdTech Platforms",
-                    "ai_edtech": "AI EdTech",
-                    "lms": "LMS"
-                }
-            },
-            "solutions": {
-                "efficiency": {
-                    "title": "Operational Efficiency",
-                    "desc": "Streamline workflows and reduce overhead."
-                },
-                "growth": {
-                    "title": "Revenue Growth",
-                    "desc": "Unlock new streams with digital channels."
-                },
-                "experience": {
-                    "title": "Customer Experience",
-                    "desc": "Engage users with personalized journeys."
-                },
-                "risk": {
-                    "title": "Risk Management",
-                    "desc": "Secure your business with advanced protection."
-                }
-            },
-            "about": {
-                "company_title": "Company",
-                "connect_title": "Connect",
-                "story": "Our Story",
-                "story_desc": "From inception to innovation leader.",
-                "team": "Team",
-                "team_desc": "Meet the experts behind the tech.",
-                "careers": "Careers",
-                "careers_desc": "Join us in building the future.",
-                "contact": "Contact",
-                "contact_desc": "Get in touch with our support.",
-                "news": "News",
-                "news_desc": "Latest updates and insights."
-            }
-        }
-    },
-    "welcome": {
-        "badge": "Gateway to the Future",
-        "cradle": "CRADLE OF",
-        "innovation": "INNOVATION",
-        "subtitle": "Where the wisdom of the ancients meets the technology of tomorrow.",
-        "subtitle_2": "Build your legacy with Shoka.",
-        "enter": "Enter Platform",
-        "system_ready": "SYS.READY",
-        "connected": "CONNECTED",
-        "est": "EST. 2026 // BABYLON_PRIME",
-        "nav": {
-            "expertise": "Expertise",
-            "portfolio": "Portfolio",
-            "discuss": "Discuss Project"
-        }
-    },
-    "hero": {
-        "updates": {
-            "news": "Latest News",
-            "achievement": "Achievement",
-            "event": "Upcoming Event",
-            "new": "What's New",
-            "cta_talk": "Let's Talk",
-            "cta_expertise": "Our Expertise",
-            "scroll": "Scroll",
-            "fallback": {
-                "f1_title": "Design Excellence",
-                "f1_summary": "Pioneering the next generation of intelligent digital systems.",
-                "f2_title": "Platform Milestones",
-                "f2_summary": "Celebrating major achievements in infrastructure and cloud engineering.",
-                "f3_title": "Community Events",
-                "f3_summary": "Join us at our upcoming tech summits and collaborative workshops.",
-                "f4_title": "Latest Innovations",
-                "f4_summary": "Exploring new boundaries in AI and high-frequency data processing."
-            }
-        },
-        "static": {
-            "badge": "Engineering Excellence",
-            "title_line1": "Partners for",
-            "title_line2": "Progress.",
-            "description": "We design, build, and support the unique software that powers your business. Combining deep industry expertise with world-class engineering to deliver sustainable innovation.",
-            "cta_primary": "Let's Talk",
-            "cta_secondary": "Our Expertise"
-        },
-        "slides": {
-            "1": {
-                "badge": "Intelligent Digital Systems",
-                "title": "Designing Intelligent Digital Systems",
-                "description": "AI, Software, Data & Cloud Solutions for Modern Organizations"
-            },
-            "2": {
-                "badge": "Infrastructure & Cloud",
-                "title_prefix": "Building",
-                "title_highlight": "Resilient",
-                "title_suffix": "Systems for Growth.",
-                "description": "Scalable infrastructure designed to adapt and evolve with your business needs."
-            },
-            "3": {
-                "badge": "Future-Proof Architecture",
-                "title_prefix": "Pioneering",
-                "title_highlight": "AI Innovation",
-                "title_suffix": "globally.",
-                "description": "Empowering enterprises with cutting-edge artificial intelligence and machine learning."
-            }
-        }
-    },
-    "stats": {
-        "experience": {
-            "number": "15+",
-            "label": "Years Combined Experience"
-        },
-        "projects": {
-            "number": "100+",
-            "label": "Projects Delivered"
-        },
-        "clients": {
-            "number": "50+",
-            "label": "Enterprise Clients"
-        },
-        "satisfaction": {
-            "number": "99.8%",
-            "label": "Client Satisfaction"
-        }
-    },
-    "value_proposition": "We help businesses build, automate, and scale through intelligent technology solutions.",
+  "navbar": {
+    "brand": "SHOKA",
+    "services": "Services",
+    "about": "About",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
     "book_consultation": "Book Consultation",
-    "explore_services": "Explore Services",
-    "core_capabilities": "Core Capabilities",
-    "view_all_services": "View All Services",
-    "view_all_projects": "View All Projects",
-    "view_service": "View Service",
-    "view_project": "View Project",
-    "home": {
-        "services": {
-            "badge": "Expertise",
-            "title": "Our Expertise",
-            "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges.",
-            "ai": {
-                "title": "AI Solutions",
-                "desc": "Intelligent automation, AI integration, and smart systems."
-            },
-            "fullstack": {
-                "title": "Full Stack Development",
-                "desc": "Scalable, high-performance web & system development."
-            },
-            "data": {
-                "title": "Data & Analytics",
-                "desc": "Transforming data into strategic decisions."
-            },
-            "cloud": {
-                "title": "Cloud Services",
-                "desc": "Secure, scalable cloud infrastructure & deployment."
-            },
-            "learn_more": "Learn More"
-        },
-        "trust": {
-            "badge": "Recognition",
-            "title": "Trusted by forward-thinking teams",
-            "description": "We work with organizations across the globe to build their digital future.",
-            "clients": "Enterprise Clients"
-        },
-        "projects": {
-            "badge": "Portfolio",
-            "title": "Featured Projects",
-            "description": "Real-world challenges solved with intelligent engineering."
-        },
-        "why_us": {
-            "badge": "Why Us",
-            "title": "Built for Reliability.",
-            "description": "We combine human ingenuity with technical precision to deliver systems that don't just work—they excel.",
-            "points": {
-                "business_first": {
-                    "title": "Business-First Solutions",
-                    "desc": "Technology serves your goals, not the other way around."
-                },
-                "rapid_prototyping": {
-                    "title": "Rapid Prototyping",
-                    "desc": "Fast iteration cycles to validate ideas before full-scale development."
-                },
-                "modern_stack": {
-                    "title": "Modern Technology Stack",
-                    "desc": "Latest tools and frameworks that ensure longevity and performance."
-                },
-                "ai_driven": {
-                    "title": "AI-Driven Mindset",
-                    "desc": "Intelligence embedded in every solution we architect."
-                },
-                "engineering_precision": {
-                    "title": "Engineering Precision",
-                    "desc": "Meticulous attention to detail in every line of code."
-                }
-            }
-        },
-        "philosophy": {
-            "badge": "Our Values",
-            "title": "Core Philosophy",
-            "description": "The principles that guide every decision and every line of code we write."
-        },
-        "process": {
-            "badge": "Methodology",
-            "title": "How We Work",
-            "description": "Our proven iterative approach ensures transparency, speed, and exceptional quality.",
-            "steps": {
-                "discover": {
-                    "title": "Discover",
-                    "desc": "Understanding your business, challenges, and objectives."
-                },
-                "design": {
-                    "title": "Design",
-                    "desc": "Architecting solutions that align with your vision."
-                },
-                "build": {
-                    "title": "Build",
-                    "desc": "Engineering robust, scalable systems with precision."
-                },
-                "launch": {
-                    "title": "Launch",
-                    "desc": "Deploying and validating in production environments."
-                },
-                "scale": {
-                    "title": "Scale",
-                    "desc": "Continuous optimization and growth enablement."
-                }
-            }
-        },
-        "insights": {
-            "title": "Insights & Perspectives",
-            "subtitle": "Thought Leadership",
-            "description": "Stay ahead of the curve with our latest research and engineering breakthroughs."
-        },
-        "industries": {
-            "title": "Industries",
-            "description": "We provide specialized digital solutions tailored to the unique challenges and opportunities of various sectors.",
-            "learn_more": "Learn more",
-            "not_found": "Industry not found",
-            "not_found_desc": "The industry you are looking for does not exist or has been removed.",
-            "back_to_industries": "Back to Industries",
-            "industry": "Industry",
-            "overview": "Industry Overview",
-            "details": "Industry Details"
-        },
-        "solutions": {
-            "title": "Solutions",
-            "description": "Strategic digital solutions designed to drive business outcomes and accelerate transformation.",
-            "strategic_impact": "Strategic Impact",
-            "cta": {
-                "title": "Ready for transformation?",
-                "description": "Unlock new dimensions of growth with our strategic technology solutions.",
-                "button": "Partner for growth"
-            }
-        },
-        "results": {
-            "badge": "Our Impact",
-            "title": "Results Delivered.",
-            "description": "We measure our success by the tangible outcomes we deliver for our clients globally.",
-            "items": {
-                "market_time": "Time to Market",
-                "market_time_sub": "Average reduction in deployment cycles",
-                "cost_reduction": "Cost Optimization",
-                "cost_reduction_sub": "Infrastructure cost savings realized",
-                "uptime": "System Reliability",
-                "uptime_sub": "Guaranteed availability for critical systems",
-                "satisfaction": "Client Satisfaction",
-                "satisfaction_sub": "Based on post-delivery satisfaction surveys",
-                "revenue": "Revenue Growth",
-                "revenue_sub": "Average increase in digital channel revenue",
-                "onboarding": "Faster Onboarding",
-                "onboarding_sub": "Reduction in new user setup time",
-                "delivered": "Projects Delivered",
-                "delivered_sub": "Successful enterprise implementations",
-                "sla": "SLA Compliance",
-                "sla_sub": "Critical response time and resolution"
-            },
-            "footnote": "* Statistics based on aggregate client data from FY 2024-2025 across global implementations."
-        },
-        "cta": {
-            "badge": "Start Today",
-            "title": "Ready to Innovate?",
-            "description": "Let's discuss how we can help you build your digital future — free first consultation, no commitment required.",
-            "primary": "Contact Us",
-            "secondary": "Explore Services"
-        },
-        "packages": {
-            "no_description": "A tailored bundle of services designed to help you succeed."
-        }
+    "recent_work": "Use Cases",
+    "packages": "Packages",
+    "projects": "Projects",
+    "industries": "Industries",
+    "menu": {
+      "services": {
+        "description": "Custom software architecture, full-stack development, and performance optimization."
+      },
+      "packages": {
+        "description": "Pre-built solution bundles designed around specific business needs — each solves a real problem.",
+        "view_all": "View all packages ({{count}})"
+      },
+      "about": {
+        "company_title": "Company",
+        "connect_title": "Connect",
+        "story": "Our Story",
+        "team": "Team",
+        "careers": "Careers",
+        "contact": "Contact",
+        "news": "News"
+      }
+    }
+  },
+  "welcome": {
+    "subtitle_2": "Build your legacy with Shoka.",
+    "enter": "Enter Platform",
+    "system_ready": "SYS.READY"
+  },
+  "hero": {
+    "updates": {
+      "news": "Latest News",
+      "achievement": "Achievement",
+      "event": "Upcoming Event",
+      "new": "What's New",
+      "cta_talk": "Let's Talk",
+      "cta_expertise": "Our Expertise",
+      "scroll": "Scroll"
+    }
+  },
+  "stats": {
+    "experience": {
+      "number": "4+",
+      "label": "Years Combined Experience"
     },
-    "packages": {
-        "title": "Our Packages",
-        "description": "Comprehensive solutions tailored to meet your business needs.",
-        "empty": "No packages found.",
-        "back": "Back to Packages",
-        "included_services": "Included Services",
-        "cta": {
-            "title": "Ready to Get Started?",
-            "description": "Contact us to learn more about our packages and how we can help your business.",
-            "button": "Get in Touch"
-        },
-        "cta_sidebar": {
-            "title": "Interested in this Package?",
-            "desc": "Contact us to start your journey and supercharge your business."
-        }
+    "projects": {
+      "number": "20+",
+      "label": "Projects Delivered"
+    },
+    "clients": {
+      "number": "5+",
+      "label": "Enterprise Clients"
+    },
+    "satisfaction": {
+      "number": "99.8%",
+      "label": "Client Satisfaction"
+    }
+  },
+  "book_consultation": "Book Consultation",
+  "view_all_services": "View All Services",
+  "view_all_projects": "View All Projects",
+  "view_service": "View Service",
+  "view_project": "View Project",
+  "home": {
+    "industries": {
+      "badge": "Industries",
+      "title": "Industries We Serve",
+      "description": "Tailored digital solutions for every sector. Explore how we've helped businesses across industries transform their digital landscape.",
+      "overview": "Overview",
+      "details": "Details",
+      "learn_more": "Learn More",
+      "industry": "Industry",
+      "not_found": "Industry not found",
+      "not_found_desc": "The industry you are looking for does not exist or has been removed.",
+      "back_to_industries": "Back to Industries"
+    },
+    "solutions": {
+      "title": "Strategic Solutions",
+      "description": "Explore how we solve specialized problems in this industry.",
+      "strategic_impact": "Strategic Impact"
     },
     "services": {
-        "title": "Our Services",
-        "description": "We deliver end-to-end technology solutions tailored to your organization's unique challenges. From architectural strategy to pixel-perfect execution.",
-        "list": {
-            "web": {
-                "title": "Web & Digital Platforms",
-                "desc": "High-performance web applications built on Next.js and modern frameworks. We prioritize speed, accessibility, and aesthetic excellence."
-            },
-            "mobile": {
-                "title": "Mobile Solutions",
-                "desc": "Native and cross-platform mobile apps that provide seamless user experiences across iOS and Android ecosystems."
-            },
-            "backend": {
-                "title": "Backend Architecture",
-                "desc": "Robust server-side systems designed to handle high concurrency and complex data processing requirements."
-            },
-            "security": {
-                "title": "Cybersecurity Audits",
-                "desc": "Comprehensive security assessments to identify vulnerabilities and strengthen your digital infrastructure against threats."
-            },
-            "data": {
-                "title": "Data Analytics",
-                "desc": "Transform raw data into actionable insights through custom dashboards and predictive modeling."
-            },
-            "api": {
-                "title": "API Integration",
-                "desc": "Seamlessly connect your systems with third-party services to automate workflows and extend functionality."
-            }
-        },
-        "learn_more": "Learn More",
-        "categories": {
-            "software_development": "Software Development",
-            "data_analytics": "Data & Analytics",
-            "cloud_solutions": "Cloud Solutions",
-            "ai_ml": "AI & Machine Learning",
-            "digital_transformation": "Digital Transformation",
-            "enterprise_solutions": "Enterprise Solutions"
-        },
-        "items": {
-            "web_development": "Web Development",
-            "mobile_apps": "Mobile Apps",
-            "custom_software": "Custom Software",
-            "api_development": "API Development",
-            "business_intelligence": "Business Intelligence",
-            "data_visualization": "Data Visualization",
-            "big_data": "Big Data",
-            "predictive_analytics": "Predictive Analytics",
-            "cloud_migration": "Cloud Migration",
-            "cloud_infrastructure": "Cloud Infrastructure",
-            "devops_services": "DevOps Services",
-            "cloud_security": "Cloud Security",
-            "machine_learning": "Machine Learning",
-            "nlp_solutions": "NLP Solutions",
-            "computer_vision": "Computer Vision",
-            "ai_strategy": "AI Strategy",
-            "process_automation": "Process Automation",
-            "digital_strategy": "Digital Strategy",
-            "change_management": "Change Management",
-            "digital_consulting": "Digital Consulting",
-            "erp_systems": "ERP Systems",
-            "crm_solutions": "CRM Solutions",
-            "enterprise_integration": "Enterprise Integration",
-            "security_solutions": "Security Solutions"
-        },
-        "cta": {
-            "title": "Ready to innovate?",
-            "description": "Let's discuss how we can help you build your digital future.",
-            "button": "Get in Touch"
-        },
-        "back": "Back to Services",
-        "overview": "Service Overview",
-        "details": "Service Details",
-        "type": "Type",
-        "status_label": "Status",
-        "status_active": "Active",
-        "status_inactive": "Inactive",
-        "inquire": "Inquire About Service",
-        "specialized": "Specialized Service"
+      "badge": "What We Do",
+      "title": "Our Expertise",
+      "description": "Comprehensive digital solutions tailored to transform your business and drive growth.",
+      "learn_more": "Learn More"
     },
-    "portfolio": {
-        "subtitle": "Our Work",
-        "title": "Case Studies",
-        "description": "Real-world challenges solved with intelligent engineering. Explore how we've helped organizations transform their digital landscape.",
-        "view_case_study": "View Case Study",
-        "projects": {
-            "archive": {
-                "title": "National Data Archive",
-                "category": "Government / Data",
-                "desc": "Digitizing 50 years of historical records into a secure, searchable cloud database powered by AI-driven optical character recognition."
-            },
-            "banking": {
-                "title": "FinTech Core Banking",
-                "category": "Finance",
-                "desc": "A next-generation core banking system built for high-frequency trading and real-time transaction processing."
-            },
-            "smart_city": {
-                "title": "Smart City Grid",
-                "category": "Infrastructure",
-                "desc": "IoT network managing energy distribution across 3 major districts, reducing waste by 24%."
-            },
-            "edutech": {
-                "title": "EduTech Learning Platform",
-                "category": "Education",
-                "desc": "Adaptive learning system serving 50,000+ students with personalized AI-driven curriculum paths."
-            },
-            "title": "Projects",
-            "subtitle": "Our Execution Journey",
-            "description": "Explore our timeline of innovation, from completed milestones to upcoming breakthroughs.",
-            "categories": {
-                "made": "Projects We Have Made",
-                "making": "Projects We Are Making",
-                "will_make": "Projects We Will Make"
-            },
-            "status": {
-                "made": "Completed",
-                "making": "In Progress",
-                "will_make": "Upcoming"
-            },
-            "timeline": "Timeline",
-            "back": "Project Library",
-            "not_found": "Project not found",
-            "not_found_desc": "The project you are looking for does not exist or has been removed.",
-            "overview": "Project Overview",
-            "details": "Details",
-            "category": "Category",
-            "status_label": "Status",
-            "deliverance": "Deliverance",
-            "inquire": "Initiate Inquiry",
-            "cta": {
-                "title": "Start your project?",
-                "description": "Let's architect the next milestone in your digital history.",
-                "button": "Discuss Project"
-            }
+    "why_us": {
+      "badge": "Why Choose Us",
+      "title": "Built for Reliability.",
+      "description": "We combine technical excellence with business acumen to deliver solutions that stand the test of time.",
+      "points": {
+        "business_first": {
+          "title": "Business-First Approach",
+          "desc": "Every line of code aligns with your business objectives and ROI."
+        },
+        "rapid_prototyping": {
+          "title": "Rapid Prototyping",
+          "desc": "We validate ideas fast with interactive prototypes before full development."
+        },
+        "modern_stack": {
+          "title": "Modern Tech Stack",
+          "desc": "Built on cutting-edge technologies that scale with your ambitions."
+        },
+        "ai_driven": {
+          "title": "AI-Driven Solutions",
+          "desc": "Intelligent automation and analytics that evolve with your data."
+        },
+        "engineering_precision": {
+          "title": "Engineering Precision",
+          "desc": "Robust architecture with zero-compromise quality standards."
         }
+      }
     },
-    "about": {
-        "subtitle": "Who We Are",
-        "title": "Our Heritage & Future",
-        "description": "Shoka is a global technology consultancy rooted in the rich history of innovation. We believe that true intelligence comes from understanding where we come from while looking boldly ahead.",
-        "heritage": "Heritage",
-        "legacy_title": "A Legacy of Innovation",
-        "legacy_p1": "Founded in Turkey by two Iraqi engineers, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
-        "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
-        "stats": {
-            "clients": "Enterprise Clients",
-            "countries": "Countries Served",
-            "delivery": "Project Delivery",
-            "support": "Support & Monitoring"
+    "philosophy": {
+      "badge": "Our Philosophy",
+      "title": "Core Philosophy",
+      "description": "Our values guide every decision we make and every solution we deliver."
+    },
+    "process": {
+      "badge": "Our Process",
+      "title": "How We Work",
+      "steps": {
+        "discover": {
+          "title": "Discover",
+          "desc": "Understanding your business, challenges, and objectives."
         },
-        "values": {
-            "precision": "Precision",
-            "precision_desc": "We measure twice and cut once. Every line of code serves a purpose.",
-            "standard": "Global Standard",
-            "standard_desc": "International best practices applied to local challenges.",
-            "partnership": "Partnership",
-            "partnership_desc": "We are not vendors; we are your strategic technology partners.",
-            "excellence": "Excellence",
-            "excellence_desc": "Mediocrity has no place here. We aim for the exceptional."
+        "design": {
+          "title": "Design",
+          "desc": "Architecting solutions that align with your vision."
         },
-        "team": {
-            "badge": "Our Team",
-            "title": "Meet Our Experts",
-            "profile": "Profile",
-            "portfolio": "Portfolio",
-            "linkedin": "LinkedIn"
+        "build": {
+          "title": "Build",
+          "desc": "Engineering robust, scalable systems with precision."
         },
-        "events": {
-            "badge": "Our Events",
-            "title": "Connecting the Tech Hub",
-            "view_all": "View All Events"
+        "launch": {
+          "title": "Launch",
+          "desc": "Deploying and validating in production environments."
         },
-        "awards": {
-            "badge": "Recognition",
-            "title": "Excellence Acknowledged"
-        },
-        "history": {
-            "badge": "Our Story",
-            "title": "Journey Through Time",
-            "milestones": {
-                "2024": {
-                    "title": "Planning Shoka",
-                    "desc": "We started planning to shoka from 2024 but because of some struggles we get late."
-                },
-                "2025": {
-                    "title": "Market Study",
-                    "desc": "We studied the market at 2025."
-                },
-                "2026": {
-                    "title": "Deployment",
-                    "desc": "We deployed it at 2026 and it will be standing for so many years."
-                }
-            }
-        },
-        "cta": {
-            "title": "Grow with us.",
-            "description": "We're more than a platform. We are your partner in the long-term digital evolution of Iraq.",
-            "contact": "Contact Us",
-            "news": "Latest News"
+        "scale": {
+          "title": "Scale",
+          "desc": "Continuous optimization and growth enablement."
         }
+      }
     },
-    "news": {
-        "subtitle": "News & Events",
-        "title": "Our Achievements",
-        "description": "Stay up to date with our latest achievements, articles, and upcoming events as we continue to innovate the digital future.",
-        "no_articles_title": "No updates yet",
-        "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Shoka.",
-        "cta": {
-            "title": "Stay Connected",
-            "description": "Get in touch to learn more about our innovations and how we can elevate your systems.",
-            "button": "Contact Us"
-        }
+    "results": {
+      "badge": "Our Impact",
+      "title": "Results Delivered.",
+      "description": "Measurable outcomes that drive real business value and growth.",
+      "footnote": "* Statistics based on aggregate client data from FY 2024-2025 across global implementations.",
+      "items": {
+        "market_time": "Faster Time to Market",
+        "market_time_sub": "Launch products 3× faster with agile development",
+        "cost_reduction": "Cost Reduction",
+        "cost_reduction_sub": "Reduce operational costs by up to 62%",
+        "uptime": "System Uptime",
+        "uptime_sub": "99.9% guaranteed uptime for critical systems",
+        "satisfaction": "Client Satisfaction",
+        "satisfaction_sub": "Average rating of 4.9 out of 5 stars",
+        "revenue": "Revenue Growth",
+        "revenue_sub": "Average revenue increase of 200%+",
+        "onboarding": "Faster Onboarding",
+        "onboarding_sub": "Reduce user onboarding time by 40%",
+        "delivered": "Projects Delivered",
+        "delivered_sub": "500+ successful projects delivered",
+        "sla": "Support Response",
+        "sla_sub": "Under 24-hour SLA guaranteed"
+      }
     },
-    "contact": {
-        "subtitle": "Get in touch",
-        "title": "Let's discuss your next project.",
-        "description": "Whether you have a specific project in mind or just want to explore how Shoka can help your business grow, we're here to listen.",
-        "email_us": "Email Us",
-        "call_us": "Call Us",
-        "visit_us": "Visit Us",
-        "mon_fri": "Mon-Fri from 9am to 6pm",
-        "address": {
-            "line1": "Kizalie",
-            "line2": "Ankara | Turkey"
-        },
-        "form": {
-            "title": "Send a Message",
-            "name": "Full Name",
-            "email": "Email",
-            "company": "Company (Optional)",
-            "message": "How can we help?",
-            "submit": "Send Message",
-            "success_title": "Message Sent",
-            "success_desc": "We've received your inquiry and will respond within 24 hours.",
-            "error_title": "Error",
-            "error_desc": "Something went wrong. Please try again later.",
-            "validation": {
-                "name": "Name is required",
-                "email": "Invalid email address",
-                "message": "Please provide more detail about your inquiry"
-            },
-            "placeholders": {
-                "name": "John Doe",
-                "email": "john@company.com",
-                "company": "Acme Inc."
-            }
-        }
+    "cta": {
+      "badge": "Get Started",
+      "title": "Ready to Innovate?",
+      "description": "Let's discuss how we can help transform your business with cutting-edge digital solutions.",
+      "primary": "Contact Us",
+      "secondary": "Explore Services"
     },
-    "footer": {
-        "sitemap": "Sitemap",
-        "connect": "Connect",
-        "social": {
-            "linkedin": "LinkedIn",
-            "twitter": "Twitter",
-            "instagram": "Instagram"
-        },
-        "rights": "All rights reserved.",
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Service",
-        "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
-        "copyright": "Shoka Systems.",
-        "links": {
-            "home": "Home",
-            "services": "Services",
-            "portfolio": "Portfolio",
-            "contact": "Contact"
-        }
+    "packages": {
+      "badge": "What We Offer",
+      "title": "Our Packages",
+      "description": "Tailored service bundles designed to match your business needs and scale with your ambitions.",
+      "no_description": "A tailored bundle of services designed to help you succeed.",
+      "learn_more": "Learn more",
+      "view_all": "View All Packages"
     },
-    "not_found": {
-        "title": "404 Page Not Found",
-        "desc": "Did you forget to add the page to the router?"
+    "projects": {
+      "badge": "Our Work",
+      "title": "Featured Projects",
+      "description": "Explore our portfolio of successful projects delivered across industries."
     },
-    "tags": {
-        "cloud_migration": "Cloud Migration",
-        "ai_ocr": "AI/OCR",
-        "security": "Security",
-        "blockchain": "Blockchain",
-        "nodejs": "Node.js",
-        "realtime": "Real-time",
-        "iot": "IoT",
-        "big_data": "Big Data",
-        "analytics": "Analytics",
-        "react": "React",
-        "ai": "AI",
-        "mobile_app": "Mobile App"
-    },
-    "admin": {
-        "login": {
-            "brand": "Shoka Admin",
-            "subtitle": "Sign in to manage content",
-            "username": "Username",
-            "username_placeholder": "Enter username",
-            "password": "Password",
-            "password_placeholder": "Enter password",
-            "signin": "Sign In",
-            "demo_title": "Demo Credentials:",
-            "error_invalid": "Invalid username or password"
-        }
-    },
-    "common": {
-        "loading": "Loading...",
-        "explore_all": "Explore All",
-        "explore": "Explore",
-        "scroll": "Scroll",
-        "discover": "Discover",
-        "explore_content": "Explore Content"
-    },
-    "industries": {
-        "categories": {
-            "healthcare": "Healthcare",
-            "education": "Education",
-            "finance": "Finance",
-            "retail": "Retail",
-            "manufacturing": "Manufacturing",
-            "real_estate": "Real Estate",
-            "travel": "Travel",
-            "automotive": "Automotive",
-            "food": "Food & Beverage",
-            "entertainment": "Entertainment"
-        },
-        "items": {
-            "hospital_management": "Hospital Management",
-            "telemedicine": "Telemedicine",
-            "health_analytics": "Health Analytics",
-            "e_learning": "E-Learning",
-            "lms": "LMS",
-            "ed_tech": "EdTech",
-            "fintech": "FinTech",
-            "banking": "Banking",
-            "blockchain": "Blockchain",
-            "ecommerce": "E-Commerce",
-            "pos_systems": "POS Systems",
-            "inventory": "Inventory Management",
-            "automation": "Factory Automation",
-            "iot": "Industrial IoT",
-            "supply_chain": "Supply Chain",
-            "property_management": "Property Management",
-            "smart_buildings": "Smart Buildings",
-            "marketplace": "Real Estate Marketplace",
-            "booking_systems": "Booking Systems",
-            "tourism_tech": "Tourism Tech",
-            "travel_analytics": "Travel Analytics",
-            "fleet_management": "Fleet Management",
-            "autonomous_vehicles": "Autonomous Vehicles",
-            "auto_dealerships": "Auto Dealerships",
-            "food_delivery": "Food Delivery",
-            "restaurant_apps": "Restaurant Apps",
-            "food_safety": "Food Safety",
-            "streaming": "Streaming Platforms",
-            "gaming": "Gaming Tech",
-            "social_media": "Social Media"
-        },
-        "cta": {
-            "title": "Build for your industry",
-            "description": "Localized expertise for global digital excellence.",
-            "button": "Partner with us"
-        }
+    "trust": {
+      "badge": "Client Stories",
+      "title": "Trusted by Industry Leaders",
+      "description": "Don't just take our word for it. Here's what our clients have to say about working with us."
     }
+  },
+  "packages": {
+    "title": "Our Packages",
+    "description": "Comprehensive solutions tailored to meet your business needs.",
+    "empty": "No packages found.",
+    "back": "Back to Packages",
+    "cta": {
+      "title": "Ready to Get Started?",
+      "description": "Contact us to learn more about our packages and how we can help your business.",
+      "button": "Get in Touch"
+    },
+    "cta_sidebar": {
+      "title": "Interested in this Package?",
+      "desc": "Contact us to start your journey and supercharge your business."
+    },
+    "order": "Package Number",
+    "added": "Added",
+    "other_packages": "Other Packages",
+    "other_packages_desc": "Explore more tailored solutions we offer.",
+    "view_all": "View All Packages"
+  },
+  "services": {
+    "title": "Our Services",
+    "description": "Explore our comprehensive expertise designed specifically to elevate your business.",
+    "empty": "No services found.",
+    "back": "Back to Services",
+    "not_found": "Service not found",
+    "not_found_desc": "The service you are looking for does not exist or has been removed.",
+    "order": "Service Number",
+    "added": "Added",
+    "view_all": "View All Services",
+    "other_services": "Other Services",
+    "other_services_desc": "Explore more services we offer.",
+    "cta": {
+      "title": "Looking for tailored solutions?",
+      "description": "Check out our pre-built packages or contact us for a custom approach.",
+      "button": "Get in Touch",
+      "contact": "Contact Us"
+    },
+    "cta_sidebar": {
+      "title": "Interested in this Service?",
+      "desc": "Contact us to start your journey and supercharge your business."
+    },
+    "overview": "Service Overview",
+    "details": "Service Details",
+    "type": "Type",
+    "status_label": "Status",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "inquire": "Inquire About Service"
+  },
+  "portfolio": {
+    "view_case_study": "View Project",
+    "projects": {
+      "title": "Projects",
+      "subtitle": "Our Work",
+      "description": "Explore our portfolio of successful projects delivered across industries.",
+      "categories": {
+        "made": "Completed Projects",
+        "making": "In Progress",
+        "will_make": "Upcoming"
+      },
+      "status": {
+        "made": "Completed",
+        "making": "In Progress",
+        "will_make": "Upcoming"
+      },
+      "timeline": "Scroll to Explore",
+      "back": "Project Library",
+      "not_found": "Project not found",
+      "not_found_desc": "The project you are looking for does not exist or has been removed.",
+      "overview": "Project Overview",
+      "details": "Details",
+      "category": "Category",
+      "status_label": "Status",
+      "deliverance": "Deliverance",
+      "inquire": "Initiate Inquiry",
+      "cta": {
+        "title": "Start your project?",
+        "description": "Let's discuss your project ideas and how we can bring them to life.",
+        "button": "Discuss Project"
+      }
+    }
+  },
+  "about": {
+    "title": "Our Heritage & Future",
+    "description": "We bridge the gap between ancient wisdom and modern technology, crafting digital solutions that stand the test of time.",
+    "heritage": "Scroll to explore",
+    "legacy_title": "A Legacy of Innovation",
+    "legacy_p1": "Founded in Turkey by two Iraqi engineers, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
+    "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
+    "stats": {
+      "clients": "Enterprise Clients",
+      "countries": "Countries Served",
+      "delivery": "Project Delivery",
+      "support": "Support & Monitoring"
+    },
+    "values": {
+      "precision": "Precision",
+      "precision_desc": "We measure twice and cut once. Every line of code serves a purpose.",
+      "standard": "Global Standard",
+      "standard_desc": "International best practices applied to local challenges.",
+      "partnership": "Partnership",
+      "partnership_desc": "We are not vendors; we are your strategic technology partners.",
+      "excellence": "Excellence",
+      "excellence_desc": "Mediocrity has no place here. We aim for the exceptional."
+    },
+    "team": {
+      "badge": "Our Team",
+      "title": "Meet Our Experts",
+      "profile": "Profile",
+      "portfolio": "Portfolio",
+      "linkedin": "LinkedIn"
+    },
+    "awards": {
+      "badge": "Recognition",
+      "title": "Excellence Acknowledged"
+    },
+    "history": {
+      "badge": "Our Journey",
+      "title": "Journey Through Time",
+      "milestones": {
+        "2024": {
+          "title": "Planning Shoka",
+          "desc": "We started planning to shoka from 2024 but because of some struggles we get late."
+        },
+        "2025": {
+          "title": "Market Study",
+          "desc": "We studied the market at 2025."
+        },
+        "2026": {
+          "title": "Deployment",
+          "desc": "We deployed it at 2026 and it will be standing for so many years."
+        }
+      }
+    },
+    "cta": {
+      "title": "Grow with us.",
+      "description": "Ready to transform your business with cutting-edge technology? Let's start the conversation.",
+      "contact": "Contact Us",
+      "news": "Latest News"
+    }
+  },
+  "news": {
+    "title": "Our Achievements",
+    "no_articles_title": "No updates yet",
+    "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Shoka.",
+    "cta": {
+      "title": "Stay Connected",
+      "button": "Contact Us"
+    }
+  },
+  "contact": {
+    "info_title": "Contact Information",
+    "subtitle": "Get in Touch",
+    "title": "Let's discuss your next project.",
+    "description": "Fill out the form below and our team will get back to you within 24 hours.",
+    "email_us": "Email Us",
+    "call_us": "Call Us",
+    "visit_us": "Visit Us",
+    "mon_fri": "Mon-Fri from 9am to 6pm",
+    "address": {
+      "line1": "Kizalie",
+      "line2": "Ankara | Turkey"
+    },
+    "form": {
+      "title": "Send a Message",
+      "name": "Full Name",
+      "email": "Email",
+      "company": "Company (Optional)",
+      "message": "How can we help?",
+      "submit": "Send Message",
+      "success_title": "Message Sent",
+      "success_desc": "We've received your inquiry and will respond within 24 hours.",
+      "error_title": "Error",
+      "error_desc": "Something went wrong. Please try again later.",
+      "validation": {
+        "name": "Name is required",
+        "email": "Invalid email address",
+        "message": "Please provide more detail about your inquiry"
+      },
+      "placeholders": {
+        "name": "John Doe",
+        "email": "john@company.com",
+        "company": "Acme Inc.",
+        "message": "Tell us about your project..."
+      }
+    }
+  },
+  "footer": {
+    "sitemap": "Sitemap",
+    "connect": "Connect",
+    "social": {
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "instagram": "Instagram"
+    },
+    "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
+    "links": {
+      "home": "Home",
+      "services": "Services",
+      "portfolio": "Portfolio",
+      "contact": "Contact"
+    }
+  },
+  "not_found": {
+    "title": "404 Page Not Found",
+    "desc": "Did you forget to add the page to the router?"
+  },
+  "admin": {
+    "login": {
+      "brand": "Shoka Admin",
+      "username": "Username",
+      "username_placeholder": "Enter username",
+      "password": "Password",
+      "password_placeholder": "Enter password",
+      "signin": "Sign In",
+      "demo_title": "Demo Credentials:",
+      "error_invalid": "Invalid username or password"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "back_to_home": "Back to the home page",
+    "explore_all": "Explore All",
+    "view_details": "View Details",
+    "explore": "Explore",
+    "scroll": "Scroll",
+    "discover": "Discover",
+    "explore_content": "Explore Content"
+  },
+  "industries": {
+    "cta": {
+      "title": "Build for your industry",
+      "button": "Partner with us"
+    }
+      }
 }

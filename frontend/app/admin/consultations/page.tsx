@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MessageSquare, Building2, Clock, Check, X, Trash2, MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminConsultations() {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [expandedId, setExpandedId] = useState<string | null>(null);
+    const lastCountRef = useRef<number>(0);
+    const { toast } = useToast();
 
     const { data: consultations = [], isLoading } = useQuery<any[]>({
         queryKey: ["admin-consultations"],
@@ -20,7 +23,23 @@ export default function AdminConsultations() {
             const res = await fetch("/api/admin/consultations");
             return res.json();
         },
+        refetchInterval: 30000,
     });
+
+    useEffect(() => {
+        const pendingCount = consultations.filter((c: any) => c.status === "pending").length;
+        if (lastCountRef.current > 0 && pendingCount > lastCountRef.current) {
+            const newConsultation = consultations.find((c: any) => c.status === "pending" && !c.seen);
+            if (newConsultation) {
+                toast({
+                    title: "New Consultation",
+                    description: `You received a new message from ${newConsultation.name}`,
+                });
+                setExpandedId(newConsultation.id);
+            }
+        }
+        lastCountRef.current = pendingCount;
+    }, [consultations, toast]);
 
     const updateStatusMutation = useMutation({
         mutationFn: async ({ id, status }: { id: string; status: string }) => {
@@ -28,6 +47,20 @@ export default function AdminConsultations() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status }),
+            });
+            return res.json();
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin-consultations"] });
+        },
+    });
+
+    const markAsSeenMutation = useMutation({
+        mutationFn: async (id: string) => {
+            const res = await fetch(`/api/admin/consultations/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ seen: true }),
             });
             return res.json();
         },
@@ -100,8 +133,13 @@ export default function AdminConsultations() {
                                 <div className="flex items-start justify-between gap-4">
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-3 mb-3">
-                                            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                                                <Mail className="w-5 h-5 text-primary" />
+                                            <div className="relative">
+                                                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                                    <Mail className="w-5 h-5 text-primary" />
+                                                </div>
+                                                {!consultation.seen && (
+                                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-background" />
+                                                )}
                                             </div>
                                             <div>
                                                 <h3 className="font-semibold">{consultation.name}</h3>
@@ -120,7 +158,12 @@ export default function AdminConsultations() {
 
                                         <div 
                                             className="ml-13 pl-13 cursor-pointer group"
-                                            onClick={() => setExpandedId(isExpanded ? null : consultation.id)}
+                                            onClick={() => {
+                                                setExpandedId(isExpanded ? null : consultation.id);
+                                                if (!isExpanded && !consultation.seen) {
+                                                    markAsSeenMutation.mutate(consultation.id);
+                                                }
+                                            }}
                                         >
                                             <div className="flex items-start gap-2 mb-2 p-2 -ml-2 rounded-md hover:bg-muted/50 transition-colors">
                                                 <MessageSquare className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-primary transition-colors" />

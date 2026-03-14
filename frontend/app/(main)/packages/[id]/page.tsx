@@ -207,57 +207,6 @@ export default function PackageDetails() {
                 </FadeIn>
               )}
 
-              {/* What's included highlights */}
-              <FadeIn delay={0.1}>
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="h-px w-12 bg-primary/50" />
-                  <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-primary">
-                    {t("packages.whats_included", "What's Included")}
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    t("packages.features.consultation", "Expert Consultation"),
-                    t("packages.features.custom_solution", "Custom Solution Design"),
-                    t("packages.features.dedicated_support", "Dedicated Support Team"),
-                    t("packages.features.delivery", "On-Time Delivery"),
-                    t("packages.features.quality", "Quality Assurance"),
-                    t("packages.features.followup", "Post-Launch Follow-Up"),
-                  ].map((feature, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: isRtl ? 10 : -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.07, duration: 0.4 }}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-background border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group"
-                    >
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                      <span className="text-sm font-medium text-foreground/80">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </FadeIn>
-
-              {/* Why choose this package */}
-              <FadeIn delay={0.15}>
-                <div className="relative rounded-3xl overflow-hidden border border-primary/20 bg-gradient-to-br from-primary/5 via-background to-background p-8 md:p-10">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                        <Sparkles className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="text-xl font-display font-bold text-foreground">
-                        {t("packages.why_choose", "Why Choose This Package?")}
-                      </h3>
-                    </div>
-                    <p className="text-muted-foreground leading-relaxed text-base md:text-lg font-light">
-                      {t("packages.why_choose_desc", "This package is carefully crafted to meet your business needs with a clear scope, transparent process, and measurable results. Our team brings expertise and commitment to every project — ensuring you receive maximum value from your investment.")}
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
             </div>
 
             {/* ── RIGHT: Sticky Sidebar ── */}

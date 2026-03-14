@@ -206,37 +206,6 @@ export default function ServiceDetail({ params }: { params: Promise<{ id: string
                 </FadeIn>
               )}
 
-              {/* What's included highlights */}
-              <FadeIn delay={0.1}>
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="h-px w-12 bg-primary/50" />
-                  <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-primary">
-                    {t("services.whats_included", "What's Included")}
-                  </h2>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    t("services.features.expert_consultation", "Expert Consultation"),
-                    t("services.features.custom_solution", "Custom Solution Design"),
-                    t("services.features.dedicated_support", "Dedicated Support Team"),
-                    t("services.features.delivery", "On-Time Delivery"),
-                    t("services.features.quality", "Quality Assurance"),
-                    t("services.features.followup", "Post-Launch Follow-Up"),
-                  ].map((feature, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: isRtl ? 10 : -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.07, duration: 0.4 }}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-background border border-border/50 hover:border-primary/30 hover:bg-primary/5 transition-all duration-300 group"
-                    >
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                      <span className="text-sm font-medium text-foreground/80">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </FadeIn>
             </div>
 
             {/* ── RIGHT: Sticky Sidebar ── */}

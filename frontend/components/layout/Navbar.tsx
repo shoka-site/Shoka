@@ -225,9 +225,7 @@ export default function Navbar() {
                 <NavigationMenuContent>
                   <MegaMenuSection
                     title={t("navbar.services", "Services")}
-                    description={isRtl 
-                      ? "برمجة وبناء وتطوير واجهات ونظم مخصصة بجودة وأداء عالي"
-                      : "Custom software architecture, full-stack development, and performance optimization."}
+                    description={t("navbar.menu.services.description")}
                     icon={LayoutGrid}
                     href="/services"
                     layout="list"
@@ -268,9 +266,7 @@ export default function Navbar() {
                 <NavigationMenuContent>
                   <MegaMenuSection
                     title={t("navbar.packages")}
-                    description={isRtl
-                      ? "باقات مجمّعة مصممة لاحتياجات أعمال محددة — كل باقة تحل مشكلة حقيقية."
-                      : "Pre-built solution bundles designed around specific business needs."}
+                    description={t("navbar.menu.packages.description")}
                     icon={Package}
                     href="/packages"
                     layout="grid"
@@ -300,7 +296,7 @@ export default function Navbar() {
                     {packages.length > 4 && (
                       <div className="mt-6 pt-6 border-t border-white/5">
                         <Link href="/packages" className={`inline-flex items-center text-sm text-white/60 hover:text-primary transition-colors ${isRtl ? 'flex-row-reverse' : ''}`}>
-                          {isRtl ? `عرض جميع الباقات (${packages.length})` : `View all packages (${packages.length})`}
+                          {t("navbar.menu.packages.view_all", { count: packages.length })}
                           <ArrowRight className={`w-4 h-4 ${isRtl ? 'mr-2 rotate-180' : 'ml-2'}`} />
                         </Link>
                       </div>

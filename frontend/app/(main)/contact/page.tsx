@@ -96,7 +96,7 @@ export default function Contact() {
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
-                {isRtl ? "العودة إلى الصفحة الرئيسية" : "Back to the home page"}
+                {t("common.back_to_home")}
               </Link>
             </motion.div>
           </div>
@@ -143,7 +143,7 @@ export default function Contact() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] pointer-events-none" />
 
                 <h3 className="text-2xl font-display font-bold mb-8 text-foreground">
-                   {isRtl ? 'معلومات التواصل' : 'Contact Information'}
+                   {t("contact.info_title")}
                 </h3>
 
                 <div className="space-y-8 relative z-10">

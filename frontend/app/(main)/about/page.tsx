@@ -60,7 +60,7 @@ export default function About() {
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
-                {isRtl ? "العودة إلى الصفحة الرئيسية" : "Back to the home page"}
+                {t("common.back_to_home")}
               </Link>
             </motion.div>
           </div>
