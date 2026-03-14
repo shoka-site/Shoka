@@ -14,7 +14,6 @@ export default function AdminSolutions() {
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({
-        iconName: "",
         titleEn: "",
         titleAr: "",
         descriptionEn: "",
@@ -84,7 +83,6 @@ export default function AdminSolutions() {
 
     const resetForm = () => {
         setFormData({
-            iconName: "",
             titleEn: "",
             titleAr: "",
             descriptionEn: "",
@@ -108,7 +106,6 @@ export default function AdminSolutions() {
 
     const handleEdit = (solution: any) => {
         setFormData({
-            iconName: solution.iconName,
             titleEn: solution.titleEn || solution.title,
             titleAr: solution.titleAr || solution.title,
             descriptionEn: solution.descriptionEn || solution.description,
@@ -137,12 +134,6 @@ export default function AdminSolutions() {
                 {isEditing && (
                     <form onSubmit={handleSubmit} className="mb-8 p-6 bg-muted rounded-lg space-y-4">
                         <div className="grid grid-cols-2 gap-4">
-                            <Input
-                                placeholder="Icon Name (e.g., Target, Shield, Zap)"
-                                value={formData.iconName}
-                                onChange={(e) => setFormData({ ...formData, iconName: e.target.value })}
-                                required
-                            />
                             <Input
                                 type="number"
                                 placeholder="Order"
@@ -222,7 +213,6 @@ export default function AdminSolutions() {
                                     {solution.published && (
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
-                                    <span className="text-xs bg-blue-500/20 text-blue-600 px-2 py-1 rounded">Icon: {solution.iconName}</span>
                                     {solution.industryId && (
                                         <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">
                                             Industry: {industries.find((i: any) => i.id === solution.industryId)?.titleEn || "Unknown"}

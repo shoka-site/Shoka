@@ -159,6 +159,17 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
@@ -175,7 +186,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   if (items.length === 0) {
     return (
       <section 
-        className="relative h-screen flex items-center overflow-hidden"
+        className="relative h-[100dvh] flex items-center overflow-hidden"
         style={{ backgroundColor: "#0f0a04" }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#0f0a04]" />
@@ -188,13 +199,19 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   const prev = () => goTo((activeIdx - 1 + items.length) % items.length);
   const next = () => goTo((activeIdx + 1) % items.length);
 
+  // Handle both mouse and touch for parallax effect
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return; // Skip parallax on mobile
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     setMousePosition({
-      x: (clientX / innerWidth - 0.5) * 20, // -10 to 10
-      y: (clientY / innerHeight - 0.5) * 20 // -10 to 10
+      x: (clientX / innerWidth - 0.5) * 20,
+      y: (clientY / innerHeight - 0.5) * 20
     });
+  };
+
+  const handleTouchMove = () => {
+    // Disable parallax on touch devices but keep carousel working
   };
 
   const item = items[activeIdx];
@@ -218,7 +235,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen flex items-center overflow-hidden"
+      className="relative h-[100dvh] flex items-center overflow-hidden"
       style={{ backgroundColor: "#0f0a04" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -564,72 +581,73 @@ export default function Home() {
 
       {/* ── 2. OUR PACKAGES ────────────────────────────────────────── */}
       {!loadingPackages && packages.length > 0 && (
-        <Section background="default" className="py-20 md:py-32">
-          <FadeInSection className="text-center mb-16 md:mb-20">
-            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 block">
+        <Section background="default" className="py-12 md:py-16">
+          <FadeInSection className="text-center mb-8 md:mb-10">
+            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
               {t("home.packages.badge", "What We Offer")}
             </span>
-            <h2 className="text-3xl md:text-6xl lg:text-7xl font-display font-black mt-2 tracking-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight">
               {t("home.packages.title", "Our Packages")}
             </h2>
-            <p className="text-muted-foreground text-base md:text-xl mt-4 md:mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
               {t("home.packages.description", "Tailored service bundles designed to match your business needs and scale with your ambitions.")}
             </p>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {packages.slice(0, 3).map((pkg, index) => (
-              <motion.div
-                key={pkg.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: index * 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -8, transition: { duration: 0.25 } }}
-                className="group relative flex flex-col bg-background border border-border/60 rounded-3xl overflow-hidden hover:border-accent/40 hover:shadow-2xl transition-all duration-500"
-              >
-                {/* Top accent line */}
-                <div
-                  className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
-                />
+              <Link key={pkg.id} href={`/packages/${pkg.id}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+                >
+                  {/* Top accent line */}
+                  <div
+                    className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
+                  />
 
-                <div className="flex flex-col flex-1 p-8 md:p-10">
-                  {/* Order badge */}
-                  <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6 self-start">
-                    {String(pkg.order).padStart(2, "0")}
-                  </span>
+                  <div className="flex flex-col flex-1 p-5 md:p-6">
+                    {/* Order badge */}
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                      {String(pkg.order).padStart(2, "0")}
+                    </span>
 
-                  <h3 className="text-2xl font-display font-black mb-4 group-hover:text-accent transition-colors duration-300">
-                    {pkg.title}
-                  </h3>
+                    <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">
+                      {pkg.title}
+                    </h3>
 
-                  {pkg.description ? (
-                    <p className="text-muted-foreground leading-relaxed text-base flex-1">
-                      {pkg.description}
-                    </p>
-                  ) : (
-                    <p className="text-muted-foreground/40 leading-relaxed text-base italic flex-1">
-                      {t("home.packages.no_description", "A tailored bundle of services designed to help you succeed.")}
-                    </p>
-                  )}
+                    {pkg.description ? (
+                      <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                        {pkg.description}
+                      </p>
+                    ) : (
+                      <p className="text-muted-foreground/40 leading-relaxed text-sm italic flex-1">
+                        {t("home.packages.no_description", "A tailored bundle of services designed to help you succeed.")}
+                      </p>
+                    )}
 
-                  <Link href="/packages" className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline">
-                    {t("home.packages.learn_more", "Learn more")}
-                    <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
-                  </Link>
-                </div>
-              </motion.div>
+                    <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
+                      {t("home.packages.learn_more", "Learn more")}
+                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
             ))}
           </div>
 
           {/* View all packages CTA */}
-          <div className="mt-16 text-center">
+          <div className="mt-8 text-center">
             <Link href="/packages">
               <Button
                 variant="ghost"
                 size="lg"
-                className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
+                className="group text-base font-display font-bold tracking-wider hover:bg-transparent"
               >
                 <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">
                   {t("home.packages.view_all", "View All Packages")}
@@ -643,45 +661,44 @@ export default function Home() {
 
       {/* ── 3. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
-        <Section background="muted">
-          <FadeInSection>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16">
+        <Section background="muted" className="py-12 md:py-16">
+          <FadeInSection className="mb-8 md:mb-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
               <div className="max-w-xl">
                 <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.services.badge")}</span>
-                <h2 className="text-3xl md:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.services.title")}</h2>
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.services.title")}</h2>
+                <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
                   {t("home.services.description")}
                 </p>
               </div>
               <Link href="/packages">
-                <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
+                <span className="group flex items-center text-primary font-medium mt-4 md:mt-0 hover:underline cursor-pointer">
                   {t("view_all_services")}
                   <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
                 </span>
               </Link>
             </div>
           </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {services.slice(0, 4).map((service, index) => {
               return (
-                <motion.div
-                  key={service.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                  className="bg-background/60 p-8 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer"
-                >
-                  <h3 className="text-xl font-display font-bold mb-3">{service.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-4">{service.description}</p>
-                  <Link href={`/packages/${service.id}`}>
-                    <span className="text-primary text-sm font-medium hover:underline inline-flex items-center cursor-pointer">
+                <Link key={service.id} href={`/services/${service.id}`}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="bg-background/60 p-5 md:p-6 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-xl hover:bg-background/80 transition-all duration-300 group cursor-pointer h-full"
+                  >
+                    <h3 className="text-lg md:text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm line-clamp-3">{service.description}</p>
+                    <div className="mt-4 inline-flex items-center text-primary text-sm font-medium">
                       {t("view_service")}
-                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"}`} />
-                    </span>
-                  </Link>
-                </motion.div>
+                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform`} />
+                    </div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>

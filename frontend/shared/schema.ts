@@ -102,7 +102,6 @@ export type Industry = z.infer<typeof industrySchema>;
 export const solutionSchema = z.object({
     id: z.string().uuid(),
     order: z.number(),
-    iconName: z.string(),
     titleEn: z.string(),
     titleAr: z.string(),
     descriptionEn: z.string(),

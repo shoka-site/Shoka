@@ -247,7 +247,6 @@ export default function IndustryDetails() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {industry.solutions.map((solution: any, index: number) => {
-                                    const Icon = iconMap[solution.iconName] || Zap;
                                     return (
                                         <motion.div
                                             key={solution.id}
@@ -260,7 +259,7 @@ export default function IndustryDetails() {
                                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                                                 <CardHeader className={`relative z-10 pb-4 pt-6 md:pt-8 px-6 md:px-8 flex items-start sm:items-center gap-4 md:gap-6 ${isRtl ? 'flex-col sm:flex-row-reverse text-right' : 'flex-col sm:flex-row text-left'}`}>
                                                     <div className="text-primary p-4 bg-primary/5 rounded-2xl shadow-sm border border-primary/10">
-                                                        <Icon className="w-8 h-8 md:w-10 md:h-10" />
+                                                        <Zap className="w-8 h-8 md:w-10 md:h-10" />
                                                     </div>
                                                     <CardTitle className="text-2xl md:text-3xl font-display font-bold text-foreground leading-tight tracking-tight">
                                                         {solution.title}

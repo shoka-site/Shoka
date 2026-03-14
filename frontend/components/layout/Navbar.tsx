@@ -67,6 +67,29 @@ export default function Navbar() {
     i18n.changeLanguage(newLang);
   };
 
+  // Close menu on route change
+  useEffect(() => {
+    closeMenu();
+  }, [pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       // Close navbar on any scroll (up or down)
@@ -116,17 +139,11 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
         scrolled
           ? "bg-black/80 backdrop-blur-2xl border-b border-primary/20 py-3 shadow-2xl"
           : "bg-transparent py-5"
       )}
-      onClick={() => {
-        // Close desktop dropdown menu when clicking anywhere in header
-        if (menuValue) {
-          setMenuValue("");
-        }
-      }}
     >
       {/* Subtle gradient line at bottom */}
       <div className={cn(
