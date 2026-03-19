@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 import "./globals.css";
 
-const SITE_NAME = "شوكة | أنظمة رقمية ذكية وحلول برمجية عراقية";
+const SITE_NAME = "شوكة | شركة برمجيات وتطوير تقني في العراق";
 const SITE_URL = "https://www.shoka.site";
 
 export const metadata: Metadata = {
@@ -13,8 +13,32 @@ export const metadata: Metadata = {
         default: SITE_NAME,
         template: `%s | شوكة`,
     },
-    description: "شوكة هي المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات. نحن متخصصون في التحول الرقمي، حيث نجمع بين الأصالة العراقية والتميز التكنولوجي الحديث لبناء المستقبل.",
-    keywords: ["شوكة", "منصة شوكة", "منصة عراقية", "تحول رقمي في العراق", "تطوير برمجيات في العراق", "أنظمة ذكية", "حلول تقنية", "تكنولوجيا بغداد", "شركة برمجيات عراقية"],
+    description: "شوكة — شركة برمجيات عراقية متخصصة في تطوير المواقع، التطبيقات، أنظمة ERP، والذكاء الاصطناعي. هل تبحث عن حل برمجي في العراق؟ نحن نبنيه. Software company Iraq | Web development | Mobile apps | AI.",
+    keywords: [
+        "شركة برمجيات عراقية",
+        "تطوير برمجيات في العراق",
+        "برمجة مواقع العراق",
+        "تطوير تطبيقات العراق",
+        "تحول رقمي العراق",
+        "حلول برمجية بغداد",
+        "شركة تقنية عراقية",
+        "نظام ERP العراق",
+        "ذكاء اصطناعي العراق",
+        "برمجة تطبيقات الجوال العراق",
+        "شوكة",
+        "منصة شوكة",
+        "software company Iraq",
+        "web development Iraq",
+        "software development Baghdad",
+        "IT company Iraq",
+        "digital transformation Iraq",
+        "mobile app development Iraq",
+        "custom software Iraq",
+        "ERP system Iraq",
+        "Iraq tech company",
+        "Shoka",
+        "Shoka software Iraq",
+    ],
     
     // Canonical and alternate languages
     alternates: {
@@ -47,11 +71,11 @@ export const metadata: Metadata = {
     // Twitter Cards
     twitter: {
         card: "summary_large_image",
-        title: "شوكة | تميز برمجاني ورقمي عراقي",
-        description: "قيادة التحول الرقمي في العراق من خلال الأنظمة الذكية والحلول البرمجية الحديثة.",
+        title: "شوكة | شركة برمجيات عراقية | Iraq Software Company",
+        description: "هل تبحث عن شركة برمجيات في العراق؟ شوكة تطور مواقع، تطبيقات، وأنظمة ذكية. Software company Iraq.",
         images: [`${SITE_URL}/og-image.png`],
-        creator: "@shoka_iq",
-        site: "@shoka_iq",
+        creator: "@shoka_it",
+        site: "@shoka_it",
     },
     
     // Robots
@@ -114,9 +138,11 @@ export default function RootLayout({
             "availableLanguage": ["Arabic", "English", "Turkish"],
         },
         "sameAs": [
-            "https://linkedin.com/company/shoka",
-            "https://twitter.com/shoka_iq",
-            "https://instagram.com/shoka_iq",
+            "https://www.linkedin.com/company/shoka-global/",
+            "https://x.com/shoka_it",
+            "https://www.instagram.com/shoka.it/",
+            "https://www.tiktok.com/@shoka.it",
+            "https://www.facebook.com/profile.php?id=61578501381386",
         ],
     };
 
