@@ -394,8 +394,10 @@
     "connect": "Connect",
     "social": {
       "linkedin": "LinkedIn",
-      "twitter": "Twitter",
-      "instagram": "Instagram"
+      "twitter": "X (Twitter)",
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "facebook": "Facebook"
     },
     "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
     "links": {
