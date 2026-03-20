@@ -8,3 +8,5 @@ vite.config.ts.*
 .env
 .env.local
 .env.*.local
+public/uploads/*
+!public/uploads/.gitkeep

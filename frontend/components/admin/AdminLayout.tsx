@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         <ProtectedRoute>
-            <div className="min-h-screen bg-background">
+            <div className="min-h-screen bg-background" dir="ltr" lang="en">
                 {/* Sidebar */}
                 <div className="fixed left-0 top-0 bottom-0 w-64 bg-muted border-r border-border p-6 overflow-y-auto">
                     <div className="mb-8">

@@ -2,14 +2,16 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    isLoading: boolean;
     login: (username: string, password: string) => Promise<boolean>;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Check if user is already authenticated on mount
     useEffect(() => {
@@ -17,6 +19,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (authStatus === 'true') {
             setIsAuthenticated(true);
         }
+        setIsLoading(false);
     }, []);
 
     const login = async (username: string, password: string): Promise<boolean> => {
@@ -42,13 +45,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        localStorage.removeItem('admin_auth');
+    const logout = async () => {
+        try {
+            await fetch('/api/admin/logout', { method: 'POST' });
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            setIsAuthenticated(false);
+            localStorage.removeItem('admin_auth');
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

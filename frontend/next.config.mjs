@@ -15,6 +15,7 @@ const nextConfig = {
     
     // Enable trailing slashes for better SEO
     trailingSlash: true,
+    output: 'standalone',
 };
 
 export default nextConfig;

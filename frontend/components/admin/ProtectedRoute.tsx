@@ -9,14 +9,19 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, isLoading } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!isLoading && !isAuthenticated) {
             router.push('/admin/login');
         }
-    }, [isAuthenticated, router]);
+    }, [isAuthenticated, isLoading, router]);
+
+    // While checking auth, show nothing (avoids flash of redirect)
+    if (isLoading) {
+        return null;
+    }
 
     if (!isAuthenticated) {
         return null;

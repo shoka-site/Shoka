@@ -16,7 +16,18 @@ export async function POST(req: NextRequest) {
         }
 
         if (username === adminUsername && password === adminPassword) {
-            return NextResponse.json({ success: true, message: "Login successful" });
+            const response = NextResponse.json({ success: true, message: "Login successful" });
+            
+            // Set a secure cookie for authentication
+            response.cookies.set('admin_auth', 'true', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 24 * 7, // 1 week
+                path: '/',
+            });
+            
+            return response;
         } else {
             return NextResponse.json(
                 { error: "Invalid credentials" },
