@@ -81,7 +81,7 @@ export default function About() {
               >
                 <Badge variant="outline" className="text-accent border-accent/40 bg-accent/10 px-5 py-2 text-xs backdrop-blur-md flex items-center justify-center gap-2 font-bold uppercase tracking-widest">
                   <Sparkles className="w-3.5 h-3.5" />
-                  {t('about.badge', 'Our Story')}
+                  {t('about.badge')}
                 </Badge>
               </motion.div>
             </div>

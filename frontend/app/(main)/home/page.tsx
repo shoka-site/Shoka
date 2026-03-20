@@ -661,138 +661,160 @@ export default function Home() {
 
       {/* ── 3. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
-        <Section background="muted" className="py-12 md:py-16">
-          <FadeInSection className="mb-8 md:mb-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
-              <div className="max-w-xl">
-                <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.services.badge")}</span>
-                <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.services.title")}</h2>
-                <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-                  {t("home.services.description")}
-                </p>
-              </div>
-              <Link href="/packages">
-                <span className="group flex items-center text-primary font-medium mt-4 md:mt-0 hover:underline cursor-pointer">
-                  {t("view_all_services")}
-                  <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
-                </span>
-              </Link>
-            </div>
+        <Section background="default" className="py-12 md:py-16">
+          <FadeInSection className="text-center mb-8 md:mb-10">
+            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
+              {t("home.services.badge")}
+            </span>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight">
+              {t("home.services.title")}
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
+              {t("home.services.description")}
+            </p>
           </FadeInSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {services.slice(0, 4).map((service, index) => {
-              return (
-                <Link key={service.id} href={`/services/${service.id}`}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                    className="bg-background/60 p-5 md:p-6 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-xl hover:bg-background/80 transition-all duration-300 group cursor-pointer h-full"
-                  >
-                    <h3 className="text-lg md:text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm line-clamp-3">{service.description}</p>
-                    <div className="mt-4 inline-flex items-center text-primary text-sm font-medium">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {services.slice(0, 3).map((service, index) => (
+              <Link key={service.id} href={`/services/${service.id}`}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+                >
+                  {/* Top accent line */}
+                  <div
+                    className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
+                  />
+                  <div className="flex flex-col flex-1 p-5 md:p-6">
+                    {/* Order badge */}
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                      {String(service.order ?? index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                      {service.description}
+                    </p>
+                    <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
                       {t("view_service")}
-                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform`} />
+                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
                     </div>
-                  </motion.div>
-                </Link>
-              );
-            })}
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+
+          {/* View all services CTA */}
+          <div className="mt-8 text-center">
+            <Link href="/services">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="group text-base font-display font-bold tracking-wider hover:bg-transparent"
+              >
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">
+                  {t("view_all_services")}
+                </span>
+                <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
+              </Button>
+            </Link>
           </div>
         </Section>
       )}
 
-      {/* ── 3. PROJECTS — proof of work ───────────────────────────── */}
+      {/* ── 4. PROJECTS — proof of work ───────────────────────────── */}
       {!loadingProjects && projects.length > 0 && (
-        <Section background="default" className="py-20 md:py-32">
-          <FadeInSection>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16">
-              <div className="max-w-xl">
-                <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.projects.badge")}</span>
-                <h2 className="text-3xl md:text-5xl font-display font-bold mb-3 md:mb-4">{t("home.projects.title")}</h2>
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                  {t("home.projects.description")}
-                </p>
-              </div>
-              <Link href="/projects">
-                <span className="group flex items-center text-primary font-medium mt-6 md:mt-0 hover:underline cursor-pointer">
-                  {t("view_all_projects")}
-                  <ArrowRight className={`mx-2 w-4 h-4 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
-                </span>
-              </Link>
-            </div>
+        <Section background="muted" className="py-12 md:py-16">
+          <FadeInSection className="text-center mb-8 md:mb-10">
+            <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
+              {t("home.projects.badge")}
+            </span>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight">
+              {t("home.projects.title")}
+            </h2>
+            <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
+              {t("home.projects.description")}
+            </p>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {projects.slice(0, 4).map((project, index) => {
-              return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {projects.slice(0, 3).map((project, index) => (
+              <Link key={project.id} href={`/projects/${project.id}`}>
                 <motion.div
-                  key={project.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                  className="bg-background/60 rounded-2xl border border-border/50 hover:border-primary/20 hover:shadow-2xl hover:bg-background/80 transition-all duration-300 group cursor-pointer flex flex-col overflow-hidden"
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
                 >
-                  <Link href={`/projects/${project.id}`} className="flex flex-col h-full">
-                    {/* Project Thumbnail */}
-                    <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0 border-b border-border/20">
-                      {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") ? (
-                        <Image
-                          src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-muted/50 flex items-center justify-center">
-                          <Layers className="w-8 h-8 text-muted-foreground/30" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Inner Category Badge */}
-                      <div className="absolute top-4 left-4 z-10 transition-transform duration-300 group-hover:-translate-y-1">
-                        <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 bg-background/80 backdrop-blur-md rounded-full">
-                          {project.category}
-                        </span>
-                      </div>
-                    </div>
+                  {/* Top accent line */}
+                  <div
+                    className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
+                  />
 
-                    {/* Card Content */}
-                    <div className="p-6 md:p-8 flex flex-col flex-1">
-                      <h3 className="text-xl font-display font-bold mb-3 line-clamp-2 md:line-clamp-none transition-colors group-hover:text-primary">
-                        {project.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed mb-6 line-clamp-3 text-sm flex-1">
-                        {project.description}
-                      </p>
-                      
-                      <div className="mt-auto">
-                        <span className="text-primary text-sm font-medium inline-flex items-center">
-                          {t("view_project")}
-                          <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${isRtl ? "mr-2 rotate-180 group-hover:-translate-x-1" : "ml-2 group-hover:translate-x-1"}`} />
-                        </span>
+                  {/* Project Thumbnail */}
+                  <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0">
+                    {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") ? (
+                      <Image
+                        src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted/50 flex items-center justify-center">
+                        <Layers className="w-8 h-8 text-muted-foreground/30" />
                       </div>
+                    )}
+                    {/* Category badge */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20 bg-background/80 backdrop-blur-md rounded-full">
+                        {project.category}
+                      </span>
                     </div>
-                  </Link>
+                  </div>
+
+                  <div className="flex flex-col flex-1 p-5 md:p-6">
+                    {/* Index badge */}
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">
+                      {project.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                      {project.description}
+                    </p>
+                    <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
+                      {t("view_project")}
+                      <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-1 rotate-180" : "ml-1"} group-hover:translate-x-1 transition-transform duration-300`} />
+                    </div>
+                  </div>
                 </motion.div>
-              );
-            })}
+              </Link>
+            ))}
           </div>
 
-          <div className="mt-16 md:mt-20 text-center">
+          {/* View all projects CTA */}
+          <div className="mt-8 text-center">
             <Link href="/projects">
               <Button
                 variant="ghost"
                 size="lg"
-                className="group text-lg font-display font-bold tracking-wider hover:bg-transparent"
+                className="group text-base font-display font-bold tracking-wider hover:bg-transparent"
               >
-                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">{t("view_all_projects")}</span>
+                <span className="mr-3 border-b-2 border-accent pb-1 group-hover:border-primary transition-colors">
+                  {t("view_all_projects")}
+                </span>
                 <ArrowRight className={`w-5 h-5 transition-transform ${isRtl ? "rotate-180 group-hover:-translate-x-2" : "group-hover:translate-x-2"}`} />
               </Button>
             </Link>

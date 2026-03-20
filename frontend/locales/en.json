@@ -31,9 +31,11 @@
     }
   },
   "welcome": {
+    "badge": "Iraq's Digital Platform",
     "subtitle_2": "Build your legacy with Shoka.",
     "enter": "Enter Platform",
-    "system_ready": "SYS.READY"
+    "system_ready": "SYS.READY",
+    "est": "EST. 2026"
   },
   "hero": {
     "updates": {
@@ -128,6 +130,7 @@
     "process": {
       "badge": "Our Process",
       "title": "How We Work",
+      "description": "A clear, proven methodology from discovery to scale — built for reliability and speed.",
       "steps": {
         "discover": {
           "title": "Discover",
@@ -285,6 +288,7 @@
     }
   },
   "about": {
+    "badge": "Our Story",
     "title": "Our Heritage & Future",
     "description": "We bridge the gap between ancient wisdom and modern technology, crafting digital solutions that stand the test of time.",
     "heritage": "Scroll to explore",

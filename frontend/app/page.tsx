@@ -208,14 +208,8 @@ export default function WelcomeV3() {
                                 حيث تلتقي{" "}
                                 <em className="not-italic font-semibold"
                                     style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                                    حكمة القدماء
+                                    حكمة القدماء بتكنولوجية الغد.
                                 </em>
-                                {" "}بـ
-                                <em className="not-italic font-semibold"
-                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                                    تكنولوجيا الغد
-                                </em>
-                                .
                             </>
                         )}
                     </p>
