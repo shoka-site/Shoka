@@ -31,7 +31,7 @@ export default function AdminProjects() {
     const { data: projects = [], isLoading } = useQuery<Project[]>({
         queryKey: ["admin-projects"],
         queryFn: async () => {
-            const res = await fetch("/api/content/en/projects");
+            const res = await fetch("/api/admin/projects");
             return res.json();
         },
     });
