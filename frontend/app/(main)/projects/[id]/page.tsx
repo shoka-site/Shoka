@@ -285,10 +285,12 @@ export default function ProjectDetails() {
                                     </div>
 
                                     <div className="mt-12">
-                                        <button className="w-full py-5 rounded-full bg-foreground text-background font-black uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-primary/20 flex items-center justify-center gap-3">
-                                            {t("portfolio.projects.inquire", "Initiate Inquiry")}
-                                            <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
-                                        </button>
+                                        <Link href={`/contact?project=${encodeURIComponent(project.title)}`}>
+                                            <button className="w-full py-5 rounded-full bg-foreground text-background font-black uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-primary/20 flex items-center justify-center gap-3">
+                                                {t("portfolio.projects.inquire", "Initiate Inquiry")}
+                                                <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

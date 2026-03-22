@@ -63,7 +63,7 @@ export default function WelcomeV3() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5 }}
-                className={`absolute top-10 ${isRtl ? "left-10" : "right-10"} z-50`}
+                className={`absolute top-6 md:top-10 ${isRtl ? "left-6 md:left-10" : "right-6 md:right-10"} z-50`}
             >
                 <button
                     onClick={toggleLanguage}
@@ -152,7 +152,7 @@ export default function WelcomeV3() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className={`text-[clamp(4rem,15vw,10rem)] leading-none font-black select-none ${isRtl ? "" : "tracking-tighter"}`}
+                        className={`text-[clamp(3rem,12vw,8rem)] md:text-[clamp(4rem,15vw,10rem)] leading-none font-black select-none ${isRtl ? "" : "tracking-tighter"}`}
                         style={{
                             background: "linear-gradient(to bottom, #fff 30%, #C2A45C 70%, #8A6D2D 100%)",
                             WebkitBackgroundClip: "text",
@@ -221,20 +221,20 @@ export default function WelcomeV3() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 1.2 }}
-                    className="flex flex-col items-center gap-8 mb-20"
+                    className="flex flex-col items-center gap-6 md:gap-8 mb-20"
                 >
                     <Link
                         href="/home"
-                        className="group relative flex items-center gap-6 pl-12 pr-10 py-6 bg-white/[0.02] border border-white/10 hover:border-accent/40 transition-all duration-700 rounded-full group overflow-hidden"
+                        className="group relative flex items-center gap-4 md:gap-6 pl-8 md:pl-12 pr-6 md:pr-10 py-4 md:py-6 bg-white/[0.02] border border-white/10 hover:border-accent/40 transition-all duration-700 rounded-full group overflow-hidden"
                     >
                         {/* Glow on hover */}
                         <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                        <span className="relative z-10 text-white font-bold text-xl uppercase tracking-[0.2em]">
+                        <span className="relative z-10 text-white font-bold text-lg md:text-xl uppercase tracking-[0.2em]">
                             {t("welcome.enter")}
                         </span>
 
-                        <div className={`relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white text-black group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:scale-110 ${isRtl ? "rotate-180" : ""}`}>
+                        <div className={`relative z-10 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white text-black group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:scale-110 ${isRtl ? "rotate-180" : ""}`}>
                             <ChevronRight className="w-6 h-6" />
                         </div>
                     </Link>
@@ -254,7 +254,7 @@ export default function WelcomeV3() {
                 transition={{ delay: 2, duration: 2 }}
                 className="absolute bottom-10 flex justify-center w-full"
             >
-                <div className="flex items-center gap-8 text-[10px] font-bold tracking-[0.5em] uppercase text-white">
+                <div className="flex items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] md:tracking-[0.5em] uppercase text-white">
                     <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                         {t("welcome.system_ready")}

@@ -12,11 +12,15 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { Mail, MapPin, Phone, ArrowLeft, ArrowRight, MessageSquare } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Contact() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
+  const searchParams = useSearchParams();
+  const project = searchParams.get('project');
 
   const formSchema = z.object({
     name: z.string().min(2, t('contact.form.validation.name')),
@@ -35,6 +39,12 @@ export default function Contact() {
       message: "",
     },
   });
+
+  useEffect(() => {
+    if (project) {
+      form.setValue('message', `I am interested in the following project: ${decodeURIComponent(project)}`);
+    }
+  }, [project, form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {

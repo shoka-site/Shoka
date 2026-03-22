@@ -177,7 +177,7 @@ export default function RootLayout({
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
                 />
             </head>
-            <body className="min-h-screen bg-background text-foreground relative font-sans antialiased">
+            <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
                 <InitialLoader />
                 <Providers>
                     {children}

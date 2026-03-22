@@ -278,7 +278,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
         initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
         animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className={`absolute ${isRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[35vw] leading-none select-none pointer-events-none`}
+        className={`absolute ${isRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[25vw] md:text-[35vw] leading-none select-none pointer-events-none`}
         style={{ color: style.accentHex }}
       >
         {style.emoji}
@@ -336,7 +336,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-5xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${isRtl ? "md:text-5xl lg:text-7xl" : ""}`}
+              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${isRtl ? "md:text-5xl lg:text-7xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
                 x: mousePosition.x * -1,
@@ -372,7 +372,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="rounded-full text-base h-14 px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
+                  className="rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
                   style={{ backgroundColor: style.accentHex, color: "#1a1005", boxShadow: `0 8px 30px ${style.accentHex}40` }}
                 >
                   {t("hero.updates.cta_talk")}
@@ -382,7 +382,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-full text-base h-14 px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
+                  className="rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
                 >
                   {t("hero.updates.cta_expertise")}
                 </Button>
@@ -394,7 +394,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
 
       {/* Bottom navigation */}
       <div
-        className="absolute bottom-12 left-0 right-0 px-8 md:px-16 lg:px-24 z-20 flex items-center justify-between"
+        className="absolute bottom-8 md:bottom-12 left-0 right-0 px-6 md:px-16 lg:px-24 z-20 flex items-center justify-between"
         dir={isRtl ? "rtl" : "ltr"}
       >
         {/* Counter */}
@@ -561,7 +561,7 @@ export default function Home() {
       {/* ── 1. STATS — instant credibility ────────────────────────── */}
       <Section background="default" className="py-16 border-y border-border/30">
         <FadeInSection>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.id}
@@ -622,7 +622,7 @@ export default function Home() {
                     </h3>
 
                     {pkg.description ? (
-                      <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                      <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3 break-words">
                         {pkg.description}
                       </p>
                     ) : (
@@ -698,7 +698,7 @@ export default function Home() {
                     <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3 break-words">
                       {service.description}
                     </p>
                     <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
@@ -791,7 +791,7 @@ export default function Home() {
                     <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">
                       {project.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3">
+                    <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3 break-words">
                       {project.description}
                     </p>
                     <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
