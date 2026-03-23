@@ -23,6 +23,7 @@ export default function AdminProjects() {
         titleAr: "",
         descriptionEn: "",
         descriptionAr: "",
+        liveUrl: "",
         featured: false,
         order: 1,
         published: true,
@@ -87,6 +88,7 @@ export default function AdminProjects() {
             titleAr: "",
             descriptionEn: "",
             descriptionAr: "",
+            liveUrl: "",
             featured: false,
             order: 1,
             published: true,
@@ -142,6 +144,7 @@ export default function AdminProjects() {
             titleAr: project.titleAr || project.title,
             descriptionEn: project.descriptionEn || project.description,
             descriptionAr: project.descriptionAr || project.description,
+            liveUrl: project.liveUrl || "",
             featured: project.featured,
             order: project.order,
             published: project.published,
@@ -260,6 +263,15 @@ export default function AdminProjects() {
                                 value={formData.descriptionAr}
                                 onChange={(e) => setFormData({ ...formData, descriptionAr: e.target.value })}
                                 required
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Live URL (Optional)</label>
+                            <Input
+                                placeholder="https://..."
+                                value={formData.liveUrl}
+                                onChange={(e) => setFormData({ ...formData, liveUrl: e.target.value })}
                             />
                         </div>
 

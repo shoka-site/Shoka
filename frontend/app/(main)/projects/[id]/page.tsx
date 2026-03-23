@@ -5,7 +5,7 @@ import { useProject } from "@/hooks/use-content";
 import Section from "@/components/layout/Section";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown, X, ExternalLink } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
@@ -282,6 +282,21 @@ export default function ProjectDetails() {
                                                 {project.createdAt ? new Date(project.createdAt).getFullYear() : new Date().getFullYear()}
                                             </span>
                                         </div>
+
+                                        {project.liveUrl && (
+                                            <>
+                                                <div className="w-full h-px bg-gradient-to-r from-border/50 to-transparent" />
+                                                <div className="group">
+                                                    <span className="flex items-center gap-3 text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-3 font-black">
+                                                        <ExternalLink className="w-3.5 h-3.5 group-hover:text-primary transition-colors text-primary/50" />
+                                                        {t("portfolio.projects.live_url", "Live Project")}
+                                                    </span>
+                                                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-primary transition-colors hover:text-primary/80 break-all">
+                                                        {project.liveUrl.replace(/^https?:\/\//, '')}
+                                                    </a>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
 
                                     <div className="mt-12">

@@ -53,6 +53,7 @@ export interface Project {
     featured: boolean;
     published: boolean;
     status: string;
+    liveUrl?: string;
     createdAt?: string | Date;
 }
 

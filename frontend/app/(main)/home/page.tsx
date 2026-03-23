@@ -987,7 +987,7 @@ export default function Home() {
               { value: "4", suffix: ".9★", label: t("home.results.items.satisfaction"), sub: t("home.results.items.satisfaction_sub") },
               { value: "200", prefix: "+", suffix: "%", label: t("home.results.items.revenue"), sub: t("home.results.items.revenue_sub") },
               { value: "40", suffix: "%", label: t("home.results.items.onboarding"), sub: t("home.results.items.onboarding_sub") },
-              { value: "500", suffix: "+", label: t("home.results.items.delivered"), sub: t("home.results.items.delivered_sub") },
+              { value: "20", suffix: "+", label: t("home.results.items.delivered"), sub: t("home.results.items.delivered_sub") },
               { value: "24", prefix: "<", suffix: "h", label: t("home.results.items.sla"), sub: t("home.results.items.sla_sub") },
             ].map((result, i) => (
               <motion.div

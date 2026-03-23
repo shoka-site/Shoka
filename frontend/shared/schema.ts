@@ -43,6 +43,7 @@ export const projectSchema = z.object({
     featured: z.boolean().default(false),
     published: z.boolean().default(true),
     status: z.string().default("past"),
+    liveUrl: z.string().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });
