@@ -3,7 +3,15 @@ import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { InitialLoader } from "@/components/ui/InitialLoader";
+import { Readex_Pro } from "next/font/google";
 import "./globals.css";
+
+const readexPro = Readex_Pro({
+    subsets: ["arabic", "latin"],
+    weight: ["300", "400", "500", "600", "700"],
+    variable: "--font-readex-pro",
+    display: "swap",
+});
 
 const SITE_NAME = "شوكة | شركة برمجيات وتطوير تقني في العراق";
 const SITE_URL = "https://www.shoka.site";
@@ -164,7 +172,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="ar" dir="rtl">
+        <html lang="ar" dir="rtl" className={readexPro.variable}>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
                 {/* JSON-LD Structured Data */}

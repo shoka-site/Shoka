@@ -134,7 +134,7 @@ function FadeInSection({ children, delay = 0, className = "" }: { children: Reac
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.2, 1] }}
       className={className}
     >
       {children}
@@ -228,7 +228,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] as any }
+      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.4, 0, 0.2, 1] as any }
     })
   };
 
@@ -248,7 +248,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
           className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#0f0a04]`}
         />
       </AnimatePresence>
@@ -258,7 +258,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
         key={item.id + "-glow"}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 2, ease: "easeOut" }}
+        transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(circle at 70% 40%, ${style.accentLight} 0%, transparent 60%)`,
@@ -277,7 +277,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
         key={item.id + "-emoji"}
         initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
         animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
         className={`absolute ${isRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[25vw] md:text-[35vw] leading-none select-none pointer-events-none`}
         style={{ color: style.accentHex }}
       >
@@ -310,7 +310,7 @@ function HeroUpdates({ isRtl }: { isRtl: boolean }) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.7, ease: [0.2, 0.65, 0.3, 0.9] }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
             className={`max-w-5xl ${isRtl ? "mr-0 ml-auto text-right" : ""}`}
           >
             {/* Type badge */}
@@ -559,7 +559,7 @@ export default function Home() {
       </div>
 
       {/* ── 1. STATS — instant credibility ────────────────────────── */}
-      <Section background="default" className="py-16 border-y border-border/30">
+      <Section background="default" className="py-24 border-y border-border/30">
         <FadeInSection>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-12">
             {stats.map((stat, index) => (
@@ -581,7 +581,7 @@ export default function Home() {
 
       {/* ── 2. OUR PACKAGES ────────────────────────────────────────── */}
       {!loadingPackages && packages.length > 0 && (
-        <Section background="default" className="py-12 md:py-16">
+        <Section background="default" className="py-24 md:py-32">
           <FadeInSection className="text-center mb-8 md:mb-10">
             <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
               {t("home.packages.badge", "What We Offer")}
@@ -594,16 +594,16 @@ export default function Home() {
             </p>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {packages.slice(0, 3).map((pkg, index) => (
               <Link key={pkg.id} href={`/packages/${pkg.id}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                   whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+                  className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full"
                 >
                   {/* Top accent line */}
                   <div
@@ -661,7 +661,7 @@ export default function Home() {
 
       {/* ── 3. SERVICES — what we offer ───────────────────────────── */}
       {!loadingServices && services.length > 0 && (
-        <Section background="default" className="py-12 md:py-16">
+        <Section background="default" className="py-24 md:py-32">
           <FadeInSection className="text-center mb-8 md:mb-10">
             <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
               {t("home.services.badge")}
@@ -674,16 +674,16 @@ export default function Home() {
             </p>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {services.slice(0, 3).map((service, index) => (
               <Link key={service.id} href={`/services/${service.id}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                   whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+                  className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full"
                 >
                   {/* Top accent line */}
                   <div
@@ -731,7 +731,7 @@ export default function Home() {
 
       {/* ── 4. PROJECTS — proof of work ───────────────────────────── */}
       {!loadingProjects && projects.length > 0 && (
-        <Section background="muted" className="py-12 md:py-16">
+        <Section background="muted" className="py-24 md:py-32">
           <FadeInSection className="text-center mb-8 md:mb-10">
             <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 block">
               {t("home.projects.badge")}
@@ -744,16 +744,16 @@ export default function Home() {
             </p>
           </FadeInSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {projects.slice(0, 3).map((project, index) => (
               <Link key={project.id} href={`/projects/${project.id}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                   whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="group relative flex flex-col bg-background border border-border/60 rounded-2xl overflow-hidden hover:border-accent/40 hover:shadow-xl transition-all duration-300 cursor-pointer h-full"
+                  className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full"
                 >
                   {/* Top accent line */}
                   <div
@@ -836,7 +836,7 @@ export default function Home() {
         </FadeInSection>
         <div className="relative">
           <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12 relative">
             {processSteps.map((step, index) => (
               <motion.div
                 key={step.id}
@@ -859,7 +859,7 @@ export default function Home() {
 
       {/* ── 5. TESTIMONIALS — don't take our word for it ──────────── */}
       {!loadingTestimonials && testimonials.length > 0 && (
-        <Section background="default" className="py-20 md:py-24">
+        <Section background="default" className="py-24 md:py-32">
           <FadeInSection className="text-center">
             <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.trust.badge")}</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">{t("home.trust.title")}</h2>
@@ -874,8 +874,8 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="bg-muted/50 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-lg border border-border"
+                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                className="bg-background border-[0.5px] border-border/50 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-md"
               >
                 {testimonials[currentTestimonial] && (
                   <>
@@ -910,7 +910,7 @@ export default function Home() {
       )}
 
       {/* ── 6. PHILOSOPHY — our values & what we stand for ────────── */}
-      <Section background="muted" className="py-20 md:py-24">
+      <Section background="muted" className="py-24 md:py-32">
         <FadeInSection className="text-center mb-12 md:mb-16">
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-2 md:mb-3 block">{t("home.philosophy.badge")}</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold">{t("home.philosophy.title")}</h2>
@@ -918,7 +918,7 @@ export default function Home() {
             {t("home.philosophy.description")}
           </p>
         </FadeInSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
           {whyShokaPoints.map((point, index) => {
             const Icon = iconMap[point.iconName] || Target;
             return (
@@ -979,7 +979,7 @@ export default function Home() {
           </FadeInSection>
 
           {/* Results grid - Glassmorphism cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 max-w-7xl mx-auto">
             {[
               { value: "3", suffix: "×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
               { value: "62", suffix: "%", label: t("home.results.items.cost_reduction"), sub: t("home.results.items.cost_reduction_sub") },
@@ -995,8 +995,8 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative flex flex-col justify-between p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 backdrop-blur-xl hover:bg-white/[0.06] hover:border-accent/40 transition-all duration-500 overflow-hidden"
+                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                className="group relative flex flex-col justify-between p-8 rounded-[2rem] bg-white/[0.03] border-[0.5px] border-white/20 backdrop-blur-xl hover:bg-white/[0.06] hover:border-accent/40 active:scale-[0.98] transition-all duration-500 overflow-hidden"
               >
                 {/* Subtle hover glow */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
