@@ -1,29 +1,24 @@
-"use client";
-
 import AdminLayout from "@/components/admin/AdminLayout";
 import Link from "next/link";
-import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, Package } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, MessageSquare, Target, GitBranch, Package, Users, Mail } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+import { storage } from "@/lib/storage";
 
-interface DashboardStats {
-    services: number;
-    projects: number;
-    packages: number;
-    testimonials: number;
-    updates: number;
-    industries: number;
-    solutions: number;
-}
+export const revalidate = 0; // Disable cache for admin dashboard to ensure fresh stats
 
-export default function AdminDashboard() {
-    const { data: stats, isLoading } = useQuery<DashboardStats>({
-        queryKey: ["admin-dashboard-stats"],
-        queryFn: async () => {
-            const res = await fetch("/api/admin/dashboard-stats");
-            return res.json();
-        },
-    });
+export default async function AdminDashboard() {
+    // Fetch stats on the server
+    const stats = {
+        services: (await storage.getServices(false)).length,
+        projects: (await storage.getProjects(false)).length,
+        packages: (await storage.getPackages(false)).length,
+        testimonials: (await storage.getTestimonials(false)).length,
+        updates: (await storage.getPlatformUpdates(false)).length,
+        industries: (await storage.getIndustries(false)).length,
+        solutions: (await storage.getSolutions(false)).length,
+        team: (await storage.getTeamMembers(false)).length,
+        consultations: (await storage.getConsultations()).length,
+    };
 
     const contentTypes = [
         { icon: Briefcase, label: "Services", path: "/admin/services", key: "services" },
@@ -33,6 +28,8 @@ export default function AdminDashboard() {
         { icon: GitBranch, label: "Platform Updates", path: "/admin/platform-updates", key: "updates" },
         { icon: Target, label: "Industries", path: "/admin/industries", key: "industries" },
         { icon: LayoutDashboard, label: "Use Case", path: "/admin/solutions", key: "solutions" },
+        { icon: Users, label: "Our Team", path: "/admin/team", key: "team" },
+        { icon: Mail, label: "Consultations", path: "/admin/consultations", key: "consultations" },
     ];
 
     return (
@@ -44,18 +41,14 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {contentTypes.map((type) => {
                         const Icon = type.icon;
-                        const count = stats ? (stats as any)[type.key] : 0;
+                        const count = (stats as any)[type.key] || 0;
                         return (
                             <Link key={type.path} href={type.path}>
                                 <Card className="cursor-pointer hover:shadow-lg transition-shadow">
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-2">
                                             <Icon className="w-8 h-8 text-primary" />
-                                            {isLoading ? (
-                                                <div className="h-8 w-8 bg-muted animate-pulse rounded" />
-                                            ) : (
-                                                <span className="text-2xl font-bold text-muted-foreground">{count}</span>
-                                            )}
+                                            <span className="text-2xl font-bold text-muted-foreground">{count}</span>
                                         </div>
                                         <CardTitle>{type.label}</CardTitle>
                                         <CardDescription>Manage {type.label.toLowerCase()} content</CardDescription>

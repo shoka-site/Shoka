@@ -178,6 +178,9 @@
         "sla_sub": "Under 24-hour SLA guaranteed"
       }
     },
+    "outcomes": {
+      "title": "Ready to Build Your Digital Future?"
+    },
     "cta": {
       "badge": "Get Started",
       "title": "Ready to Innovate?",
@@ -435,7 +438,10 @@
     "explore": "Explore",
     "scroll": "Scroll",
     "discover": "Discover",
-    "explore_content": "Explore Content"
+    "explore_content": "Explore Content",
+    "loading_content": "Loading Content...",
+    "loading_projects": "Loading Projects...",
+    "loading_testimonials": "Loading Testimonials..."
   },
   "industries": {
     "cta": {

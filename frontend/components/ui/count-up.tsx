@@ -14,7 +14,7 @@ interface CountUpProps {
 }
 
 export function CountUp({
-    end,
+    end = 0,
     duration = 2,
     decimals = 0,
     className = "",
@@ -29,7 +29,7 @@ export function CountUp({
     });
 
     useEffect(() => {
-        if (inView) {
+        if (inView && end !== undefined && !isNaN(end)) {
             let startTime: number;
             let animationFrame: number;
 
@@ -64,10 +64,12 @@ export function CountUp({
         }
     }, [end, duration, inView, delay]);
 
+    const displayValue = (typeof count === 'number' && !isNaN(count)) ? count.toFixed(decimals) : "0";
+
     return (
         <span ref={ref} className={className}>
             {prefix}
-            {count.toFixed(decimals)}
+            {displayValue}
             {suffix}
         </span>
     );

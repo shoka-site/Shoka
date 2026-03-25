@@ -178,6 +178,9 @@
         "sla_sub": "ضمان استجابة أقل من 24 ساعة"
       }
     },
+    "outcomes": {
+      "title": "مستعد تبني مستقبلك الرقمي؟"
+    },
     "cta": {
       "badge": "خطوتك الجاية",
       "title": "مستعد تبدي؟ إحنا جاهزين.",
@@ -422,7 +425,10 @@
     "explore": "اكتشف",
     "scroll": "مرر",
     "discover": "اكتشف",
-    "explore_content": "اكتشف المحتوى"
+    "explore_content": "اكتشف المحتوى",
+    "loading_content": "جاري تحميل المحتوى...",
+    "loading_projects": "جاري تحميل المشاريع...",
+    "loading_testimonials": "جاري تحميل آراء العملاء..."
   },
   "industries": {
     "cta": {
