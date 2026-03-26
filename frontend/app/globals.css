@@ -34,82 +34,71 @@
 }
 
 :root {
-  /* Brand Palette 
-     Heritage Sand: #D6C6A5 -> 42 38% 74%
-     Deep Clay/Bronze: #8C6239 -> 30 42% 39%
-     Charcoal Black: #2A2A2A -> 0 0% 16%
-     Ivory White: #F7F3EB -> 40 33% 95%
-     Accent Gold: #C2A45C -> 42 45% 56%
+  /*
+  ══════════════════════════════════════════════
+  MESOPOTAMIAN LUXURY — "The Darkness of Babylon"
+  Inspired by: obsidian stone of Nineveh,
+  golden artifacts of the Royal Tombs of Ur,
+  and cuneiform script carved into clay tablets.
+
+  #000000 — Obsidian Black    60% (dominant ground)
+  #c2a45c — Ur Gold          30% (accent, divine light)
+  #ffffff — Cuneiform White   10% (text, clarity)
+  ══════════════════════════════════════════════
   */
 
-  --background: hsl(40 33% 95%);
-  /* Ivory White */
-  --foreground: hsl(0 0% 16%);
-  /* Charcoal Black */
+  --background: hsl(0 0% 0%);           /* #000000 — Obsidian Black */
+  --foreground: hsl(0 0% 100%);         /* #ffffff — Cuneiform White */
 
-  --card: hsl(40 33% 95%);
-  --card-foreground: hsl(0 0% 16%);
+  --card: hsl(0 0% 5%);                 /* #0d0d0d — Elevated dark panel */
+  --card-foreground: hsl(0 0% 95%);
 
-  --popover: hsl(40 33% 95%);
-  --popover-foreground: hsl(0 0% 16%);
+  --popover: hsl(0 0% 7%);
+  --popover-foreground: hsl(0 0% 95%);
 
-  --primary: hsl(30 42% 39%);
-  /* Deep Clay/Bronze */
-  --primary-foreground: hsl(40 33% 95%);
+  --primary: hsl(42 43% 56%);           /* #c2a45c — Ur Gold */
+  --primary-foreground: hsl(0 0% 0%);
 
-  --secondary: hsl(42 38% 74%);
-  /* Heritage Sand */
-  --secondary-foreground: hsl(0 0% 16%);
+  --secondary: hsl(0 0% 10%);           /* #1a1a1a — Deep Onyx */
+  --secondary-foreground: hsl(0 0% 80%);
 
-  --muted: hsl(42 20% 90%);
-  /* Light Sand Muted */
-  --muted-foreground: hsl(30 10% 40%);
+  --muted: hsl(0 0% 8%);                /* #141414 — Muted dark */
+  --muted-foreground: hsl(0 0% 52%);    /* readable mid-tone */
 
-  --accent: hsl(42 45% 56%);
-  /* Accent Gold */
-  --accent-foreground: hsl(0 0% 16%);
+  --accent: hsl(42 43% 56%);            /* #c2a45c — Ur Gold (same as primary) */
+  --accent-foreground: hsl(0 0% 0%);
 
-  --destructive: hsl(0 84.2% 60.2%);
+  --destructive: hsl(0 72% 51%);
   --destructive-foreground: hsl(0 0% 98%);
 
-  --border: hsl(30 10% 85%);
-  /* Subtle border */
-  --input: hsl(30 10% 85%);
-  --ring: hsl(30 42% 39%);
+  --border: hsl(42 43% 56% / 0.15);     /* Gold at 15% — subtle gilded border */
+  --input: hsl(0 0% 100% / 0.06);
+  --ring: hsl(42 43% 56%);              /* Gold focus ring */
 
-  --radius: 0.25rem;
+  --radius: 0.5rem;
 }
 
+/* Dark mode = same as root; this is a dark-first design */
 .dark {
-  /* Inverted/Dark Mode - if needed, though brand guidelines lean light/warm */
-  --background: hsl(0 0% 10%);
-  --foreground: hsl(40 33% 95%);
-
-  --card: hsl(0 0% 12%);
-  --card-foreground: hsl(40 33% 95%);
-
-  --popover: hsl(0 0% 12%);
-  --popover-foreground: hsl(40 33% 95%);
-
-  --primary: hsl(42 45% 56%);
-  /* Gold acts as primary in dark */
-  --primary-foreground: hsl(0 0% 10%);
-
-  --secondary: hsl(0 0% 16%);
-  --secondary-foreground: hsl(40 33% 95%);
-
-  --muted: hsl(0 0% 16%);
-  --muted-foreground: hsl(40 20% 70%);
-
-  --accent: hsl(30 42% 39%);
-  --accent-foreground: hsl(40 33% 95%);
-
-  --destructive: hsl(0 62.8% 30.6%);
+  --background: hsl(0 0% 0%);
+  --foreground: hsl(0 0% 100%);
+  --card: hsl(0 0% 5%);
+  --card-foreground: hsl(0 0% 95%);
+  --popover: hsl(0 0% 7%);
+  --popover-foreground: hsl(0 0% 95%);
+  --primary: hsl(42 43% 56%);
+  --primary-foreground: hsl(0 0% 0%);
+  --secondary: hsl(0 0% 10%);
+  --secondary-foreground: hsl(0 0% 80%);
+  --muted: hsl(0 0% 8%);
+  --muted-foreground: hsl(0 0% 52%);
+  --accent: hsl(42 43% 56%);
+  --accent-foreground: hsl(0 0% 0%);
+  --destructive: hsl(0 72% 51%);
   --destructive-foreground: hsl(0 0% 98%);
-
-  --border: hsl(0 0% 20%);
-  --input: hsl(0 0% 20%);
-  --ring: hsl(42 45% 56%);
+  --border: hsl(42 43% 56% / 0.15);
+  --input: hsl(0 0% 100% / 0.06);
+  --ring: hsl(42 43% 56%);
 }
 
 @layer base {
@@ -119,6 +108,12 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground leading-[1.7];
+    /* Subtle golden radial bloom from the top — like a divine light from Babylon */
+    background-image: radial-gradient(
+      ellipse 120% 40% at 50% -5%,
+      rgba(194, 164, 92, 0.06) 0%,
+      transparent 70%
+    );
   }
 
   h1,
@@ -132,6 +127,7 @@
 }
 
 @layer utilities {
+  /* ── Grain texture overlay ─────────────────────────── */
   .bg-grain {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
     background-repeat: repeat;
@@ -143,5 +139,87 @@
 
   .perspective-1000 {
     perspective: 1000px;
+  }
+
+  /* ── Mesopotamian Diamond Lattice ──────────────────────
+     Inspired by Assyrian & Babylonian lozenge mosaic tilework.
+     Use as a background overlay on dark sections. */
+  .bg-mesopot-lattice {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M24 3L45 24L24 45L3 24Z' fill='none' stroke='%23c2a45c' stroke-width='0.6' opacity='0.12'/%3E%3C/svg%3E");
+    background-size: 48px 48px;
+  }
+
+  /* ── Assyrian Chevron Zigzag ───────────────────────────
+     Recurring motif in Assyrian palace reliefs & pottery. */
+  .bg-mesopot-chevron {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Cpolyline points='0,12 12,0 24,12' fill='none' stroke='%23c2a45c' stroke-width='0.7' opacity='0.15'/%3E%3C/svg%3E");
+    background-size: 24px 12px;
+    background-repeat: repeat-x;
+  }
+
+  /* ── Cuneiform Wedge Rosette ───────────────────────────
+     8-point star / sun-disc from Shamash worship. */
+  .bg-mesopot-rosette {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23c2a45c' stroke-width='0.4' opacity='0.07'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='%23c2a45c' stroke-width='0.4' opacity='0.07'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+  }
+
+  /* ── Mesopotamian Section Divider ─────────────────────
+     Gold gradient rule with central diamond glyph. */
+  .mesopot-divider {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(194, 164, 92, 0.5) 25%,
+      rgba(194, 164, 92, 0.5) 75%,
+      transparent 100%
+    );
+  }
+  .mesopot-divider::before {
+    content: "◆";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #c2a45c;
+    font-size: 9px;
+    background: #000;
+    padding: 0 10px;
+    opacity: 0.7;
+  }
+
+  /* ── Ancient Seal Card ─────────────────────────────────
+     Inspired by Mesopotamian cylinder seal impressions. */
+  .card-seal {
+    border: 1px solid rgba(194, 164, 92, 0.15);
+    box-shadow:
+      inset 0 1px 0 rgba(194, 164, 92, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .card-seal:hover {
+    border-color: rgba(194, 164, 92, 0.4);
+    box-shadow:
+      inset 0 1px 0 rgba(194, 164, 92, 0.15),
+      0 8px 30px rgba(194, 164, 92, 0.1),
+      0 0 0 1px rgba(194, 164, 92, 0.1);
+  }
+
+  /* ── Ur Gold Glow Text ─────────────────────────────── */
+  .text-ur-glow {
+    text-shadow: 0 0 80px rgba(194, 164, 92, 0.35), 0 0 20px rgba(194, 164, 92, 0.15);
+  }
+
+  /* ── Ziggurat Gradient — stepped dark elevation ───── */
+  .bg-ziggurat {
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 0%) 0%,
+      hsl(0 0% 3%) 40%,
+      hsl(0 0% 5%) 100%
+    );
   }
 }

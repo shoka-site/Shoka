@@ -66,6 +66,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProjectDetailLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default async function ProjectDetailLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const SITE_URL = "https://www.shoka.site";
+
+  let projectSchema = null;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    const res = await fetch(`${baseUrl}/api/projects/${id}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const project = await res.json();
+      if (project?.title) {
+        projectSchema = {
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: project.title,
+          description: project.description || "",
+          url: `${SITE_URL}/projects/${id}`,
+          ...(project.images?.length > 0 && { image: project.images }),
+          ...(project.createdAt && { dateCreated: project.createdAt }),
+          creator: {
+            "@type": "Organization",
+            name: "Shoka - شوكة",
+            url: SITE_URL,
+          },
+        };
+      }
+    }
+  } catch {
+    // fallback — no schema
+  }
+
+  return (
+    <>
+      {projectSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+        />
+      )}
+      {children}
+    </>
+  );
 }

@@ -15,23 +15,36 @@ async function fetchIds(endpoint: string): Promise<string[]> {
   }
 }
 
+function withAlternates(url: string, lastModified: Date, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], priority: number): MetadataRoute.Sitemap[number] {
+  return {
+    url,
+    lastModified,
+    changeFrequency,
+    priority,
+    alternates: {
+      languages: {
+        ar: url,
+        en: url,
+      },
+    },
+  };
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Static pages
   const staticPages: MetadataRoute.Sitemap = [
-    { url: SITE_URL, lastModified: now, changeFrequency: "daily", priority: 1.0 },
-    { url: `${SITE_URL}/home`, lastModified: now, changeFrequency: "daily", priority: 1.0 },
-    { url: `${SITE_URL}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_URL}/packages`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_URL}/projects`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${SITE_URL}/industries`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${SITE_URL}/news`, lastModified: now, changeFrequency: "weekly", priority: 0.75 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    withAlternates(SITE_URL, now, "daily", 1.0),
+    withAlternates(`${SITE_URL}/home`, now, "daily", 1.0),
+    withAlternates(`${SITE_URL}/services`, now, "weekly", 0.9),
+    withAlternates(`${SITE_URL}/packages`, now, "weekly", 0.9),
+    withAlternates(`${SITE_URL}/projects`, now, "weekly", 0.85),
+    withAlternates(`${SITE_URL}/industries`, now, "weekly", 0.85),
+    withAlternates(`${SITE_URL}/about`, now, "monthly", 0.8),
+    withAlternates(`${SITE_URL}/news`, now, "weekly", 0.75),
+    withAlternates(`${SITE_URL}/contact`, now, "monthly", 0.7),
   ];
 
-  // Dynamic pages — fetch IDs from the API
   const [serviceIds, projectIds, packageIds, industryIds] = await Promise.all([
     fetchIds("services"),
     fetchIds("projects"),
@@ -39,33 +52,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchIds("industries"),
   ]);
 
-  const servicePages: MetadataRoute.Sitemap = serviceIds.map((id) => ({
-    url: `${SITE_URL}/services/${id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  const servicePages = serviceIds.map((id) =>
+    withAlternates(`${SITE_URL}/services/${id}`, now, "monthly", 0.8)
+  );
 
-  const projectPages: MetadataRoute.Sitemap = projectIds.map((id) => ({
-    url: `${SITE_URL}/projects/${id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.75,
-  }));
+  const projectPages = projectIds.map((id) =>
+    withAlternates(`${SITE_URL}/projects/${id}`, now, "monthly", 0.75)
+  );
 
-  const packagePages: MetadataRoute.Sitemap = packageIds.map((id) => ({
-    url: `${SITE_URL}/packages/${id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  const packagePages = packageIds.map((id) =>
+    withAlternates(`${SITE_URL}/packages/${id}`, now, "monthly", 0.8)
+  );
 
-  const industryPages: MetadataRoute.Sitemap = industryIds.map((id) => ({
-    url: `${SITE_URL}/industries/${id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.75,
-  }));
+  const industryPages = industryIds.map((id) =>
+    withAlternates(`${SITE_URL}/industries/${id}`, now, "monthly", 0.75)
+  );
 
   return [
     ...staticPages,

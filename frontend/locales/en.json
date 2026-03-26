@@ -217,6 +217,19 @@
       "description": "Contact us to learn more about our packages and how we can help your business.",
       "button": "Get in Touch"
     },
+    "most_popular": "Most Popular",
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about our packages.",
+      "q1": "What's included in each package?",
+      "a1": "Each package includes a tailored bundle of services such as web development, mobile apps, UI/UX design, and ongoing support. The exact inclusions vary by package tier.",
+      "q2": "Can I customize a package?",
+      "a2": "Yes. All packages can be customized to fit your specific business requirements. Contact us to discuss your needs and we'll tailor the perfect solution.",
+      "q3": "What's the typical project timeline?",
+      "a3": "Timelines vary by package complexity. Simple packages can be delivered in 4-6 weeks, while enterprise solutions may take 8-12 weeks. We provide a detailed timeline during consultation.",
+      "q4": "How do I get started?",
+      "a4": "Book a free consultation through our contact page. We'll discuss your requirements, recommend the best package, and provide a detailed proposal within 48 hours."
+    },
     "cta_sidebar": {
       "title": "Interested in this Package?",
       "desc": "Contact us to start your journey and supercharge your business."
@@ -406,6 +419,14 @@
       "tiktok": "TikTok",
       "facebook": "Facebook"
     },
+    "newsletter": {
+      "title": "Stay in the loop",
+      "description": "Get updates on our latest projects and insights.",
+      "placeholder": "your@email.com",
+      "button": "Subscribe",
+      "success": "Subscribed!",
+      "success_desc": "You'll hear from us soon."
+    },
     "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
     "links": {
       "home": "Home",
@@ -448,5 +469,15 @@
       "title": "Build for your industry",
       "button": "Partner with us"
     }
-      }
+  },
+  "exit_popup": {
+    "title": "Wait — before you go!",
+    "description": "Book a free consultation and let us help you build your digital future.",
+    "name_placeholder": "Your name",
+    "email_placeholder": "your@email.com",
+    "cta": "Get Free Consultation",
+    "dismiss": "No thanks, I'm just browsing",
+    "success_title": "Thank you!",
+    "success_desc": "We'll be in touch within 24 hours."
+  }
 }

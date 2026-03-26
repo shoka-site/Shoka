@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { trackEvent } from "@/lib/analytics";
 
 export function ContactForm({ isRtl }: { isRtl: boolean }) {
   const { t } = useTranslation();
@@ -53,6 +54,7 @@ export function ContactForm({ isRtl }: { isRtl: boolean }) {
       });
 
       if (response.ok) {
+        trackEvent("form_submit", { form_type: "contact", has_company: !!values.company });
         toast({
           title: t('contact.form.success_title', 'Success!'),
           description: t('contact.form.success_desc', 'Your message has been sent successfully.'),

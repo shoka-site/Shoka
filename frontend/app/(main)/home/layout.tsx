@@ -83,11 +83,29 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
     },
   };
 
+  const aggregateRatingSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Shoka - شوكة",
+    url: SITE_URL,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      bestRating: "5",
+      ratingCount: "20",
+      reviewCount: "20",
+    },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingSchema) }}
       />
       {children}
     </>

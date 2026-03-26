@@ -33,17 +33,31 @@ export default async function Home() {
       <HeroUpdatesClient items={platformUpdates} isRtl={isRtl} />
 
       {/* Why Us Title Banner */}
-      <div className="border-b border-border/40 bg-background">
+      <div className="relative bg-background overflow-hidden">
+        {/* Mesopotamian Assyrian chevron strip — top border */}
+        <div className="absolute top-0 left-0 right-0 h-6 bg-mesopot-chevron opacity-60" />
+        {/* Subtle gold radial glow behind headline */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(194,164,92,0.05) 0%, transparent 70%)" }} />
         <div className="container mx-auto px-6 md:px-12 lg:px-20 py-16 md:py-28">
           <FadeInSection>
-            <p className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em] mb-3 md:mb-4 text-center">
-              {t("home.why_us.badge")}
-            </p>
+            <div className="flex items-center justify-center gap-3 mb-3 md:mb-4">
+              <span className="text-accent/40 text-[8px]">◆◆◆</span>
+              <p className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]">
+                {t("home.why_us.badge")}
+              </p>
+              <span className="text-accent/40 text-[8px]">◆◆◆</span>
+            </div>
           </FadeInSection>
           <FadeInSection delay={0.08}>
             <h2
-              className="text-center font-display font-black text-foreground leading-[1.0]"
-              style={{ fontSize: "clamp(2.5rem, 8vw, 7.5rem)" }}
+              className="text-center font-display font-black text-foreground leading-[1.0] text-ur-glow"
+              style={{
+                fontSize: "clamp(2.5rem, 8vw, 7.5rem)",
+                background: "linear-gradient(180deg, #ffffff 40%, #c2a45c 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
               {t("home.why_us.title")}
             </h2>
@@ -54,6 +68,8 @@ export default async function Home() {
             </p>
           </FadeInSection>
         </div>
+        {/* Mesopotamian gold gradient bottom rule */}
+        <div className="mesopot-divider mx-8 md:mx-24" />
       </div>
 
       {/* Progressive Loading with Suspense */}
@@ -114,13 +130,13 @@ async function PackagesSection({ t, isRtl, lang }: any) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {packages.slice(0, 3).map((pkg: any, index: number) => (
           <Link key={pkg.id} href={`/packages/${pkg.id}`}>
-            <div className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full">
+            <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div
-                className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
               />
               <div className="flex flex-col flex-1 p-5 md:p-6">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start" style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(pkg.order).padStart(2, "0")}
                 </span>
                 <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">
@@ -176,13 +192,13 @@ async function ServicesSection({ t, isRtl, lang }: any) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {services.slice(0, 3).map((service: any, index: number) => (
           <Link key={service.id} href={`/services/${service.id}`}>
-            <div className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full">
+            <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div
-                className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
               />
               <div className="flex flex-col flex-1 p-5 md:p-6">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start" style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(service.order ?? index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">
@@ -238,9 +254,9 @@ async function ProjectsSection({ t, isRtl, lang }: any) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {projects.slice(0, 3).map((project: any, index: number) => (
           <Link key={project.id} href={`/projects/${project.id}`}>
-            <div className="group relative flex flex-col bg-background border-[0.5px] border-border/50 rounded-2xl overflow-hidden hover:border-accent/40 shadow-sm hover:shadow-xl active:scale-[0.98] transition-all duration-300 cursor-pointer h-full">
+            <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div
-                className="h-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }}
               />
               <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0">
@@ -265,7 +281,7 @@ async function ProjectsSection({ t, isRtl, lang }: any) {
               </div>
 
               <div className="flex flex-col flex-1 p-5 md:p-6">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-xs mb-4 self-start">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start" style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">
@@ -342,8 +358,13 @@ function PhilosophySection({ t, isRtl }: any) {
           return (
             <div key={point.id} className="text-center">
               <FadeInSection delay={index * 0.1}>
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">
-                  <Icon className="w-8 h-8" />
+                <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full mb-6"
+                  style={{
+                    background: "radial-gradient(circle, rgba(194,164,92,0.12) 0%, transparent 70%)",
+                    border: "1px solid rgba(194,164,92,0.25)",
+                    boxShadow: "0 0 0 6px rgba(194,164,92,0.04), inset 0 1px 0 rgba(194,164,92,0.1)",
+                  }}>
+                  <Icon className="w-7 h-7 text-accent" />
                 </div>
                 <h3 className="text-xl font-display font-bold mb-3">{point.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{point.description}</p>
@@ -376,19 +397,26 @@ function ProcessSection({ t, isRtl }: any) {
       </FadeInSection>
 
       <div className="relative max-w-6xl mx-auto px-4">
-        {/* Connection Line */}
-        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-primary/20 hidden lg:block -translate-y-1/2" />
-        
+        {/* Ziggurat connecting line — gold gradient */}
+        <div className="absolute top-[2.5rem] left-[10%] right-[10%] h-[1px] hidden lg:block"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(194,164,92,0.3) 20%, rgba(194,164,92,0.3) 80%, transparent)" }} />
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12 lg:gap-8 relative z-10">
           {processSteps.map((step, index) => (
             <FadeInSection key={step.id} delay={index * 0.1} className="relative group text-center">
               <div className="relative mb-8 inline-block">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl md:text-2xl font-display font-bold shadow-xl group-hover:scale-110 transition-transform duration-500 relative z-10 mx-auto">
+                {/* Outer seal ring */}
+                <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ border: "1px solid rgba(194,164,92,0.3)", boxShadow: "0 0 20px rgba(194,164,92,0.15)" }} />
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full text-primary-foreground flex items-center justify-center text-xl md:text-2xl font-display font-bold relative z-10 mx-auto transition-all duration-500"
+                  style={{
+                    background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)",
+                    boxShadow: "0 4px 20px rgba(194,164,92,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
+                  }}>
                   {step.stepNumber}
                 </div>
-                <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping group-hover:scale-150 transition-transform duration-500 opacity-0 group-hover:opacity-100" />
               </div>
-              <h3 className="text-lg md:text-xl font-display font-bold mb-3 group-hover:text-primary transition-colors duration-300">{step.title}</h3>
+              <h3 className="text-lg md:text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">{step.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed font-light">{step.description}</p>
             </FadeInSection>
           ))}
@@ -411,23 +439,19 @@ function ResultsSection({ t, isRtl }: any) {
   ];
 
   return (
-    <section className="relative py-32 bg-foreground text-background overflow-hidden">
-      <div className="absolute inset-0 opacity-5">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="results-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M30 0L60 30L30 60L0 30Z" fill="none" stroke="currentColor" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#results-pattern)" />
-        </svg>
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground via-transparent to-foreground/90 z-0" />
+    <section className="relative py-32 bg-[#060606] text-white overflow-hidden">
+      {/* Mesopotamian diamond lattice overlay */}
+      <div className="absolute inset-0 opacity-100 bg-mesopot-lattice" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#060606] via-transparent to-[#060606]/90 z-0" />
       <div className="container mx-auto px-6 relative z-10">
         <FadeInSection>
-          <p className="text-accent text-xs font-bold uppercase tracking-[0.4em] mb-4 text-center">
-            {t("home.results.badge")}
-          </p>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="text-accent/40 text-[8px]">◆◆◆</span>
+            <p className="text-accent text-xs font-bold uppercase tracking-[0.4em]">
+              {t("home.results.badge")}
+            </p>
+            <span className="text-accent/40 text-[8px]">◆◆◆</span>
+          </div>
         </FadeInSection>
         <FadeInSection delay={0.1}>
           <h2
@@ -487,33 +511,45 @@ function ResultsSection({ t, isRtl }: any) {
 
 function OutcomesSection({ t, isRtl }: any) {
   return (
-    <section className="relative py-32 bg-foreground text-background overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-        </div>
+    <section className="relative py-32 bg-[#060606] text-white overflow-hidden">
+        {/* Mesopotamian rosette / sun-disc pattern overlay */}
+        <div className="absolute inset-0 bg-mesopot-rosette opacity-100" />
         <div className="container relative z-10 mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <FadeInSection>
-              <h2 className="text-4xl md:text-6xl font-display font-black mb-10 leading-tight">
+              {/* Mesopotamian decorative crown mark */}
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="flex-1 max-w-[120px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(194,164,92,0.5))" }} />
+                <span className="text-accent text-xs tracking-[0.5em]">◆</span>
+                <div className="flex-1 max-w-[120px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(194,164,92,0.5))" }} />
+              </div>
+              <h2 className="text-4xl md:text-6xl font-display font-black mb-10 leading-tight"
+                style={{
+                  background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}>
                 {t("home.outcomes.title")}
               </h2>
             </FadeInSection>
             <FadeInSection delay={0.2}>
               <div className="flex flex-col sm:flex-row gap-6 justify-center mt-12">
                 <Link href="/contact">
-                  <Button size="lg" className="h-16 px-12 rounded-full bg-primary text-primary-foreground font-bold text-lg hover:scale-105 transition-transform duration-300">
+                  <Button size="lg" className="h-16 px-12 rounded-full font-bold text-lg hover:scale-105 transition-all duration-300"
+                    style={{
+                      background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)",
+                      color: "#000",
+                      boxShadow: "0 8px 30px rgba(194,164,92,0.3)",
+                    }}>
                     {t("home.cta.primary")}
                   </Button>
                 </Link>
                 <Link href="/projects">
-                  <Button variant="outline" size="lg" className="h-16 px-12 rounded-full border-background/20 bg-background/10 text-background hover:bg-background/20 font-bold text-lg">
+                  <Button variant="outline" size="lg" className="h-16 px-12 rounded-full font-bold text-lg text-white transition-all duration-300 hover:border-accent/60 hover:bg-accent/10"
+                    style={{
+                      borderColor: "rgba(194,164,92,0.3)",
+                      background: "rgba(194,164,92,0.05)",
+                    }}>
                     {t("view_all_projects")}
                   </Button>
                 </Link>

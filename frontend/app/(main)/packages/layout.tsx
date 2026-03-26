@@ -61,11 +61,54 @@ export default function PackagesLayout({ children }: { children: React.ReactNode
     },
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What's included in Shoka's packages?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Each package includes a tailored bundle of services such as web development, mobile apps, UI/UX design, and ongoing support. The exact inclusions vary by package tier.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I customize a package?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. All packages can be customized to fit your specific business requirements. Contact us to discuss your needs and we'll tailor the perfect solution.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the typical project timeline?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Timelines vary by package complexity. Simple packages can be delivered in 4-6 weeks, while enterprise solutions may take 8-12 weeks. We provide a detailed timeline during consultation.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How do I get started?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Book a free consultation through our contact page. We'll discuss your requirements, recommend the best package, and provide a detailed proposal within 48 hours.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       {children}
     </>

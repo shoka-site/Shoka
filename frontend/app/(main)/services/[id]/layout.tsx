@@ -62,6 +62,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ServiceDetailLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export default async function ServiceDetailLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const SITE_URL = "https://www.shoka.site";
+
+  let serviceSchema = null;
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    const res = await fetch(`${baseUrl}/api/services/${id}`, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const service = await res.json();
+      if (service?.title) {
+        serviceSchema = {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: service.title,
+          description: service.description || "",
+          url: `${SITE_URL}/services/${id}`,
+          provider: {
+            "@type": "Organization",
+            name: "Shoka - شوكة",
+            url: SITE_URL,
+          },
+          areaServed: ["Iraq", "Turkey", "Middle East"],
+          serviceType: service.type || "Software Development",
+        };
+      }
+    }
+  } catch {
+    // fallback — no schema
+  }
+
+  return (
+    <>
+      {serviceSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+      )}
+      {children}
+    </>
+  );
 }

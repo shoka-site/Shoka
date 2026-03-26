@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { InitialLoader } from "@/components/ui/InitialLoader";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { Readex_Pro } from "next/font/google";
 import "./globals.css";
 
@@ -171,6 +172,37 @@ export default function RootLayout({
         },
     };
 
+    // JSON-LD for LocalBusiness (SEO: rich snippets for location-based searches)
+    const localBusinessSchema = {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Shoka - شوكة",
+        "image": `${SITE_URL}/logo.png`,
+        "url": SITE_URL,
+        "telephone": "+90-000-000-0000",
+        "email": "global@shoka.site",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Kızılay",
+            "addressLocality": "Ankara",
+            "addressCountry": "TR",
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.9208,
+            "longitude": 32.8541,
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00",
+        },
+        "priceRange": "$$",
+        "areaServed": ["Iraq", "Turkey", "Middle East"],
+        "knowsLanguage": ["Arabic", "English", "Turkish"],
+    };
+
     return (
         <html lang="ar" dir="rtl" className={readexPro.variable}>
             <head>
@@ -184,12 +216,17 @@ export default function RootLayout({
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+                />
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
                 <InitialLoader />
                 <Providers>
                     {children}
                 </Providers>
+                <GoogleAnalytics />
                 <SpeedInsights />
                 <Analytics />
             </body>
