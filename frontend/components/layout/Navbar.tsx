@@ -50,6 +50,8 @@ export default function Navbar() {
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
     i18n.changeLanguage(newLang);
+    // Set cookie for server-side detection
+    document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
   };
 
   useEffect(() => {

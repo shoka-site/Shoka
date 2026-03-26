@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 export const revalidate = 60;
 
 export default async function Projects() {
-    const { t, isRtl, lang } = getServerTranslation("ar");
+    const { t, isRtl, lang } = await getServerTranslation();
 
     return (
         <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">
@@ -50,7 +50,7 @@ async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: any }) {
     const rawProjects = await storage.getProjects(true, true);
     const projects = transformForLanguage(rawProjects, lang);
 
-    const { t } = getServerTranslation(lang);
+    const { t } = await getServerTranslation(lang);
 
     const categories = [
         { key: "past", label: t("portfolio.projects.categories.made"), icon: History, color: "text-emerald-500", badge: t("portfolio.projects.status.made") },

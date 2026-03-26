@@ -2,28 +2,31 @@
 
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { ChevronRight, ChevronLeft, ArrowRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
-
 import { Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type UpdateType = "news" | "achievement" | "event" | "new";
 
 export interface PlatformUpdate {
-    id: string;
-    type: UpdateType;
-    title: string;
-    summary: string;
+  id: string;
+  type: UpdateType;
+  title?: string;
+  summary?: string;
+  titleEn?: string;
+  titleAr?: string;
+  summaryEn?: string;
+  summaryAr?: string;
 }
 
 export interface Testimonial {
-    id: string;
-    quote: string;
-    author: string;
-    role: string;
-    rating: number;
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+  rating: number;
 }
 
 function useUpdateStyle() {
@@ -31,38 +34,38 @@ function useUpdateStyle() {
     news: {
       label: "hero.updates.news",
       emoji: "📰",
-      accentHex: "#C2A45C",
-      accentLight: "rgba(194,164,92,0.14)",
-      textClass: "text-amber-300",
-      bgFrom: "from-[#1e1505]",
-      bgVia: "via-[#2a1f08]",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194,164,92,0.10)",
+      textClass: "text-[#c2a45c]",
+      bgFrom: "from-[#070500]",
+      bgVia: "via-[#0a0800]",
     },
     achievement: {
       label: "hero.updates.achievement",
       emoji: "🏆",
-      accentHex: "#8C6239",
-      accentLight: "rgba(140,98,57,0.18)",
-      textClass: "text-[#D6C6A5]",
-      bgFrom: "from-[#1a0f08]",
-      bgVia: "via-[#221508]",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194,164,92,0.10)",
+      textClass: "text-[#c2a45c]",
+      bgFrom: "from-[#060500]",
+      bgVia: "via-[#090700]",
     },
     event: {
       label: "hero.updates.event",
       emoji: "📅",
-      accentHex: "#D6C6A5",
-      accentLight: "rgba(214,198,165,0.12)",
-      textClass: "text-[#e8ddcc]",
-      bgFrom: "from-[#17110a]",
-      bgVia: "via-[#22190e]",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194,164,92,0.08)",
+      textClass: "text-[#c2a45c]",
+      bgFrom: "from-[#040404]",
+      bgVia: "via-[#060604]",
     },
     new: {
       label: "hero.updates.new",
       emoji: "✨",
-      accentHex: "#C2A45C",
-      accentLight: "rgba(194,164,92,0.16)",
-      textClass: "text-amber-200",
-      bgFrom: "from-[#1c1408]",
-      bgVia: "via-[#251c0c]",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194,164,92,0.12)",
+      textClass: "text-[#c2a45c]",
+      bgFrom: "from-[#070600]",
+      bgVia: "via-[#0a0800]",
     },
   };
 }
@@ -93,12 +96,23 @@ export function FadeInSection({ children, delay = 0, className = "" }: { childre
 }
 
 export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; isRtl: boolean }) {
+  const { t, i18n } = useTranslation();
+
+  // Localize items reactively based on current language
+  const isArabic = i18n.language?.startsWith("ar") ?? true;
+  const localizedItems = items.map((item) => ({
+    ...item,
+    title: (isArabic ? item.titleAr : item.titleEn) ?? item.title ?? "",
+    summary: (isArabic ? item.summaryAr : item.summaryEn) ?? item.summary ?? "",
+  }));
+
+  // Also update RTL from client-side language
+  const clientIsRtl = i18n.dir() === "rtl";
   const heroRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const yOffset = useTransform(scrollY, [0, 600], [0, -80]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-  const { t } = useTranslation();
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
@@ -125,20 +139,20 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
   const updateStyle = useUpdateStyle();
 
-  if (items.length === 0) {
+  if (localizedItems.length === 0) {
     return (
-      <section 
+      <section
         className="relative h-[100dvh] flex items-center overflow-hidden"
-        style={{ backgroundColor: "#0f0a04" }}
+        style={{ backgroundColor: "#000000" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#0f0a04]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#000000]" />
       </section>
     );
   }
 
   const goTo = (i: number) => { setDirection(i > activeIdx ? 1 : -1); setActiveIdx(i); };
-  const prev = () => goTo((activeIdx - 1 + items.length) % items.length);
-  const next = () => goTo((activeIdx + 1) % items.length);
+  const prev = () => goTo((activeIdx - 1 + localizedItems.length) % localizedItems.length);
+  const next = () => goTo((activeIdx + 1) % localizedItems.length);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isMobile) return;
@@ -150,7 +164,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
     });
   };
 
-  const item = items[activeIdx];
+  const item = localizedItems[activeIdx];
   const style = (updateStyle as any)[item?.type] ?? updateStyle.news;
 
   const slideVariants: any = {
@@ -172,7 +186,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
     <section
       ref={heroRef}
       className="relative h-[100dvh] flex items-center overflow-hidden"
-      style={{ backgroundColor: "#0f0a04" }}
+      style={{ backgroundColor: "#000000" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onMouseMove={handleMouseMove}
@@ -184,7 +198,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-          className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#0f0a04]`}
+          className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#000000]`}
         />
       </AnimatePresence>
 
@@ -208,7 +222,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
         initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
         animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
         transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-        className={`absolute ${isRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[25vw] md:text-[35vw] leading-none select-none pointer-events-none`}
+        className={`absolute ${clientIsRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[25vw] md:text-[35vw] leading-none select-none pointer-events-none`}
         style={{ color: style.accentHex }}
       >
         {style.emoji}
@@ -228,7 +242,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
       <motion.div
         style={{ y: yOffset, opacity }}
         className={`relative z-10 w-full px-8 md:px-16 lg:px-24 pt-20`}
-        dir={isRtl ? "rtl" : "ltr"}
+        dir={clientIsRtl ? "rtl" : "ltr"}
       >
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
@@ -239,18 +253,18 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
             animate="center"
             exit="exit"
             transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-            className={`max-w-5xl ${isRtl ? "mr-0 ml-auto text-right" : ""}`}
+            className={`max-w-5xl ${clientIsRtl ? "mr-0 ml-auto text-right" : ""}`}
           >
             <motion.div
               custom={1}
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`mb-8 flex items-center gap-4 ${isRtl ? "justify-start" : ""}`}
+              className={`mb-8 flex items-center gap-4 ${clientIsRtl ? "justify-start" : ""}`}
             >
               <span className="text-4xl drop-shadow-md">{style.emoji}</span>
               <span
-                className={`text-xs font-bold uppercase tracking-[0.3em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
+                className={`text-xs font-bold uppercase tracking-[0.05em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
                 style={{ borderColor: style.accentHex + "60", backgroundColor: style.accentLight }}
               >
                 {t(style.label)}
@@ -262,7 +276,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${isRtl ? "md:text-5xl lg:text-7xl" : ""}`}
+              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
                 x: mousePosition.x * -1,
@@ -277,7 +291,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12 ${isRtl ? "lg:text-xl max-w-xl" : ""}`}
+              className={`text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12 ${clientIsRtl ? "lg:text-xl max-w-xl" : ""}`}
               style={{
                 x: mousePosition.x * -0.5,
                 y: mousePosition.y * -0.5
@@ -291,7 +305,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`flex flex-col sm:flex-row gap-5 ${isRtl ? "justify-start" : ""}`}
+              className={`flex flex-col sm:flex-row gap-5 ${clientIsRtl ? "justify-start" : ""}`}
             >
               <Link href="/contact">
                 <Button
@@ -318,7 +332,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
       <div
         className="absolute bottom-8 md:bottom-12 left-0 right-0 px-6 md:px-16 lg:px-24 z-20 flex items-center justify-between"
-        dir={isRtl ? "rtl" : "ltr"}
+        dir={clientIsRtl ? "rtl" : "ltr"}
       >
         <div className="text-sm font-mono text-white/30 tracking-widest">
           <span className="font-bold text-lg" style={{ color: style.accentHex }}>
@@ -357,7 +371,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
           <div className="h-8 w-px bg-white/10 mx-2 hidden md:block"></div>
 
           <div className="flex gap-2.5 hidden md:flex">
-            {items.map((_, i) => (
+            {localizedItems.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
@@ -377,7 +391,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
         className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pb-8 cursor-pointer"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
-        <span className={`text-[10px] uppercase tracking-[0.2em] font-medium text-white/30 mb-3 ${isRtl ? 'mr-1' : 'ml-1'}`}>{t("hero.updates.scroll")}</span>
+        <span className={`text-[10px] uppercase tracking-[0.05em] font-medium text-white/30 mb-3 ${clientIsRtl ? 'mr-1' : 'ml-1'}`}>{t("hero.updates.scroll")}</span>
         <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/20 to-white/0 relative overflow-hidden">
           <motion.div
             className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white/80"
@@ -412,21 +426,40 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as any }}
-          className="bg-background border-[0.5px] border-border/50 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-md"
+          className="relative p-8 md:p-12 rounded-2xl overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, rgba(194,164,92,0.06) 0%, rgba(0,0,0,0) 60%)",
+            border: "1px solid rgba(194,164,92,0.2)",
+            boxShadow: "0 4px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(194,164,92,0.1)",
+          }}
         >
           {testimonials[currentTestimonial] && (
             <>
+              {/* Gold gradient top stripe */}
+              <div className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(194,164,92,0.6) 50%, transparent)" }} />
+              {/* Decorative quote glyph */}
+              <div className="text-[80px] leading-none font-serif text-center mb-2 select-none"
+                style={{ color: "rgba(194,164,92,0.15)", lineHeight: "0.7" }}>
+                ❝
+              </div>
               <div className="flex justify-center mb-6">
                 {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-accent fill-accent" />
+                  <Star key={i} className="w-4 h-4 text-accent fill-accent" />
                 ))}
               </div>
-              <p className="text-lg md:text-xl text-foreground/80 mb-8 italic leading-relaxed">
-                &quot;{testimonials[currentTestimonial].quote}&quot;
+              <p className="text-lg md:text-xl text-white/75 mb-8 leading-relaxed text-center">
+                {testimonials[currentTestimonial].quote}
               </p>
+              {/* Author separator */}
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="h-px w-12" style={{ background: "linear-gradient(to right, transparent, rgba(194,164,92,0.4))" }} />
+                <span className="text-accent text-[8px]">◆</span>
+                <div className="h-px w-12" style={{ background: "linear-gradient(to left, transparent, rgba(194,164,92,0.4))" }} />
+              </div>
               <div className="text-center">
-                <div className="font-bold text-foreground">{testimonials[currentTestimonial].author}</div>
-                <div className="text-sm text-muted-foreground">{testimonials[currentTestimonial].role}</div>
+                <div className="font-bold text-white">{testimonials[currentTestimonial].author}</div>
+                <div className="text-sm text-accent/70 mt-1">{testimonials[currentTestimonial].role}</div>
               </div>
             </>
           )}

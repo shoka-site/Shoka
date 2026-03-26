@@ -5,7 +5,7 @@ import { ContactHero, InfoCard } from "@/components/contact/ContactClientCompone
 import { ContactForm } from "@/components/contact/ContactForm";
 
 export default async function Contact() {
-  const { t, isRtl } = getServerTranslation("ar");
+  const { t, isRtl } = await getServerTranslation();
 
   return (
     <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">

@@ -16,6 +16,8 @@ export default function WelcomeV3() {
     const toggleLanguage = () => {
         const newLang = i18n.language === "en" ? "ar" : "en";
         i18n.changeLanguage(newLang);
+        // Set cookie for server-side detection
+        document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
     };
 
     // Mouse tracking for the "Golden Aura"
@@ -189,29 +191,7 @@ export default function WelcomeV3() {
                     </div>
 
                     <p className={`text-white/70 text-lg md:text-xl max-w-2xl leading-relaxed text-center ${isRtl ? "" : "tracking-wide"}`}>
-                        {i18n.language === "en" ? (
-                            <>
-                                Where the{" "}
-                                <em className="not-italic font-semibold"
-                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                                    wisdom of the ancients
-                                </em>
-                                {" "}meets the{" "}
-                                <em className="not-italic font-semibold"
-                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                                    technology of tomorrow
-                                </em>
-                                .
-                            </>
-                        ) : (
-                            <>
-                                حيث تلتقي{" "}
-                                <em className="not-italic font-semibold"
-                                    style={{ background: "linear-gradient(90deg, #C2A45C, #e8d49a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                                    حكمة القدماء بتكنولوجية الغد.
-                                </em>
-                            </>
-                        )}
+                        {t("welcome.tagline")}
                     </p>
                 </motion.div>
 

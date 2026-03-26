@@ -49,7 +49,7 @@ export const metadata: Metadata = {
         "Shoka",
         "Shoka software Iraq",
     ],
-    
+
     // Canonical and alternate languages
     alternates: {
         canonical: SITE_URL,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
             "en": `${SITE_URL}/en`,
         },
     },
-    
+
     // Open Graph
     openGraph: {
         type: "website",
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
             },
         ],
     },
-    
+
     // Twitter Cards
     twitter: {
         card: "summary_large_image",
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
         creator: "@shoka_it",
         site: "@shoka_it",
     },
-    
+
     // Robots
     robots: {
         index: true,
@@ -100,14 +100,14 @@ export const metadata: Metadata = {
             "max-snippet": -1,
         },
     },
-    
+
     // Icons
     icons: {
         icon: "/og-image.png",
         shortcut: "/og-image.png",
         apple: "/og-image.png",
     },
-    
+
     // Verification
     verification: {
         google: "google-site-verification-code",
@@ -122,20 +122,28 @@ export const viewport: Viewport = {
     themeColor: '#000000',
 };
 
-export default function RootLayout({
+import { cookies } from "next/headers";
+
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const cookieStore = await cookies();
+    const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+    const isRtl = lang === "ar";
+
     // JSON-LD structured data for Organization
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "شوكة - منصة الأنظمة الرقمية العراقية",
+        "name": isRtl ? "شوكة - منصة الأنظمة الرقمية العراقية" : "Shoka - Iraqi Digital Systems Platform",
         "alternateName": ["Shoka", "شوكة"],
         "url": SITE_URL,
         "logo": `${SITE_URL}/logo.png`,
-        "description": "المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات والتحول الرقمي.",
+        "description": isRtl
+            ? "المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات والتحول الرقمي."
+            : "The leading Iraqi platform for intelligent digital systems, software development, and digital transformation.",
         "foundingDate": "2024",
         "address": {
             "@type": "PostalAddress",
@@ -160,7 +168,7 @@ export default function RootLayout({
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": SITE_NAME,
+        "name": isRtl ? SITE_NAME : "SHOKA | Software & Tech Development in Iraq",
         "url": SITE_URL,
         "potentialAction": {
             "@type": "SearchAction",
@@ -172,7 +180,7 @@ export default function RootLayout({
         },
     };
 
-    // JSON-LD for LocalBusiness (SEO: rich snippets for location-based searches)
+    // JSON-LD for LocalBusiness
     const localBusinessSchema = {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
@@ -204,7 +212,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="ar" dir="rtl" className={readexPro.variable}>
+        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={readexPro.variable}>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
                 {/* JSON-LD Structured Data */}

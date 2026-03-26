@@ -1,9 +1,12 @@
+import { cookies } from "next/headers";
 import en from "../locales/en.json";
 import ar from "../locales/ar.json";
 
 const resources = { en, ar };
 
-export function getServerTranslation(lang: "en" | "ar" = "ar") {
+export async function getServerTranslation(forcedLang?: "en" | "ar") {
+  const cookieStore = await cookies();
+  const lang = forcedLang || (cookieStore.get("NEXT_LOCALE")?.value as "en" | "ar") || "ar";
   const translations = resources[lang] || resources.ar;
 
   return {
