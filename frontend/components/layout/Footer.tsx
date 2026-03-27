@@ -98,10 +98,10 @@ export default function Footer() {
             <h3 className="text-lg font-display font-semibold mb-6 text-accent">{t('footer.connect')}</h3>
             <ul className="space-y-4">
               <li><a href="https://www.linkedin.com/company/shoka-global/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.linkedin')}</a></li>
-              <li><a href="https://x.com/shoka_it" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.twitter')}</a></li>
-              <li><a href="https://www.instagram.com/shoka.it/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.instagram')}</a></li>
-              <li><a href="https://www.tiktok.com/@shoka.it" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.tiktok')}</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=61578501381386" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.facebook')}</a></li>
+              <li><a href="https://x.com/sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.twitter')}</a></li>
+              <li><a href="https://www.instagram.com/sehle.iq/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.instagram')}</a></li>
+              <li><a href="https://www.tiktok.com/@sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.tiktok')}</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61576641872056&sk=about_details" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.facebook')}</a></li>
               <li><a href="mailto:global@shoka.site" className="text-white/60 hover:text-white transition-colors">global@shoka.site</a></li>
             </ul>
           </div>
