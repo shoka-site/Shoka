@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Sparkles, Globe } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
 import Image from "next/image";
@@ -20,33 +20,54 @@ export default function WelcomeV3() {
         document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
     };
 
-    // Mouse tracking for the "Golden Aura"
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    // Detect touch/mobile device — disable heavy effects on mobile to reduce INP
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+    useEffect(() => {
+        setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768);
+    }, []);
+
+    // Mouse tracking for the "Golden Aura" — desktop only
+    const mouseX = useMotionValue(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
+    const mouseY = useMotionValue(typeof window !== "undefined" ? window.innerHeight / 2 : 0);
 
     const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
     const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
     useEffect(() => {
+        if (isTouchDevice) return; // skip mouse tracking on mobile
         const handleMouseMove = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
         };
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    }, [isTouchDevice, mouseX, mouseY]);
 
     // Aura spotlight effect
     const spotlight = useMotionTemplate`radial-gradient(1000px circle at ${springX}px ${springY}px, rgba(194,164,92,0.07), transparent 80%)`;
 
-    // Generate particles only on the client to avoid hydration mismatch
+    // Defer video load to unblock LCP — video starts playing after hero content is visible
+    const videoRef = useRef<HTMLVideoElement>(null);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (videoRef.current) {
+                videoRef.current.src = "/Evolution_of_Writing_Mediums.mp4";
+                videoRef.current.load();
+            }
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Generate particles only on the client to avoid hydration mismatch.
+    // 0 particles on mobile (main-thread relief), 8 on desktop (reduced from 20).
     const [particles, setParticles] = useState<Array<{
         x: number; y: number; scale: number; duration: number; delay: number; xOffset: number;
     }>>([]);
 
     useEffect(() => {
+        const count = isTouchDevice ? 0 : 8;
         setParticles(
-            Array.from({ length: 20 }, () => ({
+            Array.from({ length: count }, () => ({
                 x: Math.random() * 2000,
                 y: Math.random() * 1000,
                 scale: Math.random() * 0.5,
@@ -55,7 +76,7 @@ export default function WelcomeV3() {
                 xOffset: (Math.random() - 0.5) * 100,
             }))
         );
-    }, []);
+    }, [isTouchDevice]);
 
     return (
         <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display" dir={isRtl ? "rtl" : "ltr"}>
@@ -76,23 +97,24 @@ export default function WelcomeV3() {
                 </button>
             </motion.div>
 
-            {/* 0. Video Background Layer */}
+            {/* 0. Video Background Layer — src injected after 2s to unblock LCP */}
             <video
+                ref={videoRef}
                 autoPlay
                 loop
                 muted
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover z-0 opacity-60"
-            >
-                <source src="/Evolution_of_Writing_Mediums.mp4" type="video/mp4" />
-            </video>
+            />
 
             {/* 1. Background Layers */}
-            {/* Interactive Spotlight Aura */}
-            <motion.div
-                className="absolute inset-0 z-10 pointer-events-none"
-                style={{ background: spotlight }}
-            />
+            {/* Interactive Spotlight Aura — desktop only to avoid INP penalty on mobile */}
+            {!isTouchDevice && (
+                <motion.div
+                    className="absolute inset-0 z-10 pointer-events-none"
+                    style={{ background: spotlight }}
+                />
+            )}
 
             {/* Subtle Gradient Fog/Overlay to ensure readability */}
             <div className="absolute inset-0 z-10 opacity-70"

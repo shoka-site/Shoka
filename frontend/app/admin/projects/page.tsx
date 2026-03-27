@@ -33,7 +33,8 @@ export default function AdminProjects() {
         queryKey: ["admin-projects"],
         queryFn: async () => {
             const res = await fetch("/api/admin/projects");
-            return res.json();
+            const json = await res.json();
+            return json.data ?? json;
         },
     });
 

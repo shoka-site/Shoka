@@ -59,19 +59,11 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
+    // Use CSS class on <html> instead of inline body styles to prevent scrollbar-shift CLS.
+    // .overflow-locked applies padding-right: var(--scrollbar-width) to compensate.
+    document.documentElement.classList.toggle('overflow-locked', isOpen);
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
+      document.documentElement.classList.remove('overflow-locked');
     };
   }, [isOpen]);
 

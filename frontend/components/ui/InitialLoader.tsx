@@ -8,14 +8,16 @@ export function InitialLoader() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Hide scrolling while loading
-    document.body.style.overflow = "hidden";
+    // Lock scroll via CSS class on <html> — avoids scrollbar-shift CLS caused by body overflow/position hacks.
+    document.documentElement.classList.add("overflow-locked");
+
+    const unlock = () => document.documentElement.classList.remove("overflow-locked");
 
     const handleLoad = () => {
       // Small artificial delay for aesthetics to let animations play out slightly
       setTimeout(() => {
         setIsLoading(false);
-        document.body.style.overflow = "";
+        unlock();
       }, 1000);
     };
 
@@ -25,14 +27,14 @@ export function InitialLoader() {
       window.addEventListener("load", handleLoad);
       return () => {
         window.removeEventListener("load", handleLoad);
-        document.body.style.overflow = "";
+        unlock();
       };
     }
 
     // Fallback: If "load" never fires or takes too long, hide it anyway after 5 seconds to prevent being stuck forever.
     const timeout = setTimeout(() => {
       setIsLoading(false);
-      document.body.style.overflow = "";
+      unlock();
     }, 5000);
 
     return () => clearTimeout(timeout);

@@ -34,7 +34,8 @@ export default function AdminServices() {
         queryKey: ["admin-services"],
         queryFn: async () => {
             const res = await fetch("/api/admin/services");
-            return res.json();
+            const json = await res.json();
+            return json.data ?? json;
         },
     });
 

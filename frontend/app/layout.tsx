@@ -215,6 +215,8 @@ export default async function RootLayout({
         <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={readexPro.variable}>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
+                {/* Measure scrollbar width early so .overflow-locked can compensate — prevents CLS */}
+                <script dangerouslySetInnerHTML={{ __html: `document.documentElement.style.setProperty('--scrollbar-width',(window.innerWidth-document.documentElement.clientWidth)+'px')` }} />
                 {/* JSON-LD Structured Data */}
                 <script
                     type="application/ld+json"

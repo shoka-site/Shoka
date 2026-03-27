@@ -37,7 +37,8 @@ export default function AdminTeam() {
         queryKey: ["admin-team"],
         queryFn: async () => {
             const res = await fetch("/api/admin/team");
-            return res.json();
+            const json = await res.json();
+            return json.data ?? json;
         },
     });
 

@@ -32,7 +32,8 @@ export default function AdminConsultations() {
         queryKey: ["admin-consultations"],
         queryFn: async () => {
             const res = await fetch("/api/admin/consultations");
-            return res.json();
+            const json = await res.json();
+            return json.data ?? json;
         },
         refetchInterval: 30000,
     });

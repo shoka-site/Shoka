@@ -28,7 +28,8 @@ export default function AdminPackages() {
         queryKey: ["admin-packages"],
         queryFn: async () => {
             const res = await fetch("/api/admin/packages");
-            return res.json();
+            const json = await res.json();
+            return json.data ?? json;
         },
     });
 
