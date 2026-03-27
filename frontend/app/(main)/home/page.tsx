@@ -1,6 +1,5 @@
 import { storage } from "@/lib/storage";
 import { getServerTranslation } from "@/lib/server-i18n";
-import { Suspense } from "react";
 import { HeroUpdatesClient, ScrollProgressBar } from "@/components/home/HomeClientComponents";
 import { WhyUsBanner, PhilosophySection, ProcessSection, ResultsSection, OutcomesSection } from "@/components/home/HomeStaticSections";
 import { ServicesSectionClient, ProjectsSectionClient, PackagesSectionClient, TestimonialsSectionClient } from "@/components/home/HomeDataSections";

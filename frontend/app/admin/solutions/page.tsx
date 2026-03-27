@@ -40,7 +40,7 @@ export default function AdminSolutions() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/solutions", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -56,7 +56,7 @@ export default function AdminSolutions() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/solutions/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -104,15 +104,16 @@ export default function AdminSolutions() {
         }
     };
 
-    const handleEdit = (solution: any) => {
+    const handleEdit = (solution: Solution) => {
+        const raw = solution as unknown as Record<string, unknown>;
         setFormData({
-            titleEn: solution.titleEn || solution.title,
-            titleAr: solution.titleAr || solution.title,
-            descriptionEn: solution.descriptionEn || solution.description,
-            descriptionAr: solution.descriptionAr || solution.description,
+            titleEn: (raw.titleEn ?? solution.title ?? "") as string,
+            titleAr: (raw.titleAr ?? solution.title ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? solution.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? solution.description ?? "") as string,
             order: solution.order,
             published: solution.published,
-            industryId: solution.industryId || "",
+            industryId: (solution.industryId ?? "") as string,
         });
         setEditingId(solution.id);
         setIsEditing(true);
@@ -190,9 +191,9 @@ export default function AdminSolutions() {
                                 required
                             >
                                 <option value="" disabled>Select an Industry</option>
-                                {industries.map((industry: any) => (
-                                    <option key={industry.id} value={industry.id}>
-                                        {industry.titleEn || industry.title}
+                                {(industries as Record<string, unknown>[]).map((industry) => (
+                                    <option key={industry.id as string} value={industry.id as string}>
+                                        {(industry.titleEn as string) || (industry.title as string)}
                                     </option>
                                 ))}
                             </select>
@@ -205,7 +206,9 @@ export default function AdminSolutions() {
                 )}
 
                 <div className="space-y-4">
-                    {solutions.map((solution: any) => (
+                    {solutions.map((solution: Solution) => {
+                        const raw = solution as unknown as Record<string, unknown>;
+                        return (
                         <div key={solution.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -215,12 +218,12 @@ export default function AdminSolutions() {
                                     )}
                                     {solution.industryId && (
                                         <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">
-                                            Industry: {industries.find((i: any) => i.id === solution.industryId)?.titleEn || "Unknown"}
+                                            Industry: {(industries as Record<string, unknown>[]).find((i) => i.id === solution.industryId)?.titleEn as string || "Unknown"}
                                         </span>
                                     )}
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{solution.title || solution.titleEn}</h3>
-                                <p className="text-sm">{solution.description || solution.descriptionEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{solution.title || (raw.titleEn as string)}</h3>
+                                <p className="text-sm">{solution.description || (raw.descriptionEn as string)}</p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(solution)}>
@@ -236,7 +239,8 @@ export default function AdminSolutions() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                     {solutions.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
                             No solutions found. Click &quot;Add New&quot; to create one.

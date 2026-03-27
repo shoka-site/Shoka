@@ -1,20 +1,10 @@
-import { 
-  Code2, 
-  Database, 
-  Cloud, 
-  Brain, 
-  Smartphone, 
-  Shield, 
-  Workflow, 
-  LineChart, 
-  Users, 
-  Lightbulb,
-  Globe,
-  Cpu,
-  Server,
-  Lock,
-  Gauge,
-  Building2
+import {
+  Code2,
+  Database,
+  Cloud,
+  Brain,
+  Workflow,
+  Building2,
 } from "lucide-react";
 
 export const serviceCategories = [

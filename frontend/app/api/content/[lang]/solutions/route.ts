@@ -5,8 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ lang: string }> }) {
     try {
-        const { lang: requestedLang } = await params;
-        const lang = requestedLang.split("-")[0] as "en" | "ar";
+        await params;
         const published = true;
         const items = await storage.getSolutions(published);
         return NextResponse.json(items);

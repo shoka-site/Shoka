@@ -1,16 +1,14 @@
-import { 
-  Building2, 
-  ShoppingCart, 
-  HeartPulse, 
-  GraduationCap, 
-  Wallet, 
-  Car, 
-  Factory, 
-  Plane, 
-  Home, 
+import {
+  ShoppingCart,
+  HeartPulse,
+  GraduationCap,
+  Wallet,
+  Car,
+  Factory,
+  Plane,
+  Home,
   Utensils,
   Music,
-  Gamepad2
 } from "lucide-react";
 
 export const industryCategories = [

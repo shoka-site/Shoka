@@ -1,23 +1,32 @@
-import { storage } from "@/lib/storage";
-import { NextRequest, NextResponse } from "next/server";
+import { storage } from '@/lib/storage';
+import { NextRequest } from 'next/server';
+import { assertAdmin } from '@/lib/auth';
+import { ok, fail, withErrorHandler } from '@/lib/api-response';
+import { insertConsultationSchema } from '@shared/schema';
 
-export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json();
-        const consultation = await storage.createConsultation(body);
-        return NextResponse.json(consultation, { status: 201 });
-    } catch (error) {
-        console.error("Error creating consultation:", error);
-        return NextResponse.json({ error: "Failed to create consultation" }, { status: 500 });
-    }
-}
+export const GET = withErrorHandler(async (req: NextRequest) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
 
-export async function GET() {
-    try {
-        const consultations = await storage.getConsultations();
-        return NextResponse.json(consultations);
-    } catch (error) {
-        console.error("Error fetching consultations:", error);
-        return NextResponse.json({ error: "Failed to fetch consultations" }, { status: 500 });
-    }
-}
+  const { searchParams } = new URL(req.url);
+  const page = Math.max(1, Number(searchParams.get('page') ?? 1));
+  const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
+
+  const consultations = await storage.getConsultations();
+  const total = consultations.length;
+  const paginated = consultations.slice((page - 1) * limit, page * limit);
+
+  return ok(paginated, { page, limit, total });
+});
+
+export const POST = withErrorHandler(async (req: NextRequest) => {
+  // Public endpoint — no admin auth required (contact form submissions)
+  const body = await req.json().catch(() => null);
+  const parsed = insertConsultationSchema.safeParse(body);
+  if (!parsed.success) {
+    return fail('VALIDATION_ERROR', 'Invalid consultation data', parsed.error.issues);
+  }
+
+  const consultation = await storage.createConsultation(parsed.data);
+  return ok(consultation, undefined, 201);
+});

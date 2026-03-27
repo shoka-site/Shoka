@@ -7,6 +7,7 @@ import { getServerTranslation } from "@/lib/server-i18n";
 import { ProjectsHero, ProjectCard, FadeInSection } from "@/components/projects/ProjectsClientComponents";
 import { Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
+import type { Project } from "@/hooks/use-content";
 
 export const revalidate = 60;
 
@@ -46,9 +47,9 @@ export default async function Projects() {
     );
 }
 
-async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: any }) {
+async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: "en" | "ar" }) {
     const rawProjects = await storage.getProjects(true, true);
-    const projects = transformForLanguage(rawProjects, lang);
+    const projects = transformForLanguage(rawProjects, lang) as Project[];
 
     const { t } = await getServerTranslation(lang);
 
@@ -69,7 +70,7 @@ async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: any }) {
     return (
         <>
             {categories.map((category, catIndex) => {
-                const categoryProjects = projects.filter((p: any) => p.status === category.key);
+                const categoryProjects = projects.filter((p: Project) => p.status === category.key);
                 if (categoryProjects.length === 0) return null;
 
                 return (
@@ -94,10 +95,10 @@ async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: any }) {
                             </FadeInSection>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                {categoryProjects.map((project: any, index: number) => (
+                                {categoryProjects.map((project: Project, index: number) => (
                                     <ProjectCard
                                         key={project.id}
-                                        project={project}
+                                        project={project as unknown as Record<string, unknown>}
                                         index={index}
                                         isRtl={isRtl}
                                     />

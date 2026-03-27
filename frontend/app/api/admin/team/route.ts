@@ -1,42 +1,34 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { storage } from '@/lib/storage';
+import { NextRequest } from 'next/server';
+import { assertAdmin } from '@/lib/auth';
+import { ok, fail, withErrorHandler } from '@/lib/api-response';
+import { insertTeamMemberSchema } from '@shared/schema';
 
-const prisma = new PrismaClient();
+export const GET = withErrorHandler(async (req: NextRequest) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
 
-export async function GET() {
-    try {
-        const members = await prisma.teamMember.findMany({
-            orderBy: { order: "asc" },
-        });
-        return NextResponse.json(members);
-    } catch (error) {
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-    }
-}
+  const { searchParams } = new URL(req.url);
+  const page = Math.max(1, Number(searchParams.get('page') ?? 1));
+  const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-export async function POST(request: Request) {
-    try {
-        const body = await request.json();
-        const member = await prisma.teamMember.create({
-            data: {
-                order: body.order,
-                nameEn: body.nameEn,
-                nameAr: body.nameAr,
-                roleEn: body.roleEn,
-                roleAr: body.roleAr,
-                bioEn: body.bioEn,
-                bioAr: body.bioAr,
-                descriptionEn: body.descriptionEn,
-                descriptionAr: body.descriptionAr,
-                imageUrl: body.imageUrl,
-                resumeUrl: body.resumeUrl,
-                portfolioUrl: body.portfolioUrl,
-                published: body.published ?? true,
-            },
-        });
-        return NextResponse.json(member);
-    } catch (error) {
-        console.error("Error creating team member:", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-    }
-}
+  const members = await storage.getTeamMembers();
+  const total = members.length;
+  const paginated = members.slice((page - 1) * limit, page * limit);
+
+  return ok(paginated, { page, limit, total });
+});
+
+export const POST = withErrorHandler(async (req: NextRequest) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
+
+  const body = await req.json().catch(() => null);
+  const parsed = insertTeamMemberSchema.safeParse(body);
+  if (!parsed.success) {
+    return fail('VALIDATION_ERROR', 'Invalid team member data', parsed.error.issues);
+  }
+
+  const member = await storage.createTeamMember(parsed.data);
+  return ok(member, undefined, 201);
+});

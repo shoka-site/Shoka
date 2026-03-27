@@ -38,7 +38,7 @@ export default function AdminProjects() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/projects", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@ export default function AdminProjects() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/projects/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -135,16 +135,17 @@ export default function AdminProjects() {
         }
     };
 
-    const handleEdit = (project: any) => {
+    const handleEdit = (project: Project) => {
+        const raw = project as unknown as Record<string, unknown>;
         setFormData({
-            images: project.images || (project.imageUrl ? [project.imageUrl] : []),
-            categoryEn: project.categoryEn || project.category,
-            categoryAr: project.categoryAr || project.category,
-            titleEn: project.titleEn || project.title,
-            titleAr: project.titleAr || project.title,
-            descriptionEn: project.descriptionEn || project.description,
-            descriptionAr: project.descriptionAr || project.description,
-            liveUrl: project.liveUrl || "",
+            images: (raw.images as string[] | undefined) ?? (raw.imageUrl ? [raw.imageUrl as string] : []),
+            categoryEn: (raw.categoryEn ?? project.category ?? "") as string,
+            categoryAr: (raw.categoryAr ?? project.category ?? "") as string,
+            titleEn: (raw.titleEn ?? project.title ?? "") as string,
+            titleAr: (raw.titleAr ?? project.title ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? project.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? project.description ?? "") as string,
+            liveUrl: (project.liveUrl ?? "") as string,
             featured: project.featured,
             order: project.order,
             published: project.published,
@@ -301,7 +302,9 @@ export default function AdminProjects() {
                 )}
 
                 <div className="space-y-4">
-                    {projects.map((project: any) => (
+                    {projects.map((project: Project) => {
+                        const raw = project as unknown as Record<string, unknown>;
+                        return (
                         <div key={project.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -312,10 +315,10 @@ export default function AdminProjects() {
                                     {project.featured && (
                                         <span className="text-xs bg-yellow-500/20 text-yellow-600 px-2 py-1 rounded">Featured</span>
                                     )}
-                                    <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">{project.categoryEn || project.category}</span>
+                                    <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">{(raw.categoryEn as string) || project.category}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{project.title || project.titleEn}</h3>
-                                <p className="text-sm mb-2">{project.description || project.descriptionEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{project.title || (raw.titleEn as string)}</h3>
+                                <p className="text-sm mb-2">{project.description || (raw.descriptionEn as string)}</p>
                                 <p className="text-xs text-muted-foreground">Images: {project.images?.length || 0}</p>
                             </div>
                             <div className="flex gap-2">
@@ -332,7 +335,8 @@ export default function AdminProjects() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </AdminLayout>

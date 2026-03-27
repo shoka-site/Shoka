@@ -1,23 +1,34 @@
-import { storage } from "@/lib/storage";
-import { NextRequest, NextResponse } from "next/server";
+import { storage } from '@/lib/storage';
+import { NextRequest } from 'next/server';
+import { assertAdmin } from '@/lib/auth';
+import { ok, fail, withErrorHandler } from '@/lib/api-response';
+import { insertProjectSchema } from '@shared/schema';
 
-export async function GET() {
-    try {
-        const projects = await storage.getProjects();
-        return NextResponse.json(projects);
-    } catch (error) {
-        console.error("Error fetching projects:", error);
-        return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
-    }
-}
+export const GET = withErrorHandler(async (req: NextRequest) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
 
-export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json();
-        const project = await storage.createProject(body);
-        return NextResponse.json(project, { status: 201 });
-    } catch (error) {
-        console.error("Error creating project:", error);
-        return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
-    }
-}
+  const { searchParams } = new URL(req.url);
+  const page = Math.max(1, Number(searchParams.get('page') ?? 1));
+  const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
+
+  const projects = await storage.getProjects();
+  const total = projects.length;
+  const paginated = projects.slice((page - 1) * limit, page * limit);
+
+  return ok(paginated, { page, limit, total });
+});
+
+export const POST = withErrorHandler(async (req: NextRequest) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
+
+  const body = await req.json().catch(() => null);
+  const parsed = insertProjectSchema.safeParse(body);
+  if (!parsed.success) {
+    return fail('VALIDATION_ERROR', 'Invalid project data', parsed.error.issues);
+  }
+
+  const project = await storage.createProject(parsed.data);
+  return ok(project, undefined, 201);
+});

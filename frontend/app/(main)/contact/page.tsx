@@ -1,4 +1,3 @@
-import Section from "@/components/layout/Section";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { getServerTranslation } from "@/lib/server-i18n";
 import { ContactHero, InfoCard } from "@/components/contact/ContactClientComponents";

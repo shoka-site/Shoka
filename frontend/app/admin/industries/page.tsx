@@ -31,7 +31,7 @@ export default function AdminIndustries() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/industries", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -47,7 +47,7 @@ export default function AdminIndustries() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/industries/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -94,14 +94,15 @@ export default function AdminIndustries() {
         }
     };
 
-    const handleEdit = (industry: any) => {
+    const handleEdit = (industry: Industry) => {
+        const raw = industry as unknown as Record<string, unknown>;
         setFormData({
-            titleEn: industry.titleEn || industry.title,
-            titleAr: industry.titleAr || industry.title,
-            descriptionEn: industry.descriptionEn || industry.description,
-            descriptionAr: industry.descriptionAr || industry.description,
-            order: industry.order,
-            published: industry.published,
+            titleEn: (raw.titleEn ?? raw.title ?? "") as string,
+            titleAr: (raw.titleAr ?? raw.title ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? raw.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? raw.description ?? "") as string,
+            order: (raw.order ?? 1) as number,
+            published: (raw.published ?? true) as boolean,
         });
         setEditingId(industry.id);
         setIsEditing(true);
@@ -180,7 +181,9 @@ export default function AdminIndustries() {
                 )}
 
                 <div className="space-y-4">
-                    {industries.map((industry: any) => (
+                    {industries.map((industry: Industry) => {
+                        const raw = industry as unknown as Record<string, unknown>;
+                        return (
                         <div key={industry.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -189,8 +192,8 @@ export default function AdminIndustries() {
                                         <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded">Published</span>
                                     )}
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{industry.title || industry.titleEn}</h3>
-                                <p className="text-sm">{industry.description || industry.descriptionEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{industry.title || (raw.titleEn as string)}</h3>
+                                <p className="text-sm">{industry.description || (raw.descriptionEn as string)}</p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(industry)}>
@@ -206,7 +209,8 @@ export default function AdminIndustries() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                     {industries.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
                             No industries found. Click &quot;Add New&quot; to create one.

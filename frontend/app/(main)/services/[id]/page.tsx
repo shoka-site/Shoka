@@ -8,7 +8,6 @@ import {
   ArrowRight,
   LayoutGrid,
   ArrowLeft,
-  CheckCircle2,
   ChevronDown,
   Calendar,
   Hash,
@@ -154,7 +153,7 @@ export default function ServiceDetail({ params }: { params: Promise<{ id: string
             </motion.div>
 
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
-              {service.title || (service as any).titleEn}
+              {service.title || ((service as unknown as Record<string, unknown>).titleEn as string)}
             </h1>
 
             {descriptionParagraphs.length > 0 && (

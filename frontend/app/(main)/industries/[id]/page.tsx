@@ -5,16 +5,13 @@ import { useIndustry } from "@/hooks/use-content";
 import { useDataReady } from "@/hooks/useDataReady";
 import Section from "@/components/layout/Section";
 import Link from "next/link";
-import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2, TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone, ArrowRight } from "lucide-react";
+import { ArrowLeft, Tag, Activity, Sparkles, ChevronDown, Building2, Zap, ArrowRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
-const iconMap: Record<string, any> = {
-    TrendingUp, Zap, Users, ShieldCheck, Database, Globe, Cloud, Smartphone
-};
 
 export default function IndustryDetails() {
     const params = useParams();
@@ -246,7 +243,7 @@ export default function IndustryDetails() {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {industry.solutions.map((solution: any, index: number) => {
+                                {industry.solutions.map((solution: { id: string; title: string; description: string }, index: number) => {
                                     return (
                                         <motion.div
                                             key={solution.id}

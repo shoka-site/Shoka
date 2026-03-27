@@ -1,14 +1,15 @@
 "use client";
 
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Brain, Code, Database, Cloud, Target, Zap, Layers, Cpu, Lock, ArrowRight } from "lucide-react";
+import { Brain, Code, Database, Cloud, Target, Zap, Layers, Cpu, Lock } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Section from "@/components/layout/Section";
 import { FadeInSection } from "@/components/home/HomeClientComponents";
 import { CountUp } from "@/components/ui/count-up";
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Brain, Code, Database, Cloud, Target, Zap, Layers, Cpu, Lock,
 };
 
@@ -56,8 +57,7 @@ export function WhyUsBanner() {
 
 // ─── Philosophy (Why Shoka) Section ──────────────────────────────────────────
 export function PhilosophySection() {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.dir() === "rtl";
+  const { t } = useTranslation();
 
   const whyShokaPoints = [
     { id: "why-1", iconName: "Target", title: t("home.why_us.points.business_first.title"), description: t("home.why_us.points.business_first.desc") },
@@ -106,7 +106,7 @@ export function PhilosophySection() {
 
 // ─── Process (How We Work) Section ───────────────────────────────────────────
 export function ProcessSection() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const processSteps = [
     { id: "proc-1", stepNumber: "01", title: t("home.process.steps.discover.title"), description: t("home.process.steps.discover.desc") },

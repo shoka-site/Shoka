@@ -34,7 +34,7 @@ export default function AdminTestimonials() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/testimonials", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -50,7 +50,7 @@ export default function AdminTestimonials() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/testimonials/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -100,17 +100,18 @@ export default function AdminTestimonials() {
         }
     };
 
-    const handleEdit = (testimonial: any) => {
+    const handleEdit = (testimonial: Testimonial) => {
+        const raw = testimonial as unknown as Record<string, unknown>;
         setFormData({
-            quoteEn: testimonial.quoteEn || testimonial.quote,
-            quoteAr: testimonial.quoteAr || testimonial.quote,
-            authorEn: testimonial.authorEn || testimonial.author,
-            authorAr: testimonial.authorAr || testimonial.author,
-            roleEn: testimonial.roleEn || testimonial.role,
-            roleAr: testimonial.roleAr || testimonial.role,
-            rating: testimonial.rating,
-            order: testimonial.order,
-            published: testimonial.published,
+            quoteEn: (raw.quoteEn ?? raw.quote ?? "") as string,
+            quoteAr: (raw.quoteAr ?? raw.quote ?? "") as string,
+            authorEn: (raw.authorEn ?? raw.author ?? "") as string,
+            authorAr: (raw.authorAr ?? raw.author ?? "") as string,
+            roleEn: (raw.roleEn ?? raw.role ?? "") as string,
+            roleAr: (raw.roleAr ?? raw.role ?? "") as string,
+            rating: (raw.rating ?? 5) as number,
+            order: (raw.order ?? 1) as number,
+            published: (raw.published ?? true) as boolean,
         });
         setEditingId(testimonial.id);
         setIsEditing(true);
@@ -215,7 +216,9 @@ export default function AdminTestimonials() {
                 )}
 
                 <div className="space-y-4">
-                    {testimonials.map((testimonial: any) => (
+                    {testimonials.map((testimonial: Testimonial) => {
+                        const raw = testimonial as unknown as Record<string, unknown>;
+                        return (
                         <div key={testimonial.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -227,10 +230,10 @@ export default function AdminTestimonials() {
                                         ⭐ {testimonial.rating}/5
                                     </span>
                                 </div>
-                                <p className="text-sm italic mb-3">&quot;{testimonial.quote || testimonial.quoteEn}&quot;</p>
+                                <p className="text-sm italic mb-3">&quot;{testimonial.quote || (raw.quoteEn as string)}&quot;</p>
                                 <div>
-                                    <p className="font-bold">{testimonial.authorEn} / {testimonial.authorAr}</p>
-                                    <p className="text-sm text-muted-foreground">{testimonial.roleEn} / {testimonial.roleAr}</p>
+                                    <p className="font-bold">{raw.authorEn as string} / {raw.authorAr as string}</p>
+                                    <p className="text-sm text-muted-foreground">{raw.roleEn as string} / {raw.roleAr as string}</p>
                                 </div>
                             </div>
                             <div className="flex gap-2">
@@ -247,7 +250,8 @@ export default function AdminTestimonials() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </AdminLayout>

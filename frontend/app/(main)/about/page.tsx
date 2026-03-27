@@ -4,11 +4,10 @@ import Section from "@/components/layout/Section";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Award, Users, Globe, Target, Calendar, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft, Linkedin } from "lucide-react";
+import { Award, Users, Globe, Target, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTeamMembers, usePlatformUpdates } from "@/hooks/use-content";
 import { useDataReady } from "@/hooks/useDataReady";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { InitialLoader } from "@/components/ui/InitialLoader";
@@ -26,7 +25,6 @@ export default function About() {
   // Wait for data to be ready before showing the page
   const isReady = useDataReady(isLoadingTeam);
 
-  const events = updates.filter(u => u.type === 'event').slice(0, 3);
   const awards = updates.filter(u => u.type === 'achievement').slice(0, 4);
 
   const milestones = ["2024", "2025", "2026"];

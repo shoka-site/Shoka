@@ -33,7 +33,7 @@ export default function AdminTeam() {
         published: true,
     });
 
-    const { data: members = [], isLoading } = useQuery<any[]>({
+    const { data: members = [], isLoading } = useQuery<TeamMember[]>({
         queryKey: ["admin-team"],
         queryFn: async () => {
             const res = await fetch("/api/admin/team");
@@ -42,7 +42,7 @@ export default function AdminTeam() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/team", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@ export default function AdminTeam() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/team/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -163,20 +163,21 @@ export default function AdminTeam() {
         }
     };
 
-    const handleEdit = (member: any) => {
+    const handleEdit = (member: TeamMember) => {
+        const raw = member as unknown as Record<string, unknown>;
         setFormData({
-            nameEn: member.nameEn,
-            nameAr: member.nameAr,
-            roleEn: member.roleEn,
-            roleAr: member.roleAr,
-            bioEn: member.bioEn,
-            bioAr: member.bioAr,
-            descriptionEn: member.descriptionEn || "",
-            descriptionAr: member.descriptionAr || "",
+            nameEn: (raw.nameEn ?? member.name ?? "") as string,
+            nameAr: (raw.nameAr ?? member.name ?? "") as string,
+            roleEn: (raw.roleEn ?? member.role ?? "") as string,
+            roleAr: (raw.roleAr ?? member.role ?? "") as string,
+            bioEn: (raw.bioEn ?? member.bio ?? "") as string,
+            bioAr: (raw.bioAr ?? member.bio ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? member.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? "") as string,
             imageUrl: member.imageUrl,
-            resumeUrl: member.resumeUrl || "",
-            portfolioUrl: member.portfolioUrl || "",
-            linkedinUrl: member.linkedinUrl || "",
+            resumeUrl: (member.resumeUrl ?? "") as string,
+            portfolioUrl: (member.portfolioUrl ?? "") as string,
+            linkedinUrl: (member.linkedinUrl ?? "") as string,
             order: member.order,
             published: member.published,
         });
@@ -371,14 +372,16 @@ export default function AdminTeam() {
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {members.map((member: any) => (
+                    {members.map((member: TeamMember) => {
+                        const raw = member as unknown as Record<string, unknown>;
+                        return (
                         <div key={member.id} className="p-6 bg-muted rounded-lg relative group">
                             <div className="flex items-start gap-4">
                                 <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     {member.imageUrl ? (
                                         <Image
                                             src={member.imageUrl}
-                                            alt={member.nameEn}
+                                            alt={(raw.nameEn as string) || member.name}
                                             width={80}
                                             height={80}
                                             className="w-full h-full object-cover"
@@ -400,9 +403,9 @@ export default function AdminTeam() {
                                             <Globe className="w-3 h-3 text-accent" />
                                         )}
                                     </div>
-                                    <h3 className="text-lg font-bold truncate">{member.nameEn}</h3>
-                                    <p className="text-xs text-primary mb-2 font-medium">{member.roleEn}</p>
-                                    <p className="text-sm text-muted-foreground line-clamp-2">{member.bioEn}</p>
+                                    <h3 className="text-lg font-bold truncate">{(raw.nameEn as string) || member.name}</h3>
+                                    <p className="text-xs text-primary mb-2 font-medium">{(raw.roleEn as string) || member.role}</p>
+                                    <p className="text-sm text-muted-foreground line-clamp-2">{(raw.bioEn as string) || member.bio}</p>
                                 </div>
                             </div>
 
@@ -421,7 +424,8 @@ export default function AdminTeam() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                     {members.length === 0 && (
                         <div className="col-span-full text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
                             No team members found. Click &quot;Add Team Member&quot; to create one.

@@ -4,20 +4,31 @@ import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MessageSquare, Building2, Clock, Check, X, Trash2, MoreVertical } from "lucide-react";
+import { Mail, MessageSquare, Building2, Clock, Check, X, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
 
+interface Consultation {
+    id: string;
+    name: string;
+    email: string;
+    company?: string;
+    message: string;
+    status: string;
+    seen: boolean;
+    createdAt: string;
+}
+
 export default function AdminConsultations() {
-    const { t } = useTranslation();
+    useTranslation();
     const queryClient = useQueryClient();
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const lastCountRef = useRef<number>(0);
     const { toast } = useToast();
 
-    const { data: consultations = [], isLoading } = useQuery<any[]>({
+    const { data: consultations = [], isLoading } = useQuery<Consultation[]>({
         queryKey: ["admin-consultations"],
         queryFn: async () => {
             const res = await fetch("/api/admin/consultations");
@@ -27,9 +38,9 @@ export default function AdminConsultations() {
     });
 
     useEffect(() => {
-        const pendingCount = consultations.filter((c: any) => c.status === "pending").length;
+        const pendingCount = consultations.filter((c) => c.status === "pending").length;
         if (lastCountRef.current > 0 && pendingCount > lastCountRef.current) {
-            const newConsultation = consultations.find((c: any) => c.status === "pending" && !c.seen);
+            const newConsultation = consultations.find((c) => c.status === "pending" && !c.seen);
             if (newConsultation) {
                 toast({
                     title: "New Consultation",
@@ -113,7 +124,7 @@ export default function AdminConsultations() {
                     </div>
                     <div className="flex gap-2">
                         <Badge variant="outline" className="text-sm py-1.5">
-                            {consultations.filter((c: any) => c.status === "pending").length} Pending
+                            {consultations.filter((c) => c.status === "pending").length} Pending
                         </Badge>
                         <Badge variant="outline" className="text-sm py-1.5">
                             {consultations.length} Total
@@ -122,7 +133,7 @@ export default function AdminConsultations() {
                 </div>
 
                 <div className="space-y-4">
-                    {consultations.map((consultation: any) => {
+                    {consultations.map((consultation) => {
                         const isExpanded = expandedId === consultation.id;
                         return (
                         <Card 

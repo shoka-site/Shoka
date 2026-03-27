@@ -9,7 +9,7 @@ import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown, 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function ProjectDetails() {
@@ -69,7 +69,7 @@ export default function ProjectDetails() {
         );
     }
 
-    const validImages: string[] = project.images?.filter((img: any) => typeof img === 'string' && img.trim() !== "") || [];
+    const validImages: string[] = project.images?.filter((img: unknown) => typeof img === 'string' && (img as string).trim() !== "") || [];
     const selectedIndex = selectedImage ? validImages.indexOf(selectedImage) : -1;
 
     const handlePrev = (e: React.MouseEvent) => {
@@ -224,7 +224,7 @@ export default function ProjectDetails() {
                             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8"
                         >
-                            {project.images && project.images.filter((img: any) => typeof img === 'string' && img.trim() !== "").map((img: string, idx: number) => (
+                            {project.images && project.images.filter((img: unknown) => typeof img === 'string' && (img as string).trim() !== "").map((img: string, idx: number) => (
                                 <div key={idx} onClick={() => setSelectedImage(img)} className={`cursor-pointer relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}>
                                     <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />

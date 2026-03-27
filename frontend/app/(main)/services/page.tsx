@@ -156,12 +156,12 @@ export default function Services() {
                             <Card className="h-full border-border/40 hover:border-primary/30 transition-all duration-300 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative shadow-sm hover:shadow-md group cursor-pointer">
                               <CardHeader className="relative z-10 pb-2 pt-6 px-6">
                                 <CardTitle className="text-xl font-bold text-foreground leading-tight group-hover:text-primary transition-colors">
-                                  {service.title || (service as any).titleEn}
+                                  {service.title || ((service as unknown as Record<string, unknown>).titleEn as string)}
                                 </CardTitle>
                               </CardHeader>
                               <CardContent className="flex-grow relative z-10 px-6 pb-6 mt-2 flex flex-col">
                                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 mb-6">
-                                  {service.description || (service as any).descriptionEn}
+                                  {service.description || ((service as unknown as Record<string, unknown>).descriptionEn as string)}
                                 </p>
                                 <div className="mt-auto inline-flex items-center text-primary text-sm font-semibold group-hover:underline">
                                   {t('home.packages.learn_more', "Learn more")}

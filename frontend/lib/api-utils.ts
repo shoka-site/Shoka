@@ -1,4 +1,4 @@
-export function transformForLanguage<T extends Record<string, any>>(content: T | T[], lang: 'en' | 'ar'): any {
+export function transformForLanguage<T extends Record<string, unknown>>(content: T | T[], lang: 'en' | 'ar'): unknown {
     if (!content || typeof content !== 'object' || content instanceof Date) return content;
 
     // If it's an array, transform each item
@@ -7,7 +7,7 @@ export function transformForLanguage<T extends Record<string, any>>(content: T |
     }
 
     // Extract language-specific fields
-    const transformed: Record<string, any> = {};
+    const transformed: Record<string, unknown> = {};
     Object.keys(content).forEach(key => {
         if (key.endsWith('En') && lang === 'en') {
             transformed[key.replace('En', '')] = content[key];
@@ -19,7 +19,7 @@ export function transformForLanguage<T extends Record<string, any>>(content: T |
             // Include non-language-specific fields (id, order, published, etc.)
             // Recursively transform nested arrays and objects
             if (content[key] && typeof content[key] === 'object' && !(content[key] instanceof Date)) {
-                transformed[key] = transformForLanguage(content[key], lang);
+                transformed[key] = transformForLanguage(content[key] as Record<string, unknown>, lang);
             } else {
                 transformed[key] = content[key];
             }

@@ -1,44 +1,69 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { checkLoginRateLimit, recordFailedLogin, verifyAdminCredentials } from '@/lib/auth';
+
+const loginSchema = z.object({
+  username: z.string().min(1),
+  password: z.string().min(1),
+});
 
 export async function POST(req: NextRequest) {
-    try {
-        const { username, password } = await req.json();
+  // Rate limiting — keyed by IP
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    req.headers.get('x-real-ip') ??
+    'unknown';
 
-        const adminUsername = process.env.ADMIN_USERNAME;
-        const adminPassword = process.env.ADMIN_PASSWORD;
+  const rateLimit = checkLoginRateLimit(ip);
+  if (!rateLimit.allowed) {
+    const retryAfterSec = Math.ceil((rateLimit.retryAfterMs ?? 0) / 1000);
+    return NextResponse.json(
+      { success: false, error: { code: 'TOO_MANY_REQUESTS', message: 'Too many login attempts. Try again later.' } },
+      { status: 429, headers: { 'Retry-After': String(retryAfterSec) } }
+    );
+  }
 
-        if (!adminUsername || !adminPassword) {
-            console.error("Admin credentials not configured in environment variables.");
-            return NextResponse.json(
-                { error: "Server configuration error" },
-                { status: 500 }
-            );
-        }
+  // Input validation
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json(
+      { success: false, error: { code: 'INVALID_JSON', message: 'Request body must be valid JSON' } },
+      { status: 400 }
+    );
+  }
 
-        if (username === adminUsername && password === adminPassword) {
-            const response = NextResponse.json({ success: true, message: "Login successful" });
-            
-            // Set a secure cookie for authentication
-            response.cookies.set('admin_auth', 'true', {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 60 * 60 * 24 * 7, // 1 week
-                path: '/',
-            });
-            
-            return response;
-        } else {
-            return NextResponse.json(
-                { error: "Invalid credentials" },
-                { status: 401 }
-            );
-        }
-    } catch (error) {
-        console.error("Login error:", error);
-        return NextResponse.json(
-            { error: "Internal server error" },
-            { status: 500 }
-        );
-    }
+  const parsed = loginSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { success: false, error: { code: 'VALIDATION_ERROR', message: 'Invalid credentials format' } },
+      { status: 400 }
+    );
+  }
+
+  const { username, password } = parsed.data;
+
+  // Credential verification (timing-safe)
+  if (!verifyAdminCredentials(username, password)) {
+    recordFailedLogin(ip);
+    // Uniform delay to resist timing attacks on the response
+    await new Promise((r) => setTimeout(r, 200));
+    return NextResponse.json(
+      { success: false, error: { code: 'INVALID_CREDENTIALS', message: 'Invalid username or password' } },
+      { status: 401 }
+    );
+  }
+
+  const response = NextResponse.json({ success: true, message: 'Login successful' });
+
+  response.cookies.set('admin_auth', 'true', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24, // 24 hours — reduced from 7 days
+    path: '/',
+  });
+
+  return response;
 }

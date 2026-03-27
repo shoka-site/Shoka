@@ -1,7 +1,6 @@
 "use client";
 
 import Section from "@/components/layout/Section";
-import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Newspaper, Trophy, Calendar, Sparkles, ChevronDown } from "lucide-react";
@@ -9,7 +8,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePlatformUpdates } from "@/hooks/use-content";
 import { useDataReady } from "@/hooks/useDataReady";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 

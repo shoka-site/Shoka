@@ -39,7 +39,7 @@ export default function AdminServices() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/services", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ export default function AdminServices() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/services/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -103,13 +103,14 @@ export default function AdminServices() {
         }
     };
 
-    const handleEdit = (service: any) => {
+    const handleEdit = (service: Service) => {
+        const raw = service as unknown as Record<string, unknown>;
         setFormData({
-            type: service.type || "Other",
-            titleEn: service.titleEn || service.title,
-            titleAr: service.titleAr || service.title,
-            descriptionEn: service.descriptionEn || service.description,
-            descriptionAr: service.descriptionAr || service.description,
+            type: (service.type ?? "Other") as string,
+            titleEn: (raw.titleEn ?? service.title ?? "") as string,
+            titleAr: (raw.titleAr ?? service.title ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? service.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? service.description ?? "") as string,
             order: service.order,
             published: service.published,
         });
@@ -226,7 +227,9 @@ export default function AdminServices() {
                 )}
 
                 <div className="space-y-4">
-                    {services.map((service: any) => (
+                    {services.map((service: Service) => {
+                        const raw = service as unknown as Record<string, unknown>;
+                        return (
                         <div key={service.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -236,8 +239,8 @@ export default function AdminServices() {
                                     )}
                                     <span className="text-xs bg-purple-500/20 text-purple-600 px-2 py-1 rounded">Type: {service.type}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{service.title || service.titleEn}</h3>
-                                <p className="text-sm">{service.description || service.descriptionEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{service.title || (raw.titleEn as string)}</h3>
+                                <p className="text-sm">{service.description || (raw.descriptionEn as string)}</p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(service)}>
@@ -253,7 +256,8 @@ export default function AdminServices() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </AdminLayout>

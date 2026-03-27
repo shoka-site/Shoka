@@ -8,9 +8,10 @@ interface CacheEntry<T> {
   timestamp: number;
 }
 
-interface CacheOptions {
-  ttl: number; // Time to live in milliseconds
-}
+// CacheOptions is reserved for future use
+// interface CacheOptions {
+//   ttl: number; // Time to live in milliseconds
+// }
 
 /**
  * Simple in-memory cache with TTL support

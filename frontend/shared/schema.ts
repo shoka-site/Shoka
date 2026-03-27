@@ -164,3 +164,49 @@ export const packageSchema = z.object({
 export type Package = z.infer<typeof packageSchema>;
 export const insertPackageSchema = packageSchema.omit({ id: true, createdAt: true, updatedAt: true });
 export type InsertPackage = z.infer<typeof insertPackageSchema>;
+export const updatePackageSchema = insertPackageSchema.partial();
+export type UpdatePackage = z.infer<typeof updatePackageSchema>;
+
+// ---------------------------------------------------------------------------
+// Insert / Update schemas for all remaining entities
+// ---------------------------------------------------------------------------
+
+export const insertServiceSchema = serviceSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertService = z.infer<typeof insertServiceSchema>;
+export const updateServiceSchema = insertServiceSchema.partial();
+export type UpdateService = z.infer<typeof updateServiceSchema>;
+
+export const insertProjectSchema = projectSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertProject = z.infer<typeof insertProjectSchema>;
+export const updateProjectSchema = insertProjectSchema.partial();
+export type UpdateProject = z.infer<typeof updateProjectSchema>;
+
+export const insertTestimonialSchema = testimonialSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+export const updateTestimonialSchema = insertTestimonialSchema.partial();
+export type UpdateTestimonial = z.infer<typeof updateTestimonialSchema>;
+
+export const insertPlatformUpdateSchema = platformUpdateSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertPlatformUpdate = z.infer<typeof insertPlatformUpdateSchema>;
+export const updatePlatformUpdateSchema = insertPlatformUpdateSchema.partial();
+export type UpdatePlatformUpdate = z.infer<typeof updatePlatformUpdateSchema>;
+
+export const insertIndustrySchema = industrySchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertIndustry = z.infer<typeof insertIndustrySchema>;
+export const updateIndustrySchema = insertIndustrySchema.partial();
+export type UpdateIndustry = z.infer<typeof updateIndustrySchema>;
+
+export const insertSolutionSchema = solutionSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertSolution = z.infer<typeof insertSolutionSchema>;
+export const updateSolutionSchema = insertSolutionSchema.partial();
+export type UpdateSolution = z.infer<typeof updateSolutionSchema>;
+
+export const insertTeamMemberSchema = teamMemberSchema.omit({ id: true, createdAt: true, updatedAt: true });
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
+export const updateTeamMemberSchema = insertTeamMemberSchema.partial();
+export type UpdateTeamMember = z.infer<typeof updateTeamMemberSchema>;
+
+export const updateConsultationSchema = z.object({
+  status: z.enum(['pending', 'responded', 'closed']),
+});
+export type UpdateConsultation = z.infer<typeof updateConsultationSchema>;

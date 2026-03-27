@@ -90,7 +90,7 @@ export function ProjectsHero({ isRtl }: { isRtl: boolean }) {
   );
 }
 
-export function ProjectCard({ project, index, isRtl }: { project: any; index: number; isRtl: boolean }) {
+export function ProjectCard({ project, index, isRtl }: { project: Record<string, unknown>; index: number; isRtl: boolean }) {
   const { t } = useTranslation();
   return (
     <Link href={`/projects/${project.id}`}>
@@ -98,14 +98,14 @@ export function ProjectCard({ project, index, isRtl }: { project: any; index: nu
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] as any }}
+        transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         className="group relative h-full min-h-[500px] rounded-[2.5rem] overflow-hidden bg-background border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700"
       >
         <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-border/10">
-          {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") && (
+          {Boolean(project.images) && (project.images as unknown[]).some((img) => typeof img === 'string' && (img as string).trim() !== "") && (
             <NextImage
-              src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
-              alt={project.title || ""}
+              src={(project.images as unknown[]).find((img) => typeof img === 'string' && (img as string).trim() !== "") as string || ""}
+              alt={(project.title as string) || ""}
               fill
               className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1 grayscale group-hover:grayscale-0"
             />
@@ -116,15 +116,15 @@ export function ProjectCard({ project, index, isRtl }: { project: any; index: nu
         <div className="absolute inset-0 z-10 p-6 md:p-12 flex flex-col justify-end">
           <motion.div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-[1px] bg-accent/60"></span>
-            <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category}</span>
+            <span className="text-accent text-xs font-bold uppercase tracking-[0.2em]">{project.category as string}</span>
           </motion.div>
 
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-black text-foreground mb-4 tracking-tight leading-[1.1] transition-transform duration-500 group-hover:-translate-y-2">
-            {project.title}
+            {project.title as string}
           </h3>
 
           <p className="text-muted-foreground text-base sm:text-lg max-w-lg mb-6 md:mb-8 line-clamp-2 md:line-clamp-3 lg:line-clamp-2 font-light leading-relaxed opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-            {project.description}
+            {project.description as string}
           </p>
 
           <div className="flex items-center gap-4 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">

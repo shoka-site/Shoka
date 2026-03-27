@@ -3,13 +3,38 @@
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Layers, Star } from "lucide-react";
+import { ArrowRight, Layers } from "lucide-react";
 import Section from "@/components/layout/Section";
 import { FadeInSection, TestimonialCarousel } from "@/components/home/HomeClientComponents";
-import type { PlatformUpdate, Testimonial } from "@/components/home/HomeClientComponents";
+import type { Testimonial } from "@/components/home/HomeClientComponents";
+
+interface LocalizedService {
+  id: string;
+  order: number;
+  title: string;
+  description: string;
+  [key: string]: unknown;
+}
+
+interface LocalizedProject {
+  id: string;
+  images?: unknown[];
+  category: string;
+  title: string;
+  description: string;
+  [key: string]: unknown;
+}
+
+interface LocalizedPackage {
+  id: string;
+  order: number;
+  title: string;
+  description?: string;
+  [key: string]: unknown;
+}
 
 // ─── Services Section ─────────────────────────────────────────────────────────
-export function ServicesSectionClient({ services }: { services: any[] }) {
+export function ServicesSectionClient({ services }: { services: Record<string, unknown>[] }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
@@ -17,10 +42,12 @@ export function ServicesSectionClient({ services }: { services: any[] }) {
 
   // Pick the right language field at runtime
   const lang = i18n.language?.startsWith("en") ? "en" : "ar";
-  const localizedServices = services.map((s) => ({
+  const localizedServices: LocalizedService[] = services.map((s) => ({
     ...s,
-    title: s[`title${lang === "en" ? "En" : "Ar"}`] ?? s.titleAr ?? s.title,
-    description: s[`description${lang === "en" ? "En" : "Ar"}`] ?? s.descriptionAr ?? s.description,
+    id: s.id as string,
+    order: s.order as number,
+    title: (s[`title${lang === "en" ? "En" : "Ar"}`] ?? s.titleAr ?? s.title) as string,
+    description: (s[`description${lang === "en" ? "En" : "Ar"}`] ?? s.descriptionAr ?? s.description) as string,
   }));
 
   return (
@@ -73,17 +100,20 @@ export function ServicesSectionClient({ services }: { services: any[] }) {
 }
 
 // ─── Projects Section ─────────────────────────────────────────────────────────
-export function ProjectsSectionClient({ projects }: { projects: any[] }) {
+export function ProjectsSectionClient({ projects }: { projects: Record<string, unknown>[] }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
   if (!projects || projects.length === 0) return null;
 
   const lang = i18n.language?.startsWith("en") ? "en" : "ar";
-  const localizedProjects = projects.map((p) => ({
+  const localizedProjects: LocalizedProject[] = projects.map((p) => ({
     ...p,
-    title: p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title,
-    description: p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description,
+    id: p.id as string,
+    images: p.images as unknown[] | undefined,
+    category: (p.category ?? p.categoryEn ?? p.categoryAr ?? "") as string,
+    title: (p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title) as string,
+    description: (p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description) as string,
   }));
 
   return (
@@ -110,9 +140,9 @@ export function ProjectsSectionClient({ projects }: { projects: any[] }) {
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }} />
               <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0">
-                {project.images && project.images.some((img: any) => typeof img === 'string' && img.trim() !== "") ? (
+                {project.images && (project.images as unknown[]).some((img) => typeof img === 'string' && (img as string).trim() !== "") ? (
                   <Image
-                    src={project.images.find((img: any) => typeof img === 'string' && img.trim() !== "") || ""}
+                    src={(project.images as unknown[]).find((img) => typeof img === 'string' && (img as string).trim() !== "") as string || ""}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -156,17 +186,19 @@ export function ProjectsSectionClient({ projects }: { projects: any[] }) {
 }
 
 // ─── Packages Section ─────────────────────────────────────────────────────────
-export function PackagesSectionClient({ packages }: { packages: any[] }) {
+export function PackagesSectionClient({ packages }: { packages: Record<string, unknown>[] }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
 
   if (!packages || packages.length === 0) return null;
 
   const lang = i18n.language?.startsWith("en") ? "en" : "ar";
-  const localizedPackages = packages.map((p) => ({
+  const localizedPackages: LocalizedPackage[] = packages.map((p) => ({
     ...p,
-    title: p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title,
-    description: p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description,
+    id: p.id as string,
+    order: p.order as number,
+    title: (p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title) as string,
+    description: (p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description) as string | undefined,
   }));
 
   return (
@@ -186,7 +218,7 @@ export function PackagesSectionClient({ packages }: { packages: any[] }) {
         </p>
       </FadeInSection>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-        {localizedPackages.slice(0, 3).map((pkg, index) => (
+        {localizedPackages.slice(0, 3).map((pkg) => (
           <Link key={pkg.id} href={`/packages/${pkg.id}`}>
             <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
@@ -219,15 +251,18 @@ export function PackagesSectionClient({ packages }: { packages: any[] }) {
 }
 
 // ─── Testimonials Section ─────────────────────────────────────────────────────
-export function TestimonialsSectionClient({ testimonials }: { testimonials: any[] }) {
+export function TestimonialsSectionClient({ testimonials }: { testimonials: Record<string, unknown>[] }) {
   const { t, i18n } = useTranslation();
 
   if (!testimonials || testimonials.length === 0) return null;
 
   const lang = i18n.language?.startsWith("en") ? "en" : "ar";
   const localizedTestimonials: Testimonial[] = testimonials.map((item) => ({
-    ...item,
-    quote: item[`quote${lang === "en" ? "En" : "Ar"}`] ?? item.quoteAr ?? item.quote,
+    id: item.id as string,
+    author: (item.authorEn ?? item.authorAr ?? item.author ?? "") as string,
+    role: (item.roleEn ?? item.roleAr ?? item.role ?? "") as string,
+    rating: (item.rating ?? 5) as number,
+    quote: ((item[`quote${lang === "en" ? "En" : "Ar"}`] ?? item.quoteAr ?? item.quote) ?? "") as string,
   }));
 
   return (

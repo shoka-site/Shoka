@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, BarChart3, Briefcase, MessageSquare, Target, GitBranch, Lightbulb, LogOut, Users, Mail, Package } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, MessageSquare, Target, GitBranch, LogOut, Users, Mail, Package } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";

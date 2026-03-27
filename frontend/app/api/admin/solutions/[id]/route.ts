@@ -1,37 +1,37 @@
-import { storage } from "@/lib/storage";
-import { NextRequest, NextResponse } from "next/server";
+import { storage } from '@/lib/storage';
+import { NextRequest } from 'next/server';
+import { assertAdmin } from '@/lib/auth';
+import { ok, fail, withErrorHandler } from '@/lib/api-response';
+import { updateSolutionSchema } from '@shared/schema';
 
-export async function PUT(
-    req: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
-) {
-    try {
-        const { id } = await params;
-        const body = await req.json();
-        const updated = await storage.updateSolution(id, body);
-        if (!updated) {
-            return NextResponse.json({ error: "Solution not found" }, { status: 404 });
-        }
-        return NextResponse.json(updated);
-    } catch (error) {
-        console.error("Error updating solution:", error);
-        return NextResponse.json({ error: "Failed to update solution" }, { status: 500 });
-    }
-}
+export const PUT = withErrorHandler(async (
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
 
-export async function DELETE(
-    req: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
-) {
-    try {
-        const { id } = await params;
-        const deleted = await storage.deleteSolution(id);
-        if (!deleted) {
-            return NextResponse.json({ error: "Solution not found" }, { status: 404 });
-        }
-        return new NextResponse(null, { status: 204 });
-    } catch (error) {
-        console.error("Error deleting solution:", error);
-        return NextResponse.json({ error: "Failed to delete solution" }, { status: 500 });
-    }
-}
+  const { id } = await params;
+  const body = await req.json().catch(() => null);
+  const parsed = updateSolutionSchema.safeParse(body);
+  if (!parsed.success) {
+    return fail('VALIDATION_ERROR', 'Invalid solution data', parsed.error.issues);
+  }
+
+  const updated = await storage.updateSolution(id, parsed.data);
+  if (!updated) return fail('NOT_FOUND', 'Solution not found', undefined, 404);
+  return ok(updated);
+});
+
+export const DELETE = withErrorHandler(async (
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  const deny = await assertAdmin();
+  if (deny) return deny;
+
+  const { id } = await params;
+  const deleted = await storage.deleteSolution(id);
+  if (!deleted) return fail('NOT_FOUND', 'Solution not found', undefined, 404);
+  return ok({ deleted: true });
+});

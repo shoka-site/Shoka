@@ -165,20 +165,20 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   };
 
   const item = localizedItems[activeIdx];
-  const style = (updateStyle as any)[item?.type] ?? updateStyle.news;
+  const style = (updateStyle as Record<string, typeof updateStyle.news>)[item?.type] ?? updateStyle.news;
 
-  const slideVariants: any = {
+  const slideVariants = {
     enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 40 : -40, filter: "blur(8px)" }),
     center: { opacity: 1, x: 0, filter: "blur(0px)" },
     exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -40 : 40, filter: "blur(8px)" }),
   };
 
-  const textVariants: any = {
+  const textVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.4, 0, 0.2, 1] }
+      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }
     })
   };
 
@@ -425,7 +425,7 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as any }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
           className="relative p-8 md:p-12 rounded-2xl overflow-hidden"
           style={{
             background: "linear-gradient(135deg, rgba(194,164,92,0.06) 0%, rgba(0,0,0,0) 60%)",

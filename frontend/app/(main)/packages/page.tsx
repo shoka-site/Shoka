@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { usePackages } from "@/hooks/use-content";
 import { useDataReady } from "@/hooks/useDataReady";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
 export default function Packages() {

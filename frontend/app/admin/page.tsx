@@ -41,7 +41,7 @@ export default async function AdminDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {contentTypes.map((type) => {
                         const Icon = type.icon;
-                        const count = (stats as any)[type.key] || 0;
+                        const count = (stats as Record<string, number>)[type.key] || 0;
                         return (
                             <Link key={type.path} href={type.path}>
                                 <Card className="cursor-pointer hover:shadow-lg transition-shadow">

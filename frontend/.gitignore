@@ -10,3 +10,8 @@ vite.config.ts.*
 .env.*.local
 public/uploads/*
 !public/uploads/.gitkeep
+
+# Logs
+*.log
+server.log
+npm-debug.log*

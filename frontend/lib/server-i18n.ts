@@ -12,11 +12,11 @@ export async function getServerTranslation(forcedLang?: "en" | "ar") {
   return {
     t: (key: string, fallback?: string) => {
       const keys = key.split(".");
-      let result: any = translations;
+      let result: unknown = translations;
       
       for (const k of keys) {
         if (result && typeof result === "object" && k in result) {
-          result = result[k];
+          result = (result as Record<string, unknown>)[k];
         } else {
           return fallback || key;
         }

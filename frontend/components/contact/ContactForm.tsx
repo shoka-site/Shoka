@@ -67,7 +67,7 @@ export function ContactForm({ isRtl }: { isRtl: boolean }) {
           variant: "destructive",
         });
       }
-    } catch (error) {
+    } catch {
       toast({
         title: t('contact.form.error_title', 'Error'),
         description: t('contact.form.error_desc', 'Something went wrong. Please try again.'),

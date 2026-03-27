@@ -6,7 +6,7 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Edit, Trash2, Package, ChevronDown, ChevronUp } from "lucide-react";
+import { Plus, Edit, Trash2, Package } from "lucide-react";
 import type { Package as PackageType } from "@/hooks/use-content";
 
 const EMPTY_FORM = {
@@ -22,10 +22,9 @@ export default function AdminPackages() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [expandedId, setExpandedId] = useState<string | null>(null);
     const [formData, setFormData] = useState(EMPTY_FORM);
 
-    const { data: packages = [], isLoading } = useQuery<any[]>({
+    const { data: packages = [], isLoading } = useQuery<PackageType[]>({
         queryKey: ["admin-packages"],
         queryFn: async () => {
             const res = await fetch("/api/admin/packages");
@@ -34,7 +33,7 @@ export default function AdminPackages() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/packages", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -46,7 +45,7 @@ export default function AdminPackages() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/packages/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -75,13 +74,14 @@ export default function AdminPackages() {
         }
     };
 
-    const handleEdit = (pkg: any) => {
+    const handleEdit = (pkg: PackageType) => {
+        const raw = pkg as unknown as Record<string, unknown>;
         setFormData({
             order: pkg.order,
-            titleEn: pkg.titleEn || pkg.title || "",
-            titleAr: pkg.titleAr || "",
-            descriptionEn: pkg.descriptionEn || "",
-            descriptionAr: pkg.descriptionAr || "",
+            titleEn: (raw.titleEn ?? pkg.title ?? "") as string,
+            titleAr: (raw.titleAr ?? "") as string,
+            descriptionEn: (raw.descriptionEn ?? pkg.description ?? "") as string,
+            descriptionAr: (raw.descriptionAr ?? "") as string,
             published: pkg.published,
         });
         setEditingId(pkg.id);
@@ -198,7 +198,9 @@ export default function AdminPackages() {
                             <p className="text-sm">No packages yet. Click &quot;Add Package&quot; to create one.</p>
                         </div>
                     ) : (
-                        packages.map((pkg: any) => (
+                        packages.map((pkg) => {
+                            const raw = pkg as unknown as Record<string, unknown>;
+                            return (
                             <div key={pkg.id} className="border-b border-border last:border-0">
                                 {/* Main row */}
                                 <div className="grid grid-cols-[1fr_auto] gap-4 px-6 py-4 items-center hover:bg-muted/20 transition-colors">
@@ -207,10 +209,10 @@ export default function AdminPackages() {
                                             <span className="text-xs text-muted-foreground">#{pkg.order}</span>
                                             {pkg.published && <span className="text-xs bg-green-500/20 text-green-600 px-2 py-0.5 rounded-full">Published</span>}
                                         </div>
-                                        <p className="font-semibold text-sm">{pkg.title || pkg.titleEn}</p>
-                                        {(pkg.descriptionEn || pkg.descriptionAr) && (
+                                        <p className="font-semibold text-sm">{pkg.title || (raw.titleEn as string)}</p>
+                                        {Boolean(raw.descriptionEn || raw.descriptionAr) && (
                                             <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
-                                                {pkg.descriptionEn || pkg.descriptionAr}
+                                                {(raw.descriptionEn as string) || (raw.descriptionAr as string)}
                                             </p>
                                         )}
                                     </div>
@@ -224,7 +226,8 @@ export default function AdminPackages() {
                                     </div>
                                 </div>
                             </div>
-                        ))
+                        );
+                        })
                     )}
                 </div>
             </div>

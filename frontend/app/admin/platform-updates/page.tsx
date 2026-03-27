@@ -34,7 +34,7 @@ export default function AdminPlatformUpdates() {
     });
 
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: Record<string, unknown>) => {
             const res = await fetch("/api/admin/platform-updates", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -50,7 +50,7 @@ export default function AdminPlatformUpdates() {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ id, data }: { id: string; data: any }) => {
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
             const res = await fetch(`/api/admin/platform-updates/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -103,13 +103,14 @@ export default function AdminPlatformUpdates() {
         }
     };
 
-    const handleEdit = (update: any) => {
+    const handleEdit = (update: PlatformUpdate) => {
+        const raw = update as unknown as Record<string, unknown>;
         setFormData({
             type: update.type,
-            titleEn: update.titleEn || update.title,
-            titleAr: update.titleAr || update.title,
-            summaryEn: update.summaryEn || update.summary,
-            summaryAr: update.summaryAr || update.summary,
+            titleEn: (raw.titleEn ?? update.title ?? "") as string,
+            titleAr: (raw.titleAr ?? update.title ?? "") as string,
+            summaryEn: (raw.summaryEn ?? update.summary ?? "") as string,
+            summaryAr: (raw.summaryAr ?? update.summary ?? "") as string,
             date: new Date(update.date).toISOString().split('T')[0],
             order: update.order,
             published: update.published,
@@ -138,7 +139,7 @@ export default function AdminPlatformUpdates() {
                                 <label className="text-sm font-medium mb-1 block">Type</label>
                                 <Select
                                     value={formData.type}
-                                    onValueChange={(val: any) => setFormData({ ...formData, type: val })}
+                                    onValueChange={(val: 'news' | 'achievement' | 'event' | 'new') => setFormData({ ...formData, type: val })}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select type" />
@@ -234,7 +235,9 @@ export default function AdminPlatformUpdates() {
                 )}
 
                 <div className="space-y-4">
-                    {updates.map((update: any) => (
+                    {updates.map((update: PlatformUpdate) => {
+                        const raw = update as unknown as Record<string, unknown>;
+                        return (
                         <div key={update.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
@@ -247,8 +250,8 @@ export default function AdminPlatformUpdates() {
                                     )}
                                     <span className="text-xs text-muted-foreground">Order: {update.order}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{update.title || update.titleEn}</h3>
-                                <p className="text-sm text-muted-foreground">{update.summary || update.summaryEn}</p>
+                                <h3 className="text-xl font-bold mb-2">{update.title || (raw.titleEn as string)}</h3>
+                                <p className="text-sm text-muted-foreground">{update.summary || (raw.summaryEn as string)}</p>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(update)}>
@@ -264,7 +267,8 @@ export default function AdminPlatformUpdates() {
                                 </Button>
                             </div>
                         </div>
-                    ))}
+                        );
+                    })}
                     {updates.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
                             No platform updates found. Click &quot;Add New Update&quot; to create one.

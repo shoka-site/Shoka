@@ -160,7 +160,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('services');
       await prisma.service.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -210,7 +210,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('projects');
       await prisma.project.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -246,7 +246,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('testimonials');
       return await prisma.testimonial.update({ where: { id }, data: updates });
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -256,7 +256,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('testimonials');
       await prisma.testimonial.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -293,7 +293,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('platformUpdates');
       return await prisma.platformUpdate.update({ where: { id }, data: updates }) as PlatformUpdate;
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -303,7 +303,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('platformUpdates');
       await prisma.platformUpdate.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -343,7 +343,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('industries');
       return await prisma.industry.update({ where: { id }, data: updates });
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -353,7 +353,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('industries');
       await prisma.industry.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -389,7 +389,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('solutions');
       return await prisma.solution.update({ where: { id }, data: updates });
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -399,7 +399,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('solutions');
       await prisma.solution.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -435,7 +435,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('teamMembers');
       return await prisma.teamMember.update({ where: { id }, data: updates });
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -445,7 +445,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('teamMembers');
       await prisma.teamMember.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -487,7 +487,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('consultations');
       const updated = await prisma.consultation.update({ where: { id }, data: updates });
       return updated as Consultation;
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -497,7 +497,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('consultations');
       await prisma.consultation.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -566,7 +566,7 @@ export class PrismaStorage implements IStorage {
     try {
       CacheFactory.invalidate('packages');
       return await prisma.package.update({ where: { id }, data: updates });
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }
@@ -576,7 +576,7 @@ export class PrismaStorage implements IStorage {
       CacheFactory.invalidate('packages');
       await prisma.package.delete({ where: { id } });
       return true;
-    } catch (e) {
+    } catch {
       return false;
     }
   }
