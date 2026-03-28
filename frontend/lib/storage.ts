@@ -1,97 +1,228 @@
 import { type User, type InsertUser, type Service, type Project, type Testimonial, type PlatformUpdate, type Industry, type Solution, type TeamMember, type Consultation, type InsertConsultation, type Package } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
-import { CacheFactory } from "./cache";
+import { unstable_cache, revalidateTag } from "next/cache";
 
 const prisma = new PrismaClient();
 
-// Cache helper functions - uses MemoryCache from cache.ts
-type MemoryCache<T> = {
-  get(key: string): T | undefined;
-  set(key: string, data: T): void;
-};
+// Cache TTL: 5 minutes. Tags allow instant invalidation via revalidateTag() when admin mutates content.
+const CACHE_TTL = 300;
 
-function getCachedOrFetch<T>(cache: MemoryCache<T>, key: string, fetchFn: () => Promise<T>): Promise<T> {
-  const cached = cache.get(key);
-  if (cached) {
-    return Promise.resolve(cached);
-  }
-  return fetchFn().then(data => {
-    cache.set(key, data);
-    return data;
-  });
-}
+// ---------------------------------------------------------------------------
+// Module-level cached Prisma reads — unstable_cache persists across requests
+// and across server restarts (Next.js Data Cache). Each entity has its own tag
+// so mutations can surgically invalidate only the affected entity.
+// ---------------------------------------------------------------------------
+
+const cachedGetServices = unstable_cache(
+  (published: boolean | null) =>
+    prisma.service.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+    }),
+  ["storage-services-list"],
+  { tags: ["services"], revalidate: CACHE_TTL }
+);
+
+const cachedGetService = unstable_cache(
+  (id: string) => prisma.service.findUnique({ where: { id } }),
+  ["storage-service-one"],
+  { tags: ["services"], revalidate: CACHE_TTL }
+);
+
+const cachedGetProjects = unstable_cache(
+  (published: boolean | null, featured: boolean | null) =>
+    prisma.project.findMany({
+      where: {
+        ...(published !== null ? { published } : {}),
+        ...(featured !== null ? { featured } : {}),
+      },
+      orderBy: { order: "asc" },
+    }),
+  ["storage-projects-list"],
+  { tags: ["projects"], revalidate: CACHE_TTL }
+);
+
+const cachedGetProject = unstable_cache(
+  (id: string) => prisma.project.findUnique({ where: { id } }),
+  ["storage-project-one"],
+  { tags: ["projects"], revalidate: CACHE_TTL }
+);
+
+const cachedGetTestimonials = unstable_cache(
+  (published: boolean | null) =>
+    prisma.testimonial.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+    }),
+  ["storage-testimonials-list"],
+  { tags: ["testimonials"], revalidate: CACHE_TTL }
+);
+
+const cachedGetTestimonial = unstable_cache(
+  (id: string) => prisma.testimonial.findUnique({ where: { id } }),
+  ["storage-testimonial-one"],
+  { tags: ["testimonials"], revalidate: CACHE_TTL }
+);
+
+const cachedGetPlatformUpdates = unstable_cache(
+  (published: boolean | null) =>
+    prisma.platformUpdate.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { date: "desc" },
+    }),
+  ["storage-platform-updates-list"],
+  { tags: ["platformUpdates"], revalidate: CACHE_TTL }
+);
+
+const cachedGetPlatformUpdate = unstable_cache(
+  (id: string) => prisma.platformUpdate.findUnique({ where: { id } }),
+  ["storage-platform-update-one"],
+  { tags: ["platformUpdates"], revalidate: CACHE_TTL }
+);
+
+const cachedGetIndustries = unstable_cache(
+  (published: boolean | null) =>
+    prisma.industry.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+      include: { solutions: true },
+    }),
+  ["storage-industries-list"],
+  { tags: ["industries"], revalidate: CACHE_TTL }
+);
+
+const cachedGetIndustry = unstable_cache(
+  (id: string) =>
+    prisma.industry.findUnique({ where: { id }, include: { solutions: true } }),
+  ["storage-industry-one"],
+  { tags: ["industries"], revalidate: CACHE_TTL }
+);
+
+const cachedGetSolutions = unstable_cache(
+  (published: boolean | null) =>
+    prisma.solution.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+    }),
+  ["storage-solutions-list"],
+  { tags: ["solutions"], revalidate: CACHE_TTL }
+);
+
+const cachedGetSolution = unstable_cache(
+  (id: string) => prisma.solution.findUnique({ where: { id } }),
+  ["storage-solution-one"],
+  { tags: ["solutions"], revalidate: CACHE_TTL }
+);
+
+const cachedGetTeamMembers = unstable_cache(
+  (published: boolean | null) =>
+    prisma.teamMember.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+    }),
+  ["storage-team-list"],
+  { tags: ["teamMembers"], revalidate: CACHE_TTL }
+);
+
+const cachedGetTeamMember = unstable_cache(
+  (id: string) => prisma.teamMember.findUnique({ where: { id } }),
+  ["storage-team-one"],
+  { tags: ["teamMembers"], revalidate: CACHE_TTL }
+);
+
+const cachedGetPackages = unstable_cache(
+  (published: boolean | null) =>
+    prisma.package.findMany({
+      where: published !== null ? { published } : undefined,
+      orderBy: { order: "asc" },
+    }),
+  ["storage-packages-list"],
+  { tags: ["packages"], revalidate: CACHE_TTL }
+);
+
+const cachedGetPackage = unstable_cache(
+  (id: string) => prisma.package.findUnique({ where: { id } }),
+  ["storage-package-one"],
+  { tags: ["packages"], revalidate: CACHE_TTL }
+);
+
+// Consultations are admin-only — no public caching needed, but cache for admin list performance
+const cachedGetConsultations = unstable_cache(
+  () =>
+    prisma.consultation.findMany({ orderBy: { createdAt: "desc" } }),
+  ["storage-consultations-list"],
+  { tags: ["consultations"], revalidate: 60 }
+);
+
+const cachedGetConsultation = unstable_cache(
+  (id: string) => prisma.consultation.findUnique({ where: { id } }),
+  ["storage-consultation-one"],
+  { tags: ["consultations"], revalidate: 60 }
+);
+
+// ---------------------------------------------------------------------------
+// Storage interfaces
+// ---------------------------------------------------------------------------
 
 export interface IStorage {
-  // User methods
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 
-  // Services
   getServices(published?: boolean): Promise<Service[]>;
   getService(id: string): Promise<Service | undefined>;
-  createService(service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<Service>;
-  updateService(id: string, service: Partial<Omit<Service, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Service | undefined>;
+  createService(service: Omit<Service, "id" | "createdAt" | "updatedAt">): Promise<Service>;
+  updateService(id: string, service: Partial<Omit<Service, "id" | "createdAt" | "updatedAt">>): Promise<Service | undefined>;
   deleteService(id: string): Promise<boolean>;
 
-  // Projects
   getProjects(published?: boolean, featured?: boolean): Promise<Project[]>;
   getProject(id: string): Promise<Project | undefined>;
-  createProject(project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>): Promise<Project>;
-  updateProject(id: string, project: Partial<Omit<Project, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Project | undefined>;
+  createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project>;
+  updateProject(id: string, project: Partial<Omit<Project, "id" | "createdAt" | "updatedAt">>): Promise<Project | undefined>;
   deleteProject(id: string): Promise<boolean>;
 
-  // Testimonials
   getTestimonials(published?: boolean): Promise<Testimonial[]>;
   getTestimonial(id: string): Promise<Testimonial | undefined>;
-  createTestimonial(testimonial: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial>;
-  updateTestimonial(id: string, testimonial: Partial<Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Testimonial | undefined>;
+  createTestimonial(testimonial: Omit<Testimonial, "id" | "createdAt" | "updatedAt">): Promise<Testimonial>;
+  updateTestimonial(id: string, testimonial: Partial<Omit<Testimonial, "id" | "createdAt" | "updatedAt">>): Promise<Testimonial | undefined>;
   deleteTestimonial(id: string): Promise<boolean>;
 
-
-  // Platform Updates
   getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]>;
   getPlatformUpdate(id: string): Promise<PlatformUpdate | undefined>;
-  createPlatformUpdate(update: Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>): Promise<PlatformUpdate>;
-  updatePlatformUpdate(id: string, update: Partial<Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>>): Promise<PlatformUpdate | undefined>;
+  createPlatformUpdate(update: Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">): Promise<PlatformUpdate>;
+  updatePlatformUpdate(id: string, update: Partial<Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">>): Promise<PlatformUpdate | undefined>;
   deletePlatformUpdate(id: string): Promise<boolean>;
 
-  // Industries
   getIndustries(published?: boolean): Promise<Industry[]>;
   getIndustry(id: string): Promise<Industry | undefined>;
-  createIndustry(industry: Omit<Industry, 'id' | 'createdAt' | 'updatedAt'>): Promise<Industry>;
-  updateIndustry(id: string, industry: Partial<Omit<Industry, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Industry | undefined>;
+  createIndustry(industry: Omit<Industry, "id" | "createdAt" | "updatedAt">): Promise<Industry>;
+  updateIndustry(id: string, industry: Partial<Omit<Industry, "id" | "createdAt" | "updatedAt">>): Promise<Industry | undefined>;
   deleteIndustry(id: string): Promise<boolean>;
 
-  // Solutions
   getSolutions(published?: boolean): Promise<Solution[]>;
   getSolution(id: string): Promise<Solution | undefined>;
-  createSolution(solution: Omit<Solution, 'id' | 'createdAt' | 'updatedAt'>): Promise<Solution>;
-  updateSolution(id: string, solution: Partial<Omit<Solution, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Solution | undefined>;
+  createSolution(solution: Omit<Solution, "id" | "createdAt" | "updatedAt">): Promise<Solution>;
+  updateSolution(id: string, solution: Partial<Omit<Solution, "id" | "createdAt" | "updatedAt">>): Promise<Solution | undefined>;
   deleteSolution(id: string): Promise<boolean>;
 
-  // Team Members
   getTeamMembers(published?: boolean): Promise<TeamMember[]>;
   getTeamMember(id: string): Promise<TeamMember | undefined>;
-  createTeamMember(member: Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>): Promise<TeamMember>;
-  updateTeamMember(id: string, member: Partial<Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>>): Promise<TeamMember | undefined>;
+  createTeamMember(member: Omit<TeamMember, "id" | "createdAt" | "updatedAt">): Promise<TeamMember>;
+  updateTeamMember(id: string, member: Partial<Omit<TeamMember, "id" | "createdAt" | "updatedAt">>): Promise<TeamMember | undefined>;
   deleteTeamMember(id: string): Promise<boolean>;
 
-  // Consultations
   getConsultations(): Promise<Consultation[]>;
   getConsultation(id: string): Promise<Consultation | undefined>;
   createConsultation(consultation: InsertConsultation): Promise<Consultation>;
-  updateConsultation(id: string, consultation: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined>;
+  updateConsultation(id: string, consultation: Partial<Omit<Consultation, "id" | "createdAt" | "updatedAt">>): Promise<Consultation | undefined>;
   deleteConsultation(id: string): Promise<boolean>;
 
-  // Packages
   getPackages(published?: boolean): Promise<Package[]>;
   getPackage(id: string): Promise<Package | undefined>;
-  createPackage(pkg: Omit<Package, 'id' | 'createdAt' | 'updatedAt'>): Promise<Package>;
-  updatePackage(id: string, pkg: Partial<Omit<Package, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Package | undefined>;
+  createPackage(pkg: Omit<Package, "id" | "createdAt" | "updatedAt">): Promise<Package>;
+  updatePackage(id: string, pkg: Partial<Omit<Package, "id" | "createdAt" | "updatedAt">>): Promise<Package | undefined>;
   deletePackage(id: string): Promise<boolean>;
 
-  // Count methods for dashboard
   getServiceCount(): Promise<number>;
   getProjectCount(): Promise<number>;
   getTestimonialCount(): Promise<number>;
@@ -102,53 +233,45 @@ export interface IStorage {
   getPackageCount(): Promise<number>;
 }
 
+// ---------------------------------------------------------------------------
+// PrismaStorage implementation
+// ---------------------------------------------------------------------------
+
 export class PrismaStorage implements IStorage {
-  // User methods
   async getUser(id: string): Promise<User | undefined> {
-    return await prisma.user.findUnique({ where: { id } }) || undefined;
+    return (await prisma.user.findUnique({ where: { id } })) || undefined;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    return await prisma.user.findUnique({ where: { email } }) || undefined;
+    return (await prisma.user.findUnique({ where: { email } })) || undefined;
   }
 
   async createUser(user: InsertUser): Promise<User> {
     return await prisma.user.create({ data: user });
   }
 
-  // Services - with caching
+  // ----- Services -----
+
   async getServices(published?: boolean): Promise<Service[]> {
-    const cacheKey = `services_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.services as unknown as MemoryCache<Service[]>,
-      cacheKey,
-      async () => await prisma.service.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' }
-      }) as Service[]
-    );
+    return cachedGetServices(published ?? null) as Promise<Service[]>;
   }
 
   async getService(id: string): Promise<Service | undefined> {
-    const cacheKey = `service_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.services as unknown as MemoryCache<Service | undefined>,
-      cacheKey,
-      async () => await prisma.service.findUnique({ 
-        where: { id }
-      }) as Service | undefined || undefined
-    );
+    const result = await cachedGetService(id);
+    return (result as Service | null) || undefined;
   }
 
-  async createService(service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<Service> {
-    CacheFactory.invalidate('services');
-    return await prisma.service.create({ data: service });
+  async createService(service: Omit<Service, "id" | "createdAt" | "updatedAt">): Promise<Service> {
+    const result = await prisma.service.create({ data: service });
+    revalidateTag("services");
+    return result as Service;
   }
 
-  async updateService(id: string, updates: Partial<Omit<Service, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Service | undefined> {
+  async updateService(id: string, updates: Partial<Omit<Service, "id" | "createdAt" | "updatedAt">>): Promise<Service | undefined> {
     try {
-      CacheFactory.invalidate('services');
-      return await prisma.service.update({ where: { id }, data: updates });
+      const result = await prisma.service.update({ where: { id }, data: updates });
+      revalidateTag("services");
+      return result as Service;
     } catch (e) {
       console.error("Prisma update error:", e);
       return undefined;
@@ -157,48 +280,36 @@ export class PrismaStorage implements IStorage {
 
   async deleteService(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('services');
       await prisma.service.delete({ where: { id } });
+      revalidateTag("services");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Projects - with caching
+  // ----- Projects -----
+
   async getProjects(published?: boolean, featured?: boolean): Promise<Project[]> {
-    const cacheKey = `projects_${published}_${featured}`;
-    return getCachedOrFetch(
-      CacheFactory.projects as unknown as MemoryCache<Project[]>,
-      cacheKey,
-      async () => await prisma.project.findMany({
-        where: {
-          ...(published !== undefined ? { published } : {}),
-          ...(featured !== undefined ? { featured } : {}),
-        },
-        orderBy: { order: 'asc' },
-      })
-    );
+    return cachedGetProjects(published ?? null, featured ?? null) as Promise<Project[]>;
   }
 
   async getProject(id: string): Promise<Project | undefined> {
-    const cacheKey = `project_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.projects as unknown as MemoryCache<Project | undefined>,
-      cacheKey,
-      async () => await prisma.project.findUnique({ where: { id } }) || undefined
-    );
+    const result = await cachedGetProject(id);
+    return (result as Project | null) || undefined;
   }
 
-  async createProject(project: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>): Promise<Project> {
-    CacheFactory.invalidate('projects');
-    return await prisma.project.create({ data: project });
+  async createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
+    const result = await prisma.project.create({ data: project });
+    revalidateTag("projects");
+    return result as Project;
   }
 
-  async updateProject(id: string, updates: Partial<Omit<Project, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Project | undefined> {
+  async updateProject(id: string, updates: Partial<Omit<Project, "id" | "createdAt" | "updatedAt">>): Promise<Project | undefined> {
     try {
-      CacheFactory.invalidate('projects');
-      return await prisma.project.update({ where: { id }, data: updates });
+      const result = await prisma.project.update({ where: { id }, data: updates });
+      revalidateTag("projects");
+      return result as Project;
     } catch (e) {
       console.error("Prisma update error:", e);
       return undefined;
@@ -207,45 +318,36 @@ export class PrismaStorage implements IStorage {
 
   async deleteProject(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('projects');
       await prisma.project.delete({ where: { id } });
+      revalidateTag("projects");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Testimonials - with caching
+  // ----- Testimonials -----
+
   async getTestimonials(published?: boolean): Promise<Testimonial[]> {
-    const cacheKey = `testimonials_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.testimonials as unknown as MemoryCache<Testimonial[]>,
-      cacheKey,
-      async () => await prisma.testimonial.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' },
-      })
-    );
+    return cachedGetTestimonials(published ?? null) as Promise<Testimonial[]>;
   }
 
   async getTestimonial(id: string): Promise<Testimonial | undefined> {
-    const cacheKey = `testimonial_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.testimonials as unknown as MemoryCache<Testimonial | undefined>,
-      cacheKey,
-      async () => await prisma.testimonial.findUnique({ where: { id } }) || undefined
-    );
+    const result = await cachedGetTestimonial(id);
+    return (result as Testimonial | null) || undefined;
   }
 
-  async createTestimonial(testimonial: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial> {
-    CacheFactory.invalidate('testimonials');
-    return await prisma.testimonial.create({ data: testimonial });
+  async createTestimonial(testimonial: Omit<Testimonial, "id" | "createdAt" | "updatedAt">): Promise<Testimonial> {
+    const result = await prisma.testimonial.create({ data: testimonial });
+    revalidateTag("testimonials");
+    return result as Testimonial;
   }
 
-  async updateTestimonial(id: string, updates: Partial<Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Testimonial | undefined> {
+  async updateTestimonial(id: string, updates: Partial<Omit<Testimonial, "id" | "createdAt" | "updatedAt">>): Promise<Testimonial | undefined> {
     try {
-      CacheFactory.invalidate('testimonials');
-      return await prisma.testimonial.update({ where: { id }, data: updates });
+      const result = await prisma.testimonial.update({ where: { id }, data: updates });
+      revalidateTag("testimonials");
+      return result as Testimonial;
     } catch {
       return undefined;
     }
@@ -253,46 +355,36 @@ export class PrismaStorage implements IStorage {
 
   async deleteTestimonial(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('testimonials');
       await prisma.testimonial.delete({ where: { id } });
+      revalidateTag("testimonials");
       return true;
     } catch {
       return false;
     }
   }
 
+  // ----- Platform Updates -----
 
-  // Platform Updates - with caching
   async getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]> {
-    const cacheKey = `platformUpdates_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.platformUpdates as unknown as MemoryCache<PlatformUpdate[]>,
-      cacheKey,
-      async () => await prisma.platformUpdate.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { date: 'desc' },
-      }) as PlatformUpdate[]
-    );
+    return cachedGetPlatformUpdates(published ?? null) as Promise<PlatformUpdate[]>;
   }
 
   async getPlatformUpdate(id: string): Promise<PlatformUpdate | undefined> {
-    const cacheKey = `platformUpdate_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.platformUpdates as unknown as MemoryCache<PlatformUpdate | undefined>,
-      cacheKey,
-      async () => await prisma.platformUpdate.findUnique({ where: { id } }) as PlatformUpdate | undefined || undefined
-    );
+    const result = await cachedGetPlatformUpdate(id);
+    return (result as PlatformUpdate | null) || undefined;
   }
 
-  async createPlatformUpdate(update: Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>): Promise<PlatformUpdate> {
-    CacheFactory.invalidate('platformUpdates');
-    return await prisma.platformUpdate.create({ data: update }) as PlatformUpdate;
+  async createPlatformUpdate(update: Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">): Promise<PlatformUpdate> {
+    const result = await prisma.platformUpdate.create({ data: update });
+    revalidateTag("platformUpdates");
+    return result as PlatformUpdate;
   }
 
-  async updatePlatformUpdate(id: string, updates: Partial<Omit<PlatformUpdate, 'id' | 'createdAt' | 'updatedAt'>>): Promise<PlatformUpdate | undefined> {
+  async updatePlatformUpdate(id: string, updates: Partial<Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">>): Promise<PlatformUpdate | undefined> {
     try {
-      CacheFactory.invalidate('platformUpdates');
-      return await prisma.platformUpdate.update({ where: { id }, data: updates }) as PlatformUpdate;
+      const result = await prisma.platformUpdate.update({ where: { id }, data: updates });
+      revalidateTag("platformUpdates");
+      return result as PlatformUpdate;
     } catch {
       return undefined;
     }
@@ -300,49 +392,36 @@ export class PrismaStorage implements IStorage {
 
   async deletePlatformUpdate(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('platformUpdates');
       await prisma.platformUpdate.delete({ where: { id } });
+      revalidateTag("platformUpdates");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Industries - with caching
+  // ----- Industries -----
+
   async getIndustries(published?: boolean): Promise<Industry[]> {
-    const cacheKey = `industries_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.industries as unknown as MemoryCache<Industry[]>,
-      cacheKey,
-      async () => await prisma.industry.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' },
-        include: { solutions: true },
-      }) as Industry[]
-    );
+    return cachedGetIndustries(published ?? null) as Promise<Industry[]>;
   }
 
   async getIndustry(id: string): Promise<Industry | undefined> {
-    const cacheKey = `industry_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.industries as unknown as MemoryCache<Industry | undefined>,
-      cacheKey,
-      async () => await prisma.industry.findUnique({ 
-        where: { id },
-        include: { solutions: true }
-      }) as Industry | undefined || undefined
-    );
+    const result = await cachedGetIndustry(id);
+    return (result as Industry | null) || undefined;
   }
 
-  async createIndustry(industry: Omit<Industry, 'id' | 'createdAt' | 'updatedAt'>): Promise<Industry> {
-    CacheFactory.invalidate('industries');
-    return await prisma.industry.create({ data: industry });
+  async createIndustry(industry: Omit<Industry, "id" | "createdAt" | "updatedAt">): Promise<Industry> {
+    const result = await prisma.industry.create({ data: industry });
+    revalidateTag("industries");
+    return result as Industry;
   }
 
-  async updateIndustry(id: string, updates: Partial<Omit<Industry, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Industry | undefined> {
+  async updateIndustry(id: string, updates: Partial<Omit<Industry, "id" | "createdAt" | "updatedAt">>): Promise<Industry | undefined> {
     try {
-      CacheFactory.invalidate('industries');
-      return await prisma.industry.update({ where: { id }, data: updates });
+      const result = await prisma.industry.update({ where: { id }, data: updates });
+      revalidateTag("industries");
+      return result as Industry;
     } catch {
       return undefined;
     }
@@ -350,45 +429,38 @@ export class PrismaStorage implements IStorage {
 
   async deleteIndustry(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('industries');
       await prisma.industry.delete({ where: { id } });
+      revalidateTag("industries");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Solutions - with caching
+  // ----- Solutions -----
+
   async getSolutions(published?: boolean): Promise<Solution[]> {
-    const cacheKey = `solutions_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.solutions as unknown as MemoryCache<Solution[]>,
-      cacheKey,
-      async () => await prisma.solution.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' },
-      })
-    );
+    return cachedGetSolutions(published ?? null) as Promise<Solution[]>;
   }
 
   async getSolution(id: string): Promise<Solution | undefined> {
-    const cacheKey = `solution_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.solutions as unknown as MemoryCache<Solution | undefined>,
-      cacheKey,
-      async () => await prisma.solution.findUnique({ where: { id } }) || undefined
-    );
+    const result = await cachedGetSolution(id);
+    return (result as Solution | null) || undefined;
   }
 
-  async createSolution(solution: Omit<Solution, 'id' | 'createdAt' | 'updatedAt'>): Promise<Solution> {
-    CacheFactory.invalidate('solutions');
-    return await prisma.solution.create({ data: solution });
+  async createSolution(solution: Omit<Solution, "id" | "createdAt" | "updatedAt">): Promise<Solution> {
+    const result = await prisma.solution.create({ data: solution });
+    revalidateTag("solutions");
+    revalidateTag("industries"); // Industries include their solutions
+    return result as Solution;
   }
 
-  async updateSolution(id: string, updates: Partial<Omit<Solution, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Solution | undefined> {
+  async updateSolution(id: string, updates: Partial<Omit<Solution, "id" | "createdAt" | "updatedAt">>): Promise<Solution | undefined> {
     try {
-      CacheFactory.invalidate('solutions');
-      return await prisma.solution.update({ where: { id }, data: updates });
+      const result = await prisma.solution.update({ where: { id }, data: updates });
+      revalidateTag("solutions");
+      revalidateTag("industries");
+      return result as Solution;
     } catch {
       return undefined;
     }
@@ -396,45 +468,37 @@ export class PrismaStorage implements IStorage {
 
   async deleteSolution(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('solutions');
       await prisma.solution.delete({ where: { id } });
+      revalidateTag("solutions");
+      revalidateTag("industries");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Team Members - with caching
+  // ----- Team Members -----
+
   async getTeamMembers(published?: boolean): Promise<TeamMember[]> {
-    const cacheKey = `teamMembers_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.teamMembers as unknown as MemoryCache<TeamMember[]>,
-      cacheKey,
-      async () => await prisma.teamMember.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' },
-      })
-    );
+    return cachedGetTeamMembers(published ?? null) as Promise<TeamMember[]>;
   }
 
   async getTeamMember(id: string): Promise<TeamMember | undefined> {
-    const cacheKey = `teamMember_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.teamMembers as unknown as MemoryCache<TeamMember | undefined>,
-      cacheKey,
-      async () => await prisma.teamMember.findUnique({ where: { id } }) || undefined
-    );
+    const result = await cachedGetTeamMember(id);
+    return (result as TeamMember | null) || undefined;
   }
 
-  async createTeamMember(member: Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>): Promise<TeamMember> {
-    CacheFactory.invalidate('teamMembers');
-    return await prisma.teamMember.create({ data: member });
+  async createTeamMember(member: Omit<TeamMember, "id" | "createdAt" | "updatedAt">): Promise<TeamMember> {
+    const result = await prisma.teamMember.create({ data: member });
+    revalidateTag("teamMembers");
+    return result as TeamMember;
   }
 
-  async updateTeamMember(id: string, updates: Partial<Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>>): Promise<TeamMember | undefined> {
+  async updateTeamMember(id: string, updates: Partial<Omit<TeamMember, "id" | "createdAt" | "updatedAt">>): Promise<TeamMember | undefined> {
     try {
-      CacheFactory.invalidate('teamMembers');
-      return await prisma.teamMember.update({ where: { id }, data: updates });
+      const result = await prisma.teamMember.update({ where: { id }, data: updates });
+      revalidateTag("teamMembers");
+      return result as TeamMember;
     } catch {
       return undefined;
     }
@@ -442,51 +506,36 @@ export class PrismaStorage implements IStorage {
 
   async deleteTeamMember(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('teamMembers');
       await prisma.teamMember.delete({ where: { id } });
+      revalidateTag("teamMembers");
       return true;
     } catch {
       return false;
     }
   }
 
-  // Consultations - with caching
+  // ----- Consultations -----
+
   async getConsultations(): Promise<Consultation[]> {
-    return getCachedOrFetch(
-      CacheFactory.consultations as unknown as MemoryCache<Consultation[]>,
-      'consultations_all',
-      async () => {
-        const consultations = await prisma.consultation.findMany({
-          orderBy: { createdAt: 'desc' },
-        });
-        return consultations as Consultation[];
-      }
-    );
+    return cachedGetConsultations() as Promise<Consultation[]>;
   }
 
   async getConsultation(id: string): Promise<Consultation | undefined> {
-    const cacheKey = `consultation_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.consultations as unknown as MemoryCache<Consultation | undefined>,
-      cacheKey,
-      async () => {
-        const consultation = await prisma.consultation.findUnique({ where: { id } });
-        return consultation as Consultation | undefined;
-      }
-    );
+    const result = await cachedGetConsultation(id);
+    return (result as Consultation | null) || undefined;
   }
 
   async createConsultation(consultation: InsertConsultation): Promise<Consultation> {
-    CacheFactory.invalidate('consultations');
-    const created = await prisma.consultation.create({ data: consultation });
-    return created as Consultation;
+    const result = await prisma.consultation.create({ data: consultation });
+    revalidateTag("consultations");
+    return result as Consultation;
   }
 
-  async updateConsultation(id: string, updates: Partial<Omit<Consultation, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Consultation | undefined> {
+  async updateConsultation(id: string, updates: Partial<Omit<Consultation, "id" | "createdAt" | "updatedAt">>): Promise<Consultation | undefined> {
     try {
-      CacheFactory.invalidate('consultations');
-      const updated = await prisma.consultation.update({ where: { id }, data: updates });
-      return updated as Consultation;
+      const result = await prisma.consultation.update({ where: { id }, data: updates });
+      revalidateTag("consultations");
+      return result as Consultation;
     } catch {
       return undefined;
     }
@@ -494,17 +543,53 @@ export class PrismaStorage implements IStorage {
 
   async deleteConsultation(id: string): Promise<boolean> {
     try {
-      CacheFactory.invalidate('consultations');
       await prisma.consultation.delete({ where: { id } });
+      revalidateTag("consultations");
       return true;
     } catch {
       return false;
     }
   }
 
+  // ----- Packages -----
 
+  async getPackages(published?: boolean): Promise<Package[]> {
+    return cachedGetPackages(published ?? null) as Promise<Package[]>;
+  }
 
-  // Count methods for dashboard
+  async getPackage(id: string): Promise<Package | undefined> {
+    const result = await cachedGetPackage(id);
+    return (result as Package | null) || undefined;
+  }
+
+  async createPackage(pkg: Omit<Package, "id" | "createdAt" | "updatedAt">): Promise<Package> {
+    const result = await prisma.package.create({ data: pkg });
+    revalidateTag("packages");
+    return result as Package;
+  }
+
+  async updatePackage(id: string, updates: Partial<Omit<Package, "id" | "createdAt" | "updatedAt">>): Promise<Package | undefined> {
+    try {
+      const result = await prisma.package.update({ where: { id }, data: updates });
+      revalidateTag("packages");
+      return result as Package;
+    } catch {
+      return undefined;
+    }
+  }
+
+  async deletePackage(id: string): Promise<boolean> {
+    try {
+      await prisma.package.delete({ where: { id } });
+      revalidateTag("packages");
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // ----- Dashboard counts (not cached — always live for admin) -----
+
   async getServiceCount(): Promise<number> {
     return await prisma.service.count();
   }
@@ -533,57 +618,9 @@ export class PrismaStorage implements IStorage {
     return await prisma.teamMember.count();
   }
 
-  // Packages - with caching
-  async getPackages(published?: boolean): Promise<Package[]> {
-    const cacheKey = `packages_${published}`;
-    return getCachedOrFetch(
-      CacheFactory.packages as unknown as MemoryCache<Package[]>,
-      cacheKey,
-      async () => await prisma.package.findMany({
-        where: published !== undefined ? { published } : undefined,
-        orderBy: { order: 'asc' }
-      }) as Package[]
-    );
-  }
-
-  async getPackage(id: string): Promise<Package | undefined> {
-    const cacheKey = `package_${id}`;
-    return getCachedOrFetch(
-      CacheFactory.packages as unknown as MemoryCache<Package | undefined>,
-      cacheKey,
-      async () => await prisma.package.findUnique({
-        where: { id }
-      }) as Package | undefined || undefined
-    );
-  }
-
-  async createPackage(pkg: Omit<Package, 'id' | 'createdAt' | 'updatedAt'>): Promise<Package> {
-    CacheFactory.invalidate('packages');
-    return await prisma.package.create({ data: pkg });
-  }
-
-  async updatePackage(id: string, updates: Partial<Omit<Package, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Package | undefined> {
-    try {
-      CacheFactory.invalidate('packages');
-      return await prisma.package.update({ where: { id }, data: updates });
-    } catch {
-      return undefined;
-    }
-  }
-
-  async deletePackage(id: string): Promise<boolean> {
-    try {
-      CacheFactory.invalidate('packages');
-      await prisma.package.delete({ where: { id } });
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   async getPackageCount(): Promise<number> {
     return await prisma.package.count();
   }
-
 }
+
 export const storage = new PrismaStorage();

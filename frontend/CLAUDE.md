@@ -6,9 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+All commands run from the `frontend/` directory.
+
 ```bash
 # Development
-npm run dev           # Start Next.js dev server
+npm run dev           # Start Next.js dev server (port 3000)
 
 # Build & Check
 npm run build         # Production build (also runs Prisma generate via postinstall)
@@ -16,12 +18,18 @@ npm run lint          # ESLint — must pass before committing
 npx tsc --noEmit      # TypeScript check — must pass before committing
 
 # Database
-npm run db:push       # Sync Prisma schema → database (dev only)
+npm run db:push       # Sync Prisma schema → database (dev only, no migration history)
 npx prisma generate   # Regenerate Prisma client (auto-runs on npm install)
 npx prisma studio     # GUI for database inspection
 
 # Production
 npm run start         # Start production server
+```
+
+Docker (run from project root, not `frontend/`):
+```bash
+docker-compose up --build   # Build and start full stack
+docker-compose down         # Stop all services
 ```
 
 No test runner is configured yet — `npm test` will fail.
@@ -117,3 +125,9 @@ GitHub Actions (`.github/workflows/ci.yml`):
 2. **Security Audit** — `npm audit --audit-level=high`
 3. **Build** — `npm run build` (needs `DATABASE_URL`, `ADMIN_*` env vars set as secrets)
 4. **Docker Build** — on `main` branch only; builds from `./frontend` context
+
+### Prisma Config
+`prisma/prisma.config.ts` uses `@prisma/adapter-pg` (PostgreSQL adapter). `DATABASE_URL` is used for pooled connections; `DIRECT_URL` is required for schema migrations/pushes.
+
+### Content Flow
+New content entities require changes in 4 places: `prisma/schema.prisma` → `shared/schema.ts` (Zod schemas + TS types) → `lib/storage.ts` (IStorage interface + PrismaStorage implementation) → `app/api/` route handlers.

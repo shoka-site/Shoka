@@ -35,6 +35,13 @@ const nextConfig = {
           { key: 'X-XSS-Protection', value: '1; mode=block' },
         ],
       },
+      // Public content API — cache at CDN/browser for 60s, serve stale for 5min while revalidating
+      {
+        source: '/api/content/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=300' },
+        ],
+      },
       // Immutable cache for content-hashed Next.js bundles — safe to cache forever
       {
         source: '/_next/static/(.*)',

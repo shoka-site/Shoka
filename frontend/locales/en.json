@@ -1,6 +1,6 @@
 {
   "navbar": {
-    "brand": "SHOKA",
+    "brand": "SEHLE",
     "services": "Services",
     "about": "About",
     "language": "Language",
@@ -33,7 +33,7 @@
   "welcome": {
     "badge": "Iraq's Digital Platform",
     "tagline": "Where the wisdom of the ancients meets the technology of tomorrow.",
-    "subtitle_2": "Build your legacy with Shoka.",
+    "subtitle_2": "Build your legacy with Sehle.",
     "enter": "Enter Platform",
     "system_ready": "SYS.READY",
     "est": "EST. 2026"
@@ -310,7 +310,7 @@
     "description": "We bridge the gap between ancient wisdom and modern technology, crafting digital solutions that stand the test of time.",
     "heritage": "Scroll to explore",
     "legacy_title": "A Legacy of Innovation",
-    "legacy_p1": "Founded in Turkey by two Iraqi engineers, Shoka represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
+    "legacy_p1": "Founded in Turkey by two Iraqi engineers, Sehle represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
     "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
     "stats": {
       "clients": "Enterprise Clients",
@@ -344,8 +344,8 @@
       "title": "Journey Through Time",
       "milestones": {
         "2024": {
-          "title": "Planning Shoka",
-          "desc": "We started planning to shoka from 2024 but because of some struggles we get late."
+          "title": "Planning Sehle",
+          "desc": "We started planning to Sehle from 2024 but because of some struggles we get late."
         },
         "2025": {
           "title": "Market Study",
@@ -367,7 +367,7 @@
   "news": {
     "title": "Our Achievements",
     "no_articles_title": "No updates yet",
-    "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Shoka.",
+    "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Sehle.",
     "cta": {
       "title": "Stay Connected",
       "button": "Contact Us"
@@ -442,7 +442,7 @@
   },
   "admin": {
     "login": {
-      "brand": "Shoka Admin",
+      "brand": "Sehle Admin",
       "username": "Username",
       "username_placeholder": "Enter username",
       "password": "Password",
