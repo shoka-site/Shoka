@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import { Readex_Pro } from "next/font/google";
+import { Readex_Pro, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const readexPro = Readex_Pro({
@@ -14,16 +14,24 @@ const readexPro = Readex_Pro({
     display: "swap",
 });
 
-const SITE_NAME = "شوكة | شركة برمجيات وتطوير تقني في العراق";
-const SITE_URL = "https://www.shoka.site";
+const playfairDisplay = Playfair_Display({
+    subsets: ["latin"],
+    weight: ["400", "700", "900"],
+    style: ["normal", "italic"],
+    variable: "--font-playfair",
+    display: "swap",
+});
+
+const SITE_NAME = "سهلة | شركة برمجيات وتطوير تقني في العراق";
+const SITE_URL = "https://www.sehle.site";
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
     title: {
         default: SITE_NAME,
-        template: `%s | شوكة`,
+        template: `%s | سهلة`,
     },
-    description: "شوكة — شركة برمجيات عراقية متخصصة في تطوير المواقع، التطبيقات، أنظمة ERP، والذكاء الاصطناعي. هل تبحث عن حل برمجي في العراق؟ نحن نبنيه. Software company Iraq | Web development | Mobile apps | AI.",
+    description: "سهلة — شركة برمجيات عراقية متخصصة في تطوير المواقع، التطبيقات، أنظمة ERP، والذكاء الاصطناعي. هل تبحث عن حل برمجي في العراق؟ نحن نبنيه. Software company Iraq | Web development | Mobile apps | AI.",
     keywords: [
         "شركة برمجيات عراقية",
         "تطوير برمجيات في العراق",
@@ -35,8 +43,8 @@ export const metadata: Metadata = {
         "نظام ERP العراق",
         "ذكاء اصطناعي العراق",
         "برمجة تطبيقات الجوال العراق",
-        "شوكة",
-        "منصة شوكة",
+        "سهلة",
+        "منصة سهلة",
         "software company Iraq",
         "web development Iraq",
         "software development Baghdad",
@@ -46,8 +54,8 @@ export const metadata: Metadata = {
         "custom software Iraq",
         "ERP system Iraq",
         "Iraq tech company",
-        "Shoka",
-        "Shoka software Iraq",
+        "Sehle",
+        "Sehle software Iraq",
     ],
 
     // Canonical and alternate languages
@@ -66,14 +74,14 @@ export const metadata: Metadata = {
         alternateLocale: "en_US",
         url: SITE_URL,
         siteName: SITE_NAME,
-        title: "شوكة | أنظمة رقمية ذكية وحلول برمجية عراقية",
-        description: "شوكة هي المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات. نحن متخصصون في التحول الرقمي.",
+        title: "سهلة | أنظمة رقمية ذكية وحلول برمجية عراقية",
+        description: "سهلة هي المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات. نحن متخصصون في التحول الرقمي.",
         images: [
             {
                 url: `${SITE_URL}/og-image.png`,
                 width: 1200,
                 height: 630,
-                alt: "شوكة - تصميم مستقبل التكنولوجيا العراقية",
+                alt: "سهلة - تصميم مستقبل التكنولوجيا العراقية",
             },
         ],
     },
@@ -81,11 +89,11 @@ export const metadata: Metadata = {
     // Twitter Cards
     twitter: {
         card: "summary_large_image",
-        title: "شوكة | شركة برمجيات عراقية | Iraq Software Company",
-        description: "هل تبحث عن شركة برمجيات في العراق؟ شوكة تطور مواقع، تطبيقات، وأنظمة ذكية. Software company Iraq.",
+        title: "سهلة | شركة برمجيات عراقية | Iraq Software Company",
+        description: "هل تبحث عن شركة برمجيات في العراق؟ سهلة تطور مواقع، تطبيقات، وأنظمة ذكية. Software company Iraq.",
         images: [`${SITE_URL}/og-image.png`],
-        creator: "@shoka_it",
-        site: "@shoka_it",
+        creator: "@sehle_it",
+        site: "@sehle_it",
     },
 
     // Robots
@@ -137,8 +145,8 @@ export default async function RootLayout({
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": isRtl ? "شوكة - منصة الأنظمة الرقمية العراقية" : "Shoka - Iraqi Digital Systems Platform",
-        "alternateName": ["Shoka", "شوكة"],
+        "name": isRtl ? "سهلة - منصة الأنظمة الرقمية العراقية" : "Sehle - Iraqi Digital Systems Platform",
+        "alternateName": ["Sehle", "سهلة"],
         "url": SITE_URL,
         "logo": `${SITE_URL}/logo.png`,
         "description": isRtl
@@ -156,10 +164,10 @@ export default async function RootLayout({
             "availableLanguage": ["Arabic", "English", "Turkish"],
         },
         "sameAs": [
-            "https://www.linkedin.com/company/shoka-global/",
-            "https://x.com/shoka_it",
-            "https://www.instagram.com/shoka.it/",
-            "https://www.tiktok.com/@shoka.it",
+            "https://www.linkedin.com/company/sehle/",
+            "https://x.com/sehle_it",
+            "https://www.instagram.com/sehle.it/",
+            "https://www.tiktok.com/@sehle.it",
             "https://www.facebook.com/profile.php?id=61578501381386",
         ],
     };
@@ -168,7 +176,7 @@ export default async function RootLayout({
     const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": isRtl ? SITE_NAME : "SHOKA | Software & Tech Development in Iraq",
+        "name": isRtl ? SITE_NAME : "Sehle | Software & Tech Development in Iraq",
         "url": SITE_URL,
         "potentialAction": {
             "@type": "SearchAction",
@@ -184,11 +192,11 @@ export default async function RootLayout({
     const localBusinessSchema = {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
-        "name": "Shoka - شوكة",
+        "name": "sehle - سهلة",
         "image": `${SITE_URL}/logo.png`,
         "url": SITE_URL,
-        "telephone": "+90-000-000-0000",
-        "email": "global@shoka.site",
+        "telephone": "+90-543-106-1211",
+        "email": "[EMAIL_ADDRESS]",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Kızılay",
@@ -212,7 +220,7 @@ export default async function RootLayout({
     };
 
     return (
-        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={readexPro.variable}>
+        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${readexPro.variable} ${playfairDisplay.variable}`} suppressHydrationWarning>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
                 {/* Measure scrollbar width early so .overflow-locked can compensate — prevents CLS */}

@@ -46,7 +46,17 @@
       "new": "What's New",
       "cta_talk": "Let's Talk",
       "cta_expertise": "Our Expertise",
-      "scroll": "Scroll"
+      "scroll": "Scroll",
+      "fallback": {
+        "f1_title": "Sehle Platform Launches",
+        "f1_summary": "We craft cutting-edge software solutions that transform ideas into powerful digital experiences.",
+        "f2_title": "4+ Years of Combined Expertise",
+        "f2_summary": "Our team brings deep knowledge in development, AI, and systems architecture.",
+        "f3_title": "Upcoming Tech Conference Presence",
+        "f3_summary": "Watch for Sehle at regional tech events and conferences throughout 2026.",
+        "f4_title": "Trusted Digital Transformation Partners",
+        "f4_summary": "Working with companies across Iraq and the region to build a better digital future."
+      }
     }
   },
   "stats": {

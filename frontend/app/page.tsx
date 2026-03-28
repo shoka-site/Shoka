@@ -1,269 +1,467 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ChevronRight, Sparkles, Globe } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { HeroNewsTicker } from "@/components/layout/HeroNewsTicker";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 
+const LETTERS = ["S", "E", "H", "L", "E"];
 
-export default function WelcomeV3() {
+const SOCIALS = [
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/company/sehle-global/",
+        d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
+    },
+    {
+        label: "X",
+        href: "https://x.com/sehle_it",
+        d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+    },
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/sehle.it/",
+        d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z",
+    },
+    {
+        label: "TikTok",
+        href: "https://www.tiktok.com/@sehle.it",
+        d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1-.06z",
+    },
+];
+
+export default function WelcomePage() {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.dir() === "rtl";
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Mouse spotlight — zero re-renders via direct DOM mutation
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const onMove = (e: MouseEvent) => {
+            el.style.setProperty("--mx", `${e.clientX}px`);
+            el.style.setProperty("--my", `${e.clientY}px`);
+        };
+        window.addEventListener("mousemove", onMove, { passive: true });
+        return () => window.removeEventListener("mousemove", onMove);
+    }, []);
 
     const toggleLanguage = () => {
         const newLang = i18n.language === "en" ? "ar" : "en";
         i18n.changeLanguage(newLang);
-        // Set cookie for server-side detection
         document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
     };
 
-    // Detect touch/mobile device — disable heavy effects on mobile to reduce INP
-    const [isTouchDevice, setIsTouchDevice] = useState(false);
-    useEffect(() => {
-        setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768);
-    }, []);
-
-    // Mouse tracking for the "Golden Aura" — desktop only
-    const mouseX = useMotionValue(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
-    const mouseY = useMotionValue(typeof window !== "undefined" ? window.innerHeight / 2 : 0);
-
-    const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-    useEffect(() => {
-        if (isTouchDevice) return; // skip mouse tracking on mobile
-        const handleMouseMove = (e: MouseEvent) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
-        };
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [isTouchDevice, mouseX, mouseY]);
-
-    // Aura spotlight effect
-    const spotlight = useMotionTemplate`radial-gradient(1000px circle at ${springX}px ${springY}px, rgba(194,164,92,0.07), transparent 80%)`;
-
-    // Defer video load to unblock LCP — video starts playing after hero content is visible
-    const videoRef = useRef<HTMLVideoElement>(null);
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (videoRef.current) {
-                videoRef.current.src = "/Evolution_of_Writing_Mediums.mp4";
-                videoRef.current.load();
-            }
-        }, 2000);
-        return () => clearTimeout(timer);
-    }, []);
-
-    // Generate particles only on the client to avoid hydration mismatch.
-    // 0 particles on mobile (main-thread relief), 8 on desktop (reduced from 20).
-    const [particles, setParticles] = useState<Array<{
-        x: number; y: number; scale: number; duration: number; delay: number; xOffset: number;
-    }>>([]);
-
-    useEffect(() => {
-        const count = isTouchDevice ? 0 : 8;
-        setParticles(
-            Array.from({ length: count }, () => ({
-                x: Math.random() * 2000,
-                y: Math.random() * 1000,
-                scale: Math.random() * 0.5,
-                duration: 5 + Math.random() * 10,
-                delay: Math.random() * 5,
-                xOffset: (Math.random() - 0.5) * 100,
-            }))
-        );
-    }, [isTouchDevice]);
+    const heading = isRtl ? "نبني التميّز الرقمي" : "Building Digital Excellence";
 
     return (
-        <div className="h-screen w-full flex flex-col items-center justify-center bg-black text-white relative overflow-hidden font-display" dir={isRtl ? "rtl" : "ltr"}>
+        <div
+            ref={containerRef}
+            className="relative min-h-screen overflow-hidden bg-black"
+            style={{ "--mx": "50vw", "--my": "50vh" } as React.CSSProperties}
+        >
+            {/* ════════════════ BACKGROUND ════════════════ */}
 
-            {/* Language Switcher Overlay */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className={`absolute top-6 md:top-10 ${isRtl ? "left-6 md:left-10" : "right-6 md:right-10"} z-50`}
-            >
-                <button
-                    onClick={toggleLanguage}
-                    className="flex items-center gap-2 px-4 py-2 border border-white/10 bg-white/5 backdrop-blur-xl rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/10 transition-all text-white/50 hover:text-white"
-                >
-                    <Globe className="w-3.5 h-3.5" />
-                    {i18n.language === "en" ? "العربية" : "English"}
-                </button>
-            </motion.div>
-
-            {/* 0. Video Background Layer — src injected after 2s to unblock LCP */}
-            <video
-                ref={videoRef}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover z-0 opacity-60"
+            {/* Mouse spotlight */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "radial-gradient(circle 650px at var(--mx) var(--my), rgba(194,164,92,0.07) 0%, transparent 70%)",
+                }}
             />
 
-            {/* 1. Background Layers */}
-            {/* Interactive Spotlight Aura — desktop only to avoid INP penalty on mobile */}
-            {!isTouchDevice && (
-                <motion.div
-                    className="absolute inset-0 z-10 pointer-events-none"
-                    style={{ background: spotlight }}
+            {/* Film grain */}
+            <div className="absolute inset-0 bg-grain opacity-40 pointer-events-none" />
+
+            {/* Lattice */}
+            <div className="absolute inset-0 bg-mesopot-lattice opacity-20 pointer-events-none" />
+
+            {/* Top golden bloom */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    backgroundImage:
+                        "radial-gradient(ellipse 160% 50% at 50% -8%, rgba(194,164,92,0.16) 0%, transparent 60%)",
+                }}
+            />
+
+            {/* Animated orbs */}
+            <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                    top: "15%", left: "10%",
+                    width: "40vw", height: "40vw",
+                    background: "radial-gradient(circle, rgba(194,164,92,0.11) 0%, transparent 70%)",
+                    filter: "blur(90px)",
+                }}
+                animate={{ x: [0, 80, -20, 0], y: [0, -50, 30, 0], opacity: [0.5, 0.9, 0.6, 0.5] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                    bottom: "10%", right: "8%",
+                    width: "35vw", height: "35vw",
+                    background: "radial-gradient(circle, rgba(194,164,92,0.08) 0%, transparent 70%)",
+                    filter: "blur(110px)",
+                }}
+                animate={{ x: [0, -60, 20, 0], y: [0, 40, -25, 0], opacity: [0.4, 0.8, 0.5, 0.4] }}
+                transition={{ duration: 24, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+            />
+
+            {/* Scrolling gold grid */}
+            <motion.div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(rgba(194,164,92,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(194,164,92,0.3) 1px, transparent 1px)",
+                    backgroundSize: "90px 90px",
+                    opacity: 0.025,
+                }}
+                animate={{ backgroundPosition: ["0px 0px", "90px 90px"] }}
+                transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            />
+
+            {/* Falling light trails */}
+            {([
+                { left: "20%", h: 220, dur: 9,  delay: 0,   gold: true  },
+                { left: "65%", h: 160, dur: 7,  delay: 3,   gold: false },
+                { left: "82%", h: 190, dur: 8,  delay: 1.5, gold: true  },
+            ] as const).map(({ left, h, dur, delay, gold }, i) => (
+                <motion.div key={i}
+                    className="absolute top-0 w-px pointer-events-none"
+                    style={{
+                        left,
+                        height: h,
+                        background: gold
+                            ? "linear-gradient(to bottom, rgba(194,164,92,0.6), rgba(194,164,92,0.15), transparent)"
+                            : "linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.05), transparent)",
+                        filter: "blur(0.5px)",
+                    }}
+                    animate={{ y: [-h, 1600], opacity: [0, 1, 1, 0] }}
+                    transition={{ duration: dur, repeat: Infinity, ease: "linear", delay, repeatDelay: 3 }}
                 />
-            )}
+            ))}
 
-            {/* Subtle Gradient Fog/Overlay to ensure readability */}
-            <div className="absolute inset-0 z-10 opacity-70"
-                style={{ backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(15,10,4,0.4) 50%, rgba(0,0,0,0.9) 100%)" }}
+            {/* Edge vignette */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background:
+                        "radial-gradient(ellipse 85% 85% at 50% 50%, transparent 30%, rgba(0,0,0,0.88) 100%)",
+                }}
             />
 
-            {/* Floating Golden Dust Particles - Rendered client-side only */}
-            <div className="absolute inset-0 z-10 pointer-events-none">
-                {particles.map((p, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-accent rounded-full opacity-20"
-                        initial={{ x: p.x, y: p.y, scale: p.scale }}
-                        animate={{
-                            y: [p.y, p.y - 200],
-                            opacity: [0, 0.3, 0],
-                            x: [p.x, p.x + p.xOffset]
-                        }}
-                        transition={{
-                            duration: p.duration,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: p.delay
-                        }}
-                    />
-                ))}
-            </div>
-
-            {/* 2. Main Narrative Content */}
-            <div className="relative z-30 flex flex-col items-center text-center px-6 w-full max-w-5xl">
-
-                {/* Minimalist Badge */}
+            {/* Corner brackets */}
+            {(["tl", "tr", "bl", "br"] as const).map((c, i) => (
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    className="mb-12"
+                    key={c}
+                    className="absolute pointer-events-none z-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 + i * 0.07, duration: 0.7 }}
+                    style={{
+                        top:    c[0] === "t" ? "1.25rem" : "auto",
+                        bottom: c[0] === "b" ? "1.25rem" : "auto",
+                        left:   c[1] === "l" ? "1.25rem" : "auto",
+                        right:  c[1] === "r" ? "1.25rem" : "auto",
+                        width: 28, height: 28,
+                    }}
                 >
-                    <div className="flex items-center gap-3 px-4 py-1.5 border border-accent/20 bg-accent/5 backdrop-blur-xl rounded-full">
-                        <Sparkles className="w-3 h-3 text-accent" />
-                        <span className={`text-accent text-[10px] uppercase font-bold tracking-[0.4em] ${isRtl ? "tracking-normal" : ""}`}>
-                            {t("welcome.badge")}
-                        </span>
-                    </div>
+                    <span style={{
+                        position: "absolute",
+                        top:    c[0] === "b" ? "auto" : 0,
+                        bottom: c[0] === "t" ? "auto" : 0,
+                        left:   c[1] === "r" ? "auto" : 0,
+                        right:  c[1] === "l" ? "auto" : 0,
+                        width: "100%", height: 1,
+                        background: "rgba(194,164,92,0.50)",
+                        display: "block",
+                    }} />
+                    <span style={{
+                        position: "absolute",
+                        top:    c[0] === "b" ? "auto" : 0,
+                        bottom: c[0] === "t" ? "auto" : 0,
+                        left:   c[1] === "r" ? "auto" : 0,
+                        right:  c[1] === "l" ? "auto" : 0,
+                        width: 1, height: "100%",
+                        background: "rgba(194,164,92,0.50)",
+                        display: "block",
+                    }} />
                 </motion.div>
+            ))}
 
-                {/* Logo and Shimmering Brand Title */}
-                <div className="relative flex flex-col items-center mb-6">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1.2, delay: 0.1, ease: "easeOut" }}
-                        className="mb-8 drop-shadow-[0_0_25px_rgba(194,164,92,0.5)]"
-                    >
-                        <Image src="/logo.png" alt="Iraqi Platform Logo" width={240} height={240} className="object-contain" priority />
-                    </motion.div>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                        className={`text-[clamp(3rem,12vw,8rem)] md:text-[clamp(4rem,15vw,10rem)] leading-none font-black select-none ${isRtl ? "" : "tracking-tighter"}`}
-                        style={{
-                            background: "linear-gradient(to bottom, #fff 30%, #C2A45C 70%, #8A6D2D 100%)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                        }}
-                    >
-                        {t("navbar.brand")}
-                    </motion.h1>
-
-                    {/* Ghost Glow */}
-                    <motion.div
-                        className="absolute inset-0 blur-3xl opacity-20 pointer-events-none"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.2 }}
-                        transition={{ duration: 2, delay: 0.5 }}
-                        style={{ background: "#C2A45C" }}
-                    >
-                        {t("navbar.brand")}
-                    </motion.div>
-                </div>
-
-                {/* Tagline */}
-                <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, delay: 0.9 }}
-                    className="mb-12 flex flex-col items-center gap-4"
-                >
-                    {/* Decorative separator */}
-                    <div className="flex items-center gap-4 w-full max-w-xs">
-                        <div className="flex-1 h-px bg-gradient-to-r from-transparent to-accent/40" />
-                        <div className="w-1 h-1 rounded-full bg-accent/60" />
-                        <div className="flex-1 h-px bg-gradient-to-l from-transparent to-accent/40" />
-                    </div>
-
-                    <p className={`text-white/70 text-lg md:text-xl max-w-2xl leading-relaxed text-center ${isRtl ? "" : "tracking-wide"}`}>
-                        {t("welcome.tagline")}
-                    </p>
-                </motion.div>
-
-
-                {/* Discovery CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1.2 }}
-                    className="flex flex-col items-center gap-6 md:gap-8 mb-20"
-                >
-                    <Link
-                        href="/home"
-                        className="group relative flex items-center gap-4 md:gap-6 pl-8 md:pl-12 pr-6 md:pr-10 py-4 md:py-6 bg-white/[0.02] border border-white/10 hover:border-accent/40 transition-all duration-700 rounded-full group overflow-hidden"
-                    >
-                        {/* Glow on hover */}
-                        <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                        <span className="relative z-10 text-white font-bold text-lg md:text-xl uppercase tracking-[0.2em]">
-                            {t("welcome.enter")}
-                        </span>
-
-                        <div className={`relative z-10 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white text-black group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:scale-110 ${isRtl ? "rotate-180" : ""}`}>
-                            <ChevronRight className="w-6 h-6" />
-                        </div>
-                    </Link>
-
-                </motion.div>
-
-                {/* News Ticker Integration */}
-                <div className="w-full max-w-md border-t border-white/5 pt-8">
-                    <HeroNewsTicker isRtl={isRtl} />
-                </div>
-            </div>
-
-            {/* 3. Global Status Footer */}
+            {/* One-shot load scan line */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.2 }}
-                transition={{ delay: 2, duration: 2 }}
-                className="absolute bottom-10 flex justify-center w-full"
-            >
-                <div className="flex items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] md:tracking-[0.5em] uppercase text-white">
-                    <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                className="absolute left-0 w-full h-px pointer-events-none z-30"
+                style={{
+                    background: "linear-gradient(90deg, transparent, rgba(194,164,92,0.85), transparent)",
+                    filter: "blur(1px)",
+                }}
+                initial={{ top: "0%" }}
+                animate={{ top: "108%" }}
+                transition={{ duration: 1.0, delay: 0.05, ease: [0.4, 0, 0.8, 1] }}
+            />
+
+            {/* ════════════════ CONTENT ════════════════ */}
+            <div className="relative z-10 min-h-screen flex flex-col">
+
+                {/* ── TOP NAV ── */}
+                <div className="relative flex justify-between items-center px-8 md:px-12 pt-8 md:pt-10">
+
+                    {/* Social icons */}
+                    <div className="flex gap-2.5 items-center">
+                        {SOCIALS.map(({ label, href, d }, i) => (
+                            <motion.a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={label}
+                                initial={{ opacity: 0, y: -12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
+                                whileHover={{ scale: 1.15, y: -2 }}
+                                whileTap={{ scale: 0.92 }}
+                                className="w-9 h-9 rounded-full border border-[#c2a45c]/22 flex items-center justify-center text-white/38 hover:text-[#c2a45c] hover:border-[#c2a45c]/60 transition-all duration-300"
+                            >
+                                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor" aria-hidden="true">
+                                    <path d={d} />
+                                </svg>
+                            </motion.a>
+                        ))}
+                    </div>
+
+                    {/* Brand — centered absolute */}
+                    <motion.span
+                        initial={{ opacity: 0, y: -12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.55 }}
+                        className="absolute left-1/2 -translate-x-1/2 text-white/40 text-[11px] font-light tracking-[0.55em] uppercase select-none"
+                    >
+                        Sehle
+                    </motion.span>
+
+                    {/* Language toggle */}
+                    <motion.button
+                        initial={{ opacity: 0, y: -12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.55 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={toggleLanguage}
+                        className="flex items-center gap-2 px-3 py-1.5 border border-[#c2a45c]/25 bg-[#c2a45c]/5 backdrop-blur-xl rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-[#c2a45c]/10 hover:border-[#c2a45c]/55 transition-all text-white/50 hover:text-white/90"
+                    >
+                        <Globe className="w-3.5 h-3.5" />
+                        {i18n.language === "en" ? "العربية" : "English"}
+                    </motion.button>
+                </div>
+
+                {/* ── HERO ── */}
+                <div className="flex-1 flex items-center justify-center relative px-6">
+
+                    {/* Expanding rings */}
+                    {[0, 1, 2, 3].map((i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                            style={{
+                                border: "1px solid rgba(194,164,92,0.13)",
+                                width:  "clamp(140px, 38vmin, 440px)",
+                                height: "clamp(140px, 38vmin, 440px)",
+                            }}
+                            animate={{ scale: [0.75, 3.5], opacity: [0.5, 0] }}
+                            transition={{ duration: 6, repeat: Infinity, delay: i * 1.5, ease: "easeOut" }}
+                        />
+                    ))}
+
+                    {/* Rotating conic orb */}
+                    <motion.div
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                        style={{
+                            width: "75vw", height: "50vh",
+                            background:
+                                "conic-gradient(from 0deg, transparent 0%, rgba(194,164,92,0.06) 20%, transparent 40%, rgba(194,164,92,0.04) 60%, transparent 80%)",
+                            borderRadius: "50%",
+                            filter: "blur(65px)",
+                        }}
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+                    />
+
+                    <div className="relative w-full max-w-4xl flex flex-col items-center gap-5 md:gap-7">
+
+                        {/* Badge */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.85, y: 8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                            className="flex items-center gap-2 px-4 py-1.5 border border-[#c2a45c]/28 bg-[#c2a45c]/8 rounded-full"
+                        >
+                            <motion.span
+                                className="w-1.5 h-1.5 rounded-full bg-[#c2a45c] inline-block"
+                                animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.4, 0.8] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            />
+                            <span className="text-[#c2a45c]/80 text-[10px] tracking-[0.35em] font-light uppercase">
+                                {t("welcome.badge")}
+                            </span>
+                        </motion.div>
+
+                        {/* ── SEHLE — letter clip-reveal + breathing glow ── */}
+                        <motion.div
+                            className="flex items-center justify-center"
+                            aria-label="SEHLE"
+                            animate={{
+                                filter: [
+                                    "drop-shadow(0 0 20px rgba(194,164,92,0.18))",
+                                    "drop-shadow(0 0 75px rgba(194,164,92,0.70)) drop-shadow(0 0 35px rgba(194,164,92,0.40))",
+                                    "drop-shadow(0 0 20px rgba(194,164,92,0.18))",
+                                ],
+                            }}
+                            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 2.2 }}
+                        >
+                            {LETTERS.map((letter, i) => (
+                                <div key={i} style={{ overflow: "hidden", display: "inline-block", lineHeight: 1 }}>
+                                    <motion.span
+                                        initial={{ y: "105%" }}
+                                        animate={{ y: "0%" }}
+                                        transition={{
+                                            duration: 0.95,
+                                            delay: 0.8 + i * 0.12,
+                                            ease: [0.16, 1, 0.3, 1],
+                                        }}
+                                        style={{
+                                            display: "inline-block",
+                                            fontSize: "clamp(5rem, 17vw, 16rem)",
+                                            lineHeight: 1,
+                                            fontWeight: 700,
+                                            background: "linear-gradient(175deg, #ffffff 0%, #f0e4c4 45%, #c2a45c 100%)",
+                                            WebkitBackgroundClip: "text",
+                                            WebkitTextFillColor: "transparent",
+                                            backgroundClip: "text",
+                                            fontFamily: "var(--font-playfair), Georgia, serif",
+                                            letterSpacing: "0.06em",
+                                            paddingLeft: i > 0 ? "0.06em" : 0,
+                                        }}
+                                    >
+                                        {letter}
+                                    </motion.span>
+                                </div>
+                            ))}
+                        </motion.div>
+
+                        {/* Gold divider */}
+                        <motion.div
+                            initial={{ scaleX: 0, opacity: 0 }}
+                            animate={{ scaleX: 1, opacity: 1 }}
+                            transition={{ duration: 0.9, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+                            className="w-32 h-px"
+                            style={{
+                                background: "linear-gradient(90deg, transparent, rgba(194,164,92,0.70), transparent)",
+                                transformOrigin: "center",
+                            }}
+                        />
+
+                        {/* Heading — word by word */}
+                        <div className="flex flex-wrap justify-center gap-x-3">
+                            {heading.split(" ").map((word, i) => (
+                                <div key={i} style={{ overflow: "hidden", display: "inline-block" }}>
+                                    <motion.span
+                                        initial={{ y: "110%" }}
+                                        animate={{ y: "0%" }}
+                                        transition={{
+                                            duration: 0.75,
+                                            delay: 1.75 + i * 0.13,
+                                            ease: [0.16, 1, 0.3, 1],
+                                        }}
+                                        className="inline-block text-xl md:text-2xl lg:text-3xl font-light text-white/80 tracking-wide"
+                                    >
+                                        {word}
+                                    </motion.span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Tagline */}
+                        <motion.p
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 2.2 }}
+                            className="text-white/50 text-xs md:text-sm max-w-xs md:max-w-sm text-center leading-relaxed font-light tracking-wide"
+                        >
+                            {t("welcome.tagline")}
+                        </motion.p>
+
+                        {/* ── CTA Button — sliding gold fill on hover ── */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 2.5 }}
+                        >
+                            <Link
+                                href="/home"
+                                className="group relative overflow-hidden inline-flex items-center gap-4 px-10 py-4 border border-[#c2a45c]/45 text-[11px] tracking-[0.3em] uppercase font-medium text-white/80 hover:text-black transition-colors duration-500"
+                            >
+                                {/* Gold fill slides in from left on hover */}
+                                <span
+                                    className="absolute inset-0 bg-[#c2a45c] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
+                                    aria-hidden="true"
+                                />
+                                <span className="relative">{t("welcome.enter")}</span>
+                                <motion.span
+                                    className="relative text-[#c2a45c]/70 group-hover:text-black transition-colors duration-500"
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                                >
+                                    →
+                                </motion.span>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* ── BOTTOM BAR ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 2.8 }}
+                    className="flex justify-between items-center px-8 md:px-12 pb-8 md:pb-10"
+                >
+                    <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.22em] uppercase text-white/22">
+                        <motion.span
+                            className="w-1.5 h-1.5 rounded-full bg-[#c2a45c] inline-block"
+                            animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.5, 0.8] }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        />
                         {t("welcome.system_ready")}
                     </div>
-                    <div className="w-px h-4 bg-white/10" />
-                    <div>{t("welcome.est")}</div>
-                </div>
+
+                    <motion.div
+                        animate={{ y: [0, 7, 0] }}
+                        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        <ChevronDown className="w-5 h-5 text-[#c2a45c]/28" />
+                    </motion.div>
+
+                    <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-white/22">
+                        {t("welcome.est")}
+                    </span>
+                </motion.div>
+            </div>
+
+            {/* ── Gold horizontal accent line ── */}
+            <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-px z-20 pointer-events-none"
+            >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#c2a45c]/32 to-transparent" />
+                <div className="absolute inset-0 blur-sm bg-gradient-to-r from-transparent via-[#c2a45c]/16 to-transparent" />
             </motion.div>
         </div>
     );
