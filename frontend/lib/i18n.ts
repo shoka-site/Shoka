@@ -22,7 +22,7 @@ i18n
             // On first visit with no prior choice, fallbackLng:'ar' takes effect.
             order: ['cookie', 'localStorage'],
             caches: ['localStorage'],
-            cookieName: 'NEXT_LOCALE',
+            lookupCookie: 'NEXT_LOCALE',
         },
     });
 
