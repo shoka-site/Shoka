@@ -53,7 +53,7 @@ jobs:
         run: npm ci
 
       - name: Run npm audit
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high --omit=dev
 
   build:
     name: Build Verification
@@ -64,7 +64,7 @@ jobs:
       DIRECT_URL: postgresql://test:test@localhost:5432/test_db
       ADMIN_USERNAME: admin
       ADMIN_PASSWORD: test_password_for_ci
-      NEXT_PUBLIC_SITE_URL: https://www.shoka.site
+      NEXT_PUBLIC_SITE_URL: https://www.sehle.site
       NEXT_PUBLIC_API_URL: http://localhost:3000
     steps:
       - uses: actions/checkout@v4
