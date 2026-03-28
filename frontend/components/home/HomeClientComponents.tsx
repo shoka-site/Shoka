@@ -118,6 +118,9 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  // Timestamp ref for throttling mousemove to max 20fps — prevents 60 state
+  // updates/sec that would cause continuous re-renders across the entire hero.
+  const lastMouseMoveTs = useRef(0);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -156,6 +159,11 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isMobile) return;
+    const now = Date.now();
+    // Throttle to ~20fps (50ms). The parallax shift is subtle enough that
+    // 20fps is imperceptible while cutting re-renders from 60+/sec to 20/sec.
+    if (now - lastMouseMoveTs.current < 50) return;
+    lastMouseMoveTs.current = now;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     setMousePosition({
@@ -276,9 +284,11 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
+              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
+                lineHeight: clientIsRtl ? 1.6 : 1.05,
+                paddingBottom: clientIsRtl ? "0.3em" : undefined,
                 x: mousePosition.x * -1,
                 y: mousePosition.y * -1
               }}

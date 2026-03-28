@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import ExitIntentPopup from "@/components/marketing/ExitIntentPopup";
+// Client wrapper — ssr:false dynamic imports can't live in Server Components
+import { ExitIntentPopupClient } from "@/components/marketing/ExitIntentPopupClient";
 
 function NavbarFallback() {
     return (
@@ -34,7 +35,7 @@ export default function MainLayout({
                 {children}
             </main>
             <Footer />
-            <ExitIntentPopup />
+            <ExitIntentPopupClient />
         </>
     );
 }

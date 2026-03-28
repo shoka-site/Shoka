@@ -58,7 +58,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.services.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight"
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.services.title")}
         </h2>
@@ -124,7 +124,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.projects.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight"
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.projects.title")}
         </h2>
@@ -209,7 +209,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.packages.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight"
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.packages.title")}
         </h2>
@@ -273,7 +273,7 @@ export function TestimonialsSectionClient({ testimonials }: { testimonials: Reco
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.trust.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-3xl md:text-4xl font-display font-black mb-2"
+        <h2 className="text-3xl md:text-4xl font-display font-black mb-2 leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.trust.title")}
         </h2>

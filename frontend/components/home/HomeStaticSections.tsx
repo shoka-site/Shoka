@@ -15,7 +15,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 // ─── Why Us Title Banner ─────────────────────────────────────────────────────
 export function WhyUsBanner() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === "rtl";
   return (
     <div className="relative bg-background overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-6 bg-mesopot-chevron opacity-60" />
@@ -33,9 +34,11 @@ export function WhyUsBanner() {
         </FadeInSection>
         <FadeInSection delay={0.08}>
           <h2
-            className="text-center font-display font-black text-foreground leading-[1.2]"
+            className="text-center font-display font-black text-foreground"
             style={{
               fontSize: "clamp(2.5rem, 8vw, 7.5rem)",
+              lineHeight: isRtl ? 1.7 : 1.2,
+              paddingBottom: isRtl ? "0.5em" : undefined,
               background: "linear-gradient(180deg, #ffffff 40%, #c2a45c 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -75,7 +78,7 @@ export function PhilosophySection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.philosophy.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-display font-black"
+        <h2 className="text-3xl md:text-5xl font-display font-black leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.philosophy.title")}
         </h2>
@@ -124,7 +127,7 @@ export function ProcessSection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.process.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-3xl md:text-6xl font-display font-black tracking-tight"
+        <h2 className="text-3xl md:text-6xl font-display font-black tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.process.title")}
         </h2>
@@ -159,7 +162,8 @@ export function ProcessSection() {
 
 // ─── Results (Our Impact) Section ────────────────────────────────────────────
 export function ResultsSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === "rtl";
 
   const results = [
     { value: "3", suffix: "×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
@@ -185,8 +189,15 @@ export function ResultsSection() {
           </div>
         </FadeInSection>
         <FadeInSection delay={0.1}>
-          <h2 className="text-center font-display font-black leading-[1.0] mb-6 tracking-tight"
-            style={{ fontSize: "clamp(3rem, 8vw, 6rem)", background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <h2 className="text-center font-display font-black mb-6 tracking-tight"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 6rem)",
+              lineHeight: isRtl ? 1.6 : 1.0,
+              paddingBottom: isRtl ? "0.5em" : undefined,
+              background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}>
             {t("home.results.title")}
           </h2>
         </FadeInSection>
@@ -225,7 +236,8 @@ export function ResultsSection() {
 
 // ─── Outcomes (CTA) Section ───────────────────────────────────────────────────
 export function OutcomesSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === "rtl";
   return (
     <section className="relative py-32 bg-[#060606] text-white overflow-hidden">
       <div className="absolute inset-0 bg-mesopot-rosette opacity-100" />
@@ -237,8 +249,14 @@ export function OutcomesSection() {
               <span className="text-accent text-xs tracking-[0.5em]">◆</span>
               <div className="flex-1 max-w-[120px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(194,164,92,0.5))" }} />
             </div>
-            <h2 className="text-4xl md:text-6xl font-display font-black mb-10 leading-tight"
-              style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            <h2 className="text-4xl md:text-6xl font-display font-black mb-10"
+              style={{
+                lineHeight: isRtl ? 1.6 : 1.25,
+                paddingBottom: isRtl ? "0.4em" : undefined,
+                background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}>
               {t("home.outcomes.title")}
             </h2>
           </FadeInSection>

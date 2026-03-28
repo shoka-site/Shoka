@@ -49,9 +49,23 @@ export default function Navbar() {
 
   const toggleLanguage = () => {
     const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
-    i18n.changeLanguage(newLang);
-    // Set cookie for server-side detection
+    const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+
+    // 1. Persist the choice — cookie (server) + localStorage (i18next detector)
     document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
+
+    // 2. Update document direction immediately so the visual flip is instant
+    //    rather than waiting for the i18next change + useEffect cycle.
+    document.documentElement.dir  = newDir;
+    document.documentElement.lang = newLang;
+
+    // 3. Change i18next language (loads English bundle lazily if needed)
+    i18n.changeLanguage(newLang);
+
+    // 4. Hard-reload so Server Components re-render with the new cookie.
+    //    Without this, server-rendered isRtl props (flex-row-reverse, conditional
+    //    padding, etc.) stay stale until the next navigation.
+    window.location.reload();
   };
 
   useEffect(() => {

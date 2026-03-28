@@ -6,27 +6,27 @@ import { ChevronDown, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
 
-const LETTERS = ["S", "E", "H", "L", "E"];
+const LETTERS_EN = ["S", "E", "H", "L", "E"];
 
 const SOCIALS = [
     {
         label: "LinkedIn",
-        href: "https://www.linkedin.com/company/sehle-global/",
+        href: "https://www.linkedin.com/company/sehle/about/?viewAsMember=true",
         d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
     },
     {
         label: "X",
-        href: "https://x.com/sehle_it",
+        href: "https://x.com/sehle_iq",
         d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
     },
     {
         label: "Instagram",
-        href: "https://www.instagram.com/sehle.it/",
+        href: "https://www.instagram.com/sehle_iq/",
         d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z",
     },
     {
         label: "TikTok",
-        href: "https://www.tiktok.com/@sehle.it",
+        href: "https://www.tiktok.com/@sehle_iq",
         d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1-.06z",
     },
 ];
@@ -127,9 +127,9 @@ export default function WelcomePage() {
 
             {/* Falling light trails */}
             {([
-                { left: "20%", h: 220, dur: 9,  delay: 0,   gold: true  },
-                { left: "65%", h: 160, dur: 7,  delay: 3,   gold: false },
-                { left: "82%", h: 190, dur: 8,  delay: 1.5, gold: true  },
+                { left: "20%", h: 220, dur: 9, delay: 0, gold: true },
+                { left: "65%", h: 160, dur: 7, delay: 3, gold: false },
+                { left: "82%", h: 190, dur: 8, delay: 1.5, gold: true },
             ] as const).map(({ left, h, dur, delay, gold }, i) => (
                 <motion.div key={i}
                     className="absolute top-0 w-px pointer-events-none"
@@ -164,29 +164,29 @@ export default function WelcomePage() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 + i * 0.07, duration: 0.7 }}
                     style={{
-                        top:    c[0] === "t" ? "1.25rem" : "auto",
+                        top: c[0] === "t" ? "1.25rem" : "auto",
                         bottom: c[0] === "b" ? "1.25rem" : "auto",
-                        left:   c[1] === "l" ? "1.25rem" : "auto",
-                        right:  c[1] === "r" ? "1.25rem" : "auto",
+                        left: c[1] === "l" ? "1.25rem" : "auto",
+                        right: c[1] === "r" ? "1.25rem" : "auto",
                         width: 28, height: 28,
                     }}
                 >
                     <span style={{
                         position: "absolute",
-                        top:    c[0] === "b" ? "auto" : 0,
+                        top: c[0] === "b" ? "auto" : 0,
                         bottom: c[0] === "t" ? "auto" : 0,
-                        left:   c[1] === "r" ? "auto" : 0,
-                        right:  c[1] === "l" ? "auto" : 0,
+                        left: c[1] === "r" ? "auto" : 0,
+                        right: c[1] === "l" ? "auto" : 0,
                         width: "100%", height: 1,
                         background: "rgba(194,164,92,0.50)",
                         display: "block",
                     }} />
                     <span style={{
                         position: "absolute",
-                        top:    c[0] === "b" ? "auto" : 0,
+                        top: c[0] === "b" ? "auto" : 0,
                         bottom: c[0] === "t" ? "auto" : 0,
-                        left:   c[1] === "r" ? "auto" : 0,
-                        right:  c[1] === "l" ? "auto" : 0,
+                        left: c[1] === "r" ? "auto" : 0,
+                        right: c[1] === "l" ? "auto" : 0,
                         width: 1, height: "100%",
                         background: "rgba(194,164,92,0.50)",
                         display: "block",
@@ -242,7 +242,7 @@ export default function WelcomePage() {
                         transition={{ duration: 0.7, delay: 0.55 }}
                         className="absolute left-1/2 -translate-x-1/2 text-white/40 text-[11px] font-light tracking-[0.55em] uppercase select-none"
                     >
-                        Sehle
+                        {isRtl ? "سهلة" : "Sehle"}
                     </motion.span>
 
                     {/* Language toggle */}
@@ -270,7 +270,7 @@ export default function WelcomePage() {
                             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
                             style={{
                                 border: "1px solid rgba(194,164,92,0.13)",
-                                width:  "clamp(140px, 38vmin, 440px)",
+                                width: "clamp(140px, 38vmin, 440px)",
                                 height: "clamp(140px, 38vmin, 440px)",
                             }}
                             animate={{ scale: [0.75, 3.5], opacity: [0.5, 0] }}
@@ -311,10 +311,10 @@ export default function WelcomePage() {
                             </span>
                         </motion.div>
 
-                        {/* ── SEHLE — letter clip-reveal + breathing glow ── */}
+                        {/* ── SEHLE / سهلة — letter clip-reveal + breathing glow ── */}
                         <motion.div
                             className="flex items-center justify-center"
-                            aria-label="SEHLE"
+                            aria-label={isRtl ? "سهلة" : "SEHLE"}
                             animate={{
                                 filter: [
                                     "drop-shadow(0 0 20px rgba(194,164,92,0.18))",
@@ -324,34 +324,64 @@ export default function WelcomePage() {
                             }}
                             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 2.2 }}
                         >
-                            {LETTERS.map((letter, i) => (
-                                <div key={i} style={{ overflow: "hidden", display: "inline-block", lineHeight: 1 }}>
+                            {isRtl ? (
+                                /* Arabic — single connected word, clip-reveal as one unit.
+                                   lineHeight raised from 1 → 1.3 so the wrapper clip boundary
+                                   sits below the Arabic descenders. paddingBottom gives the
+                                   WebkitBackgroundClip:text gradient box extra height so
+                                   descender ink gets painted instead of appearing transparent. */
+                                <div style={{ overflow: "hidden", display: "inline-block", lineHeight: 1.3 }}>
                                     <motion.span
                                         initial={{ y: "105%" }}
                                         animate={{ y: "0%" }}
-                                        transition={{
-                                            duration: 0.95,
-                                            delay: 0.8 + i * 0.12,
-                                            ease: [0.16, 1, 0.3, 1],
-                                        }}
+                                        transition={{ duration: 0.95, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
                                         style={{
                                             display: "inline-block",
                                             fontSize: "clamp(5rem, 17vw, 16rem)",
-                                            lineHeight: 1,
+                                            lineHeight: 1.3,
+                                            paddingBottom: "0.2em",
                                             fontWeight: 700,
                                             background: "linear-gradient(175deg, #ffffff 0%, #f0e4c4 45%, #c2a45c 100%)",
                                             WebkitBackgroundClip: "text",
                                             WebkitTextFillColor: "transparent",
                                             backgroundClip: "text",
-                                            fontFamily: "var(--font-playfair), Georgia, serif",
-                                            letterSpacing: "0.06em",
-                                            paddingLeft: i > 0 ? "0.06em" : 0,
+                                            fontFamily: "var(--font-cairo), sans-serif",
+                                            letterSpacing: 0,
                                         }}
                                     >
-                                        {letter}
+                                        سهلة
                                     </motion.span>
                                 </div>
-                            ))}
+                            ) : (
+                                LETTERS_EN.map((letter, i) => (
+                                    <div key={i} style={{ overflow: "hidden", display: "inline-block", lineHeight: 1 }}>
+                                        <motion.span
+                                            initial={{ y: "105%" }}
+                                            animate={{ y: "0%" }}
+                                            transition={{
+                                                duration: 0.95,
+                                                delay: 0.8 + i * 0.12,
+                                                ease: [0.16, 1, 0.3, 1],
+                                            }}
+                                            style={{
+                                                display: "inline-block",
+                                                fontSize: "clamp(5rem, 17vw, 16rem)",
+                                                lineHeight: 1,
+                                                fontWeight: 700,
+                                                background: "linear-gradient(175deg, #ffffff 0%, #f0e4c4 45%, #c2a45c 100%)",
+                                                WebkitBackgroundClip: "text",
+                                                WebkitTextFillColor: "transparent",
+                                                backgroundClip: "text",
+                                                fontFamily: "var(--font-cairo), sans-serif",
+                                                letterSpacing: "0.06em",
+                                                paddingLeft: i > 0 ? "0.06em" : 0,
+                                            }}
+                                        >
+                                            {letter}
+                                        </motion.span>
+                                    </div>
+                                ))
+                            )}
                         </motion.div>
 
                         {/* Gold divider */}
@@ -378,7 +408,7 @@ export default function WelcomePage() {
                                             delay: 1.75 + i * 0.13,
                                             ease: [0.16, 1, 0.3, 1],
                                         }}
-                                        className="inline-block text-xl md:text-2xl lg:text-3xl font-light text-white/80 tracking-wide"
+                                        className="inline-block text-xl md:text-2xl lg:text-3xl font-light text-white/80 tracking-wide leading-relaxed"
                                     >
                                         {word}
                                     </motion.span>

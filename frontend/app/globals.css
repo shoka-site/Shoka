@@ -24,9 +24,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-sans: var(--font-readex-pro, Arial, sans-serif);
-  --font-display: var(--font-readex-pro, Arial, sans-serif);
-  --font-arabic: var(--font-readex-pro, Arial, sans-serif);
+  --font-sans: var(--font-cairo, Arial, sans-serif);
+  --font-display: var(--font-cairo, Arial, sans-serif);
+  --font-arabic: var(--font-cairo, Arial, sans-serif);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -125,20 +125,62 @@
     @apply font-display tracking-tight;
   }
 
-  /* ── Arabic / RTL typography corrections ─────────────────
-     Arabic is a connected cursive script. letter-spacing adds
-     gaps between connecting strokes, breaking the glyph shapes.
-     Line-height 1.0 clips Arabic ascenders and descenders.
-     These rules override Tailwind tracking utilities globally
-     whenever the document is in RTL mode (Arabic). */
+  /* ══════════════════════════════════════════════════════════
+     RTL / Arabic — root-level direction + rendering baseline
+     ══════════════════════════════════════════════════════════
+
+     DIRECTION
+     The HTML dir attribute drives browser text direction, but
+     declaring it explicitly in CSS ensures it survives any
+     Tailwind preflight or third-party reset.
+     `text-align: start` resolves to right in RTL, left in LTR —
+     making every block element right-aligned in Arabic without
+     per-component changes. */
+
+  html[dir="rtl"] {
+    direction: rtl;
+    unicode-bidi: isolate;
+  }
+
+  html[dir="rtl"] body {
+    text-align: start;
+    /* overflow-x:clip creates a clipping context without making body a
+       scroll container — prevents Arabic glyphs from being sliced at
+       the viewport edge, unlike overflow-x:hidden which causes cutoff. */
+    overflow-x: clip !important;
+  }
+
+  /* ── LETTER-SPACING — kill every tracking-* utility globally ──────────
+     Arabic is a connected cursive script. Every letter physically connects
+     to its neighbours via shaped joins. Any non-zero letter-spacing breaks
+     those joins: positive spacing leaves visible gaps inside words; negative
+     spacing compresses glyphs into each other. Both look like "cut" text.
+
+     The Tailwind classes tracking-tight / tracking-tighter / tracking-wide /
+     tracking-wider / tracking-widest / tracking-[…] are used on 40+ elements
+     across buttons, badges, labels, and headings throughout this codebase.
+     This single rule zeroes all of them in one place. */
+  html[dir="rtl"] * {
+    letter-spacing: 0 !important;
+  }
+
+  /* ── LINE-HEIGHT — prevent glyph clipping on headings ─────────────────
+     Arabic ascenders and descenders extend further than Latin at the same
+     font-size. Headings in this codebase use leading-[1.05] and leading-[1.1]
+     which clip the tops and bottoms of Arabic letters.
+     1.6 gives Arabic enough vertical room at all display sizes. */
   html[dir="rtl"] h1,
   html[dir="rtl"] h2,
   html[dir="rtl"] h3,
   html[dir="rtl"] h4,
   html[dir="rtl"] h5,
   html[dir="rtl"] h6 {
-    letter-spacing: 0 !important;
-    line-height: 1.25;
+    line-height: 1.6 !important;
+    /* Extra bottom padding compensates for WebkitBackgroundClip:text clipping.
+       Gradient text clips to the element's layout box — Arabic descenders that
+       extend below the box get sliced. padding-bottom enlarges the box so the
+       full glyph is visible. */
+    padding-bottom: 0.4em;
   }
 }
 
@@ -260,6 +302,25 @@
     padding-right: var(--scrollbar-width, 0px);
   }
 
+  /* ── RTL headings — duplicated in utilities layer so specificity wins ──────
+     Tailwind pairs line-height:1 with text-5xl/6xl/7xl/8xl. Arabic connected
+     cursive extends above/below Latin metrics; with WebkitBackgroundClip:text
+     the gradient only paints inside the element's box, so glyph ink that falls
+     outside the box appears transparent — visually "cut".
+     Placing this rule here (utilities layer) gives it specificity [0,1,1]
+     (attribute + element) vs Tailwind's [0,1,0] (class) — wins in the same
+     layer without relying on cross-layer !important reversal.
+     padding-bottom expands the box so Arabic descenders get gradient paint. */
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4,
+  html[dir="rtl"] h5,
+  html[dir="rtl"] h6 {
+    line-height: 1.6 !important;
+    padding-bottom: 0.4em !important;
+  }
+
   /* ── View-all Ghost Button — gold underline treatment ── */
   .btn-view-all {
     display: inline-flex;
@@ -273,6 +334,11 @@
     padding: 0.75rem 0;
     border-bottom: 1px solid rgba(194, 164, 92, 0.3);
     transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  /* Arabic: remove letter-spacing so glyph joins are preserved */
+  html[dir="rtl"] .btn-view-all {
+    letter-spacing: 0;
+    text-transform: none;
   }
   .btn-view-all:hover {
     color: #c2a45c;

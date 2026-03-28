@@ -2,24 +2,20 @@ import type { Metadata, Viewport } from "next";
 import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import { InitialLoader } from "@/components/ui/InitialLoader";
+// Client wrapper — holds the ssr:false dynamic import that can't live in a Server Component
+import { InitialLoaderClient } from "@/components/ui/InitialLoaderClient";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import { Readex_Pro, Playfair_Display } from "next/font/google";
+import { Cairo } from "next/font/google";
 import "./globals.css";
 
-const readexPro = Readex_Pro({
+const cairo = Cairo({
     subsets: ["arabic", "latin"],
-    weight: ["300", "400", "500", "600", "700"],
-    variable: "--font-readex-pro",
+    // 4 weights cover all UI states (light body, regular, semibold UI, bold headings).
+    // Dropping 500 and 900 removes 2 font files (~60KB) from the critical path.
+    weight: ["300", "400", "600", "700"],
+    variable: "--font-cairo",
     display: "swap",
-});
-
-const playfairDisplay = Playfair_Display({
-    subsets: ["latin"],
-    weight: ["400", "700", "900"],
-    style: ["normal", "italic"],
-    variable: "--font-playfair",
-    display: "swap",
+    preload: true,
 });
 
 const SITE_NAME = "سهلة | شركة برمجيات وتطوير تقني في العراق";
@@ -220,11 +216,14 @@ export default async function RootLayout({
     };
 
     return (
-        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${readexPro.variable} ${playfairDisplay.variable}`} suppressHydrationWarning>
+        <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${cairo.variable}`} suppressHydrationWarning>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
-                {/* Measure scrollbar width early so .overflow-locked can compensate — prevents CLS */}
-                <script dangerouslySetInnerHTML={{ __html: `document.documentElement.style.setProperty('--scrollbar-width',(window.innerWidth-document.documentElement.clientWidth)+'px')` }} />
+                {/* Runs synchronously before React hydrates — two jobs:
+                    1. Set dir/lang from the NEXT_LOCALE cookie so Arabic text is
+                       never briefly rendered LTR while JS boots (eliminates RTL flash).
+                    2. Measure scrollbar width for .overflow-locked CLS compensation. */}
+                <script dangerouslySetInnerHTML={{ __html: `(function(){var c=document.cookie.match(/NEXT_LOCALE=([^;]+)/),l=c?c[1].split('-')[0]:'ar',e=document.documentElement;e.dir=l==='en'?'ltr':'rtl';e.lang=l;e.style.setProperty('--scrollbar-width',(window.innerWidth-e.clientWidth)+'px')})()` }} />
                 {/* JSON-LD Structured Data */}
                 <script
                     type="application/ld+json"
@@ -240,7 +239,7 @@ export default async function RootLayout({
                 />
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
-                <InitialLoader />
+                <InitialLoaderClient />
                 <Providers>
                     {children}
                 </Providers>
