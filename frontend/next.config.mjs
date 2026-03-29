@@ -57,6 +57,8 @@ const nextConfig = {
   // Security + caching headers
   // ---------------------------------------------------------------------------
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development';
+
     // Content-Security-Policy directives.
     // Why unsafe-inline for script-src:
     //   - app/layout.tsx injects an inline <script> for RTL detection and JSON-LD
@@ -64,6 +66,9 @@ const nextConfig = {
     //   - Google Analytics uses an inline gtag() initialiser.
     //   Migrating to nonces would harden this further but requires middleware to
     //   generate and thread a per-request nonce through all rendering layers.
+    // Why unsafe-eval in development only:
+    //   - React dev mode uses eval() to reconstruct call stacks for debugging.
+    //   - React NEVER uses eval() in production — safe to omit there.
     // Why unsafe-inline for style-src:
     //   - Framer Motion and Radix UI inject inline style attributes at runtime.
     //   - Tailwind utility classes applied dynamically also rely on inline styles.
@@ -71,7 +76,8 @@ const nextConfig = {
       "default-src 'self'",
 
       // Scripts: own origin + inline (JSON-LD + GA init) + Google Analytics + Vercel
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com",
+      // unsafe-eval is added in dev only for React's call-stack debugging
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com`,
 
       // Styles: own origin + inline (Framer Motion, Radix, Tailwind dynamic classes)
       "style-src 'self' 'unsafe-inline'",
