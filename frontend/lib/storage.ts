@@ -4,8 +4,9 @@ import { unstable_cache, revalidateTag } from "next/cache";
 
 const prisma = new PrismaClient();
 
-// Cache TTL: 5 minutes. Tags allow instant invalidation via revalidateTag() when admin mutates content.
-const CACHE_TTL = 300;
+// Cache TTL: 30 seconds. Tags allow instant invalidation via revalidateTag() when admin mutates content.
+// Kept short so stale data is never served for more than 30s even if tag invalidation is missed.
+const CACHE_TTL = 30;
 
 // ---------------------------------------------------------------------------
 // Module-level cached Prisma reads — unstable_cache persists across requests

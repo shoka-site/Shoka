@@ -24,7 +24,7 @@ export default function PageLoading() {
           <div className="relative w-20 h-20 md:w-24 md:h-24">
             <Image
               src="/logo.png"
-              alt="Shoka Logo"
+              alt="Sehle"
               fill
               sizes="(min-width: 768px) 96px, 80px"
               className="object-contain"

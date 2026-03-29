@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
+    // Disable the client-side Router Cache so every page refresh fetches
+    // fresh HTML from the server instead of serving stale cached segments.
+    staleTimes: {
+      dynamic: 0,
+      static: 30,
+    },
     // Tree-shake large packages at import time — reduces per-page JS bundle
     // significantly for libraries that don't support named exports properly.
     optimizePackageImports: [

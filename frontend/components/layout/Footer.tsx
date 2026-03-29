@@ -78,7 +78,7 @@ export default function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
-            <h2 className="text-2xl font-display font-bold mb-6">SHOKA</h2>
+            <h2 className="text-2xl font-display font-bold mb-6">Sehle</h2>
             <p className="text-white/60 max-w-sm leading-relaxed">
               {t('footer.desc')}
             </p>

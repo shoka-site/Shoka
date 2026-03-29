@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const LETTERS_EN = ["S", "E", "H", "L", "E"];
 
 const SOCIALS = [
     {
@@ -33,8 +33,14 @@ const SOCIALS = [
 
 export default function WelcomePage() {
     const { t, i18n } = useTranslation();
-    const isRtl = i18n.dir() === "rtl";
+    const [mounted, setMounted] = useState(false);
+    // Until mounted, default to Arabic (matches server-rendered HTML and avoids hydration mismatch).
+    // The LanguageDetector reads localStorage only in the browser, so SSR always produces Arabic.
+    const isRtl = mounted ? i18n.dir() === "rtl" : true;
+    const resolvedLanguage = mounted ? i18n.language : "ar";
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => { setMounted(true); }, []);
 
     // Mouse spotlight — zero re-renders via direct DOM mutation
     useEffect(() => {
@@ -49,7 +55,7 @@ export default function WelcomePage() {
     }, []);
 
     const toggleLanguage = () => {
-        const newLang = i18n.language === "en" ? "ar" : "en";
+        const newLang = resolvedLanguage === "en" ? "ar" : "en";
         i18n.changeLanguage(newLang);
         document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
     };
@@ -236,14 +242,20 @@ export default function WelcomePage() {
                     </div>
 
                     {/* Brand — centered absolute */}
-                    <motion.span
+                    <motion.div
                         initial={{ opacity: 0, y: -12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.55 }}
-                        className="absolute left-1/2 -translate-x-1/2 text-white/40 text-[11px] font-light tracking-[0.55em] uppercase select-none"
+                        className="absolute left-1/2 -translate-x-1/2"
                     >
-                        {isRtl ? "سهلة" : "Sehle"}
-                    </motion.span>
+                        <Image
+                            src="/logo.png"
+                            alt="Sehle"
+                            width={40}
+                            height={40}
+                            className="w-10 h-10 object-contain opacity-60 drop-shadow-[0_0_8px_rgba(194,164,92,0.5)]"
+                        />
+                    </motion.div>
 
                     {/* Language toggle */}
                     <motion.button
@@ -256,7 +268,7 @@ export default function WelcomePage() {
                         className="flex items-center gap-2 px-3 py-1.5 border border-[#c2a45c]/25 bg-[#c2a45c]/5 backdrop-blur-xl rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-[#c2a45c]/10 hover:border-[#c2a45c]/55 transition-all text-white/50 hover:text-white/90"
                     >
                         <Globe className="w-3.5 h-3.5" />
-                        {i18n.language === "en" ? "العربية" : "English"}
+                        {resolvedLanguage === "en" ? "العربية" : "English"}
                     </motion.button>
                 </div>
 
@@ -306,82 +318,25 @@ export default function WelcomePage() {
                                 animate={{ opacity: [0.4, 1, 0.4], scale: [0.8, 1.4, 0.8] }}
                                 transition={{ duration: 2, repeat: Infinity }}
                             />
-                            <span className="text-[#c2a45c]/80 text-[10px] tracking-[0.35em] font-light uppercase">
+                            <span className="text-[#c2a45c]/80 text-[10px] tracking-[0.35em] font-light uppercase" suppressHydrationWarning>
                                 {t("welcome.badge")}
                             </span>
                         </motion.div>
 
-                        {/* ── SEHLE / سهلة — letter clip-reveal + breathing glow ── */}
+                        {/* ── Logo ── */}
                         <motion.div
-                            className="flex items-center justify-center"
-                            aria-label={isRtl ? "سهلة" : "SEHLE"}
-                            animate={{
-                                filter: [
-                                    "drop-shadow(0 0 20px rgba(194,164,92,0.18))",
-                                    "drop-shadow(0 0 75px rgba(194,164,92,0.70)) drop-shadow(0 0 35px rgba(194,164,92,0.40))",
-                                    "drop-shadow(0 0 20px rgba(194,164,92,0.18))",
-                                ],
-                            }}
-                            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 2.2 }}
+                            initial={{ opacity: 0, scale: 0.75 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.95, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            {isRtl ? (
-                                /* Arabic — single connected word, clip-reveal as one unit.
-                                   lineHeight raised from 1 → 1.3 so the wrapper clip boundary
-                                   sits below the Arabic descenders. paddingBottom gives the
-                                   WebkitBackgroundClip:text gradient box extra height so
-                                   descender ink gets painted instead of appearing transparent. */
-                                <div style={{ overflow: "hidden", display: "inline-block", lineHeight: 1.3 }}>
-                                    <motion.span
-                                        initial={{ y: "105%" }}
-                                        animate={{ y: "0%" }}
-                                        transition={{ duration: 0.95, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                        style={{
-                                            display: "inline-block",
-                                            fontSize: "clamp(5rem, 17vw, 16rem)",
-                                            lineHeight: 1.3,
-                                            paddingBottom: "0.2em",
-                                            fontWeight: 700,
-                                            background: "linear-gradient(175deg, #ffffff 0%, #f0e4c4 45%, #c2a45c 100%)",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text",
-                                            fontFamily: "var(--font-cairo), sans-serif",
-                                            letterSpacing: 0,
-                                        }}
-                                    >
-                                        سهلة
-                                    </motion.span>
-                                </div>
-                            ) : (
-                                LETTERS_EN.map((letter, i) => (
-                                    <div key={i} style={{ overflow: "hidden", display: "inline-block", lineHeight: 1 }}>
-                                        <motion.span
-                                            initial={{ y: "105%" }}
-                                            animate={{ y: "0%" }}
-                                            transition={{
-                                                duration: 0.95,
-                                                delay: 0.8 + i * 0.12,
-                                                ease: [0.16, 1, 0.3, 1],
-                                            }}
-                                            style={{
-                                                display: "inline-block",
-                                                fontSize: "clamp(5rem, 17vw, 16rem)",
-                                                lineHeight: 1,
-                                                fontWeight: 700,
-                                                background: "linear-gradient(175deg, #ffffff 0%, #f0e4c4 45%, #c2a45c 100%)",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text",
-                                                fontFamily: "var(--font-cairo), sans-serif",
-                                                letterSpacing: "0.06em",
-                                                paddingLeft: i > 0 ? "0.06em" : 0,
-                                            }}
-                                        >
-                                            {letter}
-                                        </motion.span>
-                                    </div>
-                                ))
-                            )}
+                            <Image
+                                src="/logo.png"
+                                alt="Sehle"
+                                width={320}
+                                height={320}
+                                className="w-64 h-64 sm:w-80 sm:h-80 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
+                                priority
+                            />
                         </motion.div>
 
                         {/* Gold divider */}
@@ -422,6 +377,7 @@ export default function WelcomePage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 2.2 }}
                             className="text-white/50 text-xs md:text-sm max-w-xs md:max-w-sm text-center leading-relaxed font-light tracking-wide"
+                            suppressHydrationWarning
                         >
                             {t("welcome.tagline")}
                         </motion.p>
@@ -441,7 +397,7 @@ export default function WelcomePage() {
                                     className="absolute inset-0 bg-[#c2a45c] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
                                     aria-hidden="true"
                                 />
-                                <span className="relative">{t("welcome.enter")}</span>
+                                <span className="relative" suppressHydrationWarning>{t("welcome.enter")}</span>
                                 <motion.span
                                     className="relative text-[#c2a45c]/70 group-hover:text-black transition-colors duration-500"
                                     animate={{ x: [0, 5, 0] }}
@@ -467,7 +423,7 @@ export default function WelcomePage() {
                             animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.5, 0.8] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         />
-                        {t("welcome.system_ready")}
+                        <span suppressHydrationWarning>{t("welcome.system_ready")}</span>
                     </div>
 
                     <motion.div
@@ -477,7 +433,7 @@ export default function WelcomePage() {
                         <ChevronDown className="w-5 h-5 text-[#c2a45c]/28" />
                     </motion.div>
 
-                    <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-white/22">
+                    <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-white/22" suppressHydrationWarning>
                         {t("welcome.est")}
                     </span>
                 </motion.div>
