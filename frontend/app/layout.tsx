@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 // Client wrapper — holds the ssr:false dynamic import that can't live in a Server Component
 import { InitialLoaderClient } from "@/components/ui/InitialLoaderClient";
+import { SentryClientInit } from "@/components/SentryClientInit";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { Cairo } from "next/font/google";
 import "./globals.css";
@@ -239,6 +240,7 @@ export default async function RootLayout({
                 />
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
+                <SentryClientInit />
                 <InitialLoaderClient />
                 <Providers>
                     {children}

@@ -63,9 +63,17 @@ jobs:
       DATABASE_URL: postgresql://test:test@localhost:5432/test_db
       DIRECT_URL: postgresql://test:test@localhost:5432/test_db
       ADMIN_USERNAME: admin
-      ADMIN_PASSWORD: test_password_for_ci
+      ADMIN_PASSWORD: test_password_for_ci_min_20_chars
+      # 64-char hex string — safe dummy value for build-time validation
+      ADMIN_SESSION_SECRET: 0000000000000000000000000000000000000000000000000000000000000000
       NEXT_PUBLIC_SITE_URL: https://www.sehle.site
       NEXT_PUBLIC_API_URL: http://localhost:3000
+      RESEND_API_KEY: ""
+      RESEND_FROM_EMAIL: notifications@sehle.site
+      NOTIFICATION_EMAIL: sehle.iq@gmail.com
+      SENTRY_DSN: ""
+      NEXT_PUBLIC_SENTRY_DSN: ""
+      NEXT_PUBLIC_GA_ID: ""
     steps:
       - uses: actions/checkout@v4
 
@@ -84,3 +92,63 @@ jobs:
 
       - name: Build Next.js app
         run: npm run build
+
+  # ---------------------------------------------------------------------------
+  # Docker image build + push to GitHub Container Registry (GHCR).
+  # Runs only on push to main — not on PRs (avoids publishing unreviewed code).
+  #
+  # Images are tagged with:
+  #   ghcr.io/<owner>/<repo>:latest
+  #   ghcr.io/<owner>/<repo>:<git-sha>   ← use this tag to roll back to a
+  #                                         specific commit
+  #
+  # Rollback procedure:
+  #   docker pull ghcr.io/<owner>/<repo>:<previous-sha>
+  #   docker tag  ghcr.io/<owner>/<repo>:<previous-sha> sehle-platform:rollback
+  #   docker run  ... sehle-platform:rollback
+  # ---------------------------------------------------------------------------
+  docker-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: [build, security-audit]
+    # Only push images from the main branch — never from PRs
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
+      packages: write   # Required to push to GHCR
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata (tags + labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            # Always tag latest on main
+            type=raw,value=latest
+            # Tag with full git SHA for precise rollback targeting
+            type=sha,prefix=,format=long
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Cache layers between runs to speed up rebuilds
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

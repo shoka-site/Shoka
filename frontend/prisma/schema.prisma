@@ -162,6 +162,10 @@ model Consultation {
 
   @@map("consultations")
   @@index([status])
+  // Common admin query patterns: filter unseen + sort by newest first
+  @@index([seen, createdAt(sort: Desc)])
+  // Useful for deduplication checks and future spam filtering
+  @@index([email])
 }
 
 model Package {

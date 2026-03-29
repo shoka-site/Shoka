@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { checkLoginRateLimit, recordFailedLogin, verifyAdminCredentials } from '@/lib/auth';
+import {
+  checkLoginRateLimit,
+  recordFailedLogin,
+  verifyAdminCredentials,
+  generateSessionToken,
+} from '@/lib/auth';
+import { logger } from '@/lib/logger';
 
 const loginSchema = z.object({
   username: z.string().min(1),
@@ -55,13 +61,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Generate a cryptographically signed session token — much stronger than 'true'
+  const token = generateSessionToken();
+
+  logger.audit('login', 'auth', ip, { username });
+
   const response = NextResponse.json({ success: true, message: 'Login successful' });
 
-  response.cookies.set('admin_auth', 'true', {
+  response.cookies.set('admin_auth', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 60 * 60 * 24, // 24 hours — reduced from 7 days
+    maxAge: 60 * 60 * 24, // 24 hours
     path: '/',
   });
 
