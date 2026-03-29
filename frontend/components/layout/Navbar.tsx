@@ -117,12 +117,19 @@ export default function Navbar() {
           <Link href="/home" className="group relative z-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
             <span className="text-2xl font-display font-black text-white tracking-tighter group-hover:opacity-80 transition-all flex items-center gap-2 uppercase">
               <motion.div
-                className="w-14 h-14 xl:w-16 xl:h-16 flex items-center justify-center relative"
+                className="relative w-32 h-12 xl:w-36 xl:h-14 flex items-center justify-center"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Image src="/logo.png" alt="Sehle" width={64} height={64} className="w-14 h-14 xl:w-16 xl:h-16 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]" />
+                <Image
+                  src="/logo.png"
+                  alt="Sehle"
+                  fill
+                  sizes="(min-width: 1280px) 144px, 128px"
+                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]"
+                  priority
+                />
               </motion.div>
             </span>
           </Link>

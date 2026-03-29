@@ -21,12 +21,12 @@ export default function PageLoading() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="relative w-20 h-20 md:w-24 md:h-24">
+          <div className="relative w-48 h-16 md:w-64 md:h-20">
             <Image
               src="/logo.png"
               alt="Sehle"
               fill
-              sizes="(min-width: 768px) 96px, 80px"
+              sizes="(min-width: 768px) 256px, 192px"
               className="object-contain"
               priority
             />

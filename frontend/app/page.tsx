@@ -254,6 +254,7 @@ export default function WelcomePage() {
                             width={40}
                             height={40}
                             className="w-10 h-10 object-contain opacity-60 drop-shadow-[0_0_8px_rgba(194,164,92,0.5)]"
+                            priority
                         />
                     </motion.div>
 
@@ -334,6 +335,7 @@ export default function WelcomePage() {
                                 alt="Sehle"
                                 width={320}
                                 height={320}
+                                sizes="(min-width: 1024px) 512px, (min-width: 768px) 416px, (min-width: 640px) 320px, 256px"
                                 className="w-64 h-64 sm:w-80 sm:h-80 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
                                 priority
                             />

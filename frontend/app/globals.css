@@ -294,6 +294,17 @@
     box-shadow: 0 8px 40px rgba(194, 164, 92, 0.15), inset 0 1px 0 rgba(194, 164, 92, 0.15);
   }
 
+  /* ── Full-screen height — cross-browser safe ──────────────────
+     `100dvh` (dynamic viewport height) correctly tracks the visible
+     area as mobile browser chrome appears/disappears.  Browsers that
+     predate the dvh unit (pre-2022) fall back to `100vh`.  The two
+     declarations must appear in this order so the capable browser
+     picks the second one while the older browser ignores it. */
+  .h-screen-dvh {
+    height: 100vh;   /* fallback */
+    height: 100dvh;  /* progressive enhancement */
+  }
+
   /* ── Scroll lock — prevents CLS from scrollbar disappearing ──
      Apply to <html> (not <body>) to avoid position:fixed CLS.
      --scrollbar-width is set via inline script in layout.tsx. */

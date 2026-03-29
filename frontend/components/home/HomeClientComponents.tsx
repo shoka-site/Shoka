@@ -145,7 +145,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   if (localizedItems.length === 0) {
     return (
       <section
-        className="relative h-[100dvh] flex items-center overflow-hidden"
+        className="relative h-screen-dvh flex items-center overflow-hidden"
         style={{ backgroundColor: "#000000" }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#000000]" />
@@ -193,7 +193,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   return (
     <section
       ref={heroRef}
-      className="relative h-[100dvh] flex items-center overflow-hidden"
+      className="relative h-screen-dvh flex items-center overflow-hidden"
       style={{ backgroundColor: "#000000" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -249,7 +249,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
       <motion.div
         style={{ y: yOffset, opacity }}
-        className={`relative z-10 w-full px-8 md:px-16 lg:px-24 pt-20`}
+        className={`relative z-10 w-full px-6 sm:px-8 md:px-16 lg:px-24 pt-20 sm:pt-20 md:pt-24`}
         dir={clientIsRtl ? "rtl" : "ltr"}
       >
         <AnimatePresence mode="wait" custom={direction}>
@@ -268,7 +268,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`mb-8 flex items-center gap-4 ${clientIsRtl ? "justify-start" : ""}`}
+              className={`mb-4 sm:mb-6 md:mb-8 flex items-center gap-4 ${clientIsRtl ? "justify-start" : ""}`}
             >
               <span className="text-4xl drop-shadow-md">{style.emoji}</span>
               <span
@@ -284,7 +284,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-4xl md:text-7xl lg:text-8xl font-display font-black text-white mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
+              className={`text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-display font-black text-white mb-4 sm:mb-6 md:mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
                 lineHeight: clientIsRtl ? 1.6 : 1.05,
@@ -301,7 +301,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-12 ${clientIsRtl ? "lg:text-xl max-w-xl" : ""}`}
+              className={`text-base sm:text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-6 sm:mb-8 md:mb-12 ${clientIsRtl ? "lg:text-xl max-w-xl" : ""}`}
               style={{
                 x: mousePosition.x * -0.5,
                 y: mousePosition.y * -0.5
@@ -341,7 +341,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
       </motion.div>
 
       <div
-        className="absolute bottom-8 md:bottom-12 left-0 right-0 px-6 md:px-16 lg:px-24 z-20 flex items-center justify-between"
+        className="absolute bottom-4 sm:bottom-8 md:bottom-12 left-0 right-0 px-4 sm:px-6 md:px-16 lg:px-24 z-20 flex items-center justify-between"
         dir={clientIsRtl ? "rtl" : "ltr"}
       >
         <div className="text-sm font-mono text-white/30 tracking-widest">
