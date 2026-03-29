@@ -122,7 +122,7 @@ export default function Navbar() {
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Image src="/logo.png" alt="Logo" width={64} height={64} className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]" />
+                <Image src="/logo.png" alt="Logo" width={64} height={64} className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]" style={{ height: 'auto' }} />
               </motion.div>
               {t("navbar.brand")}
             </span>

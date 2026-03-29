@@ -263,14 +263,14 @@ export class PrismaStorage implements IStorage {
 
   async createService(service: Omit<Service, "id" | "createdAt" | "updatedAt">): Promise<Service> {
     const result = await prisma.service.create({ data: service });
-    revalidateTag("services");
+    revalidateTag("services", "max");
     return result as Service;
   }
 
   async updateService(id: string, updates: Partial<Omit<Service, "id" | "createdAt" | "updatedAt">>): Promise<Service | undefined> {
     try {
       const result = await prisma.service.update({ where: { id }, data: updates });
-      revalidateTag("services");
+      revalidateTag("services", "max");
       return result as Service;
     } catch (e) {
       console.error("Prisma update error:", e);
@@ -281,7 +281,7 @@ export class PrismaStorage implements IStorage {
   async deleteService(id: string): Promise<boolean> {
     try {
       await prisma.service.delete({ where: { id } });
-      revalidateTag("services");
+      revalidateTag("services", "max");
       return true;
     } catch {
       return false;
@@ -301,14 +301,14 @@ export class PrismaStorage implements IStorage {
 
   async createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
     const result = await prisma.project.create({ data: project });
-    revalidateTag("projects");
+    revalidateTag("projects", "max");
     return result as Project;
   }
 
   async updateProject(id: string, updates: Partial<Omit<Project, "id" | "createdAt" | "updatedAt">>): Promise<Project | undefined> {
     try {
       const result = await prisma.project.update({ where: { id }, data: updates });
-      revalidateTag("projects");
+      revalidateTag("projects", "max");
       return result as Project;
     } catch (e) {
       console.error("Prisma update error:", e);
@@ -319,7 +319,7 @@ export class PrismaStorage implements IStorage {
   async deleteProject(id: string): Promise<boolean> {
     try {
       await prisma.project.delete({ where: { id } });
-      revalidateTag("projects");
+      revalidateTag("projects", "max");
       return true;
     } catch {
       return false;
@@ -339,14 +339,14 @@ export class PrismaStorage implements IStorage {
 
   async createTestimonial(testimonial: Omit<Testimonial, "id" | "createdAt" | "updatedAt">): Promise<Testimonial> {
     const result = await prisma.testimonial.create({ data: testimonial });
-    revalidateTag("testimonials");
+    revalidateTag("testimonials", "max");
     return result as Testimonial;
   }
 
   async updateTestimonial(id: string, updates: Partial<Omit<Testimonial, "id" | "createdAt" | "updatedAt">>): Promise<Testimonial | undefined> {
     try {
       const result = await prisma.testimonial.update({ where: { id }, data: updates });
-      revalidateTag("testimonials");
+      revalidateTag("testimonials", "max");
       return result as Testimonial;
     } catch {
       return undefined;
@@ -356,7 +356,7 @@ export class PrismaStorage implements IStorage {
   async deleteTestimonial(id: string): Promise<boolean> {
     try {
       await prisma.testimonial.delete({ where: { id } });
-      revalidateTag("testimonials");
+      revalidateTag("testimonials", "max");
       return true;
     } catch {
       return false;
@@ -376,14 +376,14 @@ export class PrismaStorage implements IStorage {
 
   async createPlatformUpdate(update: Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">): Promise<PlatformUpdate> {
     const result = await prisma.platformUpdate.create({ data: update });
-    revalidateTag("platformUpdates");
+    revalidateTag("platformUpdates", "max");
     return result as PlatformUpdate;
   }
 
   async updatePlatformUpdate(id: string, updates: Partial<Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">>): Promise<PlatformUpdate | undefined> {
     try {
       const result = await prisma.platformUpdate.update({ where: { id }, data: updates });
-      revalidateTag("platformUpdates");
+      revalidateTag("platformUpdates", "max");
       return result as PlatformUpdate;
     } catch {
       return undefined;
@@ -393,7 +393,7 @@ export class PrismaStorage implements IStorage {
   async deletePlatformUpdate(id: string): Promise<boolean> {
     try {
       await prisma.platformUpdate.delete({ where: { id } });
-      revalidateTag("platformUpdates");
+      revalidateTag("platformUpdates", "max");
       return true;
     } catch {
       return false;
@@ -413,14 +413,14 @@ export class PrismaStorage implements IStorage {
 
   async createIndustry(industry: Omit<Industry, "id" | "createdAt" | "updatedAt">): Promise<Industry> {
     const result = await prisma.industry.create({ data: industry });
-    revalidateTag("industries");
+    revalidateTag("industries", "max");
     return result as Industry;
   }
 
   async updateIndustry(id: string, updates: Partial<Omit<Industry, "id" | "createdAt" | "updatedAt">>): Promise<Industry | undefined> {
     try {
       const result = await prisma.industry.update({ where: { id }, data: updates });
-      revalidateTag("industries");
+      revalidateTag("industries", "max");
       return result as Industry;
     } catch {
       return undefined;
@@ -430,7 +430,7 @@ export class PrismaStorage implements IStorage {
   async deleteIndustry(id: string): Promise<boolean> {
     try {
       await prisma.industry.delete({ where: { id } });
-      revalidateTag("industries");
+      revalidateTag("industries", "max");
       return true;
     } catch {
       return false;
@@ -450,16 +450,16 @@ export class PrismaStorage implements IStorage {
 
   async createSolution(solution: Omit<Solution, "id" | "createdAt" | "updatedAt">): Promise<Solution> {
     const result = await prisma.solution.create({ data: solution });
-    revalidateTag("solutions");
-    revalidateTag("industries"); // Industries include their solutions
+    revalidateTag("solutions", "max");
+    revalidateTag("industries", "max"); // Industries include their solutions
     return result as Solution;
   }
 
   async updateSolution(id: string, updates: Partial<Omit<Solution, "id" | "createdAt" | "updatedAt">>): Promise<Solution | undefined> {
     try {
       const result = await prisma.solution.update({ where: { id }, data: updates });
-      revalidateTag("solutions");
-      revalidateTag("industries");
+      revalidateTag("solutions", "max");
+      revalidateTag("industries", "max");
       return result as Solution;
     } catch {
       return undefined;
@@ -469,8 +469,8 @@ export class PrismaStorage implements IStorage {
   async deleteSolution(id: string): Promise<boolean> {
     try {
       await prisma.solution.delete({ where: { id } });
-      revalidateTag("solutions");
-      revalidateTag("industries");
+      revalidateTag("solutions", "max");
+      revalidateTag("industries", "max");
       return true;
     } catch {
       return false;
@@ -490,14 +490,14 @@ export class PrismaStorage implements IStorage {
 
   async createTeamMember(member: Omit<TeamMember, "id" | "createdAt" | "updatedAt">): Promise<TeamMember> {
     const result = await prisma.teamMember.create({ data: member });
-    revalidateTag("teamMembers");
+    revalidateTag("teamMembers", "max");
     return result as TeamMember;
   }
 
   async updateTeamMember(id: string, updates: Partial<Omit<TeamMember, "id" | "createdAt" | "updatedAt">>): Promise<TeamMember | undefined> {
     try {
       const result = await prisma.teamMember.update({ where: { id }, data: updates });
-      revalidateTag("teamMembers");
+      revalidateTag("teamMembers", "max");
       return result as TeamMember;
     } catch {
       return undefined;
@@ -507,7 +507,7 @@ export class PrismaStorage implements IStorage {
   async deleteTeamMember(id: string): Promise<boolean> {
     try {
       await prisma.teamMember.delete({ where: { id } });
-      revalidateTag("teamMembers");
+      revalidateTag("teamMembers", "max");
       return true;
     } catch {
       return false;
@@ -527,14 +527,14 @@ export class PrismaStorage implements IStorage {
 
   async createConsultation(consultation: InsertConsultation): Promise<Consultation> {
     const result = await prisma.consultation.create({ data: consultation });
-    revalidateTag("consultations");
+    revalidateTag("consultations", "max");
     return result as Consultation;
   }
 
   async updateConsultation(id: string, updates: Partial<Omit<Consultation, "id" | "createdAt" | "updatedAt">>): Promise<Consultation | undefined> {
     try {
       const result = await prisma.consultation.update({ where: { id }, data: updates });
-      revalidateTag("consultations");
+      revalidateTag("consultations", "max");
       return result as Consultation;
     } catch {
       return undefined;
@@ -544,7 +544,7 @@ export class PrismaStorage implements IStorage {
   async deleteConsultation(id: string): Promise<boolean> {
     try {
       await prisma.consultation.delete({ where: { id } });
-      revalidateTag("consultations");
+      revalidateTag("consultations", "max");
       return true;
     } catch {
       return false;
@@ -564,14 +564,14 @@ export class PrismaStorage implements IStorage {
 
   async createPackage(pkg: Omit<Package, "id" | "createdAt" | "updatedAt">): Promise<Package> {
     const result = await prisma.package.create({ data: pkg });
-    revalidateTag("packages");
+    revalidateTag("packages", "max");
     return result as Package;
   }
 
   async updatePackage(id: string, updates: Partial<Omit<Package, "id" | "createdAt" | "updatedAt">>): Promise<Package | undefined> {
     try {
       const result = await prisma.package.update({ where: { id }, data: updates });
-      revalidateTag("packages");
+      revalidateTag("packages", "max");
       return result as Package;
     } catch {
       return undefined;
@@ -581,7 +581,7 @@ export class PrismaStorage implements IStorage {
   async deletePackage(id: string): Promise<boolean> {
     try {
       await prisma.package.delete({ where: { id } });
-      revalidateTag("packages");
+      revalidateTag("packages", "max");
       return true;
     } catch {
       return false;

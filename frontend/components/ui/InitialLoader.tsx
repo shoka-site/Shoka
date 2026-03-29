@@ -73,7 +73,7 @@ export function InitialLoader() {
               />
 
               <div className="flex items-center justify-center w-full h-full drop-shadow-[0_0_20px_rgba(194,164,92,0.8)]">
-                <Image src="/logo.png" alt="Loading Logo" width={140} height={140} className="object-contain scale-[1.75]" priority />
+                <Image src="/logo.png" alt="Loading Logo" width={140} height={140} className="object-contain scale-[1.75]" style={{ height: 'auto' }} priority />
               </div>
             </div>
 

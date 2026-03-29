@@ -26,6 +26,7 @@ export default function PageLoading() {
               src="/logo.png"
               alt="Shoka Logo"
               fill
+              sizes="(min-width: 768px) 96px, 80px"
               className="object-contain"
               priority
             />
