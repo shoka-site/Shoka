@@ -315,22 +315,22 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`flex flex-col sm:flex-row gap-5 ${clientIsRtl ? "justify-start" : ""}`}
+              className={`flex flex-col sm:flex-row gap-4 sm:gap-5 ${clientIsRtl ? "justify-start" : ""}`}
             >
-              <Link href="/contact">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
+                  className="w-full sm:w-auto rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
                   style={{ backgroundColor: style.accentHex, color: "#1a1005", boxShadow: `0 8px 30px ${style.accentHex}40` }}
                 >
                   {t("hero.updates.cta_talk")}
                 </Button>
               </Link>
-              <Link href="/packages">
+              <Link href="/packages" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
+                  className="w-full sm:w-auto rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
                 >
                   {t("hero.updates.cta_expertise")}
                 </Button>
@@ -436,7 +436,7 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-          className="relative p-8 md:p-12 rounded-2xl overflow-hidden"
+          className="relative p-5 sm:p-8 md:p-12 rounded-2xl overflow-hidden"
           style={{
             background: "linear-gradient(135deg, rgba(194,164,92,0.06) 0%, rgba(0,0,0,0) 60%)",
             border: "1px solid rgba(194,164,92,0.2)",

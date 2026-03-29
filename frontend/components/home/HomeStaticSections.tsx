@@ -71,8 +71,8 @@ export function PhilosophySection() {
   ];
 
   return (
-    <Section background="muted" className="py-24 md:py-32">
-      <FadeInSection className="text-center mb-12 md:mb-16">
+    <Section background="muted" className="py-14 md:py-32">
+      <FadeInSection className="text-center mb-8 md:mb-16">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.philosophy.badge")}</span>
@@ -86,7 +86,7 @@ export function PhilosophySection() {
           {t("home.philosophy.description")}
         </p>
       </FadeInSection>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
         {whyShokaPoints.map((point, index) => {
           const Icon = iconMap[point.iconName] || Target;
           return (
@@ -120,8 +120,8 @@ export function ProcessSection() {
   ];
 
   return (
-    <Section background="muted" className="py-24 md:py-32 overflow-hidden">
-      <FadeInSection className="text-center mb-16 md:mb-24">
+    <Section background="muted" className="py-14 md:py-32 overflow-hidden">
+      <FadeInSection className="text-center mb-10 md:mb-24">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.process.badge")}</span>
@@ -139,7 +139,7 @@ export function ProcessSection() {
       <div className="relative max-w-6xl mx-auto px-4">
         <div className="absolute top-[2.5rem] left-[10%] right-[10%] h-[1px] hidden lg:block"
           style={{ background: "linear-gradient(90deg, transparent, rgba(194,164,92,0.3) 20%, rgba(194,164,92,0.3) 80%, transparent)" }} />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12 lg:gap-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-8 relative z-10">
           {processSteps.map((step, index) => (
             <FadeInSection key={step.id} delay={index * 0.1} className="relative group text-center">
               <div className="relative mb-8 inline-block">
@@ -177,7 +177,7 @@ export function ResultsSection() {
   ];
 
   return (
-    <section className="relative py-32 bg-[#060606] text-white overflow-hidden">
+    <section className="relative py-14 md:py-32 bg-[#060606] text-white overflow-hidden">
       <div className="absolute inset-0 opacity-100 bg-mesopot-lattice" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#060606] via-transparent to-[#060606]/90 z-0" />
       <div className="container mx-auto px-6 relative z-10">
@@ -202,14 +202,14 @@ export function ResultsSection() {
           </h2>
         </FadeInSection>
         <FadeInSection delay={0.2}>
-          <p className="text-center text-lg md:text-xl max-w-3xl mx-auto mb-20 leading-relaxed text-white/60 font-light">
+          <p className="text-center text-lg md:text-xl max-w-3xl mx-auto mb-10 md:mb-20 leading-relaxed text-white/60 font-light">
             {t("home.results.description")}
           </p>
         </FadeInSection>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
           {results.map((result, i) => (
             <FadeInSection key={i} delay={i * 0.1}>
-              <div className="mesopot-metric-card group relative flex flex-col justify-between p-8 rounded-[2rem] overflow-hidden">
+              <div className="mesopot-metric-card group relative flex flex-col justify-between p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="mb-6 flex items-baseline gap-1">
                   {result.prefix && <span className="text-2xl md:text-3xl font-display font-medium text-accent/80">{result.prefix}</span>}
@@ -239,7 +239,7 @@ export function OutcomesSection() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
   return (
-    <section className="relative py-32 bg-[#060606] text-white overflow-hidden">
+    <section className="relative py-14 md:py-32 bg-[#060606] text-white overflow-hidden">
       <div className="absolute inset-0 bg-mesopot-rosette opacity-100" />
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -261,15 +261,15 @@ export function OutcomesSection() {
             </h2>
           </FadeInSection>
           <FadeInSection delay={0.2}>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mt-12">
-              <Link href="/contact">
-                <Button size="lg" className="h-16 px-12 rounded-full font-bold text-lg hover:scale-105 transition-all duration-300"
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mt-8 md:mt-12">
+              <Link href="/contact" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-all duration-300"
                   style={{ background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)", color: "#000", boxShadow: "0 8px 30px rgba(194,164,92,0.3)" }}>
                   {t("home.cta.primary")}
                 </Button>
               </Link>
-              <Link href="/projects">
-                <Button variant="outline" size="lg" className="h-16 px-12 rounded-full font-bold text-lg text-white transition-all duration-300 hover:border-accent/60 hover:bg-accent/10"
+              <Link href="/projects" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg text-white transition-all duration-300 hover:border-accent/60 hover:bg-accent/10"
                   style={{ borderColor: "rgba(194,164,92,0.3)", background: "rgba(194,164,92,0.05)" }}>
                   {t("view_all_projects")}
                 </Button>

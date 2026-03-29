@@ -219,7 +219,6 @@ export default async function RootLayout({
     return (
         <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${cairo.variable}`} suppressHydrationWarning>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, userScalable=yes" />
                 {/* Runs synchronously before React hydrates — two jobs:
                     1. Set dir/lang from the NEXT_LOCALE cookie so Arabic text is
                        never briefly rendered LTR while JS boots (eliminates RTL flash).

@@ -51,7 +51,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
   }));
 
   return (
-    <Section background="default" className="py-24 md:py-32">
+    <Section background="default" className="py-14 md:py-32">
       <FadeInSection className="text-center mb-8 md:mb-10">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
@@ -117,7 +117,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
   }));
 
   return (
-    <Section background="muted" className="py-24 md:py-32">
+    <Section background="muted" className="py-14 md:py-32">
       <FadeInSection className="text-center mb-8 md:mb-10">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
@@ -202,7 +202,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
   }));
 
   return (
-    <Section background="default" className="py-24 md:py-32">
+    <Section background="default" className="py-14 md:py-32">
       <FadeInSection className="text-center mb-8 md:mb-10">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
@@ -266,7 +266,7 @@ export function TestimonialsSectionClient({ testimonials }: { testimonials: Reco
   }));
 
   return (
-    <Section background="default" className="py-24 md:py-32">
+    <Section background="default" className="py-14 md:py-32">
       <FadeInSection className="text-center">
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
