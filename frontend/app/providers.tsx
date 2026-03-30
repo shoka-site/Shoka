@@ -23,28 +23,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }, [i18n.language]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        // Detect whether this mount was triggered by a browser reload (F5 /
-        // Ctrl+R) rather than a soft client-side navigation.
-        const nav = performance.getEntriesByType(
-            "navigation"
-        )[0] as PerformanceNavigationTiming | undefined;
-        const isReload = nav?.type === "reload";
-
-        // Invalidate all public entity caches so that subsequent server-side
-        // reads bypass stale entries and fetch fresh data from the database.
+        // Invalidate all public entity caches, then re-render server components
+        // and clear the React Query cache so this page always reflects the latest
+        // database state — not just on reload but on every navigation entry.
+        //
+        // Previously this only called router.refresh() on "reload" navigation type,
+        // which meant soft client-side navigations would render stale ISR-cached HTML
+        // even after revalidateTag() had already cleared the server-side data cache.
+        // Now we always refresh when the server confirms revalidation occurred.
         fetch("/api/revalidate-all", { method: "POST" })
-            .then(() => {
-                if (isReload) {
+            .then((res) => res.json())
+            .then((data: { revalidated: boolean }) => {
+                if (data.revalidated) {
                     // Re-render all server components in the current page with
-                    // the now-fresh server-side cache. Without this call the
-                    // current HTML was already built from stale data; router.refresh()
-                    // triggers a new server render that returns up-to-date content.
+                    // the now-fresh server-side cache.
                     router.refresh();
 
-                    // Discard any React Query cache that was populated from
-                    // API routes before revalidation completed. This forces every
-                    // active query to re-fetch, guaranteeing client components also
-                    // display fresh data rather than the pre-revalidation snapshot.
+                    // Discard any React Query cache that was populated before
+                    // revalidation completed so client components also show fresh data.
                     queryClient.invalidateQueries();
                 }
             })

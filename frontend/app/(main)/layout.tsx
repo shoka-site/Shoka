@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { cookies } from "next/headers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 // Client wrapper — ssr:false dynamic imports can't live in Server Components
@@ -20,21 +21,28 @@ function NavbarFallback() {
     );
 }
 
-export default function MainLayout({
+export default async function MainLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    // Read the locale on the server so we can pass it to Navbar as a prop.
+    // This ensures the Navbar's initial render uses the same language on both
+    // the server (SSR) and the client (hydration), preventing hydration mismatches
+    // caused by i18next-browser-languagedetector being unable to read cookies in Node.js.
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("NEXT_LOCALE")?.value as "en" | "ar") || "ar";
+
     return (
         <>
             <div className="fixed inset-0 z-0 bg-grain opacity-50 pointer-events-none mix-blend-multiply"></div>
             <Suspense fallback={<NavbarFallback />}>
-                <Navbar />
+                <Navbar lang={lang} />
             </Suspense>
             <main className="relative z-10 w-full">
                 {children}
             </main>
-            <Footer />
+            <Footer lang={lang} />
             <ExitIntentPopupClient />
         </>
     );

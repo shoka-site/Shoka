@@ -133,18 +133,40 @@ const nextConfig = {
           { key: 'Content-Security-Policy', value: csp },
         ],
       },
-      // Public content API — cache at CDN/browser for 60s, serve stale for 5min while revalidating
+      // Public content API — cache at CDN/browser for 60s, serve stale for 30s while revalidating.
+      // stale-while-revalidate was reduced from 300s to 30s so that CDN/proxy caches don't serve
+      // deleted or updated content for more than ~90s total after an admin mutation fires revalidateTag.
       {
         source: '/api/content/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=300' },
+          { key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=30' },
         ],
       },
-      // Long cache for public static assets (images, fonts, video)
+      // Long cache for truly static, build-fingerprinted assets (fonts, bundled icons).
+      // Excludes user-uploaded images — those are handled by the /uploads rule below.
       {
-        source: '/(.*)\\.(png|jpg|jpeg|gif|webp|avif|svg|ico|mp4|webm|woff|woff2|ttf|otf)',
+        source: '/(.*)\\.(woff|woff2|ttf|otf|ico)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      // Static images that are bundled at build time (not user uploads) — 1 day, no immutable.
+      // Using immutable here would be wrong: these files don't have content-hash suffixes so the
+      // browser would never re-fetch them even if they are replaced during a redeploy.
+      {
+        source: '/(.*)\\.(png|jpg|jpeg|gif|webp|avif|svg|mp4|webm)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
+      },
+      // User-uploaded content — must never be cached long-term.
+      // Files in /uploads/ are mutable: admin can delete a content item whose image is still
+      // on disk, or replace it. `immutable` would lock deleted images in the browser cache for
+      // up to a year. This rule overrides the broader image rule above for the uploads path.
+      {
+        source: '/uploads/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
         ],
       },
     ];

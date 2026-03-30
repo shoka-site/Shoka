@@ -34,13 +34,25 @@ const AboutPanel = dynamic(() => import("./navbar/AboutPanel"), {
   loading: () => <PanelSkeleton />,
 });
 
-export default function Navbar() {
-  const { t, i18n } = useTranslation();
+interface NavbarProps {
+  // Server-detected locale, passed from the server layout so both SSR and
+  // client hydration use the same language. Without this, i18next-browser-
+  // languagedetector fails to read cookies in Node.js and falls back to Arabic,
+  // while the client correctly detects English — causing a hydration mismatch.
+  lang: "en" | "ar";
+}
+
+export default function Navbar({ lang }: NavbarProps) {
+  const { i18n } = useTranslation();
+  // getFixedT returns a `t` function bound to the server-provided language.
+  // This guarantees SSR and hydration both render the same text regardless of
+  // what language the i18next singleton happens to have initialized with.
+  const t = i18n.getFixedT(lang);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuValue, setMenuValue] = useState("");
   const pathname = usePathname();
-  const isRtl = i18n.dir() === 'rtl';
+  const isRtl = lang === 'ar';
 
   const closeMenu = () => {
     setIsOpen(false);
@@ -115,23 +127,21 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex flex-1 items-center justify-start">
           <Link href="/home" className="group relative z-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
-            <span className="text-2xl font-display font-black text-white tracking-tighter group-hover:opacity-80 transition-all flex items-center gap-2 uppercase">
-              <motion.div
-                className="relative w-32 h-12 xl:w-36 xl:h-14 flex items-center justify-center"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Image
-                  src="/logo.png"
-                  alt="Sehle"
-                  fill
-                  sizes="(min-width: 1280px) 144px, 128px"
-                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)]"
-                  priority
-                />
-              </motion.div>
-            </span>
+            <motion.div
+              className="relative w-40 h-12 xl:w-48 xl:h-14 flex items-center justify-center"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <Image
+                src="/logo-updated.png"
+                alt="Sehle"
+                fill
+                sizes="(min-width: 1280px) 192px, 160px"
+                className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200"
+                priority
+              />
+            </motion.div>
           </Link>
         </div>
 

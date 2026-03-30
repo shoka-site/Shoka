@@ -249,7 +249,7 @@ export default function WelcomePage() {
                         className="absolute left-1/2 -translate-x-1/2"
                     >
                         <Image
-                            src="/logo.png"
+                            src="/logo-updated.png"
                             alt="Sehle"
                             width={40}
                             height={40}
@@ -331,7 +331,7 @@ export default function WelcomePage() {
                             transition={{ duration: 0.95, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         >
                             <Image
-                                src="/logo.png"
+                                src="/logo-updated.png"
                                 alt="Sehle"
                                 width={320}
                                 height={320}

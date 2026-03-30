@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
+
 import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 // Client wrapper — holds the ssr:false dynamic import that can't live in a Server Component
 import { InitialLoaderClient } from "@/components/ui/InitialLoaderClient";
 import { SentryClientInit } from "@/components/SentryClientInit";
+import { TranslationProvider } from "@/components/TranslationProvider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { Cairo } from "next/font/google";
 import "./globals.css";
@@ -135,7 +137,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const cookieStore = await cookies();
-    const lang = cookieStore.get("NEXT_LOCALE")?.value || "ar";
+    const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
     const isRtl = lang === "ar";
 
     // JSON-LD structured data for Organization
@@ -145,7 +147,7 @@ export default async function RootLayout({
         "name": isRtl ? "سهلة - منصة الأنظمة الرقمية العراقية" : "Sehle - Iraqi Digital Systems Platform",
         "alternateName": ["Sehle", "سهلة"],
         "url": SITE_URL,
-        "logo": `${SITE_URL}/logo.png`,
+        "logo": `${SITE_URL}/logo-updated.png`,
         "description": isRtl
             ? "المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات والتحول الرقمي."
             : "The leading Iraqi platform for intelligent digital systems, software development, and digital transformation.",
@@ -190,7 +192,7 @@ export default async function RootLayout({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "sehle - سهلة",
-        "image": `${SITE_URL}/logo.png`,
+        "image": `${SITE_URL}/logo-updated.png`,
         "url": SITE_URL,
         "telephone": "+90-543-106-1211",
         "email": "[EMAIL_ADDRESS]",
@@ -219,12 +221,11 @@ export default async function RootLayout({
     return (
         <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${cairo.variable}`} suppressHydrationWarning>
             <head>
-                {/* Runs synchronously before React hydrates — two jobs:
-                    1. Set dir/lang from the NEXT_LOCALE cookie so Arabic text is
-                       never briefly rendered LTR while JS boots (eliminates RTL flash).
-                    2. Measure scrollbar width for .overflow-locked CLS compensation. */}
-                <script dangerouslySetInnerHTML={{ __html: `(function(){var c=document.cookie.match(/NEXT_LOCALE=([^;]+)/),l=c?c[1].split('-')[0]:'ar',e=document.documentElement;e.dir=l==='en'?'ltr':'rtl';e.lang=l;e.style.setProperty('--scrollbar-width',(window.innerWidth-e.clientWidth)+'px')})()` }} />
-                {/* JSON-LD Structured Data */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(){var c=document.cookie.match(/NEXT_LOCALE=([^;]+)/),l=c?c[1].split('-')[0]:'ar',e=document.documentElement;e.dir=l==='en'?'ltr':'rtl';e.lang=l;e.style.setProperty('--scrollbar-width',(window.innerWidth-e.clientWidth)+'px')})()`,
+                    }}
+                />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -241,9 +242,11 @@ export default async function RootLayout({
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
                 <SentryClientInit />
                 <InitialLoaderClient />
-                <Providers>
-                    {children}
-                </Providers>
+                <TranslationProvider lang={lang}>
+                    <Providers>
+                        {children}
+                    </Providers>
+                </TranslationProvider>
                 <GoogleAnalytics />
                 <SpeedInsights />
                 <Analytics />

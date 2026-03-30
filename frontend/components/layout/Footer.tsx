@@ -7,8 +7,13 @@ import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
 import { Send } from "lucide-react";
 
-export default function Footer() {
-  const { t } = useTranslation();
+interface FooterProps {
+  lang: "en" | "ar";
+}
+
+export default function Footer({ lang }: FooterProps) {
+  const { i18n } = useTranslation();
+  const t = i18n.getFixedT(lang);
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
