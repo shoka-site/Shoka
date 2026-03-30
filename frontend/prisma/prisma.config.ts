@@ -9,7 +9,7 @@ import path from "node:path";
  * @see https://www.prisma.io/docs/orm/more/advanced/generators-and-databases/prisma-config
  */
 
-export default {
+const prismaConfig = {
   earlyAccess: true,
   schema: path.join(__dirname, "schema.prisma"),
 
@@ -35,3 +35,4 @@ export default {
     },
   ],
 };
+export default prismaConfig;

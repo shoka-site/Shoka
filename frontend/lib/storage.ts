@@ -1,6 +1,10 @@
 import { type User, type InsertUser, type Service, type Project, type Testimonial, type PlatformUpdate, type Industry, type Solution, type TeamMember, type Consultation, type InsertConsultation, type Package } from "@shared/schema";
 import { PrismaClient } from "@prisma/client";
-import { unstable_cache, revalidateTag } from "next/cache";
+import { unstable_cache, revalidateTag as _revalidateTag } from "next/cache";
+
+// Next.js 16 requires a second `profile` argument. "max" tells the cache to
+// keep revalidated data cached as long as possible (until the next mutation).
+const revalidateTag = (tag: string) => _revalidateTag(tag, "max");
 
 const prisma = new PrismaClient();
 

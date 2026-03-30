@@ -48,7 +48,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 // Best-effort — a failed revalidation is non-fatal; TTL-based
                 // expiry will still refresh the cache within CACHE_TTL seconds.
             });
-    }, [router]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [router]);
 
     return (
         <QueryClientProvider client={queryClient}>
