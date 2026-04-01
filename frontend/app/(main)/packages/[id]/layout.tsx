@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 interface Props {
@@ -10,20 +10,23 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  let title = "باقة برمجية | حلول جاهزة من شوكة العراق";
+  let title = "باقة برمجية | حلول جاهزة من سهلة العراق";
   let description =
-    "تفاصيل الباقة البرمجية من شوكة — حلول متكاملة ومصممة لاحتياجات الشركات في العراق.";
+    "تفاصيل الباقة البرمجية من سهلة — حلول متكاملة ومصممة لاحتياجات الشركات في العراق.";
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/packages/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/packages`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const pkg = await res.json();
+      const packages = await res.json();
+      const pkg = Array.isArray(packages)
+        ? packages.find((p: { id: string }) => p.id === id)
+        : null;
       if (pkg?.title) {
-        title = `${pkg.title} | باقات شوكة البرمجية في العراق`;
+        title = `${pkg.title} | باقات سهلة البرمجية في العراق`;
         description = pkg.description
-          ? `${pkg.description.slice(0, 155)}... | شوكة — شركة برمجيات عراقية`
-          : `${pkg.title} — باقة برمجية متكاملة من شوكة مصممة لشركتك.`;
+          ? `${pkg.description.slice(0, 155)}... | سهلة — شركة برمجيات عراقية`
+          : `${pkg.title} — باقة برمجية متكاملة من سهلة مصممة لشركتك.`;
       }
     }
   } catch {
@@ -37,8 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "باقة برمجية عراق",
       "حلول جاهزة العراق",
       "software package Iraq",
-      "Shoka package",
+      "Sehle package",
       "business solution Iraq",
+      "سهلة",
     ],
     alternates: {
       canonical: `${SITE_URL}/packages/${id}`,
@@ -57,7 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: [OG_IMAGE],
-      creator: "@shoka_it",
+      creator: "@sehle_it",
     },
   };
 }

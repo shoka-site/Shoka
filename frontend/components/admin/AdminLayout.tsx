@@ -36,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 {/* Sidebar */}
                 <div className="fixed left-0 top-0 bottom-0 w-64 bg-muted border-r border-border p-6 overflow-y-auto">
                     <div className="mb-8">
-                        <h1 className="text-2xl font-display font-bold">Shoka Admin</h1>
+                        <h1 className="text-2xl font-display font-bold">Sehle Admin</h1>
                         <p className="text-sm text-muted-foreground">Content Management</p>
                     </div>
 

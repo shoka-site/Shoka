@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 interface Props {
@@ -10,21 +10,24 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  let title = "مشروع برمجي | معرض أعمال شوكة العراق";
+  let title = "مشروع برمجي | معرض أعمال سهلة العراق";
   let description =
-    "تفاصيل مشروع برمجي من شوكة — الشركة العراقية الرائدة في تطوير البرمجيات والأنظمة الرقمية.";
+    "تفاصيل مشروع برمجي من سهلة — الشركة العراقية في تطوير البرمجيات والأنظمة الرقمية.";
   let ogImage = OG_IMAGE;
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/projects/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/projects`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const project = await res.json();
+      const projects = await res.json();
+      const project = Array.isArray(projects)
+        ? projects.find((p: { id: string }) => p.id === id)
+        : null;
       if (project?.title) {
-        title = `${project.title} | مشاريع شوكة البرمجية`;
+        title = `${project.title} | مشاريع سهلة البرمجية`;
         description = project.description
-          ? `${project.description.slice(0, 155)}... | شوكة — شركة برمجيات عراقية`
-          : `${project.title} — مشروع برمجي ناجح من شوكة في العراق.`;
+          ? `${project.description.slice(0, 155)}... | سهلة — شركة برمجيات عراقية`
+          : `${project.title} — مشروع برمجي ناجح من سهلة في العراق.`;
         if (project.images && project.images.length > 0) {
           ogImage = project.images[0];
         }
@@ -39,10 +42,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     keywords: [
       "مشروع برمجي عراق",
-      "أعمال شوكة",
+      "أعمال سهلة",
       "portfolio Iraq software",
-      "Shoka project",
+      "Sehle project",
       "Iraq software case study",
+      "سهلة",
     ],
     alternates: {
       canonical: `${SITE_URL}/projects/${id}`,
@@ -61,21 +65,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: [ogImage],
-      creator: "@shoka_it",
+      creator: "@sehle_it",
     },
   };
 }
 
-export default async function ProjectDetailLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+export default async function ProjectDetailLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  const SITE_URL = "https://www.shoka.site";
 
   let projectSchema = null;
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/projects/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/projects`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const project = await res.json();
+      const projects = await res.json();
+      const project = Array.isArray(projects)
+        ? projects.find((p: { id: string }) => p.id === id)
+        : null;
       if (project?.title) {
         projectSchema = {
           "@context": "https://schema.org",
@@ -87,8 +99,16 @@ export default async function ProjectDetailLayout({ children, params }: { childr
           ...(project.createdAt && { dateCreated: project.createdAt }),
           creator: {
             "@type": "Organization",
-            name: "Shoka - شوكة",
+            name: "سهلة | Sehle",
             url: SITE_URL,
+          },
+          breadcrumb: {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
+              { "@type": "ListItem", position: 2, name: "المشاريع", item: `${SITE_URL}/projects` },
+              { "@type": "ListItem", position: 3, name: project.title, item: `${SITE_URL}/projects/${id}` },
+            ],
           },
         };
       }

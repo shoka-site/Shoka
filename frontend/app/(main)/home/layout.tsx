@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export const metadata: Metadata = {
-  title: "شوكة | شركة برمجيات وتطوير تقني في العراق",
+  title: "سهلة | شركة برمجيات وتطوير تقني في العراق",
   description:
-    "شوكة — الشركة العراقية الرائدة في تطوير البرمجيات، تطبيقات الجوال، المواقع الإلكترونية، والتحول الرقمي. هل تبحث عن حل برمجي؟ نحن نبنيه. Software company Iraq | Web development Iraq | Digital transformation.",
+    "سهلة — الشركة العراقية الرائدة في تطوير البرمجيات، تطبيقات الجوال، المواقع الإلكترونية، والتحول الرقمي. هل تبحث عن حل برمجي؟ نحن نبنيه. Software company Iraq | Web development Iraq | Digital transformation.",
   keywords: [
     // Arabic Iraq keywords
     "شركة برمجيات عراقية",
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
     "نظام إدارة عراقي",
     "ERP العراق",
     "تطبيقات الجوال العراق",
-    "شوكة",
-    "منصة شوكة",
+    "سهلة",
+    "منصة سهلة",
     // English Iraq keywords
     "software company Iraq",
     "web development Iraq",
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     "ERP system Iraq",
     "e-commerce Iraq",
     "Iraq software agency",
-    "Shoka",
-    "Shoka software",
+    "Sehle",
+    "Sehle software",
     // General software search terms
     "software development company",
     "custom software solutions",
@@ -52,18 +52,18 @@ export const metadata: Metadata = {
     locale: "ar_IQ",
     alternateLocale: "en_US",
     url: `${SITE_URL}/home`,
-    title: "شوكة | شركة برمجيات وتطوير تقني في العراق",
+    title: "سهلة | شركة برمجيات وتطوير تقني في العراق",
     description:
-      "نبني البرمجيات والأنظمة الرقمية التي تحتاجها شركتك. تطبيقات، مواقع، أنظمة ERP، وحلول AI — شوكة هي شريكك التقني في العراق.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "شوكة — شركة برمجيات عراقية" }],
+      "نبني البرمجيات والأنظمة الرقمية التي تحتاجها شركتك. تطبيقات، مواقع، أنظمة ERP، وحلول AI — سهلة هي شريكك التقني في العراق.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "سهلة — شركة برمجيات عراقية" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "شوكة | أفضل شركة برمجيات في العراق",
+    title: "سهلة | أفضل شركة برمجيات في العراق",
     description:
-      "هل تبحث عن شركة برمجيات في العراق؟ شوكة تطور مواقع، تطبيقات، وأنظمة ذكية لشركتك.",
+      "هل تبحث عن شركة برمجيات في العراق؟ سهلة تطور مواقع، تطبيقات، وأنظمة ذكية لشركتك.",
     images: [OG_IMAGE],
-    creator: "@shoka_it",
+    creator: "@sehle_it",
   },
 };
 
@@ -71,9 +71,9 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "شوكة — شركة برمجيات عراقية",
+    name: "سهلة — شركة برمجيات عراقية",
     description:
-      "الصفحة الرئيسية لشوكة، الشركة العراقية المتخصصة في تطوير البرمجيات والأنظمة الرقمية.",
+      "الصفحة الرئيسية لسهلة، الشركة العراقية المتخصصة في تطوير البرمجيات والأنظمة الرقمية.",
     url: `${SITE_URL}/home`,
     breadcrumb: {
       "@type": "BreadcrumbList",
@@ -86,7 +86,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
   const aggregateRatingSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Shoka - شوكة",
+    name: "Sehle - سهلة",
     url: SITE_URL,
     aggregateRating: {
       "@type": "AggregateRating",

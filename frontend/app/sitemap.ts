@@ -1,21 +1,14 @@
 import { MetadataRoute } from "next";
+import { storage } from "@/lib/storage";
 
-const SITE_URL = "https://www.shoka.site";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const SITE_URL = "https://www.sehle.site";
 
-async function fetchIds(endpoint: string): Promise<string[]> {
-  try {
-    const res = await fetch(`${API_URL}/api/${endpoint}`, { next: { revalidate: 3600 } });
-    if (!res.ok) return [];
-    const data = await res.json();
-    if (Array.isArray(data)) return data.map((item: { id: string }) => item.id);
-    return [];
-  } catch {
-    return [];
-  }
-}
-
-function withAlternates(url: string, lastModified: Date, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], priority: number): MetadataRoute.Sitemap[number] {
+function entry(
+  url: string,
+  lastModified: Date,
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"],
+  priority: number
+): MetadataRoute.Sitemap[number] {
   return {
     url,
     lastModified,
@@ -34,38 +27,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
-    withAlternates(SITE_URL, now, "daily", 1.0),
-    withAlternates(`${SITE_URL}/home`, now, "daily", 1.0),
-    withAlternates(`${SITE_URL}/services`, now, "weekly", 0.9),
-    withAlternates(`${SITE_URL}/packages`, now, "weekly", 0.9),
-    withAlternates(`${SITE_URL}/projects`, now, "weekly", 0.85),
-    withAlternates(`${SITE_URL}/industries`, now, "weekly", 0.85),
-    withAlternates(`${SITE_URL}/about`, now, "monthly", 0.8),
-    withAlternates(`${SITE_URL}/news`, now, "weekly", 0.75),
-    withAlternates(`${SITE_URL}/contact`, now, "monthly", 0.7),
+    entry(SITE_URL, now, "daily", 1.0),
+    entry(`${SITE_URL}/home`, now, "daily", 1.0),
+    entry(`${SITE_URL}/services`, now, "weekly", 0.9),
+    entry(`${SITE_URL}/packages`, now, "weekly", 0.9),
+    entry(`${SITE_URL}/projects`, now, "weekly", 0.85),
+    entry(`${SITE_URL}/industries`, now, "weekly", 0.85),
+    entry(`${SITE_URL}/about`, now, "monthly", 0.8),
+    entry(`${SITE_URL}/news`, now, "weekly", 0.75),
+    entry(`${SITE_URL}/contact`, now, "monthly", 0.7),
   ];
 
-  const [serviceIds, projectIds, packageIds, industryIds] = await Promise.all([
-    fetchIds("services"),
-    fetchIds("projects"),
-    fetchIds("packages"),
-    fetchIds("industries"),
+  // Fetch entity data directly from storage — faster than HTTP calls and avoids
+  // a dependency on the API server being up during build/revalidation.
+  const [services, projects, packages, industries] = await Promise.all([
+    storage.getServices(true).catch(() => []),
+    storage.getProjects(true).catch(() => []),
+    storage.getPackages(true).catch(() => []),
+    storage.getIndustries(true).catch(() => []),
   ]);
 
-  const servicePages = serviceIds.map((id) =>
-    withAlternates(`${SITE_URL}/services/${id}`, now, "monthly", 0.8)
+  const servicePages = services.map((s) =>
+    entry(`${SITE_URL}/services/${s.id}`, s.updatedAt ?? now, "monthly", 0.8)
   );
 
-  const projectPages = projectIds.map((id) =>
-    withAlternates(`${SITE_URL}/projects/${id}`, now, "monthly", 0.75)
+  const projectPages = projects.map((p) =>
+    entry(`${SITE_URL}/projects/${p.id}`, p.updatedAt ?? now, "monthly", 0.75)
   );
 
-  const packagePages = packageIds.map((id) =>
-    withAlternates(`${SITE_URL}/packages/${id}`, now, "monthly", 0.8)
+  const packagePages = packages.map((p) =>
+    entry(`${SITE_URL}/packages/${p.id}`, p.updatedAt ?? now, "monthly", 0.8)
   );
 
-  const industryPages = industryIds.map((id) =>
-    withAlternates(`${SITE_URL}/industries/${id}`, now, "monthly", 0.75)
+  const industryPages = industries.map((i) =>
+    entry(`${SITE_URL}/industries/${i.id}`, i.updatedAt ?? now, "monthly", 0.75)
   );
 
   return [

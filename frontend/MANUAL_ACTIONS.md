@@ -16,7 +16,7 @@ These are actions that need to be completed outside the codebase to fully activa
 - Verify site ownership at [search.google.com/search-console](https://search.google.com/search-console)
 - Get the verification code
 - Replace the placeholder `"google-site-verification-code"` in `app/layout.tsx` (line ~112) with your actual code
-- Submit sitemap URL: `https://www.shoka.site/sitemap.xml`
+- Submit sitemap URL: `https://www.sehle.site/sitemap.xml`
 
 ### 3. Update Phone Number
 - Replace the placeholder phone number `"+90-000-000-0000"` in the LocalBusiness schema in `app/layout.tsx` with the real business phone number
@@ -107,9 +107,9 @@ For each blog post, create:
 
 ### 14. Competitor Comparison Content
 Write comparison content for:
-- "Shoka vs Freelancers" — why a full team beats solo developers
-- "Shoka vs Offshore Agencies" — local understanding + quality
-- "Shoka vs DIY Platforms" — custom solutions vs templates
+- "Sehle vs Freelancers" — why a full team beats solo developers
+- "Sehle vs Offshore Agencies" — local understanding + quality
+- "Sehle vs DIY Platforms" — custom solutions vs templates
 
 ### 15. Referral Program
 Design a referral program:

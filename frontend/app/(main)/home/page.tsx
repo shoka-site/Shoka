@@ -25,8 +25,8 @@ export default async function Home() {
       {/* Hero Section — client component, localizes data reactively */}
       <HeroUpdatesClient items={rawUpdates} isRtl={isRtl} />
 
-      {/* Why Us Banner — client component, fully reactive */}
-      <WhyUsBanner />
+      {/* Why Us Banner — client component, receives server-resolved isRtl to prevent hydration mismatch */}
+      <WhyUsBanner isRtl={isRtl} />
 
       {/* Services — client component receives raw data, picks language field reactively */}
       <ServicesSectionClient services={rawServices} />
@@ -37,7 +37,7 @@ export default async function Home() {
       {/* Packages */}
       <PackagesSectionClient packages={rawPackages} />
 
-      {/* Philosophy (Why Shoka) — client component, fully reactive */}
+      {/* Philosophy (Why Sehle) — client component, fully reactive */}
       <PhilosophySection />
 
       {/* Process (How We Work) — client component, fully reactive */}
@@ -46,11 +46,11 @@ export default async function Home() {
       {/* Testimonials — client component receives raw data, picks language field reactively */}
       <TestimonialsSectionClient testimonials={rawTestimonials} />
 
-      {/* Results (Our Impact) — client component, fully reactive */}
-      <ResultsSection />
+      {/* Results (Our Impact) — receives server-resolved isRtl to prevent hydration mismatch */}
+      <ResultsSection isRtl={isRtl} />
 
-      {/* Outcomes CTA — client component, fully reactive */}
-      <OutcomesSection />
+      {/* Outcomes CTA — receives server-resolved isRtl to prevent hydration mismatch */}
+      <OutcomesSection isRtl={isRtl} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 interface Props {
@@ -10,20 +10,23 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  let title = "خدمة برمجية متخصصة | شوكة العراق";
+  let title = "خدمة برمجية متخصصة | سهلة العراق";
   let description =
-    "تفاصيل الخدمة البرمجية من شوكة — الشركة العراقية الرائدة في تطوير البرمجيات والتحول الرقمي.";
+    "تفاصيل الخدمة البرمجية من سهلة — الشركة العراقية في تطوير البرمجيات والتحول الرقمي.";
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/services/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/services`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const service = await res.json();
+      const services = await res.json();
+      const service = Array.isArray(services)
+        ? services.find((s: { id: string }) => s.id === id)
+        : null;
       if (service?.title) {
-        title = `${service.title} | خدمات شوكة البرمجية في العراق`;
+        title = `${service.title} | خدمات سهلة البرمجية في العراق`;
         description = service.description
-          ? `${service.description.slice(0, 155)}... | شوكة — شركة برمجيات عراقية`
-          : `${service.title} — خدمة برمجية متخصصة من شوكة، الشركة العراقية الرائدة في تطوير البرمجيات.`;
+          ? `${service.description.slice(0, 155)}... | سهلة — شركة برمجيات عراقية`
+          : `${service.title} — خدمة برمجية متخصصة من سهلة، الشركة العراقية في تطوير البرمجيات.`;
       }
     }
   } catch {
@@ -37,8 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "خدمة برمجية العراق",
       "تطوير برمجيات العراق",
       "software service Iraq",
-      "Shoka service",
+      "Sehle service",
       "Iraq software solution",
+      "سهلة",
     ],
     alternates: {
       canonical: `${SITE_URL}/services/${id}`,
@@ -57,21 +61,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: [OG_IMAGE],
-      creator: "@shoka_it",
+      creator: "@sehle_it",
     },
   };
 }
 
-export default async function ServiceDetailLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+export default async function ServiceDetailLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  const SITE_URL = "https://www.shoka.site";
 
   let serviceSchema = null;
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/services/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/services`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const service = await res.json();
+      const services = await res.json();
+      const service = Array.isArray(services)
+        ? services.find((s: { id: string }) => s.id === id)
+        : null;
       if (service?.title) {
         serviceSchema = {
           "@context": "https://schema.org",
@@ -81,11 +93,19 @@ export default async function ServiceDetailLayout({ children, params }: { childr
           url: `${SITE_URL}/services/${id}`,
           provider: {
             "@type": "Organization",
-            name: "Shoka - شوكة",
+            name: "سهلة | Sehle",
             url: SITE_URL,
           },
           areaServed: ["Iraq", "Turkey", "Middle East"],
           serviceType: service.type || "Software Development",
+          breadcrumb: {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
+              { "@type": "ListItem", position: 2, name: "الخدمات", item: `${SITE_URL}/services` },
+              { "@type": "ListItem", position: 3, name: service.title, item: `${SITE_URL}/services/${id}` },
+            ],
+          },
         };
       }
     }

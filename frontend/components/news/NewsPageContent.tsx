@@ -162,7 +162,7 @@ export function NewsPageContent({ updates }: Props) {
                   {t("news.no_articles_title", "No updates yet")}
                 </h3>
                 <p className="text-muted-foreground text-lg max-w-md mx-auto">
-                  {t("news.no_articles_desc", "Check back later for exciting announcements, achievements, and events from Shoka.")}
+                  {t("news.no_articles_desc", "Check back later for exciting announcements, achievements, and events from Sehle.")}
                 </p>
               </div>
             )}

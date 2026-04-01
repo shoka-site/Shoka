@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 interface Props {
@@ -10,20 +10,23 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  let title = "حلول برمجية لقطاع متخصص | شوكة العراق";
+  let title = "حلول برمجية لقطاع متخصص | سهلة العراق";
   let description =
-    "تفاصيل الحلول البرمجية التي تقدمها شوكة لهذا القطاع في العراق — تحول رقمي مخصص لاحتياجات كل مجال.";
+    "تفاصيل الحلول البرمجية التي تقدمها سهلة لهذا القطاع في العراق — تحول رقمي مخصص لاحتياجات كل مجال.";
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${baseUrl}/api/industries/${id}`, { next: { revalidate: 3600 } });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/content/ar/industries`, { next: { revalidate: 3600 } });
     if (res.ok) {
-      const industry = await res.json();
+      const industries = await res.json();
+      const industry = Array.isArray(industries)
+        ? industries.find((i: { id: string }) => i.id === id)
+        : null;
       if (industry?.title) {
-        title = `حلول برمجية لقطاع ${industry.title} في العراق | شوكة`;
+        title = `حلول برمجية لقطاع ${industry.title} في العراق | سهلة`;
         description = industry.description
-          ? `${industry.description.slice(0, 155)}... | شوكة — شركة برمجيات عراقية`
-          : `شوكة تقدم حلولاً برمجية مخصصة لقطاع ${industry.title} في العراق.`;
+          ? `${industry.description.slice(0, 155)}... | سهلة — شركة برمجيات عراقية`
+          : `سهلة تقدم حلولاً برمجية مخصصة لقطاع ${industry.title} في العراق.`;
       }
     }
   } catch {
@@ -37,8 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "حلول برمجية قطاع العراق",
       "برمجة قطاع متخصص العراق",
       "industry software solution Iraq",
-      "Shoka industry",
+      "Sehle industry",
       "sector software Iraq",
+      "سهلة",
     ],
     alternates: {
       canonical: `${SITE_URL}/industries/${id}`,
@@ -57,7 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: [OG_IMAGE],
-      creator: "@shoka_it",
+      creator: "@sehle_it",
     },
   };
 }

@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export const metadata: Metadata = {
-  title: "أخبار وإنجازات شوكة | شركة برمجيات عراقية | Shoka News",
+  title: "أخبار وإنجازات سهلة | شركة برمجيات عراقية | Sehle News",
   description:
-    "تابع آخر أخبار وإنجازات شوكة — الشركة العراقية الرائدة في تطوير البرمجيات. إطلاقات جديدة، شراكات، وإنجازات تقنية. Shoka news | Iraq tech news.",
+    "تابع آخر أخبار وإنجازات سهلة — الشركة العراقية في تطوير البرمجيات. إطلاقات جديدة، شراكات، وإنجازات تقنية. Sehle news | Iraq tech news.",
   keywords: [
-    "أخبار شوكة",
-    "إنجازات شوكة",
+    "أخبار سهلة",
+    "إنجازات سهلة",
     "أخبار تقنية عراق",
     "مستجدات برمجيات عراق",
     "شركة برمجيات عراقية أخبار",
-    "Shoka news",
+    "Sehle news",
     "Iraq tech news",
     "software company Iraq achievements",
-    "Shoka achievements",
+    "Sehle achievements",
+    "Sehle updates",
   ],
   alternates: {
     canonical: `${SITE_URL}/news`,
@@ -26,16 +27,16 @@ export const metadata: Metadata = {
     locale: "ar_IQ",
     alternateLocale: "en_US",
     url: `${SITE_URL}/news`,
-    title: "أخبار شوكة وإنجازاتها | Iraq Tech News",
-    description: "تابع آخر إنجازات وأخبار شوكة — شركة البرمجيات العراقية.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "أخبار شوكة" }],
+    title: "أخبار سهلة وإنجازاتها | Iraq Tech News",
+    description: "تابع آخر إنجازات وأخبار سهلة — شركة البرمجيات العراقية.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "أخبار سهلة" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "أخبار شوكة | Shoka News",
-    description: "آخر أخبار وإنجازات شوكة البرمجية.",
+    title: "أخبار سهلة | Sehle News",
+    description: "آخر أخبار وإنجازات سهلة البرمجية.",
     images: [OG_IMAGE],
-    creator: "@shoka_it",
+    creator: "@sehle_it",
   },
 };
 
@@ -43,13 +44,17 @@ export default function NewsLayout({ children }: { children: React.ReactNode }) 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "أخبار شوكة وإنجازاتها",
-    description: "أخبار، إنجازات، وفعاليات شوكة للأنظمة الرقمية.",
+    name: "أخبار سهلة وإنجازاتها | Sehle News",
+    description: "أخبار، إنجازات، وفعاليات سهلة للأنظمة الرقمية.",
     url: `${SITE_URL}/news`,
     publisher: {
       "@type": "Organization",
-      name: "شوكة",
+      name: "سهلة | Sehle",
       url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo-updated.png`,
+      },
     },
     breadcrumb: {
       "@type": "BreadcrumbList",

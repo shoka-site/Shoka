@@ -109,8 +109,8 @@ const nextConfig = {
       // Restrict <form> submissions to same origin
       "form-action 'self'",
 
-      // Force all sub-resource loads over HTTPS
-      "upgrade-insecure-requests",
+      // Force all sub-resource loads over HTTPS (production only — breaks localhost in dev)
+      ...(isDev ? [] : ["upgrade-insecure-requests"]),
     ].join('; ');
 
     return [

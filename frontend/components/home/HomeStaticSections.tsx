@@ -14,9 +14,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 // ─── Why Us Title Banner ─────────────────────────────────────────────────────
-export function WhyUsBanner() {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.dir() === "rtl";
+export function WhyUsBanner({ isRtl }: { isRtl: boolean }) {
+  const { t } = useTranslation();
   return (
     <div className="relative bg-background overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-6 bg-mesopot-chevron opacity-60" />
@@ -58,11 +57,11 @@ export function WhyUsBanner() {
   );
 }
 
-// ─── Philosophy (Why Shoka) Section ──────────────────────────────────────────
+// ─── Philosophy (Why Sehle) Section ──────────────────────────────────────────
 export function PhilosophySection() {
   const { t } = useTranslation();
 
-  const whyShokaPoints = [
+  const whySehlePoints = [
     { id: "why-1", iconName: "Target", title: t("home.why_us.points.business_first.title"), description: t("home.why_us.points.business_first.desc") },
     { id: "why-2", iconName: "Zap", title: t("home.why_us.points.rapid_prototyping.title"), description: t("home.why_us.points.rapid_prototyping.desc") },
     { id: "why-3", iconName: "Layers", title: t("home.why_us.points.modern_stack.title"), description: t("home.why_us.points.modern_stack.desc") },
@@ -87,7 +86,7 @@ export function PhilosophySection() {
         </p>
       </FadeInSection>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
-        {whyShokaPoints.map((point, index) => {
+        {whySehlePoints.map((point, index) => {
           const Icon = iconMap[point.iconName] || Target;
           return (
             <div key={point.id} className="text-center">
@@ -161,9 +160,8 @@ export function ProcessSection() {
 }
 
 // ─── Results (Our Impact) Section ────────────────────────────────────────────
-export function ResultsSection() {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.dir() === "rtl";
+export function ResultsSection({ isRtl }: { isRtl: boolean }) {
+  const { t } = useTranslation();
 
   const results = [
     { value: "3", suffix: "×", label: t("home.results.items.market_time"), sub: t("home.results.items.market_time_sub") },
@@ -235,9 +233,8 @@ export function ResultsSection() {
 }
 
 // ─── Outcomes (CTA) Section ───────────────────────────────────────────────────
-export function OutcomesSection() {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.dir() === "rtl";
+export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
+  const { t } = useTranslation();
   return (
     <section className="relative py-14 md:py-32 bg-[#060606] text-white overflow-hidden">
       <div className="absolute inset-0 bg-mesopot-rosette opacity-100" />

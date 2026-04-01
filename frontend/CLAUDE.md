@@ -1,6 +1,6 @@
-# CLAUDE.md — Shoka Platform Engineering Guide
+# CLAUDE.md — Sehle Platform Engineering Guide
 
-**Project:** Shoka — Iraqi Technology & Digital Training Platform
+**Project:** Sehle — Iraqi Technology & Digital Training Platform
 **Stack:** Next.js 15 App Router · React 19 · TypeScript strict · Prisma 5 · PostgreSQL · Tailwind CSS 4 · Zod · TanStack Query v5 · i18next (en/ar)
 **Auth:** Credential-based, httpOnly cookie (`admin_auth`), in-memory rate limiter
 **Deployment:** Docker + GitHub Actions CI → standalone Next.js build

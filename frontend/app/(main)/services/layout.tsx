@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
-const SITE_URL = "https://www.shoka.site";
+const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export const metadata: Metadata = {
-  title: "خدماتنا | تطوير مواقع، تطبيقات، أنظمة ERP، AI | شوكة العراق",
+  title: "خدماتنا | تطوير مواقع، تطبيقات، أنظمة ERP، AI | سهلة العراق",
   description:
-    "شوكة تقدم خدمات تطوير البرمجيات الشاملة في العراق: مواقع إلكترونية، تطبيقات الجوال، أنظمة ERP، حلول الذكاء الاصطناعي، وأكثر. Software services Iraq | Web development | Mobile apps | AI solutions.",
+    "سهلة تقدم خدمات تطوير البرمجيات الشاملة في العراق: مواقع إلكترونية، تطبيقات الجوال، أنظمة ERP، حلول الذكاء الاصطناعي، وأكثر. Software services Iraq | Web development | Mobile apps | AI solutions.",
   keywords: [
     // Arabic
     "خدمات برمجية العراق",
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     "تصميم مواقع احترافي العراق",
     "برمجة تطبيق iOS العراق",
     "برمجة تطبيق Android العراق",
+    "سهلة",
     // English
     "software services Iraq",
     "web development Iraq",
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     "Android app Iraq",
     "React development Iraq",
     "Next.js development Iraq",
+    "Sehle services",
   ],
   alternates: {
     canonical: `${SITE_URL}/services`,
@@ -46,18 +48,18 @@ export const metadata: Metadata = {
     locale: "ar_IQ",
     alternateLocale: "en_US",
     url: `${SITE_URL}/services`,
-    title: "خدمات شوكة البرمجية | تطوير مواقع وتطبيقات في العراق",
+    title: "خدمات سهلة البرمجية | تطوير مواقع وتطبيقات في العراق",
     description:
-      "من تطوير المواقع وتطبيقات الجوال إلى أنظمة ERP وحلول AI — شوكة لديها الحل البرمجي الذي تحتاجه.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "خدمات شوكة البرمجية" }],
+      "من تطوير المواقع وتطبيقات الجوال إلى أنظمة ERP وحلول AI — سهلة لديها الحل البرمجي الذي تحتاجه.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "خدمات سهلة البرمجية" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "خدمات شوكة | تطوير برمجيات في العراق",
+    title: "خدمات سهلة | تطوير برمجيات في العراق",
     description:
-      "مواقع، تطبيقات، ERP، AI — شوكة تبني كل ما تحتاجه شركتك.",
+      "مواقع، تطبيقات، ERP، AI — سهلة تبني كل ما تحتاجه شركتك.",
     images: [OG_IMAGE],
-    creator: "@shoka_it",
+    creator: "@sehle_it",
   },
 };
 
@@ -68,13 +70,13 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
     serviceType: "Software Development",
     provider: {
       "@type": "Organization",
-      name: "شوكة",
+      name: "سهلة | Sehle",
       url: SITE_URL,
     },
-    areaServed: {
-      "@type": "Country",
-      name: "Iraq",
-    },
+    areaServed: [
+      { "@type": "Country", name: "Iraq" },
+      { "@type": "Country", name: "Turkey" },
+    ],
     description:
       "خدمات تطوير البرمجيات الشاملة بما تشمل: مواقع إلكترونية، تطبيقات جوال، أنظمة ERP، وحلول ذكاء اصطناعي.",
     url: `${SITE_URL}/services`,
@@ -87,11 +89,46 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
     },
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "ما هي خدمات سهلة البرمجية في العراق؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "سهلة تقدم طيفاً شاملاً من الخدمات البرمجية في العراق: تطوير المواقع الإلكترونية، تطبيقات الجوال (iOS وAndroid)، أنظمة ERP، حلول الذكاء الاصطناعي، التجارة الإلكترونية، وأنظمة إدارة المحتوى.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What software services does Sehle offer in Iraq?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Sehle provides full-spectrum software services in Iraq: web development, mobile app development (iOS & Android), ERP systems, AI solutions, e-commerce platforms, and CMS development.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "كم تستغرق مدة تطوير مشروع برمجي مع سهلة؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "تتراوح المدة بين 4–6 أسابيع للمشاريع البسيطة وتصل إلى 8–16 أسبوعاً للحلول المؤسسية المعقدة. نقدم جدولاً زمنياً مفصلاً خلال جلسة الاستشارة المجانية.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       {children}
     </>
