@@ -137,7 +137,7 @@ export default function Navbar({ lang }: NavbarProps) {
             >
               <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Image
-                src="/logo.png"
+                src="/logoo.png"
                 alt="Sehle"
                 fill
                 sizes="(min-width: 1280px) 192px, 160px"

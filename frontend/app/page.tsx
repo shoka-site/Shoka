@@ -314,7 +314,7 @@ export default function WelcomePage() {
                             transition={{ duration: 0.95, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         >
                             <Image
-                                src="/logo-updated.png"
+                                src="/logoo.png"
                                 alt="Sehle"
                                 width={20}
                                 height={20}

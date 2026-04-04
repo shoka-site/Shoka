@@ -150,7 +150,7 @@ export default async function RootLayout({
         "name": isRtl ? "سهلة - منصة الأنظمة الرقمية العراقية" : "Sehle - Iraqi Digital Systems Platform",
         "alternateName": ["Sehle", "سهلة"],
         "url": SITE_URL,
-        "logo": `${SITE_URL}/logo-updated.png`,
+        "logo": `${SITE_URL}/logoo.png`,
         "description": isRtl
             ? "المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات والتحول الرقمي."
             : "The leading Iraqi platform for intelligent digital systems, software development, and digital transformation.",
@@ -195,7 +195,7 @@ export default async function RootLayout({
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
         "name": "sehle - سهلة",
-        "image": `${SITE_URL}/logo-updated.png`,
+        "image": `${SITE_URL}/logoo.png`,
         "url": SITE_URL,
         "telephone": "+90-543-106-1211",
         "email": "[EMAIL_ADDRESS]",

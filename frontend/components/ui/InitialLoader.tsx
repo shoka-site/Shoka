@@ -65,7 +65,7 @@ export function InitialLoader() {
             >
               <div className="relative w-48 h-16 md:w-64 md:h-20">
                 <Image
-                  src="/logo-updated.png"
+                  src="/logoo.png"
                   alt="Sehle"
                   fill
                   sizes="(min-width: 768px) 256px, 192px"
