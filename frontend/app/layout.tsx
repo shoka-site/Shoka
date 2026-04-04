@@ -57,19 +57,22 @@ export const metadata: Metadata = {
         "Sehle software Iraq",
     ],
 
-    // Canonical and alternate languages
+    // Canonical — Arabic is the primary language served to Google.
+    // The site uses cookie-based language switching (same URL for both ar/en),
+    // so there is no separate /en URL to reference. Using x-default to signal
+    // that this canonical URL is the definitive version of the page.
     alternates: {
         canonical: SITE_URL,
         languages: {
             "ar": SITE_URL,
-            "en": `${SITE_URL}/en`,
+            "x-default": SITE_URL,
         },
     },
 
     // Open Graph
     openGraph: {
         type: "website",
-        locale: "ar_AR",
+        locale: "ar_IQ",
         alternateLocale: "en_US",
         url: SITE_URL,
         siteName: SITE_NAME,

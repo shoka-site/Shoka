@@ -95,14 +95,17 @@ export default function Navbar({ lang }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isOpen || menuValue) {
-        closeMenu();
+      // Only close the desktop dropdown on scroll — never the mobile overlay.
+      // Mobile browsers fire scroll events from momentum / tap gestures, which
+      // would immediately close the menu right after the user opens it.
+      if (menuValue) {
+        setMenuValue("");
       }
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen, menuValue]);
+  }, [menuValue]);
 
   const triggerClassName = "group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
 
@@ -279,7 +282,7 @@ export default function Navbar({ lang }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 top-0 z-[49] bg-black flex flex-col pt-28 px-6 pb-8 md:pt-32 md:p-8 overflow-y-auto"
+            className="fixed inset-0 top-0 z-[49] bg-black flex flex-col pt-24 px-5 pb-8 sm:pt-28 sm:px-6 md:pt-32 md:px-8 overflow-y-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-black to-black pointer-events-none" />
 
@@ -289,6 +292,15 @@ export default function Navbar({ lang }: NavbarProps) {
 
             {/* Grid pattern */}
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+            {/* Close button inside the overlay */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-5 end-5 z-20 w-12 h-12 flex items-center justify-center rounded-2xl border border-white/20 text-white hover:bg-white/10 hover:border-primary/50 active:scale-90 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              aria-label="Close menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
 
             <nav className="container mx-auto flex flex-col space-y-2 relative z-10">
               {[
@@ -300,12 +312,12 @@ export default function Navbar({ lang }: NavbarProps) {
               ].map((link, idx) => (
                 <motion.div
                   key={link.name}
-                  initial={{ opacity: 0, x: -30 }}
+                  initial={{ opacity: 0, x: isRtl ? 30 : -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 + 0.2, type: "spring", stiffness: 300, damping: 25 }}
                 >
                   <Link href={link.href} onClick={() => setIsOpen(false)}>
-                    <span className="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary active:text-primary/70 transition-all block py-3 md:py-4 lowercase tracking-tighter">
+                    <span className="text-2xl sm:text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary active:text-primary/70 transition-all block py-2.5 sm:py-3 md:py-4 lowercase tracking-tighter">
                       {link.name}
                     </span>
                   </Link>

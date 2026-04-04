@@ -216,10 +216,10 @@ export default function WelcomePage() {
             <div className="relative z-10 min-h-screen flex flex-col">
 
                 {/* ── TOP NAV ── */}
-                <div className="relative flex justify-between items-center px-8 md:px-12 pt-8 md:pt-10">
+                <div className="relative flex justify-between items-center px-4 sm:px-8 md:px-12 pt-6 sm:pt-8 md:pt-10">
 
-                    {/* Social icons */}
-                    <div className="flex gap-2.5 items-center">
+                    {/* Social icons — show 2 on mobile, all 4 on sm+ */}
+                    <div className="flex gap-2 sm:gap-2.5 items-center">
                         {SOCIALS.map(({ label, href, d }, i) => (
                             <motion.a
                                 key={label}
@@ -232,31 +232,14 @@ export default function WelcomePage() {
                                 transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
                                 whileHover={{ scale: 1.15, y: -2 }}
                                 whileTap={{ scale: 0.92 }}
-                                className="w-9 h-9 rounded-full border border-[#c2a45c]/22 flex items-center justify-center text-white/38 hover:text-[#c2a45c] hover:border-[#c2a45c]/60 transition-all duration-300"
+                                className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full border border-[#c2a45c]/22 flex items-center justify-center text-white/38 hover:text-[#c2a45c] hover:border-[#c2a45c]/60 transition-all duration-300${i >= 2 ? " hidden sm:flex" : ""}`}
                             >
-                                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="currentColor" aria-hidden="true">
                                     <path d={d} />
                                 </svg>
                             </motion.a>
                         ))}
                     </div>
-
-                    {/* Brand — centered absolute */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.55 }}
-                        className="absolute left-1/2 -translate-x-1/2"
-                    >
-                        <Image
-                            src="/logo-updated.png"
-                            alt="Sehle"
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 object-contain opacity-60 drop-shadow-[0_0_8px_rgba(194,164,92,0.5)]"
-                            priority
-                        />
-                    </motion.div>
 
                     {/* Language toggle */}
                     <motion.button
@@ -305,7 +288,7 @@ export default function WelcomePage() {
                         transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
                     />
 
-                    <div className="relative w-full max-w-4xl flex flex-col items-center gap-5 md:gap-7">
+                    <div className="relative w-full max-w-4xl flex flex-col items-center gap-2 md:gap-3">
 
                         {/* Badge */}
                         <motion.div
@@ -333,10 +316,10 @@ export default function WelcomePage() {
                             <Image
                                 src="/logo-updated.png"
                                 alt="Sehle"
-                                width={320}
-                                height={320}
+                                width={20}
+                                height={20}
                                 sizes="(min-width: 1024px) 512px, (min-width: 768px) 416px, (min-width: 640px) 320px, 256px"
-                                className="w-64 h-64 sm:w-80 sm:h-80 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
+                                className="w-20 h-20 sm:w-20 sm:h-20 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
                                 priority
                             />
                         </motion.div>

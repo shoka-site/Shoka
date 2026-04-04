@@ -9,17 +9,14 @@ function entry(
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"],
   priority: number
 ): MetadataRoute.Sitemap[number] {
+  // No hreflang alternates — the site uses cookie-based language switching so
+  // Arabic and English share the same URL. Declaring both as separate alternates
+  // would misrepresent the URL structure to Google.
   return {
     url,
     lastModified,
     changeFrequency,
     priority,
-    alternates: {
-      languages: {
-        ar: url,
-        en: url,
-      },
-    },
   };
 }
 
