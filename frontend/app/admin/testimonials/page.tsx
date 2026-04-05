@@ -28,8 +28,9 @@ export default function AdminTestimonials() {
     const { data: testimonials = [], isLoading } = useQuery<Testimonial[]>({
         queryKey: ["admin-testimonials"],
         queryFn: async () => {
-            const res = await fetch("/api/content/en/testimonials");
-            return res.json();
+            const res = await fetch("/api/admin/testimonials");
+            const json = await res.json();
+            return json.data ?? json;
         },
     });
 
@@ -230,7 +231,7 @@ export default function AdminTestimonials() {
                                         ⭐ {testimonial.rating}/5
                                     </span>
                                 </div>
-                                <p className="text-sm italic mb-3">&quot;{testimonial.quote || (raw.quoteEn as string)}&quot;</p>
+                                <p className="text-sm italic mb-3">&quot;{raw.quoteEn as string}&quot;</p>
                                 <div>
                                     <p className="font-bold">{raw.authorEn as string} / {raw.authorAr as string}</p>
                                     <p className="text-sm text-muted-foreground">{raw.roleEn as string} / {raw.roleAr as string}</p>

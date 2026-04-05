@@ -259,10 +259,10 @@ export function TestimonialsSectionClient({ testimonials }: { testimonials: Reco
   const lang = i18n.language?.startsWith("en") ? "en" : "ar";
   const localizedTestimonials: Testimonial[] = testimonials.map((item) => ({
     id: item.id as string,
-    author: (item.authorEn ?? item.authorAr ?? item.author ?? "") as string,
-    role: (item.roleEn ?? item.roleAr ?? item.role ?? "") as string,
+    author: ((item[`author${lang === "en" ? "En" : "Ar"}`] ?? item.authorEn ?? item.author) ?? "") as string,
+    role: ((item[`role${lang === "en" ? "En" : "Ar"}`] ?? item.roleEn ?? item.role) ?? "") as string,
     rating: (item.rating ?? 5) as number,
-    quote: ((item[`quote${lang === "en" ? "En" : "Ar"}`] ?? item.quoteAr ?? item.quote) ?? "") as string,
+    quote: ((item[`quote${lang === "en" ? "En" : "Ar"}`] ?? item.quoteEn ?? item.quote) ?? "") as string,
   }));
 
   return (
