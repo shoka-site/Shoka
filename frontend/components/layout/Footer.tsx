@@ -106,7 +106,7 @@ export default function Footer({ lang }: FooterProps) {
               <li><a href="https://x.com/sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.twitter')}</a></li>
               <li><a href="https://www.instagram.com/sehle_iq/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.instagram')}</a></li>
               <li><a href="https://www.tiktok.com/@sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.tiktok')}</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=61578501381386" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.facebook')}</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61575488387547" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.facebook')}</a></li>
               <li><a href="mailto:global@sehle.site" className="text-white/60 hover:text-white transition-colors">global@sehle.site</a></li>
             </ul>
           </div>

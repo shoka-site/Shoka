@@ -114,7 +114,7 @@ export default function Navbar({ lang }: NavbarProps) {
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
         scrolled
-          ? "bg-black/80 backdrop-blur-2xl border-b border-primary/20 py-3 shadow-2xl"
+          ? "bg-black backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
           : "bg-transparent py-5"
       )}
     >
@@ -126,12 +126,12 @@ export default function Navbar({ lang }: NavbarProps) {
           : "bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-0"
       )} />
 
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="container mx-auto px-8 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-1 items-center justify-start">
-          <Link href="/home" className="group relative z-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
+          <Link href="/home" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
             <motion.div
-              className="relative w-40 h-12 xl:w-48 xl:h-14 flex items-center justify-center"
+              className="relative w-24 h-8 xl:w-32 xl:h-10 flex items-center justify-center"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
@@ -140,7 +140,7 @@ export default function Navbar({ lang }: NavbarProps) {
                 src="/logoo.png"
                 alt="Sehle"
                 fill
-                sizes="(min-width: 1280px) 192px, 160px"
+                sizes="(min-width: 1280px) 144px, 112px"
                 className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200"
                 priority
               />
@@ -282,7 +282,7 @@ export default function Navbar({ lang }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 top-0 z-[49] bg-black flex flex-col pt-24 px-5 pb-8 sm:pt-28 sm:px-6 md:pt-32 md:px-8 overflow-y-auto"
+            className="fixed inset-0 top-0 z-[110] bg-black flex flex-col pt-28 px-8 pb-8 sm:pt-32 sm:px-10 md:pt-36 md:px-12 overflow-y-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-black to-black pointer-events-none" />
 

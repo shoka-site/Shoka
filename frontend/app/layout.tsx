@@ -4,7 +4,6 @@ import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 // Client wrapper — holds the ssr:false dynamic import that can't live in a Server Component
-import { InitialLoaderClient } from "@/components/ui/InitialLoaderClient";
 import { SentryClientInit } from "@/components/SentryClientInit";
 import { TranslationProvider } from "@/components/TranslationProvider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
@@ -113,9 +112,9 @@ export const metadata: Metadata = {
 
     // Icons
     icons: {
-        icon: "/og-image.png",
-        shortcut: "/og-image.png",
-        apple: "/og-image.png",
+        icon: "/logoo.png",
+        shortcut: "/logoo.png",
+        apple: "/logoo.png",
     },
 
     // Verification
@@ -170,7 +169,7 @@ export default async function RootLayout({
             "https://x.com/sehle_it",
             "https://www.instagram.com/sehle.it/",
             "https://www.tiktok.com/@sehle.it",
-            "https://www.facebook.com/profile.php?id=61578501381386",
+            "https://www.facebook.com/profile.php?id=61575488387547",
         ],
     };
 
@@ -244,7 +243,6 @@ export default async function RootLayout({
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
                 <SentryClientInit />
-                <InitialLoaderClient />
                 <TranslationProvider lang={lang}>
                     <Providers>
                         {children}
