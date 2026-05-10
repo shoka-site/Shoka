@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SentryClientInit } from "@/components/SentryClientInit";
 import { TranslationProvider } from "@/components/TranslationProvider";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { cookies } from "next/headers";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 
@@ -23,105 +24,90 @@ const cairo = Cairo({
 const SITE_NAME = "سهلة | شركة برمجيات وتطوير تقني في العراق";
 const SITE_URL = "https://www.sehle.site";
 
-export const metadata: Metadata = {
-    metadataBase: new URL(SITE_URL),
-    title: {
-        default: SITE_NAME,
-        template: `%s | سهلة`,
-    },
-    description: "سهلة — شركة برمجيات عراقية متخصصة في تطوير المواقع، التطبيقات، أنظمة ERP، والذكاء الاصطناعي. هل تبحث عن حل برمجي في العراق؟ نحن نبنيه. Software company Iraq | Web development | Mobile apps | AI.",
-    keywords: [
-        "شركة برمجيات عراقية",
-        "تطوير برمجيات في العراق",
-        "برمجة مواقع العراق",
-        "تطوير تطبيقات العراق",
-        "تحول رقمي العراق",
-        "حلول برمجية بغداد",
-        "شركة تقنية عراقية",
-        "نظام ERP العراق",
-        "ذكاء اصطناعي العراق",
-        "برمجة تطبيقات الجوال العراق",
-        "سهلة",
-        "منصة سهلة",
-        "software company Iraq",
-        "web development Iraq",
-        "software development Baghdad",
-        "IT company Iraq",
-        "digital transformation Iraq",
-        "mobile app development Iraq",
-        "custom software Iraq",
-        "ERP system Iraq",
-        "Iraq tech company",
-        "Sehle",
-        "Sehle software Iraq",
-    ],
+export async function generateMetadata(): Promise<Metadata> {
+    const cookieStore = await cookies();
+    const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
+    const isRtl = lang === "ar";
 
-    // Canonical — Arabic is the primary language served to Google.
-    // The site uses cookie-based language switching (same URL for both ar/en),
-    // so there is no separate /en URL to reference. Using x-default to signal
-    // that this canonical URL is the definitive version of the page.
-    alternates: {
-        canonical: SITE_URL,
-        languages: {
-            "ar": SITE_URL,
-            "x-default": SITE_URL,
+    const SITE_NAME_LOC = isRtl 
+        ? "سهلة | حلول برمجية وأنظمة إدارة متكاملة" 
+        : "Sehle | Software Solutions & Management Systems";
+
+    const description = isRtl
+        ? "تقدم سهلة حلولاً برمجية مخصصة، أنظمة إدارة (ERP)، وتحولاً رقمياً لحل مشاكل الأعمال في مختلف القطاعات. نبني برمجيات الشركات التي تحتاجها."
+        : "Sehle provides cutting-edge custom software solutions, management systems (ERP), and digital transformation to solve business problems across various industries.";
+
+    const keywords = isRtl
+        ? [
+            "حلول برمجية", "حل مشاكل الأعمال", "أنظمة إدارة", "أنظمة ERP", "برمجيات للشركات", 
+            "تطوير برمجيات مخصصة", "التحول الرقمي", "شركة تقنية", "برمجة تطبيقات", "حلول تقنية للقطاعات"
+          ]
+        : [
+            "software solutions", "business problem solving", "management solutions", "ERP systems", 
+            "industry software", "custom software development", "digital transformation", "IT company", "business software"
+          ];
+
+    return {
+        metadataBase: new URL(SITE_URL),
+        title: {
+            default: SITE_NAME_LOC,
+            template: isRtl ? `%s | سهلة` : `%s | Sehle`,
         },
-    },
-
-    // Open Graph
-    openGraph: {
-        type: "website",
-        locale: "ar_IQ",
-        alternateLocale: "en_US",
-        url: SITE_URL,
-        siteName: SITE_NAME,
-        title: "سهلة | أنظمة رقمية ذكية وحلول برمجية عراقية",
-        description: "سهلة هي المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات. نحن متخصصون في التحول الرقمي.",
-        images: [
-            {
-                url: `${SITE_URL}/og-image.png`,
-                width: 1200,
-                height: 630,
-                alt: "سهلة - تصميم مستقبل التكنولوجيا العراقية",
+        description,
+        keywords,
+        alternates: {
+            canonical: SITE_URL,
+            languages: {
+                "ar": SITE_URL,
+                "x-default": SITE_URL,
             },
-        ],
-    },
-
-    // Twitter Cards
-    twitter: {
-        card: "summary_large_image",
-        title: "سهلة | شركة برمجيات عراقية | Iraq Software Company",
-        description: "هل تبحث عن شركة برمجيات في العراق؟ سهلة تطور مواقع، تطبيقات، وأنظمة ذكية. Software company Iraq.",
-        images: [`${SITE_URL}/og-image.png`],
-        creator: "@sehle_it",
-        site: "@sehle_it",
-    },
-
-    // Robots
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
+        },
+        openGraph: {
+            type: "website",
+            locale: isRtl ? "ar_IQ" : "en_US",
+            alternateLocale: isRtl ? "en_US" : "ar_IQ",
+            url: SITE_URL,
+            siteName: SITE_NAME_LOC,
+            title: SITE_NAME_LOC,
+            description,
+            images: [
+                {
+                    url: `${SITE_URL}/og-image.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: isRtl ? "سهلة - حلول برمجية مبتكرة" : "Sehle - Innovative Software Solutions",
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: SITE_NAME_LOC,
+            description,
+            images: [`${SITE_URL}/og-image.png`],
+            creator: "@sehle_it",
+            site: "@sehle_it",
+        },
+        robots: {
             index: true,
             follow: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
         },
-    },
-
-    // Icons
-    icons: {
-        icon: "/logoo.png",
-        shortcut: "/logoo.png",
-        apple: "/logoo.png",
-    },
-
-    // Verification
-    verification: {
-        google: "RLhA0Mu7GqzcdPnsd6PMxS9H_It6O9TfsSRIbeJAlWk",
-    },
-};
+        icons: {
+            icon: "/logoo.png",
+            shortcut: "/logoo.png",
+            apple: "/logoo.png",
+        },
+        verification: {
+            google: "RLhA0Mu7GqzcdPnsd6PMxS9H_It6O9TfsSRIbeJAlWk",
+        },
+    };
+}
 
 export const viewport: Viewport = {
     width: 'device-width',
@@ -131,7 +117,6 @@ export const viewport: Viewport = {
     themeColor: '#000000',
 };
 
-import { cookies } from "next/headers";
 
 export default async function RootLayout({
     children,

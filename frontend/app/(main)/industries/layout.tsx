@@ -1,61 +1,69 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-export const metadata: Metadata = {
-  title: "المجالات | حلول برمجية لكل قطاع في العراق | سهلة",
-  description:
-    "سهلة تقدم حلولاً برمجية مخصصة لجميع القطاعات في العراق: الرعاية الصحية، التعليم، التجزئة، العقارات، النفط والطاقة، والمزيد. Software solutions by industry Iraq.",
-  keywords: [
-    // Arabic
-    "حلول برمجية قطاعات العراق",
-    "برمجة قطاع الصحة العراق",
-    "برمجة قطاع التعليم العراق",
-    "برمجة قطاع التجزئة العراق",
-    "برمجة قطاع العقارات العراق",
-    "برمجة قطاع النفط العراق",
-    "تحول رقمي قطاعات العراق",
-    "نظام إدارة مستشفيات العراق",
-    "نظام إدارة مدارس العراق",
-    "نظام POS عراق",
-    "سهلة قطاعات",
-    // English
-    "industry software solutions Iraq",
-    "healthcare software Iraq",
-    "education software Iraq",
-    "retail software Iraq",
-    "real estate software Iraq",
-    "oil sector software Iraq",
-    "hospitality software Iraq",
-    "logistics software Iraq",
-    "fintech Iraq",
-    "hospital management system Iraq",
-    "school management system Iraq",
-    "POS system Iraq",
-    "Sehle industries",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/industries`,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ar_IQ",
-    alternateLocale: "en_US",
-    url: `${SITE_URL}/industries`,
-    title: "القطاعات التي نخدمها | حلول برمجية مخصصة | سهلة",
-    description:
-      "حلول برمجية مخصصة لكل قطاع عمل في العراق — من الصحة والتعليم إلى النفط والتجزئة.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "مجالات سهلة البرمجية" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "المجالات | سهلة لكل قطاع",
-    description: "حلول برمجية مخصصة لكل قطاع في العراق.",
-    images: [OG_IMAGE],
-    creator: "@sehle_it",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
+  const isRtl = lang === "ar";
+
+  const title = isRtl 
+    ? "المجالات التي نخدمها | حلول برمجية وحل مشاكل الأعمال" 
+    : "Industries We Serve | Software & Business Problem Solutions";
+
+  const description = isRtl
+    ? "نقدم حلولاً برمجية مخصصة وأنظمة إدارة مبتكرة لحل مشاكل الأعمال في القطاعات المختلفة: الرعاية الصحية، التعليم، التجزئة، العقارات والمزيد."
+    : "We provide custom software solutions and innovative management systems to solve business problems across industries: Healthcare, Education, Retail, Real Estate, and more.";
+
+  return {
+    title,
+    description,
+    keywords: [
+      // Arabic
+      "حلول برمجية قطاعات",
+      "حل مشاكل الأعمال",
+      "برمجة قطاع الصحة",
+      "برمجة قطاع التعليم",
+      "برمجة قطاع التجزئة",
+      "برمجة قطاع العقارات",
+      "تحول رقمي قطاعات",
+      "أنظمة إدارة قطاعية",
+      "سهلة قطاعات",
+      // English
+      "industry software solutions",
+      "business problem solving industries",
+      "healthcare software",
+      "education software",
+      "retail software",
+      "real estate software",
+      "hospitality software",
+      "logistics software",
+      "management systems by industry",
+      "Sehle industries",
+    ],
+    alternates: {
+      canonical: `${SITE_URL}/industries`,
+    },
+    openGraph: {
+      type: "website",
+      locale: isRtl ? "ar_IQ" : "en_US",
+      alternateLocale: isRtl ? "en_US" : "ar_IQ",
+      url: `${SITE_URL}/industries`,
+      title,
+      description,
+      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [OG_IMAGE],
+      creator: "@sehle_it",
+    },
+  };
+}
 
 export default function IndustriesLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {

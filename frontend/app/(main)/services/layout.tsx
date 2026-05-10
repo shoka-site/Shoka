@@ -1,67 +1,66 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-export const metadata: Metadata = {
-  title: "خدماتنا | تطوير مواقع، تطبيقات، أنظمة ERP، AI | سهلة العراق",
-  description:
-    "سهلة تقدم خدمات تطوير البرمجيات الشاملة في العراق: مواقع إلكترونية، تطبيقات الجوال، أنظمة ERP، حلول الذكاء الاصطناعي، وأكثر. Software services Iraq | Web development | Mobile apps | AI solutions.",
-  keywords: [
-    // Arabic
-    "خدمات برمجية العراق",
-    "تطوير مواقع العراق",
-    "تطوير تطبيقات الجوال العراق",
-    "نظام ERP العراق",
-    "ذكاء اصطناعي العراق",
-    "برمجة مخصصة العراق",
-    "حلول سحابية العراق",
-    "برمجة متجر إلكتروني العراق",
-    "نظام إدارة محتوى العراق",
-    "تطوير API العراق",
-    "تصميم مواقع احترافي العراق",
-    "برمجة تطبيق iOS العراق",
-    "برمجة تطبيق Android العراق",
-    "سهلة",
-    // English
-    "software services Iraq",
-    "web development Iraq",
-    "mobile app development Iraq",
-    "ERP system Iraq",
-    "AI solutions Iraq",
-    "custom software development Iraq",
-    "cloud solutions Iraq",
-    "e-commerce development Iraq",
-    "CMS development Iraq",
-    "API development Iraq",
-    "iOS app Iraq",
-    "Android app Iraq",
-    "React development Iraq",
-    "Next.js development Iraq",
-    "Sehle services",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/services`,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ar_IQ",
-    alternateLocale: "en_US",
-    url: `${SITE_URL}/services`,
-    title: "خدمات سهلة البرمجية | تطوير مواقع وتطبيقات في العراق",
-    description:
-      "من تطوير المواقع وتطبيقات الجوال إلى أنظمة ERP وحلول AI — سهلة لديها الحل البرمجي الذي تحتاجه.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "خدمات سهلة البرمجية" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "خدمات سهلة | تطوير برمجيات في العراق",
-    description:
-      "مواقع، تطبيقات، ERP، AI — سهلة تبني كل ما تحتاجه شركتك.",
-    images: [OG_IMAGE],
-    creator: "@sehle_it",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
+  const isRtl = lang === "ar";
+
+  const title = isRtl 
+    ? "خدماتنا | حلول برمجية وأنظمة إدارة ERP" 
+    : "Our Services | Software & Management Solutions";
+
+  const description = isRtl
+    ? "تقدم سهلة خدمات تطوير برمجيات متكاملة لحل مشاكل الأعمال في مختلف القطاعات: تطوير مواقع، تطبيقات، أنظمة إدارة (ERP)، حلول الذكاء الاصطناعي، والتحول الرقمي."
+    : "Sehle provides full-spectrum software development services to solve business problems across industries: web and mobile apps, ERP systems, AI solutions, and digital transformation.";
+
+  return {
+    title,
+    description,
+    keywords: [
+      // Arabic
+      "خدمات برمجية",
+      "حل مشاكل الأعمال",
+      "تطوير مواقع",
+      "تطوير تطبيقات الجوال",
+      "نظام ERP",
+      "ذكاء اصطناعي",
+      "برمجة مخصصة",
+      "حلول سحابية",
+      // English
+      "software services",
+      "business problem solving",
+      "web development",
+      "mobile app development",
+      "ERP system",
+      "AI solutions",
+      "custom software development",
+      "management solutions",
+    ],
+    alternates: {
+      canonical: `${SITE_URL}/services`,
+    },
+    openGraph: {
+      type: "website",
+      locale: isRtl ? "ar_IQ" : "en_US",
+      alternateLocale: isRtl ? "en_US" : "ar_IQ",
+      url: `${SITE_URL}/services`,
+      title,
+      description,
+      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [OG_IMAGE],
+      creator: "@sehle_it",
+    },
+  };
+}
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
