@@ -216,7 +216,7 @@ export default function WelcomePage() {
             <div className="relative z-10 min-h-screen flex flex-col">
 
                 {/* ── TOP NAV ── */}
-                <div className="relative flex justify-between items-center px-4 sm:px-8 md:px-12 pt-6 sm:pt-8 md:pt-10">
+                <div className="relative flex justify-between items-center px-6 sm:px-8 md:px-12 pt-6 sm:pt-8 md:pt-10">
 
                     {/* Social icons — show 2 on mobile, all 4 on sm+ */}
                     <div className="flex gap-2 sm:gap-2.5 items-center">
@@ -232,7 +232,7 @@ export default function WelcomePage() {
                                 transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
                                 whileHover={{ scale: 1.15, y: -2 }}
                                 whileTap={{ scale: 0.92 }}
-                                className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full border border-[#c2a45c]/22 flex items-center justify-center text-white/38 hover:text-[#c2a45c] hover:border-[#c2a45c]/60 transition-all duration-300${i >= 2 ? " hidden sm:flex" : ""}`}
+                                className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border border-[#c2a45c]/22 flex items-center justify-center text-white/38 hover:text-[#c2a45c] hover:border-[#c2a45c]/60 transition-all duration-300"
                             >
                                 <svg viewBox="0 0 24 24" className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="currentColor" aria-hidden="true">
                                     <path d={d} />
@@ -316,10 +316,10 @@ export default function WelcomePage() {
                             <Image
                                 src="/logoo.png"
                                 alt="Sehle"
-                                width={20}
-                                height={20}
+                                width={512}
+                                height={512}
                                 sizes="(min-width: 1024px) 512px, (min-width: 768px) 416px, (min-width: 640px) 320px, 256px"
-                                className="w-20 h-20 sm:w-20 sm:h-20 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
+                                className="w-32 h-32 sm:w-64 sm:h-64 md:w-[26rem] md:h-[26rem] lg:w-[32rem] lg:h-[32rem] object-contain"
                                 priority
                             />
                         </motion.div>
@@ -348,7 +348,7 @@ export default function WelcomePage() {
                                             delay: 1.75 + i * 0.13,
                                             ease: [0.16, 1, 0.3, 1],
                                         }}
-                                        className="inline-block text-xl md:text-2xl lg:text-3xl font-light text-white/80 tracking-wide leading-relaxed"
+                                        className="inline-block text-lg md:text-xl lg:text-2xl font-light text-white/80 tracking-wide leading-relaxed"
                                     >
                                         {word}
                                     </motion.span>
@@ -361,7 +361,7 @@ export default function WelcomePage() {
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 2.2 }}
-                            className="text-white/50 text-xs md:text-sm max-w-xs md:max-w-sm text-center leading-relaxed font-light tracking-wide"
+                            className="text-white/50 text-[10px] md:text-xs max-w-xs md:max-w-sm text-center leading-relaxed font-light tracking-wide"
                             suppressHydrationWarning
                         >
                             {t("welcome.tagline")}
@@ -375,7 +375,7 @@ export default function WelcomePage() {
                         >
                             <Link
                                 href="/home"
-                                className="group relative overflow-hidden inline-flex items-center gap-4 px-10 py-4 border border-[#c2a45c]/45 text-[11px] tracking-[0.3em] uppercase font-medium text-white/80 hover:text-black transition-colors duration-500"
+                                className="group relative overflow-hidden inline-flex items-center gap-4 px-6 py-3 sm:px-10 sm:py-4 border border-[#c2a45c]/45 text-[11px] tracking-[0.3em] uppercase font-medium text-white/80 hover:text-black transition-colors duration-500"
                             >
                                 {/* Gold fill slides in from left on hover */}
                                 <span
@@ -400,7 +400,7 @@ export default function WelcomePage() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 2.8 }}
-                    className="flex justify-between items-center px-8 md:px-12 pb-8 md:pb-10"
+                    className="flex justify-between items-center px-6 md:px-12 pb-8 md:pb-10"
                 >
                     <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.22em] uppercase text-white/22">
                         <motion.span

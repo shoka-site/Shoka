@@ -35,7 +35,7 @@ export function WhyUsBanner({ isRtl }: { isRtl: boolean }) {
           <h2
             className="text-center font-display font-black text-foreground"
             style={{
-              fontSize: "clamp(2.5rem, 8vw, 7.5rem)",
+              fontSize: "clamp(1.75rem, 7vw, 6rem)",
               lineHeight: isRtl ? 1.7 : 1.2,
               paddingBottom: isRtl ? "0.5em" : undefined,
               background: "linear-gradient(180deg, #ffffff 40%, #c2a45c 100%)",
@@ -77,7 +77,7 @@ export function PhilosophySection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.philosophy.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-display font-black leading-relaxed"
+        <h2 className="text-2xl md:text-4xl font-display font-black leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.philosophy.title")}
         </h2>
@@ -126,7 +126,7 @@ export function ProcessSection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.process.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-3xl md:text-6xl font-display font-black tracking-tight leading-relaxed"
+        <h2 className="text-2xl md:text-5xl font-display font-black tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.process.title")}
         </h2>
@@ -189,7 +189,7 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
         <FadeInSection delay={0.1}>
           <h2 className="text-center font-display font-black mb-6 tracking-tight"
             style={{
-              fontSize: "clamp(3rem, 8vw, 6rem)",
+              fontSize: "clamp(1.75rem, 7vw, 5rem)",
               lineHeight: isRtl ? 1.6 : 1.0,
               paddingBottom: isRtl ? "0.5em" : undefined,
               background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
@@ -207,7 +207,7 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
           {results.map((result, i) => (
             <FadeInSection key={i} delay={i * 0.1}>
-              <div className="mesopot-metric-card group relative flex flex-col justify-between p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] overflow-hidden">
+              <div className="mesopot-metric-card group relative flex flex-col justify-between p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="mb-6 flex items-baseline gap-1">
                   {result.prefix && <span className="text-2xl md:text-3xl font-display font-medium text-accent/80">{result.prefix}</span>}

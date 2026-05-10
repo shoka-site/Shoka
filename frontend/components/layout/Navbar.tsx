@@ -110,169 +110,172 @@ export default function Navbar({ lang }: NavbarProps) {
   const triggerClassName = "group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
-        scrolled
-          ? "bg-black backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
-          : "bg-transparent py-5"
-      )}
-    >
-      {/* Subtle gradient line at bottom */}
-      <div className={cn(
-        "absolute bottom-0 left-0 right-0 h-[1px] transition-all duration-500",
-        scrolled
-          ? "bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-100"
-          : "bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-0"
-      )} />
+    <>
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
+          scrolled
+            ? "bg-black backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
+            : "bg-transparent py-5"
+        )}
+      >
+        {/* Subtle gradient line at bottom */}
+        <div className={cn(
+          "absolute bottom-0 left-0 right-0 h-[1px] transition-all duration-500",
+          scrolled
+            ? "bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-100"
+            : "bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-0"
+        )} />
 
-      <div className="container mx-auto px-8 md:px-12 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex flex-1 items-center justify-start">
-          <Link href="/home" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
-            <motion.div
-              className="relative w-24 h-8 xl:w-32 xl:h-10 flex items-center justify-center"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        <div className="container mx-auto px-4 sm:px-8 md:px-12 flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex flex-1 items-center justify-start">
+            <Link href="/home" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
+              <motion.div
+                className="relative w-24 h-8 xl:w-32 xl:h-10 flex items-center justify-center"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              >
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Image
+                  src="/logoo.png"
+                  alt="Sehle"
+                  fill
+                  sizes="(min-width: 1280px) 144px, 112px"
+                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200"
+                  priority
+                />
+              </motion.div>
+            </Link>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex flex-none items-center justify-center">
+            <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
+              <NavigationMenuList className="gap-1 xl:gap-2">
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={triggerClassName}>
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    {t("navbar.industries")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <MegaMenuSection
+                      title={t("navbar.industries")}
+                      description={t("home.industries.description")}
+                      icon={LayoutGrid}
+                      href="/industries"
+                      layout="list"
+                    >
+                      <IndustriesPanel isRtl={isRtl} />
+                    </MegaMenuSection>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={triggerClassName}>
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    {t("navbar.services", "Services")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <MegaMenuSection
+                      title={t("navbar.services", "Services")}
+                      description={t("navbar.menu.services.description")}
+                      icon={LayoutGrid}
+                      href="/services"
+                      layout="list"
+                    >
+                      <ServicesPanel isRtl={isRtl} />
+                    </MegaMenuSection>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={triggerClassName}>
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    {t("navbar.packages")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <MegaMenuSection
+                      title={t("navbar.packages")}
+                      description={t("navbar.menu.packages.description")}
+                      icon={Package}
+                      href="/packages"
+                      layout="grid"
+                    >
+                      <PackagesPanel isRtl={isRtl} />
+                    </MegaMenuSection>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={triggerClassName}>
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    {t("navbar.projects")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <MegaMenuSection
+                      title={t("navbar.projects")}
+                      description={t("portfolio.projects.description")}
+                      icon={LayoutGrid}
+                      href="/projects"
+                      layout="list"
+                    >
+                      <ProjectsPanel isRtl={isRtl} />
+                    </MegaMenuSection>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={triggerClassName}>
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    {t("navbar.about")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <MegaMenuSection
+                      title={t("navbar.about")}
+                      description={t("footer.desc")}
+                      icon={Globe}
+                      href="/about"
+                      layout="columns"
+                    >
+                      <AboutPanel isRtl={isRtl} />
+                    </MegaMenuSection>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          {/* Desktop Right Actions */}
+          <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-4">
+            <button
+              onClick={() => { toggleLanguage(); closeMenu(); }}
+              className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
+              aria-label="Toggle Language"
             >
-              <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <Image
-                src="/logoo.png"
-                alt="Sehle"
-                fill
-                sizes="(min-width: 1280px) 144px, 112px"
-                className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200"
-                priority
-              />
-            </motion.div>
-          </Link>
+              <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
+            </button>
+            <Link href="/contact" onClick={closeMenu}>
+              <span className="bg-primary text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/80 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                {t("navbar.book_consultation")}
+              </span>
+            </Link>
+          </div>
+
+          {/* Mobile Right Actions */}
+          <div className="flex lg:hidden flex-1 items-center justify-end">
+            <button
+              onClick={() => { toggleLanguage(); }}
+              className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent active:scale-90"
+              aria-label="Toggle Language"
+            >
+              <Globe className="w-5 h-5" />
+            </button>
+          </div>
         </div>
-
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex flex-none items-center justify-center">
-          <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
-            <NavigationMenuList className="gap-1 xl:gap-2">
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerClassName}>
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  {t("navbar.industries")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.industries")}
-                    description={t("home.industries.description")}
-                    icon={LayoutGrid}
-                    href="/industries"
-                    layout="list"
-                  >
-                    <IndustriesPanel isRtl={isRtl} />
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerClassName}>
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  {t("navbar.services", "Services")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.services", "Services")}
-                    description={t("navbar.menu.services.description")}
-                    icon={LayoutGrid}
-                    href="/services"
-                    layout="list"
-                  >
-                    <ServicesPanel isRtl={isRtl} />
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerClassName}>
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  {t("navbar.packages")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.packages")}
-                    description={t("navbar.menu.packages.description")}
-                    icon={Package}
-                    href="/packages"
-                    layout="grid"
-                  >
-                    <PackagesPanel isRtl={isRtl} />
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerClassName}>
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  {t("navbar.projects")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.projects")}
-                    description={t("portfolio.projects.description")}
-                    icon={LayoutGrid}
-                    href="/projects"
-                    layout="list"
-                  >
-                    <ProjectsPanel isRtl={isRtl} />
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className={triggerClassName}>
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  {t("navbar.about")}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <MegaMenuSection
-                    title={t("navbar.about")}
-                    description={t("footer.desc")}
-                    icon={Globe}
-                    href="/about"
-                    layout="columns"
-                  >
-                    <AboutPanel isRtl={isRtl} />
-                  </MegaMenuSection>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-
-        {/* Desktop Right Actions */}
-        <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-4">
-          <button
-            onClick={() => { toggleLanguage(); closeMenu(); }}
-            className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
-            aria-label="Toggle Language"
-          >
-            <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
-          </button>
-          <Link href="/contact" onClick={closeMenu}>
-            <span className="bg-primary text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/80 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
-              {t("navbar.book_consultation")}
-            </span>
-          </Link>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <div className="flex flex-1 lg:hidden items-center justify-end">
-          <button
-            className="text-white p-3 hover:bg-white/10 rounded-2xl transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-          </button>
-        </div>
-      </div>
+      </header>
 
       {/* Mobile Nav Overlay */}
       <AnimatePresence>
@@ -282,7 +285,7 @@ export default function Navbar({ lang }: NavbarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 top-0 z-[110] bg-black flex flex-col pt-28 px-8 pb-8 sm:pt-32 sm:px-10 md:pt-36 md:px-12 overflow-y-auto"
+            className="fixed inset-0 top-0 z-[110] bg-black flex flex-col pt-28 px-6 pb-8 sm:pt-32 sm:px-10 md:pt-36 md:px-12 overflow-y-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-black to-black pointer-events-none" />
 
@@ -356,7 +359,7 @@ export default function Navbar({ lang }: NavbarProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
 

@@ -25,12 +25,12 @@ export default function Section({
         <section
             id={id}
             className={cn(
-                "py-16 md:py-24 relative overflow-hidden",
+                "py-10 sm:py-16 md:py-24 relative overflow-hidden",
                 bgStyles[background],
                 className
             )}
         >
-            <div className="container mx-auto px-6 md:px-12 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
                 {children}
             </div>
         </section>

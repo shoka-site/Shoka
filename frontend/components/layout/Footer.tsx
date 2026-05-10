@@ -49,12 +49,12 @@ export default function Footer({ lang }: FooterProps) {
   }
 
   return (
-    <footer className="bg-[#080808] text-white py-16 border-t border-[rgba(194,164,92,0.15)]">
+    <footer className="bg-[#080808] text-white py-12 pb-32 md:py-16 md:pb-16 border-t border-[rgba(194,164,92,0.15)]">
       <div className="container mx-auto px-6 md:px-12">
         {/* Newsletter Section */}
         <div className="mb-12 pb-12 border-b border-white/10">
           <div className="max-w-xl mx-auto text-center">
-            <h3 className="text-lg font-display font-bold mb-2 text-white">
+            <h3 className="text-base font-display font-bold mb-2 text-white">
               {t("footer.newsletter.title", "Stay in the loop")}
             </h3>
             <p className="text-white/50 text-sm mb-4">
@@ -81,33 +81,33 @@ export default function Footer({ lang }: FooterProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-          <div className="col-span-1 md:col-span-2">
-            <h2 className="text-2xl font-display font-bold mb-6">Sehle</h2>
-            <p className="text-white/60 max-w-sm leading-relaxed">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="col-span-2 md:col-span-2">
+            <h2 className="text-xl font-display font-bold mb-6">Sehle</h2>
+            <p className="text-white/60 max-w-sm leading-relaxed text-sm">
               {t('footer.desc')}
             </p>
           </div>
 
-          <div>
-            <h3 className="text-lg font-display font-semibold mb-6 text-accent">{t('footer.sitemap')}</h3>
-            <ul className="space-y-4">
-              <li><Link href="/home" className="text-white/60 hover:text-white transition-colors">{t('footer.links.home')}</Link></li>
-              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors">{t('footer.links.services')}</Link></li>
-              <li><Link href="/projects" className="text-white/60 hover:text-white transition-colors">{t('footer.links.portfolio')}</Link></li>
-              <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors">{t('footer.links.contact')}</Link></li>
+          <div className="hidden md:block">
+            <h3 className="text-base font-display font-semibold mb-6 text-accent">{t('footer.sitemap')}</h3>
+            <ul className="grid grid-cols-2 md:flex md:flex-col gap-4">
+              <li><Link href="/home" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.home')}</Link></li>
+              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.services')}</Link></li>
+              <li><Link href="/projects" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.portfolio')}</Link></li>
+              <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.contact')}</Link></li>
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-lg font-display font-semibold mb-6 text-accent">{t('footer.connect')}</h3>
-            <ul className="space-y-4">
-              <li><a href="https://www.linkedin.com/company/sehle/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.linkedin')}</a></li>
-              <li><a href="https://x.com/sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.twitter')}</a></li>
-              <li><a href="https://www.instagram.com/sehle_iq/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.instagram')}</a></li>
-              <li><a href="https://www.tiktok.com/@sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.tiktok')}</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=61575488387547" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">{t('footer.social.facebook')}</a></li>
-              <li><a href="mailto:global@sehle.site" className="text-white/60 hover:text-white transition-colors">global@sehle.site</a></li>
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="text-base font-display font-semibold mb-6 text-accent">{t('footer.connect')}</h3>
+            <ul className="grid grid-cols-2 md:flex md:flex-col gap-4">
+              <li><a href="https://www.linkedin.com/company/sehle/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.social.linkedin')}</a></li>
+              <li><a href="https://x.com/sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.social.twitter')}</a></li>
+              <li><a href="https://www.instagram.com/sehle_iq/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.social.instagram')}</a></li>
+              <li><a href="https://www.tiktok.com/@sehle_iq" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.social.tiktok')}</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61575488387547" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.social.facebook')}</a></li>
+              <li><a href="mailto:global@sehle.site" className="text-white/60 hover:text-white transition-colors text-sm">global@sehle.site</a></li>
             </ul>
           </div>
         </div>

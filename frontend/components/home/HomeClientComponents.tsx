@@ -249,7 +249,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
       <motion.div
         style={{ y: yOffset, opacity }}
-        className={`relative z-10 w-full px-6 sm:px-8 md:px-16 lg:px-24 pt-20 sm:pt-20 md:pt-24`}
+        className={`relative z-10 w-full px-5 sm:px-8 md:px-16 lg:px-24 pt-20 sm:pt-20 md:pt-24`}
         dir={clientIsRtl ? "rtl" : "ltr"}
       >
         <AnimatePresence mode="wait" custom={direction}>
@@ -272,7 +272,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
             >
               <span className="text-4xl drop-shadow-md">{style.emoji}</span>
               <span
-                className={`text-xs font-bold uppercase tracking-[0.05em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
+                className={`text-[10px] font-bold uppercase tracking-[0.05em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
                 style={{ borderColor: style.accentHex + "60", backgroundColor: style.accentLight }}
               >
                 {t(style.label)}
@@ -284,7 +284,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-display font-black text-white mb-4 sm:mb-6 md:mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-7xl" : ""}`}
+              className={`text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-display font-black text-white mb-4 sm:mb-6 md:mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-6xl" : ""}`}
               style={{
                 textShadow: `0 0 40px ${style.accentHex}30`,
                 lineHeight: clientIsRtl ? 1.6 : 1.05,
@@ -301,7 +301,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-base sm:text-xl md:text-2xl text-white/70 max-w-2xl leading-relaxed font-light mb-6 sm:mb-8 md:mb-12 ${clientIsRtl ? "lg:text-xl max-w-xl" : ""}`}
+              className={`text-sm sm:text-base md:text-xl text-white/70 max-w-2xl leading-relaxed font-light mb-6 sm:mb-8 md:mb-12 ${clientIsRtl ? "lg:text-lg max-w-xl" : ""}`}
               style={{
                 x: mousePosition.x * -0.5,
                 y: mousePosition.y * -0.5

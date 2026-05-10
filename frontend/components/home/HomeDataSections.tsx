@@ -58,7 +58,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.services.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.services.title")}
         </h2>
@@ -73,7 +73,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }} />
-              <div className="flex flex-col flex-1 p-5 md:p-6">
+              <div className="flex flex-col flex-1 p-4 sm:p-6">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start"
                   style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(service.order ?? index + 1).padStart(2, "0")}
@@ -124,7 +124,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.projects.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.projects.title")}
         </h2>
@@ -159,12 +159,12 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col flex-1 p-5 md:p-6">
+              <div className="flex flex-col flex-1 p-4 sm:p-6">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start"
                   style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(index + 1).padStart(2, "00")}
                 </span>
-                <h3 className="text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">{project.title}</h3>
+                <h3 className="text-lg font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">{project.title}</h3>
                 <p className="text-muted-foreground leading-relaxed text-sm flex-1 line-clamp-3 break-words">{project.description}</p>
                 <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold">
                   {t("view_project")}
@@ -209,7 +209,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.packages.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-black mt-2 tracking-tight leading-relaxed"
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
           style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.packages.title")}
         </h2>
@@ -224,7 +224,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }} />
-              <div className="flex flex-col flex-1 p-5 md:p-6">
+              <div className="flex flex-col flex-1 p-4 sm:p-6">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-xs mb-4 self-start"
                   style={{ background: "rgba(194,164,92,0.1)", border: "1px solid rgba(194,164,92,0.25)", color: "#c2a45c" }}>
                   {String(pkg.order).padStart(2, "0")}

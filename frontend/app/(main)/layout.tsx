@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { cookies } from "next/headers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BottomNav from "@/components/layout/BottomNav";
 // Client wrapper — ssr:false dynamic imports can't live in Server Components
 import { ExitIntentPopupClient } from "@/components/marketing/ExitIntentPopupClient";
 
@@ -39,9 +40,10 @@ export default async function MainLayout({
             <Suspense fallback={<NavbarFallback />}>
                 <Navbar lang={lang} />
             </Suspense>
-            <main className="relative z-10 w-full">
+            <main className="relative z-10 w-full pb-20 lg:pb-0">
                 {children}
             </main>
+            <BottomNav />
             <Footer lang={lang} />
             <ExitIntentPopupClient />
         </>
