@@ -15,24 +15,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import dynamic from "next/dynamic";
 import MegaMenuSection from "./navbar/MegaMenuSection";
-
-const IndustriesPanel = dynamic(() => import("./navbar/IndustriesPanel"), {
-  loading: () => <PanelSkeleton />,
-});
-const ServicesPanel = dynamic(() => import("./navbar/ServicesPanel"), {
-  loading: () => <PanelSkeleton />,
-});
-const PackagesPanel = dynamic(() => import("./navbar/PackagesPanel"), {
-  loading: () => <PanelSkeleton />,
-});
-const ProjectsPanel = dynamic(() => import("./navbar/ProjectsPanel"), {
-  loading: () => <PanelSkeleton />,
-});
-const AboutPanel = dynamic(() => import("./navbar/AboutPanel"), {
-  loading: () => <PanelSkeleton />,
-});
+import { NAV_CATEGORIES } from "./navbar/nav-data";
 
 interface NavbarProps {
   // Server-detected locale, passed from the server layout so both SSR and
@@ -154,95 +138,28 @@ export default function Navbar({ lang }: NavbarProps) {
             <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
               <NavigationMenuList className="gap-1 xl:gap-2">
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className={triggerClassName}>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    {t("navbar.industries")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <MegaMenuSection
-                      title={t("navbar.industries")}
-                      description={t("home.industries.description")}
-                      icon={LayoutGrid}
-                      href="/industries"
-                      layout="list"
-                    >
-                      <IndustriesPanel isRtl={isRtl} />
-                    </MegaMenuSection>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className={triggerClassName}>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    {t("navbar.services", "Services")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <MegaMenuSection
-                      title={t("navbar.services", "Services")}
-                      description={t("navbar.menu.services.description")}
-                      icon={LayoutGrid}
-                      href="/services"
-                      layout="list"
-                    >
-                      <ServicesPanel isRtl={isRtl} />
-                    </MegaMenuSection>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className={triggerClassName}>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    {t("navbar.packages")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <MegaMenuSection
-                      title={t("navbar.packages")}
-                      description={t("navbar.menu.packages.description")}
-                      icon={Package}
-                      href="/packages"
-                      layout="grid"
-                    >
-                      <PackagesPanel isRtl={isRtl} />
-                    </MegaMenuSection>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className={triggerClassName}>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    {t("navbar.projects")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <MegaMenuSection
-                      title={t("navbar.projects")}
-                      description={t("portfolio.projects.description")}
-                      icon={LayoutGrid}
-                      href="/projects"
-                      layout="list"
-                    >
-                      <ProjectsPanel isRtl={isRtl} />
-                    </MegaMenuSection>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className={triggerClassName}>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    {t("navbar.about")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <MegaMenuSection
-                      title={t("navbar.about")}
-                      description={t("footer.desc")}
-                      icon={Globe}
-                      href="/about"
-                      layout="columns"
-                    >
-                      <AboutPanel isRtl={isRtl} />
-                    </MegaMenuSection>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+                {NAV_CATEGORIES.map((category) => {
+                  const Panel = category.Panel;
+                  return (
+                    <NavigationMenuItem key={category.id}>
+                      <NavigationMenuTrigger className={triggerClassName}>
+                        <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                        {category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey)}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <MegaMenuSection
+                          title={category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey)}
+                          description={t(category.descriptionKey)}
+                          icon={category.icon}
+                          href={category.href}
+                          layout={category.layout}
+                        >
+                          <Panel isRtl={isRtl} />
+                        </MegaMenuSection>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  );
+                })}
 
               </NavigationMenuList>
             </NavigationMenu>
@@ -306,26 +223,23 @@ export default function Navbar({ lang }: NavbarProps) {
             </button>
 
             <nav className="container mx-auto flex flex-col space-y-2 relative z-10">
-              {[
-                { name: t("navbar.industries"), href: "/industries" },
-                { name: t("navbar.services", "Services"), href: "/services" },
-                { name: t("navbar.packages"), href: "/packages" },
-                { name: t("navbar.projects"), href: "/projects" },
-                { name: t("navbar.about"), href: "/about" },
-              ].map((link, idx) => (
+              {NAV_CATEGORIES.map((category, idx) => {
+                const name = category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey);
+                return (
                 <motion.div
-                  key={link.name}
+                  key={category.id}
                   initial={{ opacity: 0, x: isRtl ? 30 : -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 + 0.2, type: "spring", stiffness: 300, damping: 25 }}
                 >
-                  <Link href={link.href} onClick={() => setIsOpen(false)}>
+                  <Link href={category.href} onClick={() => setIsOpen(false)}>
                     <span className="text-2xl sm:text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary active:text-primary/70 transition-all block py-2.5 sm:py-3 md:py-4 lowercase tracking-tighter">
-                      {link.name}
+                      {name}
                     </span>
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
 
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -363,18 +277,3 @@ export default function Navbar({ lang }: NavbarProps) {
   );
 }
 
-function PanelSkeleton() {
-  return (
-    <div className="grid grid-cols-2 gap-6 animate-pulse">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="flex items-start gap-5 p-5">
-          <div className="w-12 h-12 rounded-2xl bg-white/5 shrink-0" />
-          <div className="flex-1 space-y-2">
-            <div className="h-4 bg-white/5 rounded w-3/4" />
-            <div className="h-3 bg-white/5 rounded w-full" />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}

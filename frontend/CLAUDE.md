@@ -691,3 +691,9 @@ const usernameMatch = username === stored;
 | `NEXT_PUBLIC_API_URL` | Yes | API base URL for client-side requests |
 
 All variables must be defined in `.env.example` (without values). `validateEnv()` in `lib/env.ts` throws at startup if any required var is missing.
+
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
