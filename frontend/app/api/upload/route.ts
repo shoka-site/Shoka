@@ -38,6 +38,11 @@ export async function POST(req: NextRequest) {
   if (deny) return deny;
 
   try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      console.error('[upload] BLOB_READ_WRITE_TOKEN is not configured');
+      return NextResponse.json({ success: false, error: { code: 'MISSING_TOKEN', message: 'Storage not configured' } }, { status: 500 });
+    }
+
     const data = await req.formData();
     const file = data.get('file') as File | null;
 

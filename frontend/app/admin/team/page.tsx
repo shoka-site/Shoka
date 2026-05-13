@@ -127,13 +127,17 @@ export default function AdminTeam() {
                 method: "POST",
                 body: uploadData,
             });
-            const data = await res.json();
-            if (data.url) {
-                setFormData((prev) => ({ ...prev, imageUrl: data.url }));
+            const json = await res.json();
+            if (json.success && json.data?.url) {
+                setFormData((prev) => ({ ...prev, imageUrl: json.data.url }));
+            } else {
+                const errorMsg = json.error?.message || "Upload failed";
+                console.error("Upload failed:", json.error);
+                alert(`Upload failed: ${errorMsg}`);
             }
         } catch (error) {
             console.error("Upload error:", error);
-            alert("Failed to upload image");
+            alert("Failed to upload image. Please check your connection.");
         } finally {
             setIsUploadingImage(false);
         }
@@ -152,13 +156,17 @@ export default function AdminTeam() {
                 method: "POST",
                 body: uploadData,
             });
-            const data = await res.json();
-            if (data.url) {
-                setFormData((prev) => ({ ...prev, resumeUrl: data.url }));
+            const json = await res.json();
+            if (json.success && json.data?.url) {
+                setFormData((prev) => ({ ...prev, resumeUrl: json.data.url }));
+            } else {
+                const errorMsg = json.error?.message || "Upload failed";
+                console.error("Upload failed:", json.error);
+                alert(`Upload failed: ${errorMsg}`);
             }
         } catch (error) {
             console.error("Upload error:", error);
-            alert("Failed to upload resume");
+            alert("Failed to upload resume. Please check your connection.");
         } finally {
             setIsUploadingResume(false);
         }

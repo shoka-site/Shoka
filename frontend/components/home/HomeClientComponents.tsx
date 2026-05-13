@@ -431,9 +431,9 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               }}
             >
               {(() => {
-                const projectImage = item.project?.images?.[0];
+                const projectImage = item.project?.images?.find(img => img && img.trim() !== "");
                 const serviceImage = item.service?.imageUrl;
-                const finalSrc = item.imageUrl || projectImage || serviceImage;
+                const finalSrc = (item.imageUrl?.trim() || projectImage || serviceImage || "").trim();
 
                 if (finalSrc && finalSrc.trim() !== "") {
                   return (
