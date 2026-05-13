@@ -147,6 +147,9 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015";
+                    }}
                   />
                 ) : (
                   <div className="w-full h-full bg-muted/50 flex items-center justify-center">

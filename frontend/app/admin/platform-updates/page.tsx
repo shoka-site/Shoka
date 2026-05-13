@@ -290,13 +290,21 @@ export default function AdminPlatformUpdates() {
                                         <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
                                             Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
                                         </p>
+                                    <div className="relative group w-20 h-20">
                                         <Image
-                                            src={formData.imageUrl || ""}
+                                            src={formData.imageUrl || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070"}
                                             alt="Preview"
                                             width={80}
                                             height={80}
-                                            className="h-20 w-20 object-cover rounded-md"
+                                            className="h-20 w-20 object-cover rounded-md border border-border"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
+                                            }}
                                         />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-md pointer-events-none">
+                                            <span className="text-[10px] text-white font-bold">Preview</span>
+                                        </div>
+                                    </div>
                                     </div>
                                 )}
                             </div>
@@ -373,16 +381,22 @@ export default function AdminPlatformUpdates() {
                         <div key={update.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex items-start gap-4 flex-1">
                                 <div className="w-20 h-20 rounded-md bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                                    {update.imageUrl ? (
+                                    {update.imageUrl && update.imageUrl.trim() !== "" ? (
                                         <Image
                                             src={update.imageUrl}
                                             alt={update.titleEn || ""}
                                             width={80}
                                             height={80}
                                             className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
+                                            }}
                                         />
                                     ) : (
-                                        <Camera className="w-8 h-8 text-muted-foreground" />
+                                        <div className="w-full h-full bg-muted/50 flex flex-col items-center justify-center text-center p-1">
+                                            <Camera className="w-6 h-6 text-muted-foreground/40 mb-1" />
+                                            <span className="text-[8px] text-muted-foreground/60 uppercase font-bold">No Image</span>
+                                        </div>
                                     )}
                                 </div>
                                 <div className="flex-1 min-w-0">
