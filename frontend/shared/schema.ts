@@ -79,7 +79,7 @@ export const platformUpdateSchema = z.object({
     summaryEn: z.string(),
     summaryAr: z.string(),
     date: z.coerce.date(),
-    imageUrl: z.string().optional().nullable(),
+    images: z.array(z.string()).default([]),
     published: z.boolean().default(true),
     projectId: z.string().uuid().optional().nullable(),
     serviceId: z.string().uuid().optional().nullable(),

@@ -133,10 +133,10 @@ export function NewsPageContent({ updates }: Props) {
                   <Card className="h-full border border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden hover:shadow-xl group bg-background relative flex flex-col">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                     <CardContent className="p-0 flex flex-col flex-1 relative z-10">
-                      {update.imageUrl && update.imageUrl.trim() !== "" && (
+                      {update.images && update.images.length > 0 && update.images[0]?.trim() !== "" && (
                         <div className="relative w-full aspect-video">
                           <Image
-                            src={update.imageUrl}
+                            src={update.images[0]}
                             alt={pick(update.titleEn, update.titleAr)}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -19,7 +19,7 @@ export interface PlatformUpdate {
   titleAr?: string;
   summaryEn?: string;
   summaryAr?: string;
-  imageUrl?: string | null;
+  images?: string[];
   projectId?: string | null;
   serviceId?: string | null;
   project?: {
@@ -433,7 +433,8 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               {(() => {
                 const projectImage = item.project?.images?.find(img => img && img.trim() !== "");
                 const serviceImage = item.service?.imageUrl;
-                const finalSrc = (item.imageUrl?.trim() || projectImage || serviceImage || "").trim();
+                const updateImage = item.images?.find((img: string) => img && img.trim() !== "");
+                const finalSrc = (updateImage || projectImage || serviceImage || "").trim();
 
                 if (finalSrc && finalSrc.trim() !== "") {
                   return (

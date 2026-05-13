@@ -15,7 +15,7 @@ export default function AdminPlatformUpdates() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [isUploadingImage, setIsUploadingImage] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const [formData, setFormData] = useState({
         type: "news" as 'news' | 'achievement' | 'event' | 'new' | 'project' | 'service',
         titleEn: "",
@@ -25,7 +25,7 @@ export default function AdminPlatformUpdates() {
         date: new Date().toISOString().split('T')[0],
         order: 0,
         published: true,
-        imageUrl: "",
+        images: [] as string[],
         projectId: "",
         serviceId: "",
     });
@@ -109,7 +109,7 @@ export default function AdminPlatformUpdates() {
             date: new Date().toISOString().split('T')[0],
             order: 0,
             published: true,
-            imageUrl: "",
+            images: [],
             projectId: "",
             serviceId: "",
         });
@@ -119,6 +119,10 @@ export default function AdminPlatformUpdates() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formData.images || formData.images.length === 0) {
+            alert("Please select at least one image");
+            return;
+        }
         const data = {
             ...formData,
             date: new Date(formData.date).toISOString(),
@@ -143,7 +147,7 @@ export default function AdminPlatformUpdates() {
             date: new Date(update.date).toISOString().split('T')[0],
             order: update.order,
             published: update.published,
-            imageUrl: update.imageUrl || "",
+            images: (raw.images as string[] | undefined) ?? (raw.imageUrl ? [raw.imageUrl as string] : []),
             projectId: update.projectId || "",
             serviceId: update.serviceId || "",
         });
@@ -151,11 +155,11 @@ export default function AdminPlatformUpdates() {
         setIsEditing(true);
     };
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        setIsUploadingImage(true);
+        setIsUploading(true);
         const uploadData = new FormData();
         uploadData.append("file", file);
 
@@ -166,7 +170,7 @@ export default function AdminPlatformUpdates() {
             });
             const json = await res.json();
             if (json.success && json.data?.url) {
-                setFormData((prev) => ({ ...prev, imageUrl: json.data.url }));
+                setFormData((prev) => ({ ...prev, images: [...prev.images, json.data.url] }));
             } else {
                 const errorMsg = json.error?.message || "Upload failed";
                 console.error("Upload failed:", json.error);
@@ -176,7 +180,7 @@ export default function AdminPlatformUpdates() {
             console.error("Upload error:", error);
             alert("Failed to upload image. Please check your connection.");
         } finally {
-            setIsUploadingImage(false);
+            setIsUploading(false);
         }
     };
 
@@ -278,40 +282,45 @@ export default function AdminPlatformUpdates() {
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Update Photo</label>
-                                <Input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageUpload}
-                                    disabled={isUploadingImage}
-                                    className="cursor-pointer"
-                                />
-                                {isUploadingImage && <p className="text-xs text-muted-foreground">Uploading...</p>}
-                                {formData.imageUrl && (
-                                    <div className="flex flex-col gap-1">
-                                        <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
-                                            Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
-                                        </p>
-                                    <div className="relative group w-20 h-20">
-                                        <Image
-                                            src={formData.imageUrl || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070"}
-                                            alt="Preview"
-                                            width={80}
-                                            height={80}
-                                            className="h-20 w-20 object-cover rounded-md border border-border"
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
-                                            }}
-                                        />
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-md pointer-events-none">
-                                            <span className="text-[10px] text-white font-bold">Preview</span>
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Update Images</label>
+                            <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileUpload}
+                                disabled={isUploading}
+                                className="cursor-pointer"
+                            />
+                            {isUploading && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                            {formData.images.length > 0 && (
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {formData.images.map((img, idx) => (
+                                        <div key={idx} className="relative group">
+                                            {img ? (
+                                                <Image
+                                                    src={img}
+                                                    alt={`Preview ${idx + 1}`}
+                                                    width={128}
+                                                    height={64}
+                                                    className="h-16 w-32 object-cover rounded"
+                                                />
+                                            ) : (
+                                                <div className="h-16 w-32 bg-muted flex flex-col items-center justify-center rounded border border-dashed text-xs text-muted-foreground p-1 text-center">
+                                                    <span>Invalid</span>
+                                                    <span>Image</span>
+                                                </div>
+                                            )}
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))}
+                                                className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            >
+                                                <Trash2 className="w-3 h-3" />
+                                            </button>
                                         </div>
-                                    </div>
-                                    </div>
-                                )}
-                            </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
@@ -385,9 +394,9 @@ export default function AdminPlatformUpdates() {
                         <div key={update.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
                             <div className="flex items-start gap-4 flex-1">
                                 <div className="w-20 h-20 rounded-md bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                                    {update.imageUrl && update.imageUrl.trim() !== "" ? (
+                                    {raw.images && (raw.images as string[]).length > 0 ? (
                                         <Image
-                                            src={update.imageUrl}
+                                            src={(raw.images as string[])[0]}
                                             alt={update.titleEn || ""}
                                             width={80}
                                             height={80}
@@ -404,6 +413,9 @@ export default function AdminPlatformUpdates() {
                                     )}
                                 </div>
                                 <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-xs text-muted-foreground">Images: {(raw.images as string[])?.length || 0}</span>
+                                    </div>
                                     <div className="flex items-center gap-2 mb-2">
                                     <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded capitalize">{update.type}</span>
                                     <span className="text-xs text-muted-foreground flex items-center gap-1">
