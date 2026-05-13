@@ -7,13 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Edit, Trash2, Calendar } from "lucide-react";
-import type { PlatformUpdate } from "@/hooks/use-content";
+import { Plus, Edit, Trash2, Calendar, Camera } from "lucide-react";
+import Image from "next/image";
+import type { PlatformUpdate } from "@shared/schema";
 
 export default function AdminPlatformUpdates() {
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
     const [formData, setFormData] = useState({
         type: "news" as 'news' | 'achievement' | 'event' | 'new',
         titleEn: "",
@@ -23,13 +25,15 @@ export default function AdminPlatformUpdates() {
         date: new Date().toISOString().split('T')[0],
         order: 0,
         published: true,
+        imageUrl: "",
     });
 
     const { data: updates = [], isLoading } = useQuery<PlatformUpdate[]>({
         queryKey: ["admin-platform-updates"],
         queryFn: async () => {
-            const res = await fetch("/api/content/en/platform-updates");
-            return res.json();
+            const res = await fetch("/api/admin/platform-updates");
+            const json = await res.json();
+            return json.data ?? [];
         },
     });
 
@@ -85,6 +89,7 @@ export default function AdminPlatformUpdates() {
             date: new Date().toISOString().split('T')[0],
             order: 0,
             published: true,
+            imageUrl: "",
         });
         setIsEditing(false);
         setEditingId(null);
@@ -107,16 +112,42 @@ export default function AdminPlatformUpdates() {
         const raw = update as unknown as Record<string, unknown>;
         setFormData({
             type: update.type,
-            titleEn: (raw.titleEn ?? update.title ?? "") as string,
-            titleAr: (raw.titleAr ?? update.title ?? "") as string,
-            summaryEn: (raw.summaryEn ?? update.summary ?? "") as string,
-            summaryAr: (raw.summaryAr ?? update.summary ?? "") as string,
+            titleEn: update.titleEn || "",
+            titleAr: update.titleAr || "",
+            summaryEn: update.summaryEn || "",
+            summaryAr: update.summaryAr || "",
             date: new Date(update.date).toISOString().split('T')[0],
             order: update.order,
             published: update.published,
+            imageUrl: update.imageUrl || "",
         });
         setEditingId(update.id);
         setIsEditing(true);
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setIsUploadingImage(true);
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const json = await res.json();
+            if (json.success && json.data?.url) {
+                setFormData((prev) => ({ ...prev, imageUrl: json.data.url }));
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Failed to upload image");
+        } finally {
+            setIsUploadingImage(false);
+        }
     };
 
     if (isLoading) return <AdminLayout><div>Loading...</div></AdminLayout>;
@@ -169,6 +200,34 @@ export default function AdminPlatformUpdates() {
                                     onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
                                     required
                                 />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Update Photo</label>
+                                <Input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    disabled={isUploadingImage}
+                                    className="cursor-pointer"
+                                />
+                                {isUploadingImage && <p className="text-xs text-muted-foreground">Uploading...</p>}
+                                {formData.imageUrl && (
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-xs text-muted-foreground truncate" title={formData.imageUrl}>
+                                            Current: {formData.imageUrl.startsWith('/uploads/') ? formData.imageUrl.split('/').pop() : formData.imageUrl}
+                                        </p>
+                                        <Image
+                                            src={formData.imageUrl || ""}
+                                            alt="Preview"
+                                            width={80}
+                                            height={80}
+                                            className="h-20 w-20 object-cover rounded-md"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -239,8 +298,22 @@ export default function AdminPlatformUpdates() {
                         const raw = update as unknown as Record<string, unknown>;
                         return (
                         <div key={update.id} className="p-6 bg-muted rounded-lg flex justify-between items-start">
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-2">
+                            <div className="flex items-start gap-4 flex-1">
+                                <div className="w-20 h-20 rounded-md bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    {update.imageUrl ? (
+                                        <Image
+                                            src={update.imageUrl}
+                                            alt={update.titleEn || ""}
+                                            width={80}
+                                            height={80}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <Camera className="w-8 h-8 text-muted-foreground" />
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-2">
                                     <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded capitalize">{update.type}</span>
                                     <span className="text-xs text-muted-foreground flex items-center gap-1">
                                         <Calendar className="w-3 h-3" /> {new Date(update.date).toLocaleDateString()}
@@ -250,8 +323,9 @@ export default function AdminPlatformUpdates() {
                                     )}
                                     <span className="text-xs text-muted-foreground">Order: {update.order}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{update.title || (raw.titleEn as string)}</h3>
-                                <p className="text-sm text-muted-foreground">{update.summary || (raw.summaryEn as string)}</p>
+                                <h3 className="text-xl font-bold mb-2 truncate">{update.titleEn}</h3>
+                                <p className="text-sm text-muted-foreground line-clamp-2">{update.summaryEn}</p>
+                            </div>
                             </div>
                             <div className="flex gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleEdit(update)}>

@@ -1,0 +1,3 @@
+app/admin/platform-updates/page.tsx(121,30): error TS2339: Property 'imageUrl' does not exist on type 'PlatformUpdate'.
+app/admin/platform-updates/page.tsx(302,45): error TS2339: Property 'imageUrl' does not exist on type 'PlatformUpdate'.
+app/admin/platform-updates/page.tsx(304,57): error TS2339: Property 'imageUrl' does not exist on type 'PlatformUpdate'.

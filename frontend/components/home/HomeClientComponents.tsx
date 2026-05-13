@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "fra
 import { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,7 @@ export interface PlatformUpdate {
   titleAr?: string;
   summaryEn?: string;
   summaryAr?: string;
+  imageUrl?: string | null;
 }
 
 export interface Testimonial {
@@ -207,7 +209,20 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
           className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#000000]`}
-        />
+        >
+          {item.imageUrl && (
+            <>
+              <Image
+                src={item.imageUrl}
+                alt={item.title || "Background"}
+                fill
+                className="object-cover opacity-50"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/60" />
+            </>
+          )}
+        </motion.div>
       </AnimatePresence>
 
       <motion.div

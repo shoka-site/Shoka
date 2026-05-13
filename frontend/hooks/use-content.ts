@@ -112,6 +112,7 @@ export interface PlatformUpdate {
     title: string;
     summary: string;
     date: string;
+    imageUrl?: string;
     published: boolean;
 }
 

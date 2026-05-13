@@ -2,6 +2,7 @@
 
 import Section from "@/components/layout/Section";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Newspaper, Trophy, Calendar, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -131,7 +132,13 @@ export function NewsPageContent({ updates }: Props) {
                 >
                   <Card className="h-full border border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden hover:shadow-xl group bg-background relative flex flex-col">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                    <CardContent className="p-6 md:p-8 flex flex-col flex-1 relative z-10">
+                    <CardContent className="p-0 flex flex-col flex-1 relative z-10">
+                      {update.imageUrl && (
+                        <div className="relative w-full aspect-video">
+                          <Image src={update.imageUrl} alt={pick(update.titleEn, update.titleAr)} fill className="object-cover" />
+                        </div>
+                      )}
+                      <div className="p-6 md:p-8 flex flex-col flex-1">
                       <div className="flex justify-between items-start mb-6">
                         <div className={`p-3 md:p-4 rounded-xl md:rounded-2xl flex items-center justify-center border transition-transform duration-500 group-hover:scale-110 ${colorClass}`}>
                           <Icon className="w-5 h-5 md:w-6 md:h-6" />
@@ -149,6 +156,7 @@ export function NewsPageContent({ updates }: Props) {
                       <p className="text-muted-foreground font-light leading-relaxed mb-8 flex-1">
                         {pick(update.summaryEn, update.summaryAr)}
                       </p>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
