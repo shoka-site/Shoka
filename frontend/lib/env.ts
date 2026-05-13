@@ -12,7 +12,6 @@ const REQUIRED_VARS = [
   'ADMIN_SESSION_SECRET',
   'NEXT_PUBLIC_SITE_URL',
   'NEXT_PUBLIC_API_URL',
-  'BLOB_READ_WRITE_TOKEN',
 ] as const;
 
 export function validateEnv(): void {
