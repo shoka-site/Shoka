@@ -27,32 +27,33 @@ model Service {
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
   type          String   @default("Other")
-  
 
+  platformUpdates PlatformUpdate[]
 
-  @@map("services")
   @@index([published, order])
+  @@map("services")
 }
 
 model Project {
-  id            String   @id @default(uuid())
-  order         Int
-  images        String[] @default([])
-  categoryEn    String   @map("category_en")
-  categoryAr    String   @map("category_ar")
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  featured      Boolean  @default(false)
-  published     Boolean  @default(true)
-  status        String   @default("past")
-  liveUrl       String?  @map("live_url")
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  id             String           @id @default(uuid())
+  order          Int
+  images         String[]         @default([])
+  categoryEn     String           @map("category_en")
+  categoryAr     String           @map("category_ar")
+  titleEn        String           @map("title_en")
+  titleAr        String           @map("title_ar")
+  descriptionEn  String           @map("description_en")
+  descriptionAr  String           @map("description_ar")
+  featured       Boolean          @default(false)
+  published      Boolean          @default(true)
+  status         String           @default("past")
+  liveUrl        String?          @map("live_url")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
+  PlatformUpdate PlatformUpdate[]
 
-  @@map("projects")
   @@index([published, featured, order])
+  @@map("projects")
 }
 
 model Testimonial {
@@ -69,8 +70,8 @@ model Testimonial {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  @@map("testimonials")
   @@index([published, order])
+  @@map("testimonials")
 }
 
 model PlatformUpdate {
@@ -86,28 +87,31 @@ model PlatformUpdate {
   published Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-  
-  projectId String?  @map("project_id")
-  serviceId String?  @map("service_id")
 
-  @@map("platform_updates")
+  projectId String? @map("project_id")
+  serviceId String? @map("service_id")
+
+  project Project? @relation(fields: [projectId], references: [id])
+  service Service? @relation(fields: [serviceId], references: [id])
+
   @@index([published, date])
+  @@map("platform_updates")
 }
 
 model Industry {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   order         Int
-  titleEn       String   @map("title_en")
-  titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
-  published     Boolean  @default(true)
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
+  titleEn       String     @map("title_en")
+  titleAr       String     @map("title_ar")
+  descriptionEn String     @map("description_en")
+  descriptionAr String     @map("description_ar")
+  published     Boolean    @default(true)
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
   solutions     Solution[]
 
-  @@map("industries")
   @@index([published, order])
+  @@map("industries")
 }
 
 model Solution {
@@ -120,13 +124,13 @@ model Solution {
   published     Boolean  @default(true)
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
-  
-  industryId    String?  @map("industry_id")
-  industry      Industry? @relation(fields: [industryId], references: [id], onDelete: SetNull)
 
-  @@map("solutions")
+  industryId String?   @map("industry_id")
+  industry   Industry? @relation(fields: [industryId], references: [id], onDelete: SetNull)
+
   @@index([published, order])
   @@index([industryId])
+  @@map("solutions")
 }
 
 model TeamMember {
@@ -148,10 +152,9 @@ model TeamMember {
   portfolioUrl  String?  @map("portfolio_url")
   linkedinUrl   String?  @map("linkedin_url")
 
-  @@map("our_team")
   @@index([published, order])
+  @@map("our_team")
 }
-
 
 model Consultation {
   id        String   @id @default(uuid())
@@ -164,26 +167,25 @@ model Consultation {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
-  @@map("consultations")
   @@index([status])
   // Common admin query patterns: filter unseen + sort by newest first
   @@index([seen, createdAt(sort: Desc)])
   // Useful for deduplication checks and future spam filtering
   @@index([email])
+  @@map("consultations")
 }
 
 model Package {
-  id               String   @id @default(uuid())
-  order            Int
-  titleEn          String   @map("title_en")
-  titleAr          String   @map("title_ar")
-  descriptionEn    String?  @map("description_en")
-  descriptionAr    String?  @map("description_ar")
-  published        Boolean  @default(true)
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+  id            String   @id @default(uuid())
+  order         Int
+  titleEn       String   @map("title_en")
+  titleAr       String   @map("title_ar")
+  descriptionEn String?  @map("description_en")
+  descriptionAr String?  @map("description_ar")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
-
-  @@map("packages")
   @@index([published, order])
+  @@map("packages")
 }

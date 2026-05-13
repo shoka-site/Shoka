@@ -22,6 +22,14 @@ export interface PlatformUpdate {
   imageUrl?: string | null;
   projectId?: string | null;
   serviceId?: string | null;
+  project?: {
+    images?: string[];
+    [key: string]: any;
+  } | null;
+  service?: {
+    imageUrl?: string | null;
+    [key: string]: any;
+  } | null;
 }
 
 export interface Testimonial {
@@ -422,36 +430,46 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
                 y: isMobile ? 0 : mousePosition.y * -0.6,
               }}
             >
-              {item.imageUrl && item.imageUrl.trim() !== "" ? (
-                <>
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title || "Feature"}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
-                    priority
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      const type = item.type as string;
-                      const placeholders: Record<string, string> = {
-                        news: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070",
-                        achievement: "https://images.unsplash.com/photo-1523287562758-66c7fc58967f?q=80&w=2070",
-                        project: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015",
-                        service: "https://images.unsplash.com/photo-1454165833767-027508658d61?q=80&w=2070",
-                      };
-                      target.src = placeholders[type] || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
-                    }}
-                  />
-                  {/* Subtle pattern overlay on the image itself */}
-                  <div className="absolute inset-0 bg-mesopot-rosette opacity-[0.05] mix-blend-overlay" />
-                </>
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-black flex items-center justify-center">
-                   <div className="absolute inset-0 opacity-20 bg-mesopot-lattice" />
-                   <Sparkles className="w-20 h-20 text-accent/20 animate-pulse" />
-                </div>
-              )}
+              {(() => {
+                const projectImage = item.project?.images?.[0];
+                const serviceImage = item.service?.imageUrl;
+                const finalSrc = item.imageUrl || projectImage || serviceImage;
+
+                if (finalSrc && finalSrc.trim() !== "") {
+                  return (
+                    <>
+                      <Image
+                        src={finalSrc}
+                        alt={item.title || "Feature"}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover"
+                        priority
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          const type = item.type as string;
+                          const placeholders: Record<string, string> = {
+                            news: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070",
+                            achievement: "https://images.unsplash.com/photo-1523287562758-66c7fc58967f?q=80&w=2070",
+                            project: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015",
+                            service: "https://images.unsplash.com/photo-1454165833767-027508658d61?q=80&w=2070",
+                          };
+                          target.src = placeholders[type] || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
+                          console.warn(`Hero image failed to load: ${finalSrc}. Falling back to placeholder.`);
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-mesopot-rosette opacity-[0.05] mix-blend-overlay" />
+                    </>
+                  );
+                }
+
+                return (
+                  <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-black flex items-center justify-center">
+                     <div className="absolute inset-0 opacity-20 bg-mesopot-lattice" />
+                     <Sparkles className="w-20 h-20 text-accent/20 animate-pulse" />
+                  </div>
+                );
+              })()}
               {/* Cinematic overlays */}
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent hidden lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent lg:hidden" />

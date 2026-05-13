@@ -74,13 +74,14 @@ const cachedGetPlatformUpdates = unstable_cache(
     prisma.platformUpdate.findMany({
       where: published !== null ? { published } : undefined,
       orderBy: { date: "desc" },
+      include: { project: true, service: true },
     }),
   ["storage-platform-updates-list"],
   { tags: ["platformUpdates"], revalidate: CACHE_TTL }
 );
 
 const cachedGetPlatformUpdate = unstable_cache(
-  (id: string) => prisma.platformUpdate.findUnique({ where: { id } }),
+  (id: string) => prisma.platformUpdate.findUnique({ where: { id }, include: { project: true, service: true } }),
   ["storage-platform-update-one"],
   { tags: ["platformUpdates"], revalidate: CACHE_TTL }
 );
@@ -370,13 +371,13 @@ export class PrismaStorage implements IStorage {
 
   // ----- Platform Updates -----
 
-  async getPlatformUpdates(published?: boolean): Promise<PlatformUpdate[]> {
-    return cachedGetPlatformUpdates(published ?? null) as Promise<PlatformUpdate[]>;
+  async getPlatformUpdates(published?: boolean): Promise<any[]> {
+    return cachedGetPlatformUpdates(published ?? null);
   }
 
-  async getPlatformUpdate(id: string): Promise<PlatformUpdate | undefined> {
+  async getPlatformUpdate(id: string): Promise<any | undefined> {
     const result = await cachedGetPlatformUpdate(id);
-    return (result as PlatformUpdate | null) || undefined;
+    return result || undefined;
   }
 
   async createPlatformUpdate(update: Omit<PlatformUpdate, "id" | "createdAt" | "updatedAt">): Promise<PlatformUpdate> {
