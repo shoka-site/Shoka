@@ -135,7 +135,13 @@ export function NewsPageContent({ updates }: Props) {
                     <CardContent className="p-0 flex flex-col flex-1 relative z-10">
                       {update.imageUrl && (
                         <div className="relative w-full aspect-video">
-                          <Image src={update.imageUrl} alt={pick(update.titleEn, update.titleAr)} fill className="object-cover" />
+                          <Image
+                            src={update.imageUrl}
+                            alt={pick(update.titleEn, update.titleAr)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover"
+                          />
                         </div>
                       )}
                       <div className="p-6 md:p-8 flex flex-col flex-1">

@@ -107,6 +107,7 @@ export function ProjectCard({ project, index, isRtl }: { project: Record<string,
               src={(project.images as unknown[]).find((img) => typeof img === 'string' && (img as string).trim() !== "") as string || ""}
               alt={(project.title as string) || ""}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:rotate-1 grayscale group-hover:grayscale-0"
             />
           )}

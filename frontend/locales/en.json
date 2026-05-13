@@ -45,8 +45,11 @@
       "event": "Upcoming Event",
       "new": "What's New",
       "cta_talk": "Let's Talk",
+      "cta_view": "View Details",
       "cta_expertise": "Our Expertise",
       "scroll": "Scroll",
+      "type_project": "New Project",
+      "type_service": "New Service",
       "fallback": {
         "f1_title": "Sehle Platform Launches",
         "f1_summary": "We craft cutting-edge software solutions that transform ideas into powerful digital experiences.",

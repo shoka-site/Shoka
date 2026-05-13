@@ -140,7 +140,13 @@ export function AboutPageContent({ teamMembers, updates }: Props) {
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative">
               <div className="absolute -inset-10 bg-primary/5 rounded-[4rem] blur-3xl" />
               <div className="relative rounded-[3rem] overflow-hidden shadow-2xl bg-zinc-900 border border-border/50 aspect-[4/5]">
-                <Image src="/cuneiform-glyph.png" alt="Legacy" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out" />
+                <Image
+                  src="/cuneiform-glyph.png"
+                  alt="Legacy"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
               </div>
             </motion.div>
@@ -249,6 +255,7 @@ export function AboutPageContent({ teamMembers, updates }: Props) {
                       src={member.imageUrl}
                       alt={pick(member.nameEn, member.nameAr)}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover object-top transition-transform duration-1000 group-hover:scale-110"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop";

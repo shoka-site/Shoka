@@ -17,7 +17,7 @@ export default function AdminPlatformUpdates() {
     const [editingId, setEditingId] = useState<string | null>(null);
     const [isUploadingImage, setIsUploadingImage] = useState(false);
     const [formData, setFormData] = useState({
-        type: "news" as 'news' | 'achievement' | 'event' | 'new',
+        type: "news" as 'news' | 'achievement' | 'event' | 'new' | 'project' | 'service',
         titleEn: "",
         titleAr: "",
         summaryEn: "",
@@ -26,6 +26,26 @@ export default function AdminPlatformUpdates() {
         order: 0,
         published: true,
         imageUrl: "",
+        projectId: "",
+        serviceId: "",
+    });
+
+    const { data: projects = [] } = useQuery({
+        queryKey: ["admin-projects"],
+        queryFn: async () => {
+            const res = await fetch("/api/admin/projects");
+            const json = await res.json();
+            return json.data ?? [];
+        },
+    });
+
+    const { data: services = [] } = useQuery({
+        queryKey: ["admin-services"],
+        queryFn: async () => {
+            const res = await fetch("/api/admin/services");
+            const json = await res.json();
+            return json.data ?? [];
+        },
     });
 
     const { data: updates = [], isLoading } = useQuery<PlatformUpdate[]>({
@@ -90,6 +110,8 @@ export default function AdminPlatformUpdates() {
             order: 0,
             published: true,
             imageUrl: "",
+            projectId: "",
+            serviceId: "",
         });
         setIsEditing(false);
         setEditingId(null);
@@ -99,7 +121,9 @@ export default function AdminPlatformUpdates() {
         e.preventDefault();
         const data = {
             ...formData,
-            date: new Date(formData.date).toISOString()
+            date: new Date(formData.date).toISOString(),
+            projectId: formData.type === 'project' && formData.projectId ? formData.projectId : null,
+            serviceId: formData.type === 'service' && formData.serviceId ? formData.serviceId : null,
         };
         if (editingId) {
             updateMutation.mutate({ id: editingId, data });
@@ -120,6 +144,8 @@ export default function AdminPlatformUpdates() {
             order: update.order,
             published: update.published,
             imageUrl: update.imageUrl || "",
+            projectId: update.projectId || "",
+            serviceId: update.serviceId || "",
         });
         setEditingId(update.id);
         setIsEditing(true);
@@ -170,7 +196,7 @@ export default function AdminPlatformUpdates() {
                                 <label className="text-sm font-medium mb-1 block">Type</label>
                                 <Select
                                     value={formData.type}
-                                    onValueChange={(val: 'news' | 'achievement' | 'event' | 'new') => setFormData({ ...formData, type: val })}
+                                    onValueChange={(val) => setFormData(prev => ({ ...prev, type: val as any }))}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select type" />
@@ -180,6 +206,8 @@ export default function AdminPlatformUpdates() {
                                         <SelectItem value="achievement">Achievement</SelectItem>
                                         <SelectItem value="event">Event</SelectItem>
                                         <SelectItem value="new">New Feature</SelectItem>
+                                        <SelectItem value="project">New Project</SelectItem>
+                                        <SelectItem value="service">New Service</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -188,7 +216,7 @@ export default function AdminPlatformUpdates() {
                                 <Input
                                     type="date"
                                     value={formData.date}
-                                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
                                     required
                                 />
                             </div>
@@ -197,10 +225,53 @@ export default function AdminPlatformUpdates() {
                                 <Input
                                     type="number"
                                     value={formData.order}
-                                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
+                                    onChange={(e) => {
+                                        const val = parseInt(e.target.value);
+                                        setFormData(prev => ({ ...prev, order: isNaN(val) ? 0 : val }));
+                                    }}
                                     required
                                 />
                             </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            {formData.type === "project" && (
+                                <div>
+                                    <label className="text-sm font-medium mb-1 block">Select Project</label>
+                                    <Select
+                                        value={formData.projectId}
+                                        onValueChange={(val) => setFormData(prev => ({ ...prev, projectId: val }))}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a project" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {projects.map((p: any) => (
+                                                <SelectItem key={p.id} value={p.id}>{p.titleEn}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
+
+                            {formData.type === "service" && (
+                                <div>
+                                    <label className="text-sm font-medium mb-1 block">Select Service</label>
+                                    <Select
+                                        value={formData.serviceId}
+                                        onValueChange={(val) => setFormData(prev => ({ ...prev, serviceId: val }))}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a service" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {services.map((s: any) => (
+                                                <SelectItem key={s.id} value={s.id}>{s.titleEn}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
                         </div>
 
                         <div className="grid grid-cols-1 gap-4">
@@ -237,7 +308,7 @@ export default function AdminPlatformUpdates() {
                                 <Input
                                     placeholder="Title (English)"
                                     value={formData.titleEn}
-                                    onChange={(e) => setFormData({ ...formData, titleEn: e.target.value })}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, titleEn: e.target.value }))}
                                     required
                                 />
                             </div>
@@ -246,7 +317,8 @@ export default function AdminPlatformUpdates() {
                                 <Input
                                     placeholder="Title (Arabic)"
                                     value={formData.titleAr}
-                                    onChange={(e) => setFormData({ ...formData, titleAr: e.target.value })}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, titleAr: e.target.value }))}
+                                    dir="rtl"
                                     required
                                 />
                             </div>
@@ -258,7 +330,7 @@ export default function AdminPlatformUpdates() {
                                 <Textarea
                                     placeholder="Summary (English)"
                                     value={formData.summaryEn}
-                                    onChange={(e) => setFormData({ ...formData, summaryEn: e.target.value })}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, summaryEn: e.target.value }))}
                                     required
                                 />
                             </div>
@@ -267,7 +339,8 @@ export default function AdminPlatformUpdates() {
                                 <Textarea
                                     placeholder="Summary (Arabic)"
                                     value={formData.summaryAr}
-                                    onChange={(e) => setFormData({ ...formData, summaryAr: e.target.value })}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, summaryAr: e.target.value }))}
+                                    dir="rtl"
                                     required
                                 />
                             </div>

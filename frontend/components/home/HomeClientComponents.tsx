@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-type UpdateType = "news" | "achievement" | "event" | "new";
+type UpdateType = "news" | "achievement" | "event" | "new" | "project" | "service";
 
 export interface PlatformUpdate {
   id: string;
@@ -21,6 +21,8 @@ export interface PlatformUpdate {
   summaryEn?: string;
   summaryAr?: string;
   imageUrl?: string | null;
+  projectId?: string | null;
+  serviceId?: string | null;
 }
 
 export interface Testimonial {
@@ -37,37 +39,55 @@ function useUpdateStyle() {
       label: "hero.updates.news",
       emoji: "📰",
       accentHex: "#c2a45c",
-      accentLight: "rgba(194,164,92,0.10)",
-      textClass: "text-[#c2a45c]",
-      bgFrom: "from-[#070500]",
-      bgVia: "via-[#0a0800]",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
     },
     achievement: {
       label: "hero.updates.achievement",
       emoji: "🏆",
       accentHex: "#c2a45c",
-      accentLight: "rgba(194,164,92,0.10)",
-      textClass: "text-[#c2a45c]",
-      bgFrom: "from-[#060500]",
-      bgVia: "via-[#090700]",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
     },
     event: {
       label: "hero.updates.event",
       emoji: "📅",
       accentHex: "#c2a45c",
-      accentLight: "rgba(194,164,92,0.08)",
-      textClass: "text-[#c2a45c]",
-      bgFrom: "from-[#040404]",
-      bgVia: "via-[#060604]",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
     },
     new: {
       label: "hero.updates.new",
       emoji: "✨",
       accentHex: "#c2a45c",
-      accentLight: "rgba(194,164,92,0.12)",
-      textClass: "text-[#c2a45c]",
-      bgFrom: "from-[#070600]",
-      bgVia: "via-[#0a0800]",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
+    },
+    project: {
+      label: "hero.updates.type_project",
+      emoji: "🚀",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
+    },
+    service: {
+      label: "hero.updates.type_service",
+      emoji: "🛠️",
+      accentHex: "#c2a45c",
+      accentLight: "rgba(194, 164, 92, 0.1)",
+      textClass: "text-[#c2a45c]/80",
+      bgFrom: "from-black",
+      bgVia: "via-black",
     },
   };
 }
@@ -97,6 +117,62 @@ export function FadeInSection({ children, delay = 0, className = "" }: { childre
   );
 }
 
+export function CornerBrackets({ className = "" }: { className?: string }) {
+  return (
+    <>
+      {(["tl", "tr", "bl", "br"] as const).map((c, i) => (
+        <motion.div
+          key={c}
+          className={`absolute pointer-events-none z-10 ${className}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 + i * 0.07, duration: 0.7 }}
+          style={{
+            top: c[0] === "t" ? "1.5rem" : "auto",
+            bottom: c[0] === "b" ? "1.5rem" : "auto",
+            left: c[1] === "l" ? "1.5rem" : "auto",
+            right: c[1] === "r" ? "1.5rem" : "auto",
+            width: 24, height: 24,
+          }}
+        >
+          <span className="absolute w-full h-[1px] bg-accent/40" style={{ top: c[0] === "b" ? "auto" : 0, bottom: c[0] === "t" ? "auto" : 0 }} />
+          <span className="absolute w-[1px] h-full bg-accent/40" style={{ left: c[1] === "r" ? "auto" : 0, right: c[1] === "l" ? "auto" : 0 }} />
+        </motion.div>
+      ))}
+    </>
+  );
+}
+
+export function MagneticButton({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current?.getBoundingClientRect() || { left: 0, top: 0, width: 0, height: 0 };
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    const x = (clientX - centerX) * 0.4;
+    const y = (clientY - centerY) * 0.4;
+    setPosition({ x, y });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; isRtl: boolean }) {
   const { t, i18n } = useTranslation();
 
@@ -108,25 +184,20 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
     summary: (isArabic ? item.summaryAr : item.summaryEn) ?? item.summary ?? "",
   }));
 
-  // Also update RTL from client-side language
-  const clientIsRtl = i18n.dir() === "rtl";
   const heroRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
-  const yOffset = useTransform(scrollY, [0, 600], [0, -80]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const opacityProgress = useTransform(scrollY, [0, 400], [1, 0]);
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  // Timestamp ref for throttling mousemove to max 20fps — prevents 60 state
-  // updates/sec that would cause continuous re-renders across the entire hero.
   const lastMouseMoveTs = useRef(0);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+      setIsMobile(window.innerWidth < 1024 || 'ontouchstart' in window);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -138,7 +209,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
     const timer = setInterval(() => {
       setDirection(1);
       setActiveIdx(p => (p + 1) % items.length);
-    }, 8000);
+    }, 9000);
     return () => clearInterval(timer);
   }, [items.length, isPaused]);
 
@@ -146,11 +217,8 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
 
   if (localizedItems.length === 0) {
     return (
-      <section
-        className="relative h-screen-dvh flex items-center overflow-hidden"
-        style={{ backgroundColor: "#000000" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#2a1f08] to-[#000000]" />
+      <section className="relative h-screen-dvh flex items-center overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1e1505] via-[#000000] to-[#000000]" />
       </section>
     );
   }
@@ -162,165 +230,163 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   const handleMouseMove = (e: React.MouseEvent) => {
     if (isMobile) return;
     const now = Date.now();
-    // Throttle to ~20fps (50ms). The parallax shift is subtle enough that
-    // 20fps is imperceptible while cutting re-renders from 60+/sec to 20/sec.
-    if (now - lastMouseMoveTs.current < 50) return;
+    if (now - lastMouseMoveTs.current < 40) return;
     lastMouseMoveTs.current = now;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     setMousePosition({
-      x: (clientX / innerWidth - 0.5) * 20,
-      y: (clientY / innerHeight - 0.5) * 20
+      x: (clientX / innerWidth - 0.5) * 40,
+      y: (clientY / innerHeight - 0.5) * 40
     });
   };
 
   const item = localizedItems[activeIdx];
   const style = (updateStyle as Record<string, typeof updateStyle.news>)[item?.type] ?? updateStyle.news;
 
-  const slideVariants = {
-    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 40 : -40, filter: "blur(8px)" }),
-    center: { opacity: 1, x: 0, filter: "blur(0px)" },
-    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -40 : 40, filter: "blur(8px)" }),
-  };
-
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: custom * 0.1, duration: 0.8, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }
+      transition: { delay: 0.2 + custom * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    })
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: 0.3 + i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
     })
   };
 
   return (
     <section
       ref={heroRef}
-      className="relative h-screen-dvh flex items-center overflow-hidden"
-      style={{ backgroundColor: "#000000" }}
+      className="relative h-screen-dvh flex items-center justify-center overflow-hidden bg-black"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onMouseMove={handleMouseMove}
     >
-      <AnimatePresence mode="wait">
+      {/* ── CINEMATIC BACKGROUND LAYERS ── */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Lattice & Grain */}
+        <div className="absolute inset-0 bg-mesopot-lattice opacity-[0.12]" />
+        <div className="absolute inset-0 bg-grain opacity-40" />
+
+        {/* Scrolling Gold Grid */}
         <motion.div
-          key={item.id + "-bg"}
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "linear-gradient(rgba(194,164,92,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(194,164,92,0.3) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+          animate={{ backgroundPosition: ["0px 0px", "80px 80px"] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Floating Orbs */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            top: "20%", left: "15%", width: "35vw", height: "35vw",
+            background: "radial-gradient(circle, rgba(194,164,92,0.08) 0%, transparent 70%)",
+            filter: "blur(80px)",
+          }}
+          animate={{ x: [0, 40, -30, 0], y: [0, -40, 20, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            bottom: "15%", right: "10%", width: "40vw", height: "40vw",
+            background: "radial-gradient(circle, rgba(194,164,92,0.06) 0%, transparent 70%)",
+            filter: "blur(100px)",
+          }}
+          animate={{ x: [0, -50, 40, 0], y: [0, 30, -40, 0] }}
+          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+
+        {/* Light Trails */}
+        {([
+          { left: "20%", dur: 9, delay: 0 },
+          { left: "75%", dur: 7, delay: 3 },
+          { left: "90%", dur: 11, delay: 1.5 },
+        ]).map((trail, i) => (
+          <motion.div
+            key={i}
+            className="absolute top-0 w-px h-64"
+            style={{
+              left: trail.left,
+              background: "linear-gradient(to bottom, transparent, rgba(194,164,92,0.5), transparent)",
+              filter: "blur(0.5px)",
+            }}
+            animate={{ y: [-300, 1400], opacity: [0, 1, 0] }}
+            transition={{ duration: trail.dur, repeat: Infinity, ease: "linear", delay: trail.delay }}
+          />
+        ))}
+
+        {/* Vignette */}
+        <div className="absolute inset-0 bg-radial-[circle_at_50%_50%] from-transparent via-transparent to-black/80" />
+      </div>
+
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div
+          key={item.id}
+          custom={direction}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-          className={`absolute inset-0 bg-gradient-to-br ${style.bgFrom} ${style.bgVia} to-[#000000]`}
+          transition={{ duration: 0.9 }}
+          className="relative w-full h-full flex flex-col lg:flex-row items-center z-10"
         >
-          {item.imageUrl && (
-            <>
-              <Image
-                src={item.imageUrl}
-                alt={item.title || "Background"}
-                fill
-                className="object-cover opacity-50"
-                priority
-              />
-              <div className="absolute inset-0 bg-black/60" />
-            </>
-          )}
-        </motion.div>
-      </AnimatePresence>
+          {/* Content Side */}
+          <div className="w-full lg:w-1/2 h-full flex flex-col justify-center px-6 sm:px-12 md:px-20 lg:px-24 pt-24 lg:pt-0 relative z-20 order-2 lg:order-1">
+            <CornerBrackets className="lg:hidden opacity-40" />
 
-      <motion.div
-        key={item.id + "-glow"}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle at 70% 40%, ${style.accentLight} 0%, transparent 60%)`,
-        }}
-      />
-
-      <div className="absolute inset-0 bg-grain opacity-[0.07] pointer-events-none mix-blend-overlay" />
-      <div className="absolute left-0 right-0 top-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
-      <div className="absolute left-0 right-0 bottom-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
-
-      <motion.div
-        key={item.id + "-emoji"}
-        initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-        animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
-        transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-        className={`absolute ${clientIsRtl ? "left-[-5vw]" : "right-[-5vw]"} top-1/2 -translate-y-1/2 text-[25vw] md:text-[35vw] leading-none select-none pointer-events-none`}
-        style={{ color: style.accentHex }}
-      >
-        {style.emoji}
-      </motion.div>
-
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/5 z-20">
-        <motion.div
-          key={activeIdx}
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: isPaused ? undefined : 1 }}
-          transition={{ duration: 8, ease: "linear" }}
-          className="h-full origin-left box-shadow-glow"
-          style={{ backgroundColor: style.accentHex, boxShadow: `0 0 10px ${style.accentHex}` }}
-        />
-      </div>
-
-      <motion.div
-        style={{ y: yOffset, opacity }}
-        className={`relative z-10 w-full px-5 sm:px-8 md:px-16 lg:px-24 pt-20 sm:pt-20 md:pt-24`}
-        dir={clientIsRtl ? "rtl" : "ltr"}
-      >
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={item.id}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-            className={`max-w-5xl ${clientIsRtl ? "mr-0 ml-auto text-right" : ""}`}
-          >
             <motion.div
-              custom={1}
+              custom={0}
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`mb-4 sm:mb-6 md:mb-8 flex items-center gap-4 ${clientIsRtl ? "justify-start" : ""}`}
+              className="flex items-center gap-3 mb-8"
             >
-              <span className="text-4xl drop-shadow-md">{style.emoji}</span>
-              <span
-                className={`text-[10px] font-bold uppercase tracking-[0.05em] ${style.textClass} border px-5 py-2 rounded-full backdrop-blur-sm shadow-sm`}
-                style={{ borderColor: style.accentHex + "60", backgroundColor: style.accentLight }}
-              >
-                {t(style.label)}
-              </span>
+              <div className="px-5 py-2 border border-accent/40 bg-accent/10 backdrop-blur-md rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(194,164,92,0.15)]">
+                <span className="text-xl animate-pulse">{style.emoji}</span>
+                <span className="text-[11px] font-black uppercase tracking-[0.25em] text-accent">
+                  {t(style.label)}
+                </span>
+              </div>
             </motion.div>
 
-            <motion.h1
-              custom={2}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className={`text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-display font-black text-white mb-4 sm:mb-6 md:mb-8 tracking-tight ${clientIsRtl ? "md:text-5xl lg:text-6xl" : ""}`}
-              style={{
-                textShadow: `0 0 40px ${style.accentHex}30`,
-                lineHeight: clientIsRtl ? 1.6 : 1.05,
-                paddingBottom: clientIsRtl ? "0.3em" : undefined,
-                x: mousePosition.x * -1,
-                y: mousePosition.y * -1
-              }}
-            >
-              {item.title}
-            </motion.h1>
+            <div className="flex flex-wrap gap-x-4 mb-8">
+              {item.title?.split(" ").map((word, i) => (
+                <div key={i} className="overflow-hidden">
+                  <motion.h1
+                    custom={i}
+                    variants={wordVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] tracking-tighter"
+                    style={{
+                      background: "linear-gradient(180deg, #ffffff 45%, #c2a45c 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    {word}
+                  </motion.h1>
+                </div>
+              ))}
+            </div>
 
             <motion.p
               custom={3}
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`text-sm sm:text-base md:text-xl text-white/70 max-w-2xl leading-relaxed font-light mb-6 sm:mb-8 md:mb-12 ${clientIsRtl ? "lg:text-lg max-w-xl" : ""}`}
-              style={{
-                x: mousePosition.x * -0.5,
-                y: mousePosition.y * -0.5
-              }}
+              className="text-lg sm:text-xl text-white/50 max-w-xl leading-relaxed font-light mb-12"
             >
               {item.summary}
             </motion.p>
@@ -330,101 +396,103 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
               variants={textVariants}
               initial="hidden"
               animate="visible"
-              className={`flex flex-col sm:flex-row gap-4 sm:gap-5 ${clientIsRtl ? "justify-start" : ""}`}
             >
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 font-bold border-0 hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl"
-                  style={{ backgroundColor: style.accentHex, color: "#1a1005", boxShadow: `0 8px 30px ${style.accentHex}40` }}
-                >
-                  {t("hero.updates.cta_talk")}
-                </Button>
-              </Link>
-              <Link href="/packages" className="w-full sm:w-auto">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full sm:w-auto rounded-full text-sm md:text-base h-12 md:h-14 px-6 md:px-10 bg-white/5 backdrop-blur-sm font-semibold text-white border-white/20 hover:bg-white/10 hover:border-white/40 hover:scale-105 transition-all duration-300"
-                >
-                  {t("hero.updates.cta_expertise")}
-                </Button>
-              </Link>
+              <MagneticButton>
+                <Link href={item.projectId ? `/projects/${item.projectId}` : item.serviceId ? `/services/${item.serviceId}` : "/contact"}>
+                  <Button
+                    size="lg"
+                    className="group relative overflow-hidden rounded-full bg-accent text-black px-12 h-16 font-black text-lg transition-all duration-500 shadow-[0_0_30px_rgba(194,164,92,0.4)]"
+                  >
+                    <span className="relative z-10">{item.projectId || item.serviceId ? t("hero.updates.cta_view") : t("hero.updates.cta_talk")}</span>
+                    <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                  </Button>
+                </Link>
+              </MagneticButton>
             </motion.div>
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
-
-      <div
-        className="absolute bottom-4 sm:bottom-8 md:bottom-12 left-0 right-0 px-4 sm:px-6 md:px-16 lg:px-24 z-20 flex items-center justify-between"
-        dir={clientIsRtl ? "rtl" : "ltr"}
-      >
-        <div className="text-sm font-mono text-white/30 tracking-widest">
-          <span className="font-bold text-lg" style={{ color: style.accentHex }}>
-            {String(activeIdx + 1).padStart(2, "0")}
-          </span>
-          <span className="mx-2 opacity-50">/</span>
-          <span>{String(items.length).padStart(2, "0")}</span>
-        </div>
-
-        <div className="flex items-center gap-6">
-          <div className="flex gap-3">
-            <button
-              onClick={prev}
-              className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
-              aria-label="Previous"
-            >
-              {isRtl ? (
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-              ) : (
-                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-              )}
-            </button>
-            <button
-              onClick={next}
-              className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 group"
-              aria-label="Next"
-            >
-              {isRtl ? (
-                <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-              ) : (
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-              )}
-            </button>
           </div>
 
-          <div className="h-8 w-px bg-white/10 mx-2 hidden md:block"></div>
+          {/* Image Side */}
+          <div className="w-full lg:w-1/2 h-full relative order-1 lg:order-2 overflow-hidden lg:rounded-l-[4rem]">
+            <motion.div
+              initial={{ scale: 1.2, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full h-full relative"
+              style={{
+                x: isMobile ? 0 : mousePosition.x * -0.6,
+                y: isMobile ? 0 : mousePosition.y * -0.6,
+              }}
+            >
+              {item.imageUrl && (
+                <>
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title || "Feature"}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Subtle pattern overlay on the image itself */}
+                  <div className="absolute inset-0 bg-mesopot-rosette opacity-[0.05] mix-blend-overlay" />
+                </>
+              )}
+              {/* Cinematic overlays */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent lg:hidden" />
+              <div className="absolute inset-0 bg-black/20" />
+            </motion.div>
 
-          <div className="flex gap-2.5 hidden md:flex">
-            {localizedItems.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={`rounded-full transition-all duration-500 ease-out ${i === activeIdx ? "w-8 h-1.5 opacity-100" : "w-1.5 h-1.5 opacity-30 hover:opacity-100"}`}
-                style={{ backgroundColor: i === activeIdx ? style.accentHex : "white" }}
-                aria-label={`Go to update ${i + 1}`}
-              />
-            ))}
+            {/* Content Frame */}
+            <CornerBrackets className="hidden lg:block opacity-60" />
+
+            {/* Glowing separator */}
+            <div className="absolute left-0 top-[15%] bottom-[15%] w-px bg-gradient-to-b from-transparent via-accent/50 to-transparent hidden lg:block shadow-[0_0_15px_rgba(194,164,92,0.3)]" />
           </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* ── NAVIGATION CONTROLS ── */}
+
+      {/* Progress Ring (Replacing bar for "Better" look) */}
+      <div className="absolute bottom-12 right-12 w-20 h-20 z-50 flex items-center justify-center">
+        <svg className="w-full h-full -rotate-90">
+          <circle cx="40" cy="40" r="36" className="stroke-white/5 fill-none" strokeWidth="2" />
+          <motion.circle
+            key={activeIdx}
+            cx="40" cy="40" r="36"
+            className="stroke-accent fill-none"
+            strokeWidth="2"
+            strokeDasharray="226.2"
+            initial={{ strokeDashoffset: 226.2 }}
+            animate={{ strokeDashoffset: isPaused ? undefined : 0 }}
+            transition={{ duration: 9, ease: "linear" }}
+          />
+        </svg>
+        <div className="absolute flex flex-col items-center">
+          <span className="text-xl font-display font-black text-white leading-none">{(activeIdx + 1)}</span>
+          <span className="text-[10px] text-white/40 uppercase font-bold tracking-tighter">/ {localizedItems.length}</span>
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pb-8 cursor-pointer"
-        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-      >
-        <span className={`text-[10px] uppercase tracking-[0.05em] font-medium text-white/30 mb-3 ${clientIsRtl ? 'mr-1' : 'ml-1'}`}>{t("hero.updates.scroll")}</span>
-        <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/20 to-white/0 relative overflow-hidden">
-          <motion.div
-            className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white/80"
-            animate={{ y: [-50, 64] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-      </motion.div>
+      {/* Control Arrows */}
+      <div className="absolute bottom-12 left-12 flex gap-3 z-50">
+        <button
+          onClick={prev}
+          className="w-16 h-16 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl flex items-center justify-center text-white/40 hover:text-accent hover:border-accent/50 hover:bg-white/10 transition-all duration-500 group shadow-2xl"
+        >
+          <ChevronLeft className="w-7 h-7 group-hover:-translate-x-1.5 transition-transform" />
+        </button>
+        <button
+          onClick={next}
+          className="w-16 h-16 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl flex items-center justify-center text-white/40 hover:text-accent hover:border-accent/50 hover:bg-white/10 transition-all duration-500 group shadow-2xl"
+        >
+          <ChevronRight className="w-7 h-7 group-hover:translate-x-1.5 transition-transform" />
+        </button>
+      </div>
+
+      {/* Gold horizontal accent (bottom edge) */}
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
     </section>
   );
 }

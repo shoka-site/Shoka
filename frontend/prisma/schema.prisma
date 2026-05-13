@@ -86,6 +86,9 @@ model PlatformUpdate {
   published Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  
+  projectId String?  @map("project_id")
+  serviceId String?  @map("service_id")
 
   @@map("platform_updates")
   @@index([published, date])

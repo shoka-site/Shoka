@@ -73,7 +73,7 @@ export type Testimonial = z.infer<typeof testimonialSchema>;
 export const platformUpdateSchema = z.object({
     id: z.string().uuid(),
     order: z.number().default(0),
-    type: z.enum(["news", "achievement", "event", "new"]).default("news"),
+    type: z.enum(["news", "achievement", "event", "new", "project", "service"]).default("news"),
     titleEn: z.string(),
     titleAr: z.string(),
     summaryEn: z.string(),
@@ -81,6 +81,8 @@ export const platformUpdateSchema = z.object({
     date: z.coerce.date(),
     imageUrl: z.string().optional().nullable(),
     published: z.boolean().default(true),
+    projectId: z.string().uuid().optional().nullable(),
+    serviceId: z.string().uuid().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });
