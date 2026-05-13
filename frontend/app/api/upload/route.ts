@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
 import { assertAdmin } from '@/lib/auth';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
 // Allowed MIME types — validated by magic bytes below, not just file.type
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
@@ -30,7 +31,7 @@ function sanitizeFilename(name: string): string {
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9.\-]/g, '')
-    .replace(/\.{2,}/g, '.'); // prevent path traversal via double dots
+    .replace(/\.{2,}/g, '.');
 }
 
 export async function POST(req: NextRequest) {
@@ -56,7 +57,6 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Validate by magic bytes — never trust the MIME type from the client
     const detectedType = detectMimeType(buffer);
     if (!detectedType || !ALLOWED_TYPES.has(detectedType)) {
       return NextResponse.json({ success: false, error: { code: 'INVALID_FILE', message: 'File content does not match an allowed type' } }, { status: 400 });
@@ -65,32 +65,25 @@ export async function POST(req: NextRequest) {
     const ext = sanitizeFilename(file.name).split('.').pop() ?? 'bin';
     const safeFilename = `${randomUUID()}.${ext}`;
 
-    // Upload to Vercel Blob
-    const blob = await put(safeFilename, buffer, {
-        access: 'public',
-        contentType: detectedType,
-    });
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+    await mkdir(uploadDir, { recursive: true });
+    const filePath = path.join(uploadDir, safeFilename);
+    await writeFile(filePath, buffer);
+
+    const url = `/uploads/${safeFilename}`;
 
     return NextResponse.json({ 
         success: true, 
-        data: { 
-            url: blob.url 
-        } 
+        data: { url } 
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Upload failed:', error);
-    
-    // Provide more context for common failures
-    let message = 'Upload failed';
-    if (error?.message?.includes('BLOB_READ_WRITE_TOKEN')) {
-        message = 'Storage configuration error: Missing BLOB_READ_WRITE_TOKEN';
-    }
 
     return NextResponse.json({ 
         success: false, 
         error: { 
             code: 'UPLOAD_FAILED', 
-            message 
+            message: 'Upload failed'
         } 
     }, { status: 500 });
   }
