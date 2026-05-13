@@ -2,11 +2,10 @@
 
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, Star, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 type UpdateType = "news" | "achievement" | "event" | "new" | "project" | "service";
