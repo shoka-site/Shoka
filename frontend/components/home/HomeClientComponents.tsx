@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
@@ -109,7 +109,7 @@ export function FadeInSection({ children, delay = 0, className = "" }: { childre
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
       className={className}
     >
       {children}
@@ -243,21 +243,21 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   const item = localizedItems[activeIdx];
   const style = (updateStyle as Record<string, typeof updateStyle.news>)[item?.type] ?? updateStyle.news;
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.2 + custom * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { delay: 0.2 + custom * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     })
   };
 
-  const wordVariants = {
+  const wordVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.3 + i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { delay: 0.3 + i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }
     })
   };
 
@@ -416,7 +416,7 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
             <motion.div
               initial={{ scale: 1.2, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
               className="w-full h-full relative"
               style={{
                 x: isMobile ? 0 : mousePosition.x * -0.6,
