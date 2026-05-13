@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
+import { put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
 import { assertAdmin } from '@/lib/auth';
 
@@ -66,28 +65,34 @@ export async function POST(req: NextRequest) {
     const ext = sanitizeFilename(file.name).split('.').pop() ?? 'bin';
     const safeFilename = `${randomUUID()}.${ext}`;
 
-    // Use local filesystem storage as requested
-    const uploadDir = join(process.cwd(), 'public', 'uploads');
-    
-    // Ensure directory exists
-    try {
-        await mkdir(uploadDir, { recursive: true });
-    } catch (e) {
-        // Directory might already exist
-    }
+    // Upload to Vercel Blob
+    const blob = await put(safeFilename, buffer, {
+        access: 'public',
+        contentType: detectedType,
+    });
 
-    const path = join(uploadDir, safeFilename);
-    await writeFile(path, buffer);
-
-    // Return the relative URL which Next.js will serve from the public directory
     return NextResponse.json({ 
         success: true, 
         data: { 
-            url: `/uploads/${safeFilename}` 
+            url: blob.url 
         } 
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Upload failed:', error);
-    return NextResponse.json({ success: false, error: { code: 'UPLOAD_FAILED', message: 'Upload failed' } }, { status: 500 });
+    
+    // Provide more context for common failures
+    let message = 'Upload failed';
+    if (error?.message?.includes('BLOB_READ_WRITE_TOKEN')) {
+        message = 'Storage configuration error: Missing BLOB_READ_WRITE_TOKEN';
+    }
+
+    return NextResponse.json({ 
+        success: false, 
+        error: { 
+            code: 'UPLOAD_FAILED', 
+            message 
+        } 
+    }, { status: 500 });
   }
 }
+
