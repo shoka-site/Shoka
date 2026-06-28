@@ -59,7 +59,7 @@ const nextConfig = {
 
   generateEtags: true,
   trailingSlash: true,
-  output: 'standalone',
+  output: process.env.VERCEL ? undefined : 'standalone',
 
   // ---------------------------------------------------------------------------
   // Security + caching headers
