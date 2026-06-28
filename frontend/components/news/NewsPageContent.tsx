@@ -3,6 +3,7 @@
 import Section from "@/components/layout/Section";
 import Link from "next/link";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Newspaper, Trophy, Calendar, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -142,23 +143,13 @@ export function NewsPageContent({ updates }: Props) {
                     <CardContent className="p-0 flex flex-col flex-1 relative z-10">
                       {update.images && update.images.length > 0 && update.images[0]?.trim() !== "" && (
                         <div className="relative w-full aspect-video">
-                          <Image
+                          <SafeImage
                             src={update.images[0]}
                             alt={pick(update.titleEn, update.titleAr)}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              const type = update.type as string;
-                              const placeholders: Record<string, string> = {
-                                news: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070",
-                                achievement: "https://images.unsplash.com/photo-1523287562758-66c7fc58967f?q=80&w=2070",
-                                event: "https://images.unsplash.com/photo-1506784919175-5028aa82902b?q=80&w=2070",
-                                new: "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070",
-                              };
-                              target.src = placeholders[type] || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
-                            }}
+                            fallbackType={update.type}
                           />
                         </div>
                       )}

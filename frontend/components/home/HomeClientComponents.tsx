@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft, Star, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 
@@ -439,25 +440,14 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
                 if (finalSrc && finalSrc.trim() !== "") {
                   return (
                     <>
-                      <Image
+                      <SafeImage
                         src={finalSrc}
                         alt={item.title || "Feature"}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover"
                         priority
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          const type = item.type as string;
-                          const placeholders: Record<string, string> = {
-                            news: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070",
-                            achievement: "https://images.unsplash.com/photo-1523287562758-66c7fc58967f?q=80&w=2070",
-                            project: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015",
-                            service: "https://images.unsplash.com/photo-1454165833767-027508658d61?q=80&w=2070",
-                          };
-                          target.src = placeholders[type] || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
-                          console.warn(`Hero image failed to load: ${finalSrc}. Falling back to placeholder.`);
-                        }}
+                        fallbackType={item.type}
                       />
                       <div className="absolute inset-0 bg-mesopot-rosette opacity-[0.05] mix-blend-overlay" />
                     </>
