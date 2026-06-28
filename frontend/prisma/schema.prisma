@@ -27,6 +27,8 @@ model Service {
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
   type          String   @default("Other")
+  keywordsEn    String?  @map("keywords_en")
+  keywordsAr    String?  @map("keywords_ar")
 
   platformUpdates PlatformUpdate[]
 
@@ -48,6 +50,8 @@ model Project {
   published      Boolean          @default(true)
   status         String           @default("past")
   liveUrl        String?          @map("live_url")
+  keywordsEn     String?          @map("keywords_en")
+  keywordsAr     String?          @map("keywords_ar")
   createdAt      DateTime         @default(now()) @map("created_at")
   updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
   PlatformUpdate PlatformUpdate[]
@@ -106,6 +110,8 @@ model Industry {
   descriptionEn String     @map("description_en")
   descriptionAr String     @map("description_ar")
   published     Boolean    @default(true)
+  keywordsEn    String?    @map("keywords_en")
+  keywordsAr    String?    @map("keywords_ar")
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
   solutions     Solution[]
@@ -183,6 +189,8 @@ model Package {
   descriptionEn String?  @map("description_en")
   descriptionAr String?  @map("description_ar")
   published     Boolean  @default(true)
+  keywordsEn    String?  @map("keywords_en")
+  keywordsAr    String?  @map("keywords_ar")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 

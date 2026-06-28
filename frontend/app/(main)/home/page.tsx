@@ -16,9 +16,40 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "استكشف خدمات سهلة المتكاملة في تطوير البرمجيات المخصصة، أنظمة ERP، وحلول التحول الرقمي للشركات والمؤسسات في العراق."
     : "Explore Sehle's integrated services in custom software development, ERP systems, and digital transformation solutions for enterprises in Iraq.";
 
+  const keywords = lang === "ar"
+    ? [
+        "حلول برمجية",
+        "حل مشاكل الأعمال",
+        "أنظمة إدارة",
+        "أنظمة ERP",
+        "برمجيات للشركات",
+        "تطوير برمجيات مخصصة",
+        "التحول الرقمي",
+        "شركة تقنية",
+        "برمجة تطبيقات",
+        "حلول تقنية للقطاعات"
+      ]
+    : [
+        "software company Iraq",
+        "web development Iraq",
+        "software development Baghdad",
+        "IT company Iraq",
+        "digital transformation Iraq",
+        "mobile app development Iraq",
+        "custom software Iraq",
+        "software solutions Iraq",
+        "ERP system Iraq",
+        "business problem solving",
+        "management solutions",
+        "software development company",
+        "custom software solutions",
+        "enterprise software Iraq"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

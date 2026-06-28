@@ -14,9 +14,29 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "تعرف على شركة سهلة، قصتنا، فريق عملنا من المهندسين والخبراء، ورسالتنا لتمكين الشركات العراقية من خلال الابتكار والحلول البرمجية المتطورة."
     : "Learn about Sehle, our story, our team of experts and engineers, and our mission to empower Iraqi businesses through innovation and cutting-edge software.";
 
+  const keywords = lang === "ar"
+    ? [
+        "عن سهلة",
+        "شركة برمجيات عراقية",
+        "مؤسسو سهلة",
+        "مهندسون عراقيون",
+        "شركة تقنية عراقية",
+        "تاريخ سهلة",
+        "فريق سهلة"
+      ]
+    : [
+        "about Sehle",
+        "Iraqi software founders",
+        "Iraq tech startup",
+        "who is Sehle",
+        "Sehle company",
+        "Sehle Iraq"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

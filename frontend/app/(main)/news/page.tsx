@@ -14,9 +14,26 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "تابع آخر أخبار شركة سهلة، إنجازاتنا البرمجية، مشاركتنا في الفعاليات التقنية، وتحديثات منصتنا الرقمية في العراق."
     : "Follow Sehle's latest news, software achievements, participation in tech events, and digital platform updates in Iraq.";
 
+  const keywords = lang === "ar"
+    ? [
+        "أخبار سهلة",
+        "إنجازات سهلة",
+        "أخبار تقنية عراق",
+        "مستجدات برمجيات عراق",
+        "شركة برمجيات عراقية أخبار"
+      ]
+    : [
+        "Sehle news",
+        "Iraq tech news",
+        "software company Iraq achievements",
+        "Sehle achievements",
+        "Sehle updates"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

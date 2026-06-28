@@ -15,6 +15,8 @@ const EMPTY_FORM = {
     titleAr: "",
     descriptionEn: "",
     descriptionAr: "",
+    keywordsEn: "",
+    keywordsAr: "",
     published: true,
 };
 
@@ -83,6 +85,8 @@ export default function AdminPackages() {
             titleAr: (raw.titleAr ?? "") as string,
             descriptionEn: (raw.descriptionEn ?? pkg.description ?? "") as string,
             descriptionAr: (raw.descriptionAr ?? "") as string,
+            keywordsEn: (raw.keywordsEn ?? "") as string,
+            keywordsAr: (raw.keywordsAr ?? "") as string,
             published: pkg.published,
         });
         setEditingId(pkg.id);
@@ -159,6 +163,26 @@ export default function AdminPackages() {
                                     value={formData.descriptionAr as string}
                                     onChange={(e) => setFormData({ ...formData, descriptionAr: e.target.value })}
                                     className="min-h-[100px] text-sm text-right"
+                                    dir="rtl"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Keywords */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Keywords</label>
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input
+                                    placeholder="Keywords (English) - comma separated"
+                                    value={formData.keywordsEn as string}
+                                    onChange={(e) => setFormData({ ...formData, keywordsEn: e.target.value })}
+                                    className="text-sm"
+                                />
+                                <Input
+                                    placeholder="الكلمات المفتاحية (العربية) - comma separated"
+                                    value={formData.keywordsAr as string}
+                                    onChange={(e) => setFormData({ ...formData, keywordsAr: e.target.value })}
+                                    className="text-sm text-right"
                                     dir="rtl"
                                 />
                             </div>

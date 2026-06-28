@@ -21,9 +21,27 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "شاهد معرض أعمال شركة سهلة والمشاريع الرقمية التي قمنا بتنفيذها بنجاح لمختلف القطاعات والشركات في العراق والمنطقة."
     : "View Sehle's portfolio and the successful digital projects we have delivered for various industries and businesses in Iraq and the region.";
 
+  const keywords = lang === "ar"
+    ? [
+        "مشاريع برمجية عراق",
+        "معرض أعمال سهلة",
+        "مشاريع تطوير مواقع عراق",
+        "مشاريع تطبيقات عراق",
+        "أعمال شركة برمجيات عراقية"
+      ]
+    : [
+        "software portfolio Iraq",
+        "Sehle projects",
+        "Iraq web projects",
+        "tech projects Iraq",
+        "case studies Iraq software",
+        "Sehle portfolio"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

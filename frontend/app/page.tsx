@@ -6,16 +6,37 @@ export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
   const title = lang === "ar"
-    ? "سهلة | منصة الأنظمة الرقمية والحلول البرمجية في العراق"
-    : "Sehle | Digital Systems & Software Solutions Platform in Iraq";
+    ? "سهلة | حلول رقمية متكاملة في العراق"
+    : "Sehla | Leading Digital Solutions & Software in Iraq";
 
   const description = lang === "ar"
-    ? "مرحباً بكم في منصة سهلة، شريككم الموثوق لبناء التميز الرقمي وتطوير الأنظمة البرمجية المخصصة والتحول الرقمي للشركات في العراق."
-    : "Welcome to Sehle, your trusted partner for digital excellence, custom software systems, and digital transformation for businesses in Iraq.";
+    ? "شركة سهلة للأنظمة الرقمية والحلول البرمجية في العراق. نقدم خدمات تطوير برمجيات مخصصة، تطبيقات ويب وموبايل، وحلولاً رقمية متكاملة للشركات والمؤسسات لتحقيق التميز الرقمي."
+    : "Sehle is a leading digital systems and software solutions company in Iraq. We offer custom software development, web and mobile applications, and comprehensive digital solutions to help businesses and organizations achieve digital excellence.";
+
+  const keywords = lang === "ar"
+    ? [
+        "سهلة",
+        "شركة برمجيات عراقية",
+        "حلول برمجية في العراق",
+        "تطوير برمجيات مخصصة",
+        "التحول الرقمي في العراق",
+        "أنظمة رقمية متكاملة",
+        "تطوير تطبيقات ويب وموبايل"
+      ]
+    : [
+        "Sehla",
+        "Sehle",
+        "Iraq software company",
+        "custom software development",
+        "digital solutions Iraq",
+        "integrated digital systems",
+        "web and mobile applications"
+      ];
 
   return {
     title: { absolute: title },
     description,
+    keywords,
     openGraph: {
       title,
       description,

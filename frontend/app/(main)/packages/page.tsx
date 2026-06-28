@@ -14,9 +14,31 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "تصفح باقات سهلة البرمجية المتكاملة والمصممة خصيصاً لتلبية احتياجات شركتك بمرونة وموثوقية عالية وبأسعار تنافسية."
     : "Browse Sehle's integrated software packages, specially designed to meet your business needs with high flexibility, reliability, and competitive pricing.";
 
+  const keywords = lang === "ar"
+    ? [
+        "باقات برمجية عراق",
+        "حلول برمجية جاهزة العراق",
+        "باقات تطوير مواقع العراق",
+        "نظام CRM العراق",
+        "نظام تجارة إلكترونية العراق",
+        "حلول أعمال العراق",
+        "برامج إدارة الشركات العراق"
+      ]
+    : [
+        "software packages Iraq",
+        "business software Iraq",
+        "ready-made software Iraq",
+        "CRM Iraq",
+        "e-commerce package Iraq",
+        "business management software Iraq",
+        "affordable software Iraq",
+        "Sehle packages"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

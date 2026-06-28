@@ -21,9 +21,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = lang === "ar" ? (service.titleAr || service.titleEn) : service.titleEn;
   const desc = lang === "ar" ? (service.descriptionAr || service.descriptionEn) : service.descriptionEn;
 
+  // Retrieve keywords from the database if available, otherwise fall back to title-based keywords
+  let keywords: string[] = [];
+  const dbKeywords = lang === "ar" ? service.keywordsAr : service.keywordsEn;
+  if (dbKeywords) {
+    keywords = dbKeywords.split(/[،,]+/).map(k => k.trim()).filter(Boolean);
+  } else {
+    keywords = [
+      title,
+      service.type,
+      ...(lang === "ar" ? ["خدمات سهلة", "حلول سهلة البرمجية"] : ["Sehle services", "Sehle software solutions"])
+    ].filter(Boolean);
+  }
+
   return {
     title,
     description: desc ? desc.substring(0, 160) : "",
+    keywords,
     openGraph: {
       title,
       description: desc ? desc.substring(0, 160) : "",

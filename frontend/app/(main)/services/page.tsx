@@ -14,9 +14,32 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "اكتشف خدمات شركة سهلة المتخصصة في بناء وتطوير المواقع، تطبيقات الهاتف، الأنظمة السحابية والتحول الرقمي الشامل."
     : "Discover Sehle's specialized services in building and developing websites, mobile apps, cloud systems, and comprehensive digital transformation.";
 
+  const keywords = lang === "ar"
+    ? [
+        "خدمات برمجية",
+        "حل مشاكل الأعمال",
+        "تطوير مواقع",
+        "تطوير تطبيقات الجوال",
+        "نظام ERP",
+        "ذكاء اصطناعي",
+        "برمجة مخصصة",
+        "حلول سحابية"
+      ]
+    : [
+        "software services",
+        "business problem solving",
+        "web development",
+        "mobile app development",
+        "ERP system",
+        "AI solutions",
+        "custom software development",
+        "management solutions"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

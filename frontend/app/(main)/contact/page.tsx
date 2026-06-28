@@ -15,9 +15,29 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "تواصل مع فريق سهلة اليوم لمناقشة مشروعك البرمجي القادم. نحن هنا لتقديم الاستشارات الفنية والحلول التقنية المبتكرة لأعمالك."
     : "Contact the Sehle team today to discuss your next software project. We are here to provide technical consultations and innovative tech solutions.";
 
+  const keywords = lang === "ar"
+    ? [
+        "تواصل مع سهلة",
+        "استشارة برمجية مجانية العراق",
+        "طلب خدمة برمجية العراق",
+        "تواصل شركة برمجيات عراق",
+        "احجز استشارة برمجة",
+        "رقم سهلة",
+        "ايميل سهلة"
+      ]
+    : [
+        "contact Sehle Iraq",
+        "free software consultation Iraq",
+        "hire software developer Iraq",
+        "get a quote software Iraq",
+        "software inquiry Iraq",
+        "Sehle contact"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,

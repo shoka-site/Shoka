@@ -24,6 +24,8 @@ export default function AdminProjects() {
         descriptionEn: "",
         descriptionAr: "",
         liveUrl: "",
+        keywordsEn: "",
+        keywordsAr: "",
         featured: false,
         order: 1,
         published: true,
@@ -90,6 +92,8 @@ export default function AdminProjects() {
             descriptionEn: "",
             descriptionAr: "",
             liveUrl: "",
+            keywordsEn: "",
+            keywordsAr: "",
             featured: false,
             order: 1,
             published: true,
@@ -151,6 +155,8 @@ export default function AdminProjects() {
             descriptionEn: (raw.descriptionEn ?? project.description ?? "") as string,
             descriptionAr: (raw.descriptionAr ?? project.description ?? "") as string,
             liveUrl: (project.liveUrl ?? "") as string,
+            keywordsEn: (raw.keywordsEn ?? "") as string,
+            keywordsAr: (raw.keywordsAr ?? "") as string,
             featured: project.featured,
             order: project.order,
             published: project.published,
@@ -269,6 +275,19 @@ export default function AdminProjects() {
                                 value={formData.descriptionAr}
                                 onChange={(e) => setFormData({ ...formData, descriptionAr: e.target.value })}
                                 required
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <Input
+                                placeholder="Keywords (English) - comma separated"
+                                value={formData.keywordsEn}
+                                onChange={(e) => setFormData({ ...formData, keywordsEn: e.target.value })}
+                            />
+                            <Input
+                                placeholder="Keywords (Arabic) - comma separated"
+                                value={formData.keywordsAr}
+                                onChange={(e) => setFormData({ ...formData, keywordsAr: e.target.value })}
                             />
                         </div>
 

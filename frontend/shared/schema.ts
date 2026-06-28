@@ -23,6 +23,8 @@ export const serviceSchema = z.object({
     descriptionEn: z.string(),
     descriptionAr: z.string(),
     published: z.boolean().default(true),
+    keywordsEn: z.string().optional().nullable(),
+    keywordsAr: z.string().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
     packageId: z.string().uuid().nullable().optional(),
@@ -44,6 +46,8 @@ export const projectSchema = z.object({
     published: z.boolean().default(true),
     status: z.string().default("past"),
     liveUrl: z.string().optional().nullable(),
+    keywordsEn: z.string().optional().nullable(),
+    keywordsAr: z.string().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });
@@ -97,6 +101,8 @@ export const industrySchema = z.object({
     descriptionEn: z.string(),
     descriptionAr: z.string(),
     published: z.boolean().default(true),
+    keywordsEn: z.string().optional().nullable(),
+    keywordsAr: z.string().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });
@@ -160,7 +166,11 @@ export const packageSchema = z.object({
     order: z.number(),
     titleEn: z.string(),
     titleAr: z.string(),
+    descriptionEn: z.string().optional().nullable(),
+    descriptionAr: z.string().optional().nullable(),
     published: z.boolean().default(true),
+    keywordsEn: z.string().optional().nullable(),
+    keywordsAr: z.string().optional().nullable(),
     createdAt: z.date(),
     updatedAt: z.date(),
 });

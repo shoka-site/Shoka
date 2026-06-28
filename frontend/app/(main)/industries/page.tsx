@@ -14,9 +14,24 @@ export async function generateMetadata(): Promise<Metadata> {
     ? "نقدم حلولاً برمجية متخصصة ومصممة لتناسب مختلف القطاعات كالتجارة، الصحة، التعليم، المقاولات وغيرها في السوق العراقي."
     : "We provide specialized software solutions tailored to suit various industries such as retail, healthcare, education, construction, and more in Iraq.";
 
+  const keywords = lang === "ar"
+    ? [
+        "حلول قطاعية",
+        "برمجيات للقطاعات العراقية",
+        "حلول برمجية متخصصة",
+        "أنظمة إدارة الصناعات"
+      ]
+    : [
+        "industry solutions",
+        "Iraq industry software",
+        "tailored business solutions",
+        "industry management systems"
+      ];
+
   return {
     title,
     description,
+    keywords,
     openGraph: {
       title,
       description,
