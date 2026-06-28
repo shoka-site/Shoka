@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@/components/layout/Section";
+import { Heading } from "@/components/seo/SeoHelpers";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -68,9 +69,7 @@ export function IndustriesPageContent({ industries }: Props) {
                 </Badge>
               </motion.div>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-8 leading-[1.05] tracking-tight text-white">
-              {t("home.industries.title")}
-            </h1>
+            <Heading title={t("home.industries.title")} />
             <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
               {t("home.industries.description")}
             </p>

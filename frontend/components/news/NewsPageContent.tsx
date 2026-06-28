@@ -21,6 +21,8 @@ export function NewsPageContent({ updates }: Props) {
 
   const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const latestDate = updates.length > 0 ? new Date(Math.max(...updates.map(u => new Date(u.date).getTime()))) : null;
+  const formattedLatest = latestDate ? latestDate.toLocaleDateString(isRtl ? "ar-EG" : "en-US", { year: "numeric", month: "long", day: "numeric" }) : null;
 
   const pick = (enVal: string, arVal: string) => isRtl ? (arVal || enVal) : enVal;
 
@@ -51,6 +53,11 @@ export function NewsPageContent({ updates }: Props) {
 
   return (
     <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">
+      {formattedLatest && (
+        <p className="text-center text-white/60 text-sm mt-2">
+          {`Last updated: ${formattedLatest}`}
+        </p>
+      )}
       {/* Hero */}
       <div className="relative h-[55vh] min-h-[450px] flex flex-col justify-center overflow-hidden bg-black text-white pt-24">
         <motion.div

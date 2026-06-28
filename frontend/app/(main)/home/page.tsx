@@ -3,6 +3,28 @@ import { getServerTranslation } from "@/lib/server-i18n";
 import { HeroUpdatesClient, ScrollProgressBar } from "@/components/home/HomeClientComponents";
 import { WhyUsBanner, PhilosophySection, ProcessSection, ResultsSection, OutcomesSection } from "@/components/home/HomeStaticSections";
 import { ServicesSectionClient, ProjectsSectionClient, PackagesSectionClient, TestimonialsSectionClient } from "@/components/home/HomeDataSections";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { lang } = await getServerTranslation();
+
+  const title = lang === "ar"
+    ? "الأنظمة الرقمية والحلول البرمجية المتكاملة"
+    : "Digital Systems & Integrated Software Solutions";
+
+  const description = lang === "ar"
+    ? "استكشف خدمات سهلة المتكاملة في تطوير البرمجيات المخصصة، أنظمة ERP، وحلول التحول الرقمي للشركات والمؤسسات في العراق."
+    : "Explore Sehle's integrated services in custom software development, ERP systems, and digital transformation solutions for enterprises in Iraq.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    }
+  };
+}
 
 // Revalidation time for ISR
 export const revalidate = 60;

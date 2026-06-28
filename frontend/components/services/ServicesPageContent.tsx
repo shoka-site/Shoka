@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@/components/layout/Section";
+import { Heading } from "@/components/seo/SeoHelpers";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, LayoutGrid, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";

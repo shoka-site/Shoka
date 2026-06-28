@@ -2,6 +2,28 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { getServerTranslation } from "@/lib/server-i18n";
 import { ContactHero, InfoCard } from "@/components/contact/ContactClientComponents";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { lang } = await getServerTranslation();
+
+  const title = lang === "ar"
+    ? "تواصل معنا لمشروعك القادم"
+    : "Contact Us | Let's Discuss Your Next Project";
+
+  const description = lang === "ar"
+    ? "تواصل مع فريق سهلة اليوم لمناقشة مشروعك البرمجي القادم. نحن هنا لتقديم الاستشارات الفنية والحلول التقنية المبتكرة لأعمالك."
+    : "Contact the Sehle team today to discuss your next software project. We are here to provide technical consultations and innovative tech solutions.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    }
+  };
+}
 
 export default async function Contact() {
   const { t, isRtl } = await getServerTranslation();

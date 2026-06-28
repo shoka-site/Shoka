@@ -8,6 +8,28 @@ import { ProjectsHero, ProjectCard, FadeInSection } from "@/components/projects/
 import { Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/hooks/use-content";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { lang } = await getServerTranslation();
+
+  const title = lang === "ar"
+    ? "مشاريعنا | معرض أعمالنا وحلولنا الرقمية"
+    : "Our Projects | Portfolio & Digital Solutions";
+
+  const description = lang === "ar"
+    ? "شاهد معرض أعمال شركة سهلة والمشاريع الرقمية التي قمنا بتنفيذها بنجاح لمختلف القطاعات والشركات في العراق والمنطقة."
+    : "View Sehle's portfolio and the successful digital projects we have delivered for various industries and businesses in Iraq and the region.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    }
+  };
+}
 
 export const revalidate = 60;
 
