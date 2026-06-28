@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { assertAdmin } from '@/lib/auth';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import { put } from '@vercel/blob';
 
 // Allowed MIME types — validated by magic bytes below, not just file.type
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'application/pdf']);
@@ -65,12 +66,23 @@ export async function POST(req: NextRequest) {
     const ext = sanitizeFilename(file.name).split('.').pop() ?? 'bin';
     const safeFilename = `${randomUUID()}.${ext}`;
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    await mkdir(uploadDir, { recursive: true });
-    const filePath = path.join(uploadDir, safeFilename);
-    await writeFile(filePath, buffer);
+    let url = '';
 
-    const url = `/uploads/${safeFilename}`;
+    // If Vercel Blob token is configured, use it (recommended for production/Vercel)
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      const blob = await put(safeFilename, buffer, {
+        access: 'public',
+        contentType: detectedType,
+      });
+      url = blob.url;
+    } else {
+      // Otherwise, fall back to local disk storage (useful for local development)
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      await mkdir(uploadDir, { recursive: true });
+      const filePath = path.join(uploadDir, safeFilename);
+      await writeFile(filePath, buffer);
+      url = `/uploads/${safeFilename}`;
+    }
 
     return NextResponse.json({ 
         success: true, 
@@ -79,11 +91,17 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Upload failed:', error);
 
+    // Provide helpful context if the blob token is missing in a Vercel-like environment
+    let message = 'Upload failed';
+    if (error instanceof Error && error.message.includes('BLOB_READ_WRITE_TOKEN')) {
+      message = 'Storage configuration error: Missing BLOB_READ_WRITE_TOKEN';
+    }
+
     return NextResponse.json({ 
         success: false, 
         error: { 
             code: 'UPLOAD_FAILED', 
-            message: 'Upload failed'
+            message
         } 
     }, { status: 500 });
   }
