@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { storage } from '@/lib/storage';
 
 export async function GET() {
   try {
-    await prisma.$queryRaw`SELECT 1`;
+    const isOk = await storage.ping();
+    if (!isOk) {
+      throw new Error("Database ping failed");
+    }
     return NextResponse.json({
       status: 'ok',
       db: 'connected',

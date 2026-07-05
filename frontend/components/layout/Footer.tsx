@@ -66,6 +66,7 @@ export default function Footer({ lang }: FooterProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t("footer.newsletter.placeholder", "your@email.com")}
+                aria-label={t("footer.newsletter.input_label", "Email address for newsletter")}
                 className="flex-1 h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
                 required
               />
@@ -96,6 +97,9 @@ export default function Footer({ lang }: FooterProps) {
               <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.services')}</Link></li>
               <li><Link href="/projects" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.portfolio')}</Link></li>
               <li><Link href="/contact" className="text-white/60 hover:text-white transition-colors text-sm">{t('footer.links.contact')}</Link></li>
+              <li><Link href="/blog" className="text-white/60 hover:text-white transition-colors text-sm">{lang === "ar" ? "المدونة" : "Blog"}</Link></li>
+              <li><Link href="/refer" className="text-white/60 hover:text-white transition-colors text-sm">{lang === "ar" ? "برنامج الإحالة" : "Referral Program"}</Link></li>
+              <li><Link href="/social-kit" className="text-white/60 hover:text-white transition-colors text-sm">{lang === "ar" ? "حقيبة النشر" : "Social Kit"}</Link></li>
             </ul>
           </div>
 

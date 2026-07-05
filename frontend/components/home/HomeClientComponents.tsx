@@ -1,10 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft, Star, Sparkles } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
@@ -25,11 +24,11 @@ export interface PlatformUpdate {
   serviceId?: string | null;
   project?: {
     images?: string[];
-    [key: string]: any;
+    [key: string]: unknown;
   } | null;
   service?: {
     imageUrl?: string | null;
-    [key: string]: any;
+    [key: string]: unknown;
   } | null;
 }
 
@@ -129,7 +128,7 @@ export function CornerBrackets({ className = "" }: { className?: string }) {
   return (
     <>
       {(["tl", "tr", "bl", "br"] as const).map((c, i) => (
-        <motion.div
+         <motion.div
           key={c}
           className={`absolute pointer-events-none z-10 ${className}`}
           initial={{ opacity: 0 }}
@@ -181,7 +180,7 @@ export function MagneticButton({ children, className = "" }: { children: React.R
   );
 }
 
-export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; isRtl: boolean }) {
+export function HeroUpdatesClient({ items }: { items: PlatformUpdate[]; isRtl: boolean }) {
   const { t, i18n } = useTranslation();
 
   // Localize items reactively based on current language
@@ -193,9 +192,6 @@ export function HeroUpdatesClient({ items, isRtl }: { items: PlatformUpdate[]; i
   }));
 
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollY } = useScroll();
-  const opacityProgress = useTransform(scrollY, [0, 400], [1, 0]);
-
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);

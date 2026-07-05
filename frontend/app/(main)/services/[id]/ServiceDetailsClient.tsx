@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useService, useServices } from "@/hooks/use-content";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
+import ScrollTriggerPopup from "@/components/marketing/ScrollTriggerPopup";
 
 function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
@@ -376,6 +377,26 @@ export default function ServiceDetailsClient({ params }: { params: Promise<{ id:
           </FadeIn>
         </div>
       </Section>
+
+      {/* ── SCROLL-TRIGGER POPUP ─────────────────────────── */}
+      <ScrollTriggerPopup
+        mode="scroll"
+        scrollThreshold={60}
+        storageKey="service_scroll_popup"
+        suppressDays={7}
+        showEvent="service_scroll_popup_shown"
+        submitEvent="form_submit"
+        formType="service_scroll_popup"
+        title={{
+          en: "Want a Custom Quote?",
+          ar: "هل تريد عرض سعر مخصص؟",
+        }}
+        description={{
+          en: "Leave your details and we'll prepare a tailored proposal for this service within 24 hours.",
+          ar: "اتركْ بياناتك وسنُعدّ لك عرضاً مخصصاً لهذه الخدمة خلال 24 ساعة.",
+        }}
+        cta={{ en: "Get Custom Quote", ar: "احصل على عرض سعر" }}
+      />
     </div>
   );
 }

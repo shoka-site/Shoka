@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { AlertTriangle, RefreshCw, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import * as Sentry from "@sentry/nextjs";
+import Link from "next/link";
 
 export default function AdminError({
   error,
@@ -46,10 +47,10 @@ export default function AdminError({
             Try again
           </Button>
           <Button asChild>
-            <a href="/admin/dashboard" className="gap-2 flex items-center">
+            <Link href="/admin/dashboard" className="gap-2 flex items-center">
               <LayoutDashboard className="w-4 h-4" />
               Back to Dashboard
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

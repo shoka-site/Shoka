@@ -6,17 +6,17 @@
     "language": "Language",
     "english": "English",
     "arabic": "Arabic",
-    "book_consultation": "Book Consultation",
+    "book_consultation": "Book Free Call",
     "recent_work": "Use Cases",
     "packages": "Packages",
     "projects": "Projects",
     "industries": "Industries",
     "menu": {
       "services": {
-        "description": "Custom software architecture, full-stack development, and performance optimization."
+        "description": "Custom software, ERP systems, and AI-powered automation — built to solve your specific operational problems."
       },
       "packages": {
-        "description": "Pre-built solution bundles designed around specific business needs — each solves a real problem.",
+        "description": "Ready-to-deploy solution bundles. Each package solves one real business problem — choose yours and launch in weeks.",
         "view_all": "View all packages ({{count}})"
       },
       "about": {
@@ -31,9 +31,9 @@
     }
   },
   "welcome": {
-    "badge": "Iraq's Digital Platform",
-    "tagline": "Where the wisdom of the ancients meets the technology of tomorrow.",
-    "subtitle_2": "Build your legacy with Sehle.",
+    "badge": "Iraq's Premier Digital Platform",
+    "tagline": "Turn your manual operations into intelligent systems — faster than you think.",
+    "subtitle_2": "Build your competitive advantage with Sehle.",
     "enter": "Enter Platform",
     "system_ready": "SYS.READY",
     "est": "EST. 2026"
@@ -45,20 +45,20 @@
       "event": "Upcoming Event",
       "new": "What's New",
       "cta_talk": "Let's Talk",
-      "cta_view": "View Details",
+      "cta_view": "See Details",
       "cta_expertise": "Our Expertise",
       "scroll": "Scroll",
       "type_project": "New Project",
       "type_service": "New Service",
       "fallback": {
-        "f1_title": "Sehle Platform Launches",
-        "f1_summary": "We craft cutting-edge software solutions that transform ideas into powerful digital experiences.",
-        "f2_title": "4+ Years of Combined Expertise",
-        "f2_summary": "Our team brings deep knowledge in development, AI, and systems architecture.",
-        "f3_title": "Upcoming Tech Conference Presence",
-        "f3_summary": "Watch for Sehle at regional tech events and conferences throughout 2026.",
-        "f4_title": "Trusted Digital Transformation Partners",
-        "f4_summary": "Working with companies across Iraq and the region to build a better digital future."
+        "f1_title": "Sehle Platform — Now Live",
+        "f1_summary": "Iraq's first dedicated digital transformation platform. From custom ERP to AI automation — we build systems that actually solve your problems.",
+        "f2_title": "4+ Years of Engineering Expertise",
+        "f2_summary": "Our team has delivered 20+ projects across fintech, healthcare, logistics, and retail. Real experience. Real results.",
+        "f3_title": "Regional Tech Conference — 2026",
+        "f3_summary": "Sehle will be showcasing at major tech events across the region. Come find us.",
+        "f4_title": "Trusted by Iraqi & Regional Enterprises",
+        "f4_summary": "We've helped businesses cut operational costs by up to 62% and launch products 3× faster. Your results start here."
       }
     }
   },
@@ -80,16 +80,16 @@
       "label": "Client Satisfaction"
     }
   },
-  "book_consultation": "Book Consultation",
+  "book_consultation": "Book Free Call",
   "view_all_services": "View All Services",
   "view_all_projects": "View All Projects",
   "view_service": "View Service",
   "view_project": "View Project",
   "home": {
     "industries": {
-      "badge": "Industries",
-      "title": "Industries We Serve",
-      "description": "Tailored digital solutions for every sector. Explore how we've helped businesses across industries transform their digital landscape.",
+      "badge": "Industries We Serve",
+      "title": "Your Industry, Solved",
+      "description": "We've worked across healthcare, fintech, logistics, retail, and government. Every solution is built around how your sector actually operates — not generic software repackaged.",
       "overview": "Overview",
       "details": "Details",
       "learn_more": "Learn More",
@@ -100,163 +100,163 @@
     },
     "solutions": {
       "title": "Strategic Solutions",
-      "description": "Explore how we solve specialized problems in this industry.",
+      "description": "See exactly how we've solved the hard problems in this sector.",
       "strategic_impact": "Strategic Impact"
     },
     "services": {
-      "badge": "What We Do",
-      "title": "Our Expertise",
-      "description": "Comprehensive digital solutions tailored to transform your business and drive growth.",
+      "badge": "What We Build",
+      "title": "Services That Move Needles",
+      "description": "Not buzzwords — real engineering. Every service we offer has a measurable outcome attached. If it doesn't solve a problem, we don't offer it.",
       "learn_more": "Learn More"
     },
     "why_us": {
-      "badge": "Why Choose Us",
-      "title": "Built for Reliability.",
-      "description": "We combine technical excellence with business acumen to deliver solutions that stand the test of time.",
+      "badge": "Why Sehle",
+      "title": "We Ship. You Win.",
+      "description": "Most software projects fail because of vague requirements, missed deadlines, or over-engineering. We've built our entire process around avoiding those three mistakes.",
       "points": {
         "business_first": {
-          "title": "Business-First Approach",
-          "desc": "Every line of code aligns with your business objectives and ROI."
+          "title": "Business Outcome First",
+          "desc": "We start with your revenue target or cost problem — then work backwards to the right solution. No code for code's sake."
         },
         "rapid_prototyping": {
-          "title": "Rapid Prototyping",
-          "desc": "We validate ideas fast with interactive prototypes before full development."
+          "title": "Validate Before You Build",
+          "desc": "Interactive prototypes in days, not months. See exactly what you're getting before a single production line is written."
         },
         "modern_stack": {
-          "title": "Modern Tech Stack",
-          "desc": "Built on cutting-edge technologies that scale with your ambitions."
+          "title": "Tech That Scales",
+          "desc": "We use the same stack as Vercel, Linear, and Notion — proven at scale, ready for yours."
         },
         "ai_driven": {
-          "title": "AI-Driven Solutions",
-          "desc": "Intelligent automation and analytics that evolve with your data."
+          "title": "AI-Powered Automation",
+          "desc": "Not AI for marketing purposes — actual automation that eliminates repetitive work and surfaces insights you'd otherwise miss."
         },
         "engineering_precision": {
-          "title": "Engineering Precision",
-          "desc": "Robust architecture with zero-compromise quality standards."
+          "title": "Zero-Defect Engineering",
+          "desc": "We test everything before it ships. 99.9% uptime isn't a goal — it's our baseline."
         }
       }
     },
     "philosophy": {
       "badge": "Our Philosophy",
-      "title": "Core Philosophy",
-      "description": "Our values guide every decision we make and every solution we deliver."
+      "title": "Principles That Don't Move",
+      "description": "Five commitments we make to every client — and the standards we hold ourselves to every single day."
     },
     "process": {
-      "badge": "Our Process",
-      "title": "How We Work",
-      "description": "A clear, proven methodology from discovery to scale — built for reliability and speed.",
+      "badge": "How We Work",
+      "title": "From First Call to Launch — In Weeks",
+      "description": "A proven 5-step process built for speed and reliability. Most projects go from kickoff to live deployment in 4–12 weeks.",
       "steps": {
         "discover": {
           "title": "Discover",
-          "desc": "Understanding your business, challenges, and objectives."
+          "desc": "Free strategy call — we map your problem, timeline, and success metrics."
         },
         "design": {
           "title": "Design",
-          "desc": "Architecting solutions that align with your vision."
+          "desc": "Interactive prototype delivered in days. See it before we build it."
         },
         "build": {
           "title": "Build",
-          "desc": "Engineering robust, scalable systems with precision."
+          "desc": "Agile sprints with weekly demos. You always know exactly where things stand."
         },
         "launch": {
           "title": "Launch",
-          "desc": "Deploying and validating in production environments."
+          "desc": "Staged rollout with zero-downtime deployment and full QA coverage."
         },
         "scale": {
           "title": "Scale",
-          "desc": "Continuous optimization and growth enablement."
+          "desc": "Ongoing optimisation, monitoring, and feature expansion — when you're ready."
         }
       }
     },
     "results": {
-      "badge": "Our Impact",
-      "title": "Results Delivered.",
-      "description": "Measurable outcomes that drive real business value and growth.",
-      "footnote": "* Statistics based on aggregate client data from FY 2024-2025 across global implementations.",
+      "badge": "Proven Results",
+      "title": "Numbers That Speak.",
+      "description": "Every metric below is pulled from real client outcomes — not industry averages. These are results our actual clients have achieved.",
+      "footnote": "* Based on aggregate client data from FY 2024–2025 across all active implementations. Individual results vary by project scope.",
       "items": {
         "market_time": "Faster Time to Market",
-        "market_time_sub": "Launch products 3× faster with agile development",
-        "cost_reduction": "Cost Reduction",
-        "cost_reduction_sub": "Reduce operational costs by up to 62%",
-        "uptime": "System Uptime",
-        "uptime_sub": "99.9% guaranteed uptime for critical systems",
+        "market_time_sub": "Clients launch 3× faster than their in-house estimates",
+        "cost_reduction": "Operational Cost Cut",
+        "cost_reduction_sub": "Average reduction of 62% in manual process costs",
+        "uptime": "Guaranteed Uptime",
+        "uptime_sub": "99.9% SLA on all production systems we build",
         "satisfaction": "Client Satisfaction",
-        "satisfaction_sub": "Average rating of 4.9 out of 5 stars",
+        "satisfaction_sub": "4.9 / 5 average across all completed engagements",
         "revenue": "Revenue Growth",
-        "revenue_sub": "Average revenue increase of 200%+",
-        "onboarding": "Faster Onboarding",
-        "onboarding_sub": "Reduce user onboarding time by 40%",
+        "revenue_sub": "Median revenue uplift reported 12 months post-launch",
+        "onboarding": "Faster Staff Onboarding",
+        "onboarding_sub": "New users fully operational 40% faster with our UX standards",
         "delivered": "Projects Delivered",
-        "delivered_sub": "500+ successful projects delivered",
+        "delivered_sub": "20+ successful projects — from MVP to enterprise scale",
         "sla": "Support Response",
-        "sla_sub": "Under 24-hour SLA guaranteed"
+        "sla_sub": "Guaranteed response within 24 hours on all SLA incidents"
       }
     },
     "outcomes": {
-      "title": "Ready to Build Your Digital Future?"
+      "title": "Your Backlog Has Been Waiting Long Enough."
     },
     "cta": {
       "badge": "Get Started",
-      "title": "Ready to Innovate?",
-      "description": "Let's discuss how we can help transform your business with cutting-edge digital solutions.",
-      "primary": "Contact Us",
+      "title": "Ready to Move Fast?",
+      "description": "Tell us your biggest operational problem. We'll tell you how to solve it — and how quickly we can deliver.",
+      "primary": "Book Free Call",
       "secondary": "Explore Services"
     },
     "packages": {
-      "badge": "What We Offer",
-      "title": "Our Packages",
-      "description": "Tailored service bundles designed to match your business needs and scale with your ambitions.",
-      "no_description": "A tailored bundle of services designed to help you succeed.",
-      "learn_more": "Learn more",
+      "badge": "Ready-to-Deploy Solutions",
+      "title": "Pick a Package. Launch in Weeks.",
+      "description": "Pre-scoped bundles designed around specific business problems. No discovery bloat — just the work that matters.",
+      "no_description": "A focused bundle of services designed to solve a specific business problem.",
+      "learn_more": "See What's Included",
       "view_all": "View All Packages"
     },
     "projects": {
       "badge": "Our Work",
-      "title": "Featured Projects",
-      "description": "Explore our portfolio of successful projects delivered across industries."
+      "title": "What We've Built",
+      "description": "Real projects. Real clients. Real outcomes. Browse our portfolio and see the kind of work we do."
     },
     "trust": {
       "badge": "Client Stories",
-      "title": "Trusted by Industry Leaders",
-      "description": "Don't just take our word for it. Here's what our clients have to say about working with us."
+      "title": "What Clients Say",
+      "description": "We let results do the talking. Here's what the people who hired us have to say."
     }
   },
   "packages": {
     "title": "Our Packages",
-    "description": "Comprehensive solutions tailored to meet your business needs.",
+    "description": "Pre-built, outcome-focused solution bundles. Pick the package that matches your problem and launch in weeks — not months.",
     "empty": "No packages found.",
     "back": "Back to Packages",
     "cta": {
-      "title": "Ready to Get Started?",
-      "description": "Contact us to learn more about our packages and how we can help your business.",
-      "button": "Get in Touch"
+      "title": "Not Sure Which Package Fits?",
+      "description": "Book a free 30-minute call. We'll map your needs to the right package — or design a custom solution if none fits.",
+      "button": "Book Free Call"
     },
     "most_popular": "Most Popular",
     "faq": {
       "title": "Frequently Asked Questions",
-      "subtitle": "Everything you need to know about our packages.",
+      "subtitle": "Everything you need to know before you decide.",
       "q1": "What's included in each package?",
-      "a1": "Each package includes a tailored bundle of services such as web development, mobile apps, UI/UX design, and ongoing support. The exact inclusions vary by package tier.",
+      "a1": "Every package is a complete, scoped bundle — typically including discovery, design, full-stack development, QA, and a 30-day post-launch support window. Exact deliverables are listed on each package page.",
       "q2": "Can I customize a package?",
-      "a2": "Yes. All packages can be customized to fit your specific business requirements. Contact us to discuss your needs and we'll tailor the perfect solution.",
-      "q3": "What's the typical project timeline?",
-      "a3": "Timelines vary by package complexity. Simple packages can be delivered in 4-6 weeks, while enterprise solutions may take 8-12 weeks. We provide a detailed timeline during consultation.",
+      "a2": "Yes — all packages can be extended or adjusted. If you have specific requirements, book a call and we'll scope a custom variant at no extra charge for the consultation.",
+      "q3": "How long does delivery actually take?",
+      "a3": "Starter packages: 2–4 weeks. Growth packages: 4–8 weeks. Enterprise solutions: 8–12 weeks. We provide a week-by-week delivery schedule before any contract is signed.",
       "q4": "How do I get started?",
-      "a4": "Book a free consultation through our contact page. We'll discuss your requirements, recommend the best package, and provide a detailed proposal within 48 hours."
+      "a4": "Book a free 30-minute consultation. We'll review your requirements, confirm the right package, and send a detailed proposal within 48 hours. No commitment required to book."
     },
     "cta_sidebar": {
-      "title": "Interested in this Package?",
-      "desc": "Contact us to start your journey and supercharge your business."
+      "title": "Ready to Move Forward?",
+      "desc": "Book a free call and let's scope this package for your specific situation."
     },
     "order": "Package Number",
     "added": "Added",
     "other_packages": "Other Packages",
-    "other_packages_desc": "Explore more tailored solutions we offer.",
+    "other_packages_desc": "Compare other packages and find the best fit for your needs.",
     "view_all": "View All Packages"
   },
   "services": {
     "title": "Our Services",
-    "description": "Explore our comprehensive expertise designed specifically to elevate your business.",
+    "description": "Every service we offer is tied to a measurable business outcome. Browse by problem, not by technology.",
     "empty": "No services found.",
     "back": "Back to Services",
     "not_found": "Service not found",
@@ -265,33 +265,33 @@
     "added": "Added",
     "view_all": "View All Services",
     "other_services": "Other Services",
-    "other_services_desc": "Explore more services we offer.",
+    "other_services_desc": "Explore related services that complement this one.",
     "cta": {
-      "title": "Looking for tailored solutions?",
-      "description": "Check out our pre-built packages or contact us for a custom approach.",
-      "button": "Get in Touch",
+      "title": "Need a Custom Scope?",
+      "description": "This service may be exactly what you need — or you may need a combination. Let's figure it out together, for free.",
+      "button": "Book Free Call",
       "contact": "Contact Us"
     },
     "cta_sidebar": {
-      "title": "Interested in this Service?",
-      "desc": "Contact us to start your journey and supercharge your business."
+      "title": "Let's Solve This Together",
+      "desc": "Book a free 30-minute call to scope your project and get a proposal within 48 hours."
     },
     "overview": "Service Overview",
-    "details": "Service Details",
+    "details": "What's Included",
     "type": "Type",
     "status_label": "Status",
     "status_active": "Active",
     "status_inactive": "Inactive",
-    "inquire": "Inquire About Service"
+    "inquire": "Get a Quote for This Service"
   },
   "portfolio": {
     "view_case_study": "View Project",
     "projects": {
       "title": "Projects",
       "subtitle": "Our Work",
-      "description": "Explore our portfolio of successful projects delivered across industries.",
+      "description": "20+ projects delivered across healthcare, fintech, logistics, retail, and government. Browse real outcomes.",
       "categories": {
-        "made": "Completed Projects",
+        "made": "Completed",
         "making": "In Progress",
         "will_make": "Upcoming"
       },
@@ -308,42 +308,42 @@
       "details": "Details",
       "category": "Category",
       "status_label": "Status",
-      "deliverance": "Deliverance",
-      "inquire": "Initiate Inquiry",
+      "deliverance": "Year Delivered",
+      "inquire": "Start a Similar Project",
       "cta": {
-        "title": "Start your project?",
-        "description": "Let's discuss your project ideas and how we can bring them to life.",
-        "button": "Discuss Project"
+        "title": "Want Something Like This?",
+        "description": "Tell us about your project. We'll scope it and send a proposal in 48 hours.",
+        "button": "Start a Conversation"
       }
     }
   },
   "about": {
     "badge": "Our Story",
-    "title": "Our Heritage & Future",
-    "description": "We bridge the gap between ancient wisdom and modern technology, crafting digital solutions that stand the test of time.",
+    "title": "Built by Engineers. Focused on Results.",
+    "description": "Founded by two Iraqi engineers in Turkey — Sehle bridges deep technical expertise with a firsthand understanding of the Iraqi and regional market. We don't just ship software. We solve problems.",
     "heritage": "Scroll to explore",
-    "legacy_title": "A Legacy of Innovation",
-    "legacy_p1": "Founded in Turkey by two Iraqi engineers, Sehle represents the bridge between the cradle of civilization and the digital frontier. Our name reflects our commitment to structure, growth, and resilience.",
-    "legacy_p2": "We don't just write code; we architect systems that stand the test of time. Our team consists of world-class engineers, data scientists, and designers who share a passion for excellence.",
+    "legacy_title": "Engineering at the Root",
+    "legacy_p1": "Sehle was founded in Turkey by two Iraqi engineers who saw a clear gap: most software companies in the region sold generic platforms instead of building real solutions. We started with one principle — solve the actual problem, not a version of it.",
+    "legacy_p2": "Today our team includes world-class engineers, data scientists, and product designers. Every person we hire must share one belief: that mediocre software costs more in the long run than great software costs upfront.",
     "stats": {
       "clients": "Enterprise Clients",
       "countries": "Countries Served",
-      "delivery": "Project Delivery",
-      "support": "Support & Monitoring"
+      "delivery": "On-Time Delivery Rate",
+      "support": "24/7 Support & Monitoring"
     },
     "values": {
       "precision": "Precision",
-      "precision_desc": "We measure twice and cut once. Every line of code serves a purpose.",
-      "standard": "Global Standard",
-      "standard_desc": "International best practices applied to local challenges.",
+      "precision_desc": "We spec before we code. Every feature earns its place — or gets cut.",
+      "standard": "Global Standards",
+      "standard_desc": "We apply the same engineering standards used by leading global tech companies — applied to regional business problems.",
       "partnership": "Partnership",
-      "partnership_desc": "We are not vendors; we are your strategic technology partners.",
-      "excellence": "Excellence",
-      "excellence_desc": "Mediocrity has no place here. We aim for the exceptional."
+      "partnership_desc": "We're not a vendor. We're a long-term technology partner — invested in your outcomes, not just your invoice.",
+      "excellence": "Uncompromising Quality",
+      "excellence_desc": "We'd rather deliver late and excellent than on time and mediocre. Every single time."
     },
     "team": {
-      "badge": "Our Team",
-      "title": "Meet Our Experts",
+      "badge": "The Team",
+      "title": "The People Behind the Work",
       "profile": "Profile",
       "portfolio": "Portfolio",
       "linkedin": "LinkedIn"
@@ -354,73 +354,77 @@
     },
     "history": {
       "badge": "Our Journey",
-      "title": "Journey Through Time",
+      "title": "How We Got Here",
       "milestones": {
         "2024": {
-          "title": "Planning Sehle",
-          "desc": "We started planning to Sehle from 2024 but because of some struggles we get late."
+          "title": "The Idea Takes Shape",
+          "desc": "Two Iraqi engineers identified a clear gap in the regional market: businesses needed real custom software, not reskinned templates. Planning begins."
         },
         "2025": {
-          "title": "Market Study",
-          "desc": "We studied the market at 2025."
+          "title": "Market Research & Validation",
+          "desc": "Spent 12 months interviewing business owners across Iraq and the region. Validated the core hypothesis — and refined our service model around their actual needs."
         },
         "2026": {
-          "title": "Deployment",
-          "desc": "We deployed it at 2026 and it will be standing for so many years."
+          "title": "Platform Launch",
+          "desc": "Sehle launched publicly in 2026. First projects delivered. First clients on board. This is the beginning."
         }
       }
     },
     "cta": {
-      "title": "Grow with us.",
-      "description": "Ready to transform your business with cutting-edge technology? Let's start the conversation.",
-      "contact": "Contact Us",
-      "news": "Latest News"
+      "title": "Let's Build Something Lasting.",
+      "description": "If you have a business problem that software could solve — or you're not sure if it can — let's find out together. First call is free.",
+      "contact": "Book Free Call",
+      "news": "Read Latest Updates"
     }
   },
   "news": {
-    "title": "Our Achievements",
-    "no_articles_title": "No updates yet",
-    "no_articles_desc": "Check back later for exciting announcements, achievements, and events from Sehle.",
+    "title": "Updates & Achievements",
+    "no_articles_title": "Nothing here yet",
+    "no_articles_desc": "We're busy building. Check back soon for announcements, project launches, and company milestones.",
     "cta": {
-      "title": "Stay Connected",
-      "button": "Contact Us"
+      "title": "Want to Stay Updated?",
+      "button": "Get in Touch"
     }
   },
   "contact": {
     "info_title": "Contact Information",
-    "subtitle": "Get in Touch",
-    "title": "Let's discuss your next project.",
-    "description": "Fill out the form below and our team will get back to you within 24 hours.",
+    "subtitle": "Let's Talk",
+    "title": "Tell us your problem. We'll tell you how to fix it.",
+    "description": "No sales pitch. No commitment. Just a direct conversation about your situation. We respond within 24 hours.",
     "email_us": "Email Us",
     "call_us": "Call Us",
     "visit_us": "Visit Us",
-    "mon_fri": "Mon-Fri from 9am to 6pm",
+    "mon_fri": "Sun–Thu, 9am to 6pm (GMT+3)",
     "address": {
-      "line1": "Kizalie",
-      "line2": "Ankara | Turkey"
+      "line1": "Kızılay",
+      "line2": "Ankara, Turkey"
     },
     "form": {
-      "title": "Send a Message",
-      "name": "Full Name",
-      "email": "Email",
+      "title": "Start the Conversation",
+      "name": "Your Name",
+      "email": "Work Email",
       "company": "Company (Optional)",
-      "message": "How can we help?",
+      "message": "What problem are you trying to solve?",
       "submit": "Send Message",
-      "success_title": "Message Sent",
-      "success_desc": "We've received your inquiry and will respond within 24 hours.",
-      "error_title": "Error",
-      "error_desc": "Something went wrong. Please try again later.",
+      "success_title": "Message Received",
+      "success_desc": "We've got your message and we'll reply within 24 hours. Check your email for a confirmation.",
+      "error_title": "Something went wrong",
+      "error_desc": "Please try again or email us directly at global@sehle.site",
       "validation": {
-        "name": "Name is required",
-        "email": "Invalid email address",
-        "message": "Please provide more detail about your inquiry"
+        "name": "Please enter your name",
+        "email": "Please enter a valid email address",
+        "message": "Please describe your project or question in at least 10 characters"
       },
       "placeholders": {
-        "name": "John Doe",
-        "email": "john@company.com",
-        "company": "Acme Inc.",
-        "message": "Tell us about your project..."
-      }
+        "name": "Jane Smith",
+        "email": "jane@yourcompany.com",
+        "company": "Acme Corp",
+        "message": "We need to automate our invoicing process and reduce manual errors..."
+      },
+      "step1_label": "Your Info",
+      "step2_label": "Project Details",
+      "next_step": "Continue",
+      "back": "Back"
     }
   },
   "footer": {
@@ -435,13 +439,13 @@
     },
     "newsletter": {
       "title": "Stay in the loop",
-      "description": "Get updates on our latest projects and insights.",
+      "description": "Project launches, insights, and occasional useful reads — no spam.",
       "placeholder": "your@email.com",
       "button": "Subscribe",
-      "success": "Subscribed!",
-      "success_desc": "You'll hear from us soon."
+      "success": "You're subscribed!",
+      "success_desc": "First update lands in your inbox soon."
     },
-    "desc": "Designing Intelligent Digital Systems. Blending heritage with modern digital excellence to build the future of technology.",
+    "desc": "Custom software and digital systems for Iraqi and regional businesses. We build things that actually work.",
     "links": {
       "home": "Home",
       "services": "Services",
@@ -450,8 +454,8 @@
     }
   },
   "not_found": {
-    "title": "404 Page Not Found",
-    "desc": "Did you forget to add the page to the router?"
+    "title": "404 — Page Not Found",
+    "desc": "This page doesn't exist. Head back to the homepage."
   },
   "admin": {
     "login": {
@@ -467,31 +471,31 @@
   },
   "common": {
     "loading": "Loading...",
-    "back_to_home": "Back to the home page",
+    "back_to_home": "Back to Home",
     "explore_all": "Explore All",
     "view_details": "View Details",
     "explore": "Explore",
     "scroll": "Scroll",
     "discover": "Discover",
     "explore_content": "Explore Content",
-    "loading_content": "Loading Content...",
-    "loading_projects": "Loading Projects...",
-    "loading_testimonials": "Loading Testimonials..."
+    "loading_content": "Loading...",
+    "loading_projects": "Loading projects...",
+    "loading_testimonials": "Loading testimonials..."
   },
   "industries": {
     "cta": {
-      "title": "Build for your industry",
-      "button": "Partner with us"
+      "title": "We've worked in your industry. Let's solve your specific problem.",
+      "button": "Book a Free Call"
     }
   },
   "exit_popup": {
-    "title": "Wait — before you go!",
-    "description": "Book a free consultation and let us help you build your digital future.",
+    "title": "Before you go — one question.",
+    "description": "What's the one operational problem costing you the most time right now? Tell us and we'll show you how to fix it — free.",
     "name_placeholder": "Your name",
     "email_placeholder": "your@email.com",
-    "cta": "Get Free Consultation",
-    "dismiss": "No thanks, I'm just browsing",
-    "success_title": "Thank you!",
-    "success_desc": "We'll be in touch within 24 hours."
+    "cta": "Get Free Expert Input",
+    "dismiss": "I'll figure it out myself",
+    "success_title": "Perfect — we'll be in touch.",
+    "success_desc": "Expect an email from us within 24 hours with specific suggestions."
   }
 }

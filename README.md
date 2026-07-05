@@ -1,81 +1,92 @@
-# Software Service Platform (MVP)
+# Sehle Platform — Iraq's Digital Systems Platform
 
-Hybrid Technology Solutions & Advanced Digital Training Platform MVP focused on the **services business** (teaching excluded in station 1).
+Sehle is a premium digital transformation and custom software engineering platform built for businesses in Iraq and the region.
 
-## Stack
-- Frontend: Next.js + Tailwind CSS
-- Backend: Node.js + Express
-- Database: SQLite
+---
 
-## MVP Pages
-- Home
-- About
-- Services
-- Portfolio
-- Contact
-- Book Consultation
+## 🏗️ Architecture & Stack
 
-## Run locally
+Sehle is built using a modern, unified Next.js App Router structure:
+- **Frontend**: Next.js (App Router), Tailwind CSS v4, Framer Motion, Radix UI.
+- **Backend & Database**: Next.js API Routes, Prisma ORM, SQLite database.
+- **Rate Limiting**: Distributed, low-latency rate limiting via Upstash Redis.
+- **Email Notifications**: Resend integration for admin alerts & client confirmations.
+- **Experimentation**: Built-in A/B Testing middleware variant assignment & GA4 exposure tracking.
 
-### 1) Backend
+---
+
+## ⚙️ Environment Configuration
+
+Create a `frontend/.env` file with the following variables:
+
 ```bash
-cd backend
-npm install
-npm run dev
+# Database connections
+DATABASE_URL="file:./database.sqlite"
+
+# Upstash Redis rate limiting config
+UPSTASH_REDIS_REST_URL="https://your-redis-url.upstash.io"
+UPSTASH_REDIS_REST_TOKEN="your-token"
+
+# Resend Mail Configuration
+RESEND_API_KEY="re_..."
+RESEND_FROM_EMAIL="onboarding@resend.dev"
+NEXT_PUBLIC_SITE_URL="https://www.sehle.site"
 ```
 
-Runs at `http://localhost:4000`.
+---
 
-### 2) Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Runs at `http://localhost:3000`.
-
-## Run with Docker (Recommended for Collaboration)
-
-This is the easiest way to run the project on both **Ubuntu** and **Windows**.
+## 🚀 Running Locally
 
 ### Prerequisites
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- Node.js (v18+)
+- npm (v10+)
 
-### Steps
-1. **Build and Start:**
+### Setup Steps
+1. **Navigate and Install**:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. **Setup Database**:
+   ```bash
+   npm run db:push
+   ```
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🐳 Docker Deployment
+
+The simplest way to run the entire project inside an isolated containerized environment:
+
+1. **Build and Run**:
    ```bash
    docker-compose up --build
    ```
-2. **Access the app:**
-   Open `http://localhost:3000` in your browser.
-
-3. **Stop the app:**
+2. **Stop Container**:
    ```bash
    docker-compose down
    ```
 
-### Troubleshooting (Ubuntu/Linux)
-If you see a "Permission denied" error when running docker commands:
-1. Run with `sudo`:
-   ```bash
-   sudo docker-compose up --build
-   ```
-2. **OR** fix permissions permanently (recommended):
-   ```bash
-   sudo usermod -aG docker $USER
-   newgrp docker
-   ```
+---
 
-*Note: The database (`database.sqlite`) is persisted in the `frontend` folder.*
+## 🧪 Testing
 
-## API endpoints
-- `GET /api/health`
-- `GET /api/services`
-- `GET /api/projects`
-- `GET /api/team`
-- `POST /api/leads`
-- `POST /api/bookings`
-- `GET /api/leads`
-- `GET /api/bookings`
+We use **Vitest** for testing:
+```bash
+cd frontend
+npm run test
+```
+
+---
+
+## 📜 API & OpenAPI Specifications
+Machine-readable REST API documentation is available at `openapi.yaml` in the project root. Key endpoints include:
+- `GET /api/health` — Service status check.
+- `GET /api/content/services` — Public localized services.
+- `GET /api/content/projects` — Public completed projects.
+- `POST /api/admin/consultations` — Request contact consultation (supports UTM & GA4 tracking).

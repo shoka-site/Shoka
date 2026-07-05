@@ -35,17 +35,98 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ].filter(Boolean);
   }
 
+  const SITE_URL = "https://www.sehle.site";
+  const OG_IMAGE = `${SITE_URL}/og-image.png`;
+  const ogImage = project.images?.[0] || OG_IMAGE;
+  const canonicalUrl = `${SITE_URL}/projects/${id}`;
+
   return {
     title,
     description: desc ? desc.substring(0, 160) : "",
     keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
+      type: "website",
+      locale: lang === "ar" ? "ar_IQ" : "en_US",
+      alternateLocale: lang === "ar" ? "en_US" : "ar_IQ",
+      url: canonicalUrl,
       title,
       description: desc ? desc.substring(0, 160) : "",
-    }
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: desc ? desc.substring(0, 160) : "",
+      images: [ogImage],
+      creator: "@sehle_it",
+    },
   };
 }
 
-export default async function ProjectPage() {
-  return <ProjectDetailsClient />;
+export default async function ProjectPage({ params }: Props) {
+  const { id } = await params;
+  const project = await storage.getProject(id);
+  const { lang } = await getServerTranslation();
+
+  if (!project) return <ProjectDetailsClient />;
+
+  const title = lang === "ar" ? (project.titleAr || project.titleEn) : project.titleEn;
+  const desc = lang === "ar" ? (project.descriptionAr || project.descriptionEn) : project.descriptionEn;
+  const SITE_URL = "https://www.sehle.site";
+  const OG_IMAGE = `${SITE_URL}/og-image.png`;
+  const ogImage = project.images?.[0] || OG_IMAGE;
+
+  const creativeWorkSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": title,
+    "description": desc || undefined,
+    "image": ogImage,
+    "creator": {
+      "@type": "Organization",
+      "name": "سهلة | Sehle"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": lang === "ar" ? "الرئيسية" : "Home",
+        "item": "https://www.sehle.site/home"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": lang === "ar" ? "المشاريع" : "Projects",
+        "item": "https://www.sehle.site/projects"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": `${SITE_URL}/projects/${id}`
+      }
+    ]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <ProjectDetailsClient />
+    </>
+  );
 }

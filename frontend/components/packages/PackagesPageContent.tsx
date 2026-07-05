@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, PackageOpen, Sparkles, ChevronDown } from "lucid
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
+import ScrollTriggerPopup from "@/components/marketing/ScrollTriggerPopup";
 
 // Prisma Package includes descriptionEn/descriptionAr not in the Zod schema
 interface RawPackage {
@@ -112,7 +113,8 @@ export function PackagesPageContent({ packages }: Props) {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {packages.map((pkg, index) => {
+                  {/* Anchoring: highest-tier (last by order) shown first for premium framing */}
+                  {[...packages].reverse().map((pkg, index) => {
                     const isPopular = index === 1 && packages.length >= 3;
                     const description = pickOpt(pkg.descriptionEn, pkg.descriptionAr);
                     return (
@@ -168,6 +170,79 @@ export function PackagesPageContent({ packages }: Props) {
           </div>
         </Section>
       </div>
+
+      {/* Comparison Matrix */}
+      <Section className="py-24 border-t border-border/60 relative">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-black mb-4">
+              {t("packages.compare.title", "Compare Plan Features")}
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              {t("packages.compare.subtitle", "Find the perfect level of support and features for your business growth.")}
+            </p>
+          </motion.div>
+
+          <div className="overflow-x-auto border border-border/60 rounded-3xl bg-zinc-950/40 backdrop-blur-xl">
+            <table className="w-full text-left border-collapse min-w-[700px] text-white">
+              <thead>
+                <tr className="border-b border-border/60 bg-white/5">
+                  <th className={`p-6 text-sm font-bold uppercase tracking-wider text-muted-foreground ${isRtl ? "text-right" : "text-left"}`}>{t("packages.compare.feature", "Features")}</th>
+                  <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier1", "Startup Basic")}</th>
+                  <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier2", "Business Growth")}</th>
+                  <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier3", "Enterprise Bespoke")}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {[
+                  {
+                    name: t("packages.compare.dev_hours", "Development Hours"),
+                    t1: t("packages.compare.hours_t1", "Up to 40 Hours"),
+                    t2: t("packages.compare.hours_t2", "Up to 120 Hours"),
+                    t3: t("packages.compare.hours_t3", "Unlimited & Dedicated"),
+                  },
+                  {
+                    name: t("packages.compare.support", "Support & Maintenance"),
+                    t1: t("packages.compare.sup_t1", "Email Support"),
+                    t2: t("packages.compare.sup_t2", "24/7 Slack & Phone"),
+                    t3: t("packages.compare.sup_t3", "Dedicated SLA Support"),
+                  },
+                  {
+                    name: t("packages.compare.infra", "Infrastructure & Setup"),
+                    t1: t("packages.compare.infra_t1", "Shared Cloud Hosting"),
+                    t2: t("packages.compare.infra_t2", "Dedicated VPC Hosting"),
+                    t3: t("packages.compare.infra_t3", "Multi-region Failover"),
+                  },
+                  {
+                    name: t("packages.compare.ownership", "Code Ownership"),
+                    t1: t("packages.compare.own_t1", "Shared License"),
+                    t2: t("packages.compare.own_t2", "Full Ownership"),
+                    t3: t("packages.compare.own_t3", "Full Ownership + Local Sync"),
+                  },
+                  {
+                    name: t("packages.compare.integrations", "Custom API Integrations"),
+                    t1: t("packages.compare.int_t1", "Up to 2 APIs"),
+                    t2: t("packages.compare.int_t2", "Up to 5 APIs"),
+                    t3: t("packages.compare.int_t3", "Unlimited Integrations"),
+                  }
+                ].map((row, idx) => (
+                  <tr key={idx} className="hover:bg-white/5 transition-colors">
+                    <td className={`p-6 font-medium ${isRtl ? "text-right" : "text-left"}`}>{row.name}</td>
+                    <td className="p-6 text-center text-white/70">{row.t1}</td>
+                    <td className="p-6 text-center text-white/70">{row.t2}</td>
+                    <td className="p-6 text-center text-white/70 font-semibold">{row.t3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Section>
 
       {/* FAQ */}
       <Section className="py-24 border-t border-border">
@@ -237,6 +312,27 @@ export function PackagesPageContent({ packages }: Props) {
           </motion.div>
         </div>
       </Section>
+
+      {/* Time-delay popup — fires after 45 s on the packages page */}
+      <ScrollTriggerPopup
+        mode="timeout"
+        delayMs={45000}
+        storageKey="packages_timedelay_popup"
+        suppressDays={7}
+        showEvent="packages_timedelay_popup_shown"
+        submitEvent="form_submit"
+        formType="packages_timedelay_popup"
+        title={{
+          en: "Need Help Choosing a Package?",
+          ar: "تحتاج مساعدة في اختيار الباقة المناسبة؟",
+        }}
+        description={{
+          en: "Our team can walk you through the best option for your business in a free 15-minute call.",
+          ar: "فريقنا جاهز لمساعدتك في اختيار أفضل باقة لعملك في مكالمة مجانية لمدة 15 دقيقة.",
+        }}
+        cta={{ en: "Book Free Call", ar: "احجز مكالمة مجانية" }}
+        dismissLabel={{ en: "I'll decide on my own", ar: "سأحدد بنفسي" }}
+      />
     </div>
   );
 }

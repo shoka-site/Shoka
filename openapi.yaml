@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Sehle Platform API
+  description: Public and Admin API specification for the Sehle digital systems platform.
+  version: 1.0.0
+servers:
+  - url: /api
+    description: Relative base path for API routes
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: API is operational
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+  /content/services:
+    get:
+      summary: Get all active services
+      responses:
+        '200':
+          description: List of active services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+  /content/projects:
+    get:
+      summary: Get all active projects
+      responses:
+        '200':
+          description: List of active projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+  /content/packages:
+    get:
+      summary: Get all active packages
+      responses:
+        '200':
+          description: List of active packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Package'
+  /admin/consultations:
+    post:
+      summary: Submit a contact consultation inquiry / request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - message
+              properties:
+                name:
+                  type: string
+                  example: Jane Doe
+                email:
+                  type: string
+                  format: email
+                  example: jane@company.com
+                company:
+                  type: string
+                  example: Acme Corp
+                message:
+                  type: string
+                  example: We want to automate our payroll process.
+                inquiry_type:
+                  type: string
+                  enum: [project, partnership, support]
+                  example: project
+      responses:
+        '200':
+          description: Consultation inquiry received successfully
+components:
+  schemas:
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+        titleEn:
+          type: string
+        titleAr:
+          type: string
+        descriptionEn:
+          type: string
+        descriptionAr:
+          type: string
+        published:
+          type: boolean
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        titleEn:
+          type: string
+        titleAr:
+          type: string
+        summaryEn:
+          type: string
+        summaryAr:
+          type: string
+        published:
+          type: boolean
+    Package:
+      type: object
+      properties:
+        id:
+          type: string
+        nameEn:
+          type: string
+        nameAr:
+          type: string
+        priceEn:
+          type: string
+        priceAr:
+          type: string
+        published:
+          type: boolean

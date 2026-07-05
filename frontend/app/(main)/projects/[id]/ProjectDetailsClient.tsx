@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useProject } from "@/hooks/use-content";
 import Section from "@/components/layout/Section";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Tag, Activity, Sparkles, ChevronDown, X, ExternalLink } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
@@ -223,8 +223,21 @@ export default function ProjectDetailsClient() {
                             className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8"
                         >
                             {project.images && project.images.filter((img: unknown) => typeof img === 'string' && (img as string).trim() !== "").map((img: string, idx: number) => (
-                                <div key={idx} onClick={() => setSelectedImage(img)} className={`cursor-pointer relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}>
-                                    <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                                <div 
+                                    key={idx} 
+                                    onClick={() => setSelectedImage(img)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                            e.preventDefault();
+                                            setSelectedImage(img);
+                                        }
+                                    }}
+                                    tabIndex={0}
+                                    role="button"
+                                    aria-label={t("portfolio.projects.view_image", "View larger image {{number}}", { number: idx + 1 })}
+                                    className={`cursor-pointer relative aspect-[4/5] md:aspect-square group overflow-hidden rounded-[2.5rem] bg-muted border border-border/50 shadow-sm hover:shadow-2xl transition-all duration-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${idx % 2 !== 0 ? 'md:mt-20' : ''}`}
+                                >
+                                    <SafeImage src={img} alt={`Gallery ${idx + 1}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-all duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0" fallbackType="project" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                                 </div>
                             ))}
@@ -325,6 +338,7 @@ export default function ProjectDetailsClient() {
                         <button
                             onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
                             className="absolute top-6 right-6 p-3 rounded-full bg-white/10 text-white hover:bg-white/20 hover:scale-110 transition-all z-[101]"
+                            aria-label={t("portfolio.projects.close_preview", "Close preview")}
                         >
                             <X className="w-6 h-6" />
                         </button>
@@ -334,12 +348,14 @@ export default function ProjectDetailsClient() {
                                 <button
                                     onClick={handlePrev}
                                     className={`absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md transition-all z-[101] flex items-center justify-center`}
+                                    aria-label={t("portfolio.projects.prev_image", "Previous image")}
                                 >
                                     <ArrowLeft className={`w-6 h-6 sm:w-8 sm:h-8 ${isRtl ? 'rotate-180' : ''}`} />
                                 </button>
                                 <button
                                     onClick={handleNext}
                                     className={`absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md transition-all z-[101] flex items-center justify-center`}
+                                    aria-label={t("portfolio.projects.next_image", "Next image")}
                                 >
                                     <ArrowRight className={`w-6 h-6 sm:w-8 sm:h-8 ${isRtl ? 'rotate-180' : ''}`} />
                                 </button>
@@ -355,13 +371,14 @@ export default function ProjectDetailsClient() {
                             className="relative w-full h-full max-w-7xl max-h-[90vh] rounded-lg overflow-hidden"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <Image
+                            <SafeImage
                                 src={selectedImage}
-                                alt="Full screen preview"
+                                alt={t("portfolio.projects.fullscreen_preview", "Full screen preview")}
                                 fill
                                 className="object-contain"
                                 quality={100}
                                 priority
+                                fallbackType="project"
                             />
                         </motion.div>
                     </motion.div>

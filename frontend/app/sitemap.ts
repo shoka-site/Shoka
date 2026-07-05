@@ -33,6 +33,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(`${SITE_URL}/about`, now, "monthly", 0.8),
     entry(`${SITE_URL}/news`, now, "weekly", 0.75),
     entry(`${SITE_URL}/contact`, now, "monthly", 0.7),
+    entry(`${SITE_URL}/compare`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/glossary`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/solutions-in-baghdad`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/solutions-in-basra`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/solutions-in-erbil`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/solutions-in-sulaymaniyah`, now, "weekly", 0.8),
+    entry(`${SITE_URL}/solutions-in-najaf`, now, "weekly", 0.8),
   ];
 
   // Fetch entity data directly from storage — faster than HTTP calls and avoids
@@ -60,11 +67,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(`${SITE_URL}/industries/${i.id}`, i.updatedAt ?? now, "monthly", 0.75)
   );
 
+  const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+  const serviceForIndustryPages = services.flatMap((s) =>
+    industries.map((i) =>
+      entry(`${SITE_URL}/${slugify(s.titleEn)}-for-${slugify(i.titleEn)}`, now, "monthly", 0.75)
+    )
+  );
+
   return [
     ...staticPages,
     ...servicePages,
     ...projectPages,
     ...packagePages,
     ...industryPages,
+    ...serviceForIndustryPages,
   ];
 }

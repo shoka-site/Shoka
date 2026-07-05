@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu, X, Globe, Sparkles, LayoutGrid, Package } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { trackEvent } from "@/lib/analytics";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -32,14 +33,12 @@ export default function Navbar({ lang }: NavbarProps) {
   // This guarantees SSR and hydration both render the same text regardless of
   // what language the i18next singleton happens to have initialized with.
   const t = i18n.getFixedT(lang);
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuValue, setMenuValue] = useState("");
   const pathname = usePathname();
   const isRtl = lang === 'ar';
 
   const closeMenu = () => {
-    setIsOpen(false);
     setMenuValue("");
   };
 
@@ -58,7 +57,10 @@ export default function Navbar({ lang }: NavbarProps) {
     // 3. Change i18next language (loads English bundle lazily if needed)
     i18n.changeLanguage(newLang);
 
-    // 4. Hard-reload so Server Components re-render with the new cookie.
+    // 4. Track the language switch before reloading
+    trackEvent("language_toggle", { to: newLang, from: newLang === "ar" ? "en" : "ar" });
+
+    // 5. Hard-reload so Server Components re-render with the new cookie.
     //    Without this, server-rendered isRtl props (flex-row-reverse, conditional
     //    padding, etc.) stay stale until the next navigation.
     window.location.reload();
@@ -68,14 +70,7 @@ export default function Navbar({ lang }: NavbarProps) {
     closeMenu();
   }, [pathname]);
 
-  useEffect(() => {
-    // Use CSS class on <html> instead of inline body styles to prevent scrollbar-shift CLS.
-    // .overflow-locked applies padding-right: var(--scrollbar-width) to compensate.
-    document.documentElement.classList.toggle('overflow-locked', isOpen);
-    return () => {
-      document.documentElement.classList.remove('overflow-locked');
-    };
-  }, [isOpen]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -194,85 +189,6 @@ export default function Navbar({ lang }: NavbarProps) {
         </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 top-0 z-[110] bg-black flex flex-col pt-28 px-6 pb-8 sm:pt-32 sm:px-10 md:pt-36 md:px-12 overflow-y-auto"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-black to-black pointer-events-none" />
-
-            {/* Static gradient orbs */}
-            <div className="absolute top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-40 -left-20 w-48 h-48 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
-
-            {/* Grid pattern */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-            {/* Close button inside the overlay */}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-5 end-5 z-20 w-12 h-12 flex items-center justify-center rounded-2xl border border-white/20 text-white hover:bg-white/10 hover:border-primary/50 active:scale-90 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              aria-label="Close menu"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <nav className="container mx-auto flex flex-col space-y-2 relative z-10">
-              {NAV_CATEGORIES.map((category, idx) => {
-                const name = category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey);
-                return (
-                <motion.div
-                  key={category.id}
-                  initial={{ opacity: 0, x: isRtl ? 30 : -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 + 0.2, type: "spring", stiffness: 300, damping: 25 }}
-                >
-                  <Link href={category.href} onClick={() => setIsOpen(false)}>
-                    <span className="text-2xl sm:text-4xl md:text-5xl font-display font-black text-white/90 hover:text-primary active:text-primary/70 transition-all block py-2.5 sm:py-3 md:py-4 lowercase tracking-tighter">
-                      {name}
-                    </span>
-                  </Link>
-                </motion.div>
-                );
-              })}
-
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, type: "spring", stiffness: 300, damping: 25 }}
-                className="pt-12 flex flex-col gap-6"
-              >
-                <Link href="/contact" onClick={() => setIsOpen(false)}>
-                  <span className="block w-full bg-primary text-black text-center py-4 md:py-5 rounded-full text-base md:text-xl font-black uppercase tracking-widest shadow-[0_10px_30px_rgba(194,164,92,0.3)] hover:bg-primary/80 active:scale-95 transition-all">
-                    {t("navbar.book_consultation")}
-                  </span>
-                </Link>
-                <div className="flex items-center justify-between gap-4">
-                  <button
-                    onClick={() => { toggleLanguage(); setIsOpen(false); }}
-                    className="flex-grow flex items-center justify-center gap-3 py-5 rounded-[2rem] border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 hover:border-primary/50 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-95"
-                  >
-                    <Globe className="w-5 h-5" />
-                    <span>{i18n.language.startsWith('ar') ? 'English' : 'العربية'}</span>
-                  </button>
-                  <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center text-white/40 bg-white/5">
-                    <Sparkles className="w-6 h-6" />
-                  </div>
-                </div>
-              </motion.div>
-            </nav>
-
-            <div className="mt-auto pb-12 text-center relative z-10">
-              <p className="text-[10px] text-white/20 uppercase tracking-[0.5em] font-black">Powered by Iraqi Platform</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

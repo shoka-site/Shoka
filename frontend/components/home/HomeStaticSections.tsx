@@ -246,7 +246,19 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
               <span className="text-accent text-xs tracking-[0.5em]">◆</span>
               <div className="flex-1 max-w-[120px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(194,164,92,0.5))" }} />
             </div>
-            <h2 className="text-4xl md:text-6xl font-display font-black mb-10"
+
+            {/* Social proof badge — Marketing Psychology §21 */}
+            <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-accent/25 bg-accent/8 backdrop-blur-md mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              </span>
+              <span className="text-accent/90 text-xs font-bold uppercase tracking-[0.2em]">
+                {isRtl ? "أكثر من 20 شركة تثق بنا" : "Trusted by 20+ businesses across Iraq"}
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-display font-black mb-6"
               style={{
                 lineHeight: isRtl ? 1.6 : 1.25,
                 paddingBottom: isRtl ? "0.4em" : undefined,
@@ -256,15 +268,28 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
               }}>
               {t("home.outcomes.title")}
             </h2>
+
+            {/* Benefit-led sub-copy — Copywriting §9 */}
+            <p className="text-white/55 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light mb-10 md:mb-12">
+              {isRtl
+                ? "حوّل عملياتك اليدوية إلى أنظمة رقمية ذكية. الاستشارة الأولى مجانية — بدون أي التزام."
+                : "Turn your manual operations into intelligent digital systems. Your first consultation is free — no commitment required."}
+            </p>
           </FadeInSection>
           <FadeInSection delay={0.2}>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mt-8 md:mt-12">
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-all duration-300"
-                  style={{ background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)", color: "#000", boxShadow: "0 8px 30px rgba(194,164,92,0.3)" }}>
-                  {t("home.cta.primary")}
-                </Button>
-              </Link>
+            <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center`}>
+              <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
+                <Link href="/contact" className="w-full sm:w-auto">
+                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-all duration-300"
+                    style={{ background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)", color: "#000", boxShadow: "0 8px 30px rgba(194,164,92,0.3)" }}>
+                    {t("home.cta.primary")}
+                  </Button>
+                </Link>
+                {/* CTA microcopy — Page CRO §8 */}
+                <p className="text-white/35 text-xs tracking-wide">
+                  {isRtl ? "⚡ رد خلال 24 ساعة · بدون التزام" : "⚡ Response within 24h · No commitment"}
+                </p>
+              </div>
               <Link href="/projects" className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg text-white transition-all duration-300 hover:border-accent/60 hover:bg-accent/10"
                   style={{ borderColor: "rgba(194,164,92,0.3)", background: "rgba(194,164,92,0.05)" }}>
@@ -278,3 +303,4 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
     </section>
   );
 }
+

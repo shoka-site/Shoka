@@ -6,3 +6,5 @@ tmp/
 dist/
 build/
 temp_marketingskills/
+*.log
+server.log

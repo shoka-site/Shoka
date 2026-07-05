@@ -27,7 +27,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     req.headers.get('x-real-ip') ??
     'unknown';
 
-  const result = revalidateLimiter(ip);
+  const result = await revalidateLimiter(ip);
   if (!result.allowed) {
     const retryAfterSec = Math.ceil((result.retryAfterMs ?? 0) / 1000);
     return NextResponse.json(

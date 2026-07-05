@@ -12,9 +12,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const page = Math.max(1, Number(searchParams.get('page') ?? 1));
   const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-  const members = await storage.getTeamMembers();
-  const total = members.length;
-  const paginated = members.slice((page - 1) * limit, page * limit);
+  const total = await storage.getTeamMemberCount();
+  const paginated = await storage.getTeamMembers(undefined, {
+    skip: (page - 1) * limit,
+    take: limit,
+  });
 
   return ok(paginated, { page, limit, total });
 });

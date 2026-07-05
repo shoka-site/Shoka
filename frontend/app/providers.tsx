@@ -6,11 +6,18 @@ import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
+import { initUtmTracker } from "@/lib/utm-tracker";
+import { initAutoTracking } from "@/lib/analytics";
 import "@/lib/i18n";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const { i18n } = useTranslation();
     const router = useRouter();
+
+    useEffect(() => {
+        initUtmTracker();
+        initAutoTracking();
+    }, []);
 
     useEffect(() => {
         // Depend on i18n.language (the actual string), not the i18n object itself.

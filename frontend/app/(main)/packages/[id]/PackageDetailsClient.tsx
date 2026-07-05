@@ -16,6 +16,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePackage, usePackages } from "@/hooks/use-content";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
@@ -43,6 +45,16 @@ export default function PackageDetailsClient() {
 
   const y = useTransform(scrollY, [0, 600], ["0%", "50%"]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  // Fire package_view analytics event once package data is loaded
+  useEffect(() => {
+    if (pkg) {
+      trackEvent("package_view", {
+        package_id: pkg.id,
+        package_title: pkg.title || "",
+      });
+    }
+  }, [pkg]);
 
   // Show full-screen loading while data is being fetched
   if (isLoading) {

@@ -2,7 +2,6 @@
 
 import Section from "@/components/layout/Section";
 import Link from "next/link";
-import Image from "next/image";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, ArrowLeft, Newspaper, Trophy, Calendar, Sparkles, ChevronDown } from "lucide-react";

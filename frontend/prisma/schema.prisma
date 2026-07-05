@@ -29,10 +29,12 @@ model Service {
   type          String   @default("Other")
   keywordsEn    String?  @map("keywords_en")
   keywordsAr    String?  @map("keywords_ar")
+  deletedAt     DateTime? @map("deleted_at")
 
   platformUpdates PlatformUpdate[]
 
   @@index([published, order])
+  @@index([deletedAt])
   @@map("services")
 }
 
@@ -52,11 +54,13 @@ model Project {
   liveUrl        String?          @map("live_url")
   keywordsEn     String?          @map("keywords_en")
   keywordsAr     String?          @map("keywords_ar")
+  deletedAt      DateTime?        @map("deleted_at")
   createdAt      DateTime         @default(now()) @map("created_at")
   updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
   PlatformUpdate PlatformUpdate[]
 
   @@index([published, featured, order])
+  @@index([deletedAt])
   @@map("projects")
 }
 
@@ -71,10 +75,12 @@ model Testimonial {
   roleAr    String   @map("role_ar")
   rating    Int      @default(5)
   published Boolean  @default(true)
+  deletedAt DateTime? @map("deleted_at")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@index([published, order])
+  @@index([deletedAt])
   @@map("testimonials")
 }
 
@@ -89,6 +95,7 @@ model PlatformUpdate {
   date      DateTime @default(now())
   images    String[] @default([])
   published Boolean  @default(true)
+  deletedAt DateTime? @map("deleted_at")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
@@ -99,6 +106,7 @@ model PlatformUpdate {
   service Service? @relation(fields: [serviceId], references: [id])
 
   @@index([published, date])
+  @@index([deletedAt])
   @@map("platform_updates")
 }
 
@@ -112,11 +120,13 @@ model Industry {
   published     Boolean    @default(true)
   keywordsEn    String?    @map("keywords_en")
   keywordsAr    String?    @map("keywords_ar")
+  deletedAt     DateTime?  @map("deleted_at")
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
   solutions     Solution[]
 
   @@index([published, order])
+  @@index([deletedAt])
   @@map("industries")
 }
 
@@ -125,9 +135,10 @@ model Solution {
   order         Int
   titleEn       String   @map("title_en")
   titleAr       String   @map("title_ar")
-  descriptionEn String   @map("description_en")
-  descriptionAr String   @map("description_ar")
+  descriptionEn String     @map("description_en")
+  descriptionAr String     @map("description_ar")
   published     Boolean  @default(true)
+  deletedAt     DateTime? @map("deleted_at")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
@@ -136,6 +147,7 @@ model Solution {
 
   @@index([published, order])
   @@index([industryId])
+  @@index([deletedAt])
   @@map("solutions")
 }
 
@@ -153,12 +165,14 @@ model TeamMember {
   imageUrl      String   @map("image_url")
   resumeUrl     String?  @map("resume_url")
   published     Boolean  @default(true)
+  deletedAt     DateTime? @map("deleted_at")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
   portfolioUrl  String?  @map("portfolio_url")
   linkedinUrl   String?  @map("linkedin_url")
 
   @@index([published, order])
+  @@index([deletedAt])
   @@map("our_team")
 }
 
@@ -191,9 +205,11 @@ model Package {
   published     Boolean  @default(true)
   keywordsEn    String?  @map("keywords_en")
   keywordsAr    String?  @map("keywords_ar")
+  deletedAt     DateTime? @map("deleted_at")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@index([published, order])
+  @@index([deletedAt])
   @@map("packages")
 }

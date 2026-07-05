@@ -20,9 +20,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const page = Math.max(1, Number(searchParams.get('page') ?? 1));
   const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-  const consultations = await storage.getConsultations();
-  const total = consultations.length;
-  const paginated = consultations.slice((page - 1) * limit, page * limit);
+  const total = await storage.getConsultationCount();
+  const paginated = await storage.getConsultations({
+    skip: (page - 1) * limit,
+    take: limit,
+  });
 
   return ok(paginated, { page, limit, total });
 });
@@ -35,7 +37,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     req.headers.get('x-real-ip') ??
     'unknown';
 
-  const rateLimit = consultationLimiter(ip);
+  const rateLimit = await consultationLimiter(ip);
   if (!rateLimit.allowed) {
     return fail(
       'TOO_MANY_REQUESTS',

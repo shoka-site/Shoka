@@ -2,7 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 import { ArrowRight, Layers } from "lucide-react";
 import Section from "@/components/layout/Section";
 import { FadeInSection, TestimonialCarousel } from "@/components/home/HomeClientComponents";
@@ -141,15 +141,13 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
                 style={{ background: "linear-gradient(90deg, transparent, #C2A45C, transparent)" }} />
               <div className="relative aspect-[16/9] w-full overflow-hidden shrink-0">
                 {project.images && (project.images as unknown[]).some((img) => typeof img === 'string' && (img as string).trim() !== "") ? (
-                  <Image
+                  <SafeImage
                     src={(project.images as unknown[]).find((img) => typeof img === 'string' && (img as string).trim() !== "") as string || ""}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015";
-                    }}
+                    fallbackType="project"
                   />
                 ) : (
                   <div className="w-full h-full bg-muted/50 flex items-center justify-center">

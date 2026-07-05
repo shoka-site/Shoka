@@ -1,10 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
 
 export function Heading({ title }: { title: string }) {
-  const { i18n } = useTranslation();
-  const isRtl = i18n.dir() === "rtl";
   return (
     <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-center">
       {title.split(" ").map((word, i) => (
@@ -27,7 +24,7 @@ export function Heading({ title }: { title: string }) {
   );
 }
 
-export function Freshness({ updates, isRtl }: { updates: any[]; isRtl: boolean }) {
+export function Freshness({ updates, isRtl }: { updates: { date: string | Date }[]; isRtl: boolean }) {
   if (!updates || updates.length === 0) return null;
   const latestDate = new Date(
     Math.max(...updates.map((u) => new Date(u.date).getTime()))

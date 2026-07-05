@@ -1,12 +1,5 @@
 // ---------------------------------------------------------------------------
-// Generic in-memory rate limiter factory.
-// Works in Node.js runtime only (API route handlers).
-// For multi-instance deployments, swap the Map for a Redis-backed store.
-//
-// Usage:
-//   const limiter = createRateLimiter({ windowMs: 60_000, max: 5 });
-//   const result = limiter(ip);
-//   if (!result.allowed) return 429;
+// Rate Limiter supporting both local memory and horizontal Upstash Redis.
 // ---------------------------------------------------------------------------
 
 interface Record {
@@ -16,30 +9,70 @@ interface Record {
 
 export interface RateLimitResult {
   allowed: boolean;
-  // Milliseconds until the window resets. Only set when allowed === false.
   retryAfterMs?: number;
 }
 
 export interface RateLimiterOptions {
-  // Length of the sliding window in milliseconds.
   windowMs: number;
-  // Maximum number of requests allowed within the window.
   max: number;
 }
 
 /**
- * Returns a function that accepts a string key (typically an IP address) and
- * returns whether the request is within the allowed rate.
+ * Returns a rate limiter function. When Redis env vars are configured, it uses
+ * atomic Lua scripts over REST. Otherwise, it falls back to an in-memory Map.
  */
-export function createRateLimiter(options: RateLimiterOptions): (key: string) => RateLimitResult {
+export function createRateLimiter(options: RateLimiterOptions): (key: string) => Promise<RateLimitResult> {
   const store = new Map<string, Record>();
   const { windowMs, max } = options;
 
-  return function check(key: string): RateLimitResult {
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  return async function check(key: string): Promise<RateLimitResult> {
+    if (redisUrl && redisToken) {
+      try {
+        const url = `${redisUrl.replace(/\/$/, "")}/eval`;
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${redisToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            script: `
+              local current = redis.call('get', KEYS[1])
+              if current and tonumber(current) >= tonumber(ARGV[2]) then
+                  return {0, redis.call('ttl', KEYS[1])}
+              else
+                  local val = redis.call('incr', KEYS[1])
+                  if tonumber(val) == 1 then
+                      redis.call('expire', KEYS[1], tonumber(ARGV[1]))
+                  end
+                  return {1, redis.call('ttl', KEYS[1])}
+              end
+            `,
+            keys: [key],
+            args: [String(Math.ceil(windowMs / 1000)), String(max)],
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const [allowedVal, ttlSec] = data.result ?? [1, 0];
+          if (allowedVal === 0) {
+            return { allowed: false, retryAfterMs: ttlSec * 1000 };
+          }
+          return { allowed: true };
+        }
+      } catch (err) {
+        console.error("[RateLimiter] Redis call failed, falling back to memory:", err);
+      }
+    }
+
+    // Local Map Fallback
     const now = Date.now();
     const record = store.get(key);
 
-    // No record, or window expired — start fresh.
     if (!record || now > record.resetAt) {
       store.set(key, { count: 1, resetAt: now + windowMs });
       return { allowed: true };

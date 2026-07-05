@@ -15,9 +15,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const page = Math.max(1, Number(searchParams.get('page') ?? 1));
   const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-  const packages = await storage.getPackages(published);
-  const total = packages.length;
-  const paginated = packages.slice((page - 1) * limit, page * limit);
+  const total = await storage.getPackageCount(published);
+  const paginated = await storage.getPackages(published, {
+    skip: (page - 1) * limit,
+    take: limit,
+  });
 
   return ok(paginated, { page, limit, total });
 });

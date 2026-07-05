@@ -12,9 +12,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const page = Math.max(1, Number(searchParams.get('page') ?? 1));
   const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-  const testimonials = await storage.getTestimonials();
-  const total = testimonials.length;
-  const paginated = testimonials.slice((page - 1) * limit, page * limit);
+  const total = await storage.getTestimonialCount();
+  const paginated = await storage.getTestimonials(undefined, {
+    skip: (page - 1) * limit,
+    take: limit,
+  });
 
   return ok(paginated, { page, limit, total });
 });

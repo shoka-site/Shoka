@@ -2,6 +2,7 @@
 
 import Section from "@/components/layout/Section";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/SafeImage";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Award, Users, Globe, Target, Trophy, Sparkles, ChevronDown, ArrowRight, ArrowLeft, Linkedin } from "lucide-react";
@@ -251,15 +252,13 @@ export function AboutPageContent({ teamMembers, updates }: Props) {
               >
                 <div className="group relative overflow-hidden rounded-[2.5rem] bg-background border border-border/50 hover:border-primary/40 transition-all duration-700 h-full flex flex-col shadow-sm hover:shadow-2xl">
                   <div className="aspect-[3/4] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000 ease-out relative">
-                    <Image
+                    <SafeImage
                       src={member.imageUrl}
                       alt={pick(member.nameEn, member.nameAr)}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover object-top transition-transform duration-1000 group-hover:scale-110"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop";
-                      }}
+                      fallbackType="team"
                     />
                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/40 to-transparent" />
                   </div>

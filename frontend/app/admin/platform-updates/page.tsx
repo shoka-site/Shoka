@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Edit, Trash2, Calendar, Camera } from "lucide-react";
-import Image from "next/image";
-import type { PlatformUpdate } from "@shared/schema";
+import { SafeImage } from "@/components/ui/SafeImage";
+import type { PlatformUpdate, Project, Service } from "@shared/schema";
 
 export default function AdminPlatformUpdates() {
     const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ export default function AdminPlatformUpdates() {
         serviceId: "",
     });
 
-    const { data: projects = [] } = useQuery({
+    const { data: projects = [] } = useQuery<Project[]>({
         queryKey: ["admin-projects"],
         queryFn: async () => {
             const res = await fetch("/api/admin/projects");
@@ -39,7 +39,7 @@ export default function AdminPlatformUpdates() {
         },
     });
 
-    const { data: services = [] } = useQuery({
+    const { data: services = [] } = useQuery<Service[]>({
         queryKey: ["admin-services"],
         queryFn: async () => {
             const res = await fetch("/api/admin/services");
@@ -204,7 +204,7 @@ export default function AdminPlatformUpdates() {
                                 <label className="text-sm font-medium mb-1 block">Type</label>
                                 <Select
                                     value={formData.type}
-                                    onValueChange={(val) => setFormData(prev => ({ ...prev, type: val as any }))}
+                                    onValueChange={(val) => setFormData(prev => ({ ...prev, type: val as PlatformUpdate["type"] }))}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select type" />
@@ -254,7 +254,7 @@ export default function AdminPlatformUpdates() {
                                             <SelectValue placeholder="Select a project" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {projects.map((p: any) => (
+                                            {projects.map((p: Project) => (
                                                 <SelectItem key={p.id} value={p.id}>{p.titleEn}</SelectItem>
                                             ))}
                                         </SelectContent>
@@ -273,7 +273,7 @@ export default function AdminPlatformUpdates() {
                                             <SelectValue placeholder="Select a service" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {services.map((s: any) => (
+                                            {services.map((s: Service) => (
                                                 <SelectItem key={s.id} value={s.id}>{s.titleEn}</SelectItem>
                                             ))}
                                         </SelectContent>
@@ -297,12 +297,13 @@ export default function AdminPlatformUpdates() {
                                     {formData.images.map((img, idx) => (
                                         <div key={idx} className="relative group">
                                             {img ? (
-                                                <Image
+                                                <SafeImage
                                                     src={img}
                                                     alt={`Preview ${idx + 1}`}
                                                     width={128}
                                                     height={64}
                                                     className="h-16 w-32 object-cover rounded"
+                                                    fallbackType="news"
                                                 />
                                             ) : (
                                                 <div className="h-16 w-32 bg-muted flex flex-col items-center justify-center rounded border border-dashed text-xs text-muted-foreground p-1 text-center">
@@ -395,15 +396,13 @@ export default function AdminPlatformUpdates() {
                             <div className="flex items-start gap-4 flex-1">
                                 <div className="w-20 h-20 rounded-md bg-accent/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                                     {raw.images && (raw.images as string[]).length > 0 ? (
-                                        <Image
+                                        <SafeImage
                                             src={(raw.images as string[])[0]}
                                             alt={update.titleEn || ""}
                                             width={80}
                                             height={80}
                                             className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";
-                                            }}
+                                            fallbackType="news"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-muted/50 flex flex-col items-center justify-center text-center p-1">

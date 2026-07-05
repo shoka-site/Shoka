@@ -21,7 +21,33 @@ const WINDOW_MS = 60 * 1000;
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-export function checkLoginRateLimit(ip: string): { allowed: boolean; retryAfterMs?: number } {
+export async function checkLoginRateLimit(ip: string): Promise<{ allowed: boolean; retryAfterMs?: number }> {
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (redisUrl && redisToken) {
+    try {
+      const url = `${redisUrl.replace(/\/$/, '')}/get/login_lockout:${ip}`;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${redisToken}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.result) {
+          // Locked out. Get TTL of lockout
+          const ttlRes = await fetch(`${redisUrl.replace(/\/$/, '')}/ttl/login_lockout:${ip}`, {
+            headers: { Authorization: `Bearer ${redisToken}` }
+          });
+          const ttlData = await ttlRes.json();
+          const ttlSec = ttlData.result ?? 0;
+          return { allowed: false, retryAfterMs: ttlSec * 1000 };
+        }
+      }
+    } catch (err) {
+      console.error('[auth] Redis check failed, falling back to memory:', err);
+    }
+  }
+
   const now = Date.now();
   const record = loginAttempts.get(ip);
 
@@ -30,26 +56,68 @@ export function checkLoginRateLimit(ip: string): { allowed: boolean; retryAfterM
   }
 
   if (!record || now > record.resetAt) {
-    loginAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    loginAttempts.set(ip, { count: 0, resetAt: now + WINDOW_MS });
     return { allowed: true };
   }
 
   if (record.count >= MAX_ATTEMPTS) {
-    const lockedUntil = now + LOCKOUT_MS;
-    loginAttempts.set(ip, { ...record, lockedUntil });
-    logger.audit('login_blocked', 'auth', ip, { reason: 'rate_limit_exceeded' });
-    return { allowed: false, retryAfterMs: LOCKOUT_MS };
+    return { allowed: false, retryAfterMs: record.lockedUntil ? record.lockedUntil - now : LOCKOUT_MS };
   }
 
-  loginAttempts.set(ip, { ...record, count: record.count + 1 });
   return { allowed: true };
 }
 
-export function recordFailedLogin(ip: string): void {
+export async function recordFailedLogin(ip: string): Promise<void> {
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (redisUrl && redisToken) {
+    try {
+      const base = redisUrl.replace(/\/$/, '');
+      const incrRes = await fetch(`${base}/pipeline`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${redisToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify([
+          ['INCR', `login_attempts:${ip}`],
+          ['TTL', `login_attempts:${ip}`]
+        ])
+      });
+      if (incrRes.ok) {
+        const data = await incrRes.json();
+        const count = data[0]?.result ?? 0;
+        if (count === 1) {
+          await fetch(`${base}/EXPIRE/login_attempts:${ip}/${WINDOW_MS / 1000}`, {
+            headers: { Authorization: `Bearer ${redisToken}` }
+          });
+        }
+        if (count >= MAX_ATTEMPTS) {
+          // Lock out
+          await fetch(`${base}/SET/login_lockout:${ip}/locked/PX/${LOCKOUT_MS}`, {
+            headers: { Authorization: `Bearer ${redisToken}` }
+          });
+          logger.audit('login_blocked', 'auth', ip, { reason: 'rate_limit_exceeded' });
+        }
+      }
+    } catch (err) {
+      console.error('[auth] Redis record failed:', err);
+    }
+  }
+
   const now = Date.now();
   const record = loginAttempts.get(ip);
   if (record && now <= record.resetAt) {
-    loginAttempts.set(ip, { ...record, count: record.count + 1 });
+    const nextCount = record.count + 1;
+    let lockedUntil = record.lockedUntil;
+    if (nextCount >= MAX_ATTEMPTS) {
+      lockedUntil = now + LOCKOUT_MS;
+      logger.audit('login_blocked', 'auth', ip, { reason: 'rate_limit_exceeded' });
+    }
+    loginAttempts.set(ip, { ...record, count: nextCount, lockedUntil });
+  } else {
+    loginAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
   }
   logger.audit('login_failed', 'auth', ip);
 }

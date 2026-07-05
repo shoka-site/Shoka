@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     req.headers.get('x-real-ip') ??
     'unknown';
 
-  const rateLimit = checkLoginRateLimit(ip);
+  const rateLimit = await checkLoginRateLimit(ip);
   if (!rateLimit.allowed) {
     const retryAfterSec = Math.ceil((rateLimit.retryAfterMs ?? 0) / 1000);
     return NextResponse.json(
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
   // Credential verification (timing-safe)
   if (!verifyAdminCredentials(username, password)) {
-    recordFailedLogin(ip);
+    await recordFailedLogin(ip);
     // Uniform delay to resist timing attacks on the response
     await new Promise((r) => setTimeout(r, 200));
     return NextResponse.json(

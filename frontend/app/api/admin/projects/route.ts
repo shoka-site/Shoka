@@ -12,9 +12,11 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   const page = Math.max(1, Number(searchParams.get('page') ?? 1));
   const limit = Math.min(100, Math.max(1, Number(searchParams.get('limit') ?? 50)));
 
-  const projects = await storage.getProjects();
-  const total = projects.length;
-  const paginated = projects.slice((page - 1) * limit, page * limit);
+  const total = await storage.getProjectCount();
+  const paginated = await storage.getProjects(undefined, undefined, {
+    skip: (page - 1) * limit,
+    take: limit,
+  });
 
   return ok(paginated, { page, limit, total });
 });

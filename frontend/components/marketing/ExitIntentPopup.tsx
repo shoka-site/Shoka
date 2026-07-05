@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/hooks/use-toast";
 import { trackEvent } from "@/lib/analytics";
+import { getUtmData } from "@/lib/utm-tracker";
 import { X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -70,6 +71,11 @@ export default function ExitIntentPopup() {
 
     setSubmitting(true);
     try {
+      const utmData = getUtmData();
+      const utmString = Object.keys(utmData).length > 0 
+        ? `\n\n[UTM: ${JSON.stringify(utmData)}]` 
+        : "";
+
       const res = await fetch("/api/admin/consultations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,7 +83,7 @@ export default function ExitIntentPopup() {
           name,
           email,
           company: "",
-          message: "Lead from exit-intent popup — requesting free consultation.",
+          message: `Lead from exit-intent popup — requesting free consultation.${utmString}`,
         }),
       });
 

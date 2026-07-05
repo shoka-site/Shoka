@@ -59,6 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
             canonical: SITE_URL,
             languages: {
                 "ar": SITE_URL,
+                "en": SITE_URL,
                 "x-default": SITE_URL,
             },
         },
@@ -182,7 +183,7 @@ export default async function RootLayout({
         "image": `${SITE_URL}/logoo.png`,
         "url": SITE_URL,
         "telephone": "+90-543-106-1211",
-        "email": "[EMAIL_ADDRESS]",
+        "email": "global@sehle.site",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Kızılay",
@@ -227,6 +228,12 @@ export default async function RootLayout({
                 />
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
+                <a
+                    href="#main-content"
+                    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-[9999] text-center"
+                >
+                    {isRtl ? "تخطي إلى المحتوى الرئيسي" : "Skip to main content"}
+                </a>
                 <SentryClientInit />
                 <TranslationProvider lang={lang}>
                     <Providers>

@@ -8,7 +8,7 @@ interface SafeImageProps extends Omit<ImageProps, 'onError'> {
 }
 
 export function SafeImage({ src, alt, fallbackType, ...props }: SafeImageProps) {
-  const [imgSrc, setImgSrc] = useState<any>(src);
+  const [imgSrc, setImgSrc] = useState<SafeImageProps["src"]>(src);
 
   useEffect(() => {
     setImgSrc(src);
@@ -21,6 +21,7 @@ export function SafeImage({ src, alt, fallbackType, ...props }: SafeImageProps) 
     service: "https://images.unsplash.com/photo-1454165833767-027508658d61?q=80&w=2070",
     event: "https://images.unsplash.com/photo-1506784919175-5028aa82902b?q=80&w=2070",
     new: "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070",
+    team: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2070",
   };
 
   const fallback = placeholders[fallbackType || ""] || "https://images.unsplash.com/photo-1451187530220-a095f9737559?q=80&w=2070";

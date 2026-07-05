@@ -40,6 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
+      url: "https://www.sehle.site/about",
     }
   };
 }
@@ -47,9 +48,55 @@ export async function generateMetadata(): Promise<Metadata> {
 export const revalidate = 60;
 
 export default async function AboutPage() {
+  const { lang } = await getServerTranslation();
   const [teamMembers, updates] = await Promise.all([
     storage.getTeamMembers(true),
     storage.getPlatformUpdates(true),
   ]);
-  return <AboutPageContent teamMembers={teamMembers} updates={updates} />;
+
+  const SITE_URL = "https://www.sehle.site";
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": lang === "ar" ? "من نحن | سهلة" : "About Us | Sehle",
+    "description": lang === "ar"
+      ? "تعرف على شركة سهلة، قصتنا، فريق عملنا من المهندسين والخبراء، ورسالتنا لتمكين الشركات العراقية من خلال الابتكار والحلول البرمجية المتطورة."
+      : "Learn about Sehle, our story, our team of experts and engineers, and our mission to empower Iraqi businesses through innovation and cutting-edge software.",
+    "url": `${SITE_URL}/about`,
+    "publisher": {
+      "@type": "Organization",
+      "name": "سهلة | Sehle",
+      "url": SITE_URL
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": lang === "ar" ? "فريق عمل سهلة" : "Sehle Team Members",
+      "itemListElement": teamMembers.map((member, idx) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "item": {
+          "@type": "Person",
+          "name": lang === "ar" ? (member.nameAr || member.nameEn) : member.nameEn,
+          "jobTitle": lang === "ar" ? (member.roleAr || member.roleEn) : member.roleEn,
+          "image": member.imageUrl || undefined,
+          "sameAs": member.linkedinUrl || undefined,
+          "affiliation": {
+            "@type": "Organization",
+            "name": "سهلة | Sehle",
+            "url": SITE_URL
+          }
+        }
+      }))
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
+      <AboutPageContent teamMembers={teamMembers} updates={updates} />
+    </>
+  );
 }

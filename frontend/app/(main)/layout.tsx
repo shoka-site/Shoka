@@ -40,7 +40,7 @@ export default async function MainLayout({
             <Suspense fallback={<NavbarFallback />}>
                 <Navbar lang={lang} />
             </Suspense>
-            <main className="relative z-10 w-full pb-20 lg:pb-0">
+            <main id="main-content" tabIndex={-1} className="relative z-10 w-full pb-20 lg:pb-0 outline-none">
                 {children}
             </main>
             <BottomNav />

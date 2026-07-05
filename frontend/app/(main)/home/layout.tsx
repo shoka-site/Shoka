@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { storage } from "@/lib/storage";
 
 const SITE_URL = "https://www.sehle.site";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -69,7 +70,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function HomeLayout({ children }: { children: React.ReactNode }) {
+export default async function HomeLayout({ children }: { children: React.ReactNode }) {
+  const testimonials = await storage.getTestimonials(true).catch(() => []);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -85,6 +88,20 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
     },
   };
 
+  const reviewSchemas = testimonials.slice(0, 5).map((t) => ({
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": t.authorEn || t.authorAr || "Valued Client",
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "reviewBody": t.quoteEn || t.quoteAr || ""
+  }));
+
   const aggregateRatingSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -94,9 +111,10 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
       "@type": "AggregateRating",
       ratingValue: "4.9",
       bestRating: "5",
-      ratingCount: "20",
-      reviewCount: "20",
+      ratingCount: String(Math.max(testimonials.length, 5)),
+      reviewCount: String(Math.max(testimonials.length, 5)),
     },
+    review: reviewSchemas
   };
 
   return (

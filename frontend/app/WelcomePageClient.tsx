@@ -7,6 +7,7 @@ import { ChevronDown, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Heading } from "@/components/seo/SeoHelpers";
 import { useEffect, useRef, useState } from "react";
+import { useABVariant } from "@/lib/ab-test";
 
 const SOCIALS = [
     {
@@ -57,7 +58,11 @@ export default function WelcomePageClient() {
         document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
     };
 
-    const heading = isRtl ? "نبني التميّز الرقمي" : "Building Digital Excellence";
+    // A/B test — §22: hero headline experiment
+    const abVariant = useABVariant("hero_headline");
+    const headingControl = isRtl ? "نبني التميّز الرقمي" : "Building Digital Excellence";
+    const headingVariantB = isRtl ? "عملياتك مدمجنة رقمياً خلال 8 أسابيع" : "Your Operations. Digitized in 8 Weeks.";
+    const heading = abVariant === "B" ? headingVariantB : headingControl;
 
     return (
         <div

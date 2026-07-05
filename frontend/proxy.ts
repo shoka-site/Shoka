@@ -1,22 +1,28 @@
 // ---------------------------------------------------------------------------
-// Next.js 16 Proxy (replaces middleware.ts) — first line of defence for all
-// admin routes.
+// Next.js 16 Proxy (replaces middleware.ts)
 //
-// Protects:
-//   /admin/*           Browser pages (except /admin/login)
-//   /api/admin/*       API routes (except /api/admin/login and /api/admin/logout)
-//
-// Uses Web Crypto API (available in Edge Runtime) to verify the HMAC-signed
-// session token stored in the `admin_auth` httpOnly cookie.
-//
-// NOTE: Every /api/admin/* handler also calls assertAdmin() as a second,
-// independent check — never rely on the proxy alone.
+// 1. First line of defence for all admin routes.
+//    Protects /admin/* and /api/admin/* (except login/logout).
+// 2. A/B Test Variant Assignment.
+//    Assigns visitors to experiment variants for testing.
 // ---------------------------------------------------------------------------
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000; // must match lib/auth.ts
+
+// A/B testing config
+const EXPERIMENTS: Record<string, string[]> = {
+  hero_headline: ["A", "B"],   // A = control, B = benefit-led
+  cta_color: ["A", "B"],       // A = gold CTA, B = white high-contrast CTA
+};
+const AB_COOKIE_NAME = "ab_variants";
+const AB_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+
+function assignVariant(variants: string[]): string {
+  return variants[Math.floor(Math.random() * variants.length)];
+}
 
 async function verifyToken(token: string, secret: string): Promise<boolean> {
   if (!token || !secret) return false;
@@ -67,40 +73,73 @@ async function verifyToken(token: string, secret: string): Promise<boolean> {
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
-  // Always allow login/logout — they handle their own auth logic and must
-  // remain accessible for users with expired sessions.
+  // 1. Admin Access Protection
   const isExempt =
     pathname === '/admin/login' ||
     pathname === '/admin/login/' ||
     pathname.startsWith('/api/admin/login') ||
     pathname.startsWith('/api/admin/logout');
 
-  if (isExempt) return NextResponse.next();
-
   const isAdminPage = pathname.startsWith('/admin');
   const isAdminApi = pathname.startsWith('/api/admin');
 
-  if (!isAdminPage && !isAdminApi) return NextResponse.next();
+  if ((isAdminPage || isAdminApi) && !isExempt) {
+    const secret = process.env.ADMIN_SESSION_SECRET ?? '';
+    const token = request.cookies.get('admin_auth')?.value ?? '';
+    const valid = token ? await verifyToken(token, secret) : false;
 
-  const secret = process.env.ADMIN_SESSION_SECRET ?? '';
-  const token = request.cookies.get('admin_auth')?.value ?? '';
-  const valid = token ? await verifyToken(token, secret) : false;
-
-  if (!valid) {
-    if (isAdminApi) {
-      return NextResponse.json(
-        { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    if (!valid) {
+      if (isAdminApi) {
+        return NextResponse.json(
+          { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
+          { status: 401 }
+        );
+      }
+      const loginUrl = new URL('/admin/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
-    const loginUrl = new URL('/admin/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
   }
 
-  return NextResponse.next();
+  // 2. A/B Testing Variant Assignment
+  const response = NextResponse.next();
+
+  const isPublicPage =
+    !pathname.startsWith("/api") &&
+    !pathname.startsWith("/_next") &&
+    !pathname.startsWith("/admin") &&
+    !pathname.match(/\.(ico|png|jpg|svg|webp|woff2?)$/);
+
+  if (isPublicPage) {
+    let assignments: Record<string, string> = {};
+    try {
+      const raw = request.cookies.get(AB_COOKIE_NAME)?.value;
+      if (raw) assignments = JSON.parse(decodeURIComponent(raw));
+    } catch {
+      // start fresh
+    }
+
+    let changed = false;
+    for (const [experiment, variants] of Object.entries(EXPERIMENTS)) {
+      if (!assignments[experiment]) {
+        assignments[experiment] = assignVariant(variants);
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      response.cookies.set(AB_COOKIE_NAME, encodeURIComponent(JSON.stringify(assignments)), {
+        path: "/",
+        maxAge: AB_COOKIE_MAX_AGE,
+        sameSite: "lax",
+        httpOnly: false, // must be readable by client JS for analytics
+      });
+    }
+  }
+
+  return response;
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
