@@ -1,45 +1,45 @@
 import { storage } from "@/lib/storage";
 import { getServerTranslation } from "@/lib/server-i18n";
-import ProjectDetailsClient from "./ProjectDetailsClient";
+import IndustryDetailsClient from "./IndustryDetailsClient";
 import { Metadata } from "next";
+import { slugify } from "@/lib/utils";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const project = await storage.getProject(id);
+  const { slug } = await params;
+  const industries = await storage.getIndustries(true);
+  const industry = industries.find(i => slugify(i.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
-  if (!project) {
+  if (!industry) {
     return {
-      title: lang === "ar" ? "المشروع غير موجود" : "Project Not Found",
+      title: lang === "ar" ? "القطاع غير موجود" : "Industry Not Found",
     };
   }
 
-  const baseTitle = lang === "ar" ? (project.titleAr || project.titleEn) : project.titleEn;
-  const title = lang === "ar" ? `دراسة حالة: ${baseTitle}` : `Case Study: ${baseTitle}`;
-  const desc = lang === "ar" ? (project.descriptionAr || project.descriptionEn) : project.descriptionEn;
+  const baseTitle = lang === "ar" ? (industry.titleAr || industry.titleEn) : industry.titleEn;
+  const title = lang === "ar" ? `طوّر قطاع ${baseTitle} ببرمجيات مخصصة` : `Transform ${baseTitle} with Custom Software`;
+  const desc = lang === "ar" ? (industry.descriptionAr || industry.descriptionEn) : industry.descriptionEn;
 
   // Retrieve keywords from the database if available, otherwise fall back to title-based keywords
   let keywords: string[] = [];
-  const dbKeywords = lang === "ar" ? project.keywordsAr : project.keywordsEn;
+  const dbKeywords = lang === "ar" ? industry.keywordsAr : industry.keywordsEn;
   if (dbKeywords) {
     keywords = dbKeywords.split(/[،,]+/).map(k => k.trim()).filter(Boolean);
   } else {
-    const category = lang === "ar" ? (project.categoryAr || project.categoryEn) : project.categoryEn;
     keywords = [
       title,
-      category,
-      ...(lang === "ar" ? ["مشروع سهلة", "سهلة البرمجية"] : ["Sehle project", "Sehle software"])
+      ...(lang === "ar" ? ["حلول قطاعية", "أنظمة إدارة"] : ["industry solutions", "enterprise management systems"])
     ].filter(Boolean);
   }
 
   const SITE_URL = "https://www.sehle.site";
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
-  const ogImage = project.images?.[0] || OG_IMAGE;
-  const canonicalUrl = `${SITE_URL}/projects/${id}/`;
+  const ogImage = OG_IMAGE;
+  const canonicalUrl = `${SITE_URL}/industries/${slug}/`;
 
   return {
     title,
@@ -67,30 +67,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProjectPage({ params }: Props) {
-  const { id } = await params;
-  const project = await storage.getProject(id);
+export default async function IndustryPage({ params }: Props) {
+  const { slug } = await params;
+  const industries = await storage.getIndustries(true);
+  const industry = industries.find(i => slugify(i.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
-  if (!project) return <ProjectDetailsClient />;
+  if (!industry) return <IndustryDetailsClient id="" />;
 
-  const title = lang === "ar" ? (project.titleAr || project.titleEn) : project.titleEn;
-  const desc = lang === "ar" ? (project.descriptionAr || project.descriptionEn) : project.descriptionEn;
+  const title = lang === "ar" ? (industry.titleAr || industry.titleEn) : industry.titleEn;
   const SITE_URL = "https://www.sehle.site";
-  const OG_IMAGE = `${SITE_URL}/og-image.png`;
-  const ogImage = project.images?.[0] || OG_IMAGE;
-
-  const creativeWorkSchema = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": title,
-    "description": desc || undefined,
-    "image": ogImage,
-    "creator": {
-      "@type": "Organization",
-      "name": "سهلة | Sehle"
-    }
-  };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -105,14 +91,14 @@ export default async function ProjectPage({ params }: Props) {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": lang === "ar" ? "المشاريع" : "Projects",
-        "item": "https://www.sehle.site/projects"
+        "name": lang === "ar" ? "القطاعات" : "Industries",
+        "item": "https://www.sehle.site/industries"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `${SITE_URL}/projects/${id}`
+        "item": `${SITE_URL}/industries/${slug}`
       }
     ]
   };
@@ -121,13 +107,9 @@ export default async function ProjectPage({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <ProjectDetailsClient />
+      <IndustryDetailsClient id={industry.id} />
     </>
   );
 }

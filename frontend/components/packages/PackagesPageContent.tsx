@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import ScrollTriggerPopup from "@/components/marketing/ScrollTriggerPopup";
+import { slugify } from "@/lib/utils";
 
 // Prisma Package includes descriptionEn/descriptionAr not in the Zod schema
 interface RawPackage {
@@ -156,7 +157,7 @@ export function PackagesPageContent({ packages }: Props) {
                               {t("home.packages.no_description", "A tailored bundle of services designed to help you succeed.")}
                             </p>
                           )}
-                          <Link href={`/packages/${pkg.id}`} className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline border-t border-border/50 pt-6">
+                          <Link href={`/packages/${slugify(pkg.titleEn)}`} className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline border-t border-border/50 pt-6">
                             {t("common.view_details", "View Details")}
                             <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"} group-hover:translate-x-1 transition-transform duration-300`} />
                           </Link>

@@ -7,11 +7,13 @@ import { ArrowRight, Layers } from "lucide-react";
 import Section from "@/components/layout/Section";
 import { FadeInSection, TestimonialCarousel } from "@/components/home/HomeClientComponents";
 import type { Testimonial } from "@/components/home/HomeClientComponents";
+import { slugify } from "@/lib/utils";
 
 interface LocalizedService {
   id: string;
   order: number;
   title: string;
+  titleEn: string;
   description: string;
   [key: string]: unknown;
 }
@@ -21,6 +23,7 @@ interface LocalizedProject {
   images?: unknown[];
   category: string;
   title: string;
+  titleEn: string;
   description: string;
   [key: string]: unknown;
 }
@@ -29,6 +32,7 @@ interface LocalizedPackage {
   id: string;
   order: number;
   title: string;
+  titleEn: string;
   description?: string;
   [key: string]: unknown;
 }
@@ -47,6 +51,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
     id: s.id as string,
     order: s.order as number,
     title: (s[`title${lang === "en" ? "En" : "Ar"}`] ?? s.titleAr ?? s.title) as string,
+    titleEn: (s.titleEn ?? s.title) as string,
     description: (s[`description${lang === "en" ? "En" : "Ar"}`] ?? s.descriptionAr ?? s.description) as string,
   }));
 
@@ -68,7 +73,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
       </FadeInSection>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {localizedServices.slice(0, 3).map((service, index) => (
-          <Link key={service.id} href={`/services/${service.id}`}>
+          <Link key={service.id} href={`/services/${slugify(service.titleEn)}`}>
             <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
@@ -113,6 +118,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
     images: p.images as unknown[] | undefined,
     category: (p.category ?? p.categoryEn ?? p.categoryAr ?? "") as string,
     title: (p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title) as string,
+    titleEn: (p.titleEn ?? p.title) as string,
     description: (p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description) as string,
   }));
 
@@ -134,7 +140,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
       </FadeInSection>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {localizedProjects.slice(0, 3).map((project, index) => (
-          <Link key={project.id} href={`/projects/${project.id}`}>
+          <Link key={project.id} href={`/projects/${slugify(project.titleEn)}`}>
             <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"
@@ -199,6 +205,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
     id: p.id as string,
     order: p.order as number,
     title: (p[`title${lang === "en" ? "En" : "Ar"}`] ?? p.titleAr ?? p.title) as string,
+    titleEn: (p.titleEn ?? p.title) as string,
     description: (p[`description${lang === "en" ? "En" : "Ar"}`] ?? p.descriptionAr ?? p.description) as string | undefined,
   }));
 
@@ -220,7 +227,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
       </FadeInSection>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {localizedPackages.slice(0, 3).map((pkg) => (
-          <Link key={pkg.id} href={`/packages/${pkg.id}`}>
+          <Link key={pkg.id} href={`/packages/${slugify(pkg.titleEn)}`}>
             <div className="group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:border-accent/50 active:scale-[0.98] transition-all duration-500 cursor-pointer h-full"
               style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(194,164,92,0.05)" }}>
               <div className="h-px w-full opacity-30 group-hover:opacity-100 transition-opacity duration-500"

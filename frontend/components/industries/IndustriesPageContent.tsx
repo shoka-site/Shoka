@@ -9,6 +9,7 @@ import { ArrowRight, Sparkles, ChevronDown, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import type { Industry } from "@shared/schema";
+import { slugify } from "@/lib/utils";
 
 interface Props {
   industries: Industry[];
@@ -103,7 +104,7 @@ export function IndustriesPageContent({ industries }: Props) {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                 >
-                  <Link href={`/industries/${industry.id}`} className="block h-full group">
+                  <Link href={`/industries/${slugify(industry.titleEn)}`} className="block h-full group">
                     <Card className="h-full border-border/40 group-hover:border-primary/30 transition-all duration-700 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative rounded-[2.5rem] shadow-sm hover:shadow-2xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       <div className="h-1.5 w-full bg-gradient-to-r from-primary/60 via-primary/20 to-transparent rounded-t-[2.5rem] group-hover:from-primary group-hover:via-primary/40 transition-all duration-700" />

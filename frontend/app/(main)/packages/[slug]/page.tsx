@@ -2,14 +2,16 @@ import { storage } from "@/lib/storage";
 import { getServerTranslation } from "@/lib/server-i18n";
 import PackageDetailsClient from "./PackageDetailsClient";
 import { Metadata } from "next";
+import { slugify } from "@/lib/utils";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const pkg = await storage.getPackage(id);
+  const { slug } = await params;
+  const packages = await storage.getPackages(true);
+  const pkg = packages.find(p => slugify(p.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
   if (!pkg) {
@@ -39,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const SITE_URL = "https://www.sehle.site";
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
   const ogImage = OG_IMAGE;
-  const canonicalUrl = `${SITE_URL}/packages/${id}/`;
+  const canonicalUrl = `${SITE_URL}/packages/${slug}/`;
 
   return {
     title,
@@ -68,11 +70,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PackagePage({ params }: Props) {
-  const { id } = await params;
-  const pkg = await storage.getPackage(id);
+  const { slug } = await params;
+  const packages = await storage.getPackages(true);
+  const pkg = packages.find(p => slugify(p.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
-  if (!pkg) return <PackageDetailsClient />;
+  if (!pkg) return <PackageDetailsClient id="" />;
 
   const SITE_URL = "https://www.sehle.site";
   const title = lang === "ar" ? (pkg.titleAr || pkg.titleEn) : pkg.titleEn;
@@ -87,7 +90,7 @@ export default async function PackagePage({ params }: Props) {
     "image": `${SITE_URL}/og-image.png`,
     "offers": {
       "@type": "Offer",
-      "url": `${SITE_URL}/packages/${id}`,
+      "url": `${SITE_URL}/packages/${slug}`,
       "priceCurrency": "USD",
       "price": pkg.order === 1 ? "1500" : pkg.order === 2 ? "3500" : "7500", // Representative base pricing
       "priceValidUntil": "2026-12-31",
@@ -151,7 +154,7 @@ export default async function PackagePage({ params }: Props) {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.sehle.site/packages/${id}`
+        "item": `https://www.sehle.site/packages/${slug}`
       }
     ]
   };
@@ -170,7 +173,7 @@ export default async function PackagePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <PackageDetailsClient />
+      <PackageDetailsClient id={pkg.id} />
     </>
   );
 }

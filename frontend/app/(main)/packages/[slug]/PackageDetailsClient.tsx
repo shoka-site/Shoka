@@ -15,11 +15,11 @@ import {
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { usePackage, usePackages } from "@/hooks/use-content";
-import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
+import { slugify } from "@/lib/utils";
 
 function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
@@ -35,8 +35,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-export default function PackageDetailsClient() {
-  const { id } = useParams() as { id: string };
+export default function PackageDetailsClient({ id }: { id: string }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
   const { data: pkg, isLoading } = usePackage(id);
@@ -328,7 +327,7 @@ export default function PackageDetailsClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherPackages.map((p, i) => (
                 <FadeIn key={p.id} delay={i * 0.08}>
-                  <Link href={`/packages/${p.id}`}>
+                  <Link href={`/packages/${slugify((p as any).titleEn || p.title)}`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"

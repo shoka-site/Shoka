@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Package, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { usePackages } from "@/hooks/use-content";
+import { slugify } from "@/lib/utils";
 
 export default function PackagesPanel({ isRtl }: { isRtl: boolean }) {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export default function PackagesPanel({ isRtl }: { isRtl: boolean }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1, type: "spring", stiffness: 300, damping: 25 }}
           >
-            <Link href={`/packages/${pkg.id}`} className={`group flex items-start gap-4 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+            <Link href={`/packages/${slugify(pkg.titleEn)}`} className={`group flex items-start gap-4 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
               <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                 <Package className="w-6 h-6" />
               </div>

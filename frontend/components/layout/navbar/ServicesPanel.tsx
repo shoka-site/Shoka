@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Code2, Smartphone, Database, Cloud, Brain, Workflow, Building2, Shield, Server, BarChart3, Zap } from "lucide-react";
 import { useServices } from "@/hooks/use-content";
+import { slugify } from "@/lib/utils";
 
 const serviceTypeIcons: Record<string, React.ElementType> = {
   software_development: Code2,
@@ -41,7 +42,7 @@ export default function ServicesPanel({ isRtl }: { isRtl: boolean }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.05, type: "spring", stiffness: 300, damping: 25 }}
           >
-            <Link href={`/services/${service.id}`} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+            <Link href={`/services/${slugify(service.titleEn)}`} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
               <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
                 <ServiceIcon className="w-6 h-6" />
               </div>

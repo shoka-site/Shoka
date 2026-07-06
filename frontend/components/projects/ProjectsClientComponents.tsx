@@ -7,6 +7,7 @@ import NextImage from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { slugify } from "@/lib/utils";
 
 export function ProjectsHero({ isRtl }: { isRtl: boolean }) {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ export function ProjectsHero({ isRtl }: { isRtl: boolean }) {
 export function ProjectCard({ project, index, isRtl }: { project: Record<string, unknown>; index: number; isRtl: boolean }) {
   const { t } = useTranslation();
   return (
-    <Link href={`/projects/${project.id}`}>
+    <Link href={`/projects/${slugify((project.titleEn as string) || (project.title as string))}`}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

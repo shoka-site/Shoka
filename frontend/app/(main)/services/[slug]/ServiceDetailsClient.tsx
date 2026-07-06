@@ -19,6 +19,7 @@ import { useService, useServices } from "@/hooks/use-content";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 import ScrollTriggerPopup from "@/components/marketing/ScrollTriggerPopup";
+import { slugify } from "@/lib/utils";
 
 function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
@@ -34,11 +35,10 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-export default function ServiceDetailsClient({ params }: { params: Promise<{ id: string }> }) {
-  const unwrappedParams = use(params);
+export default function ServiceDetailsClient({ id }: { id: string }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
-  const { data: service, isLoading } = useService(unwrappedParams.id);
+  const { data: service, isLoading } = useService(id);
   const { data: allServices = [] } = useServices();
   const { scrollY } = useScroll();
 
@@ -88,7 +88,7 @@ export default function ServiceDetailsClient({ params }: { params: Promise<{ id:
   }
 
   // Other services (excluding current)
-  const otherServices = allServices.filter((s) => s.id !== unwrappedParams.id).slice(0, 3);
+  const otherServices = allServices.filter((s) => s.id !== id).slice(0, 3);
 
   // Parse description paragraphs
   const descriptionParagraphs = (service.description || "").split("\n").filter(Boolean);
@@ -317,7 +317,7 @@ export default function ServiceDetailsClient({ params }: { params: Promise<{ id:
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherServices.map((s, i) => (
                 <FadeIn key={s.id} delay={i * 0.08}>
-                  <Link href={`/services/${s.id}`}>
+                  <Link href={`/services/${slugify((s as any).titleEn || s.title)}`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"

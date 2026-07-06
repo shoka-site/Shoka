@@ -13,6 +13,7 @@ export interface Service {
     id: string;
     order: number;
     title: string;
+    titleEn: string;
     description: string;
     type: string;
     published: boolean;
@@ -49,6 +50,7 @@ export interface Project {
     images?: string[];
     category: string;
     title: string;
+    titleEn: string;
     description: string;
     featured: boolean;
     published: boolean;
@@ -132,6 +134,7 @@ export interface Industry {
     id: string;
     order: number;
     title: string;
+    titleEn: string;
     type?: string;
     description: string;
     published: boolean;
@@ -216,6 +219,7 @@ export interface Package {
     id: string;
     order: number;
     title: string;
+    titleEn: string;
     description?: string;
     published: boolean;
     createdAt?: string | Date;

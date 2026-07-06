@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import type { Service } from "@shared/schema";
+import { slugify } from "@/lib/utils";
 
 interface Props {
   services: Service[];
@@ -128,7 +129,7 @@ export function ServicesPageContent({ services }: Props) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {svcs.map((service, sIdx) => (
-                        <Link href={`/services/${service.id}`} key={service.id}>
+                        <Link href={`/services/${slugify(service.titleEn)}`} key={service.id}>
                           <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}

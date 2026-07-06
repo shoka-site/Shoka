@@ -24,6 +24,11 @@ export function transformForLanguage<T extends Record<string, unknown>>(content:
                 transformed[key] = content[key];
             }
         }
+        
+        // ALWAYS preserve titleEn for slug generation
+        if (key === 'titleEn') {
+            transformed.titleEn = content[key];
+        }
     });
 
     return transformed;

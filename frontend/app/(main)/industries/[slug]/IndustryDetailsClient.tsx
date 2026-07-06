@@ -15,7 +15,7 @@ import {
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useIndustry, useIndustries } from "@/hooks/use-content";
-import { useParams } from "next/navigation";
+import { slugify } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
@@ -33,8 +33,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-export default function IndustryDetailsClient() {
-  const { id } = useParams() as { id: string };
+export default function IndustryDetailsClient({ id }: { id: string }) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
   const { data: industry, isLoading } = useIndustry(id);
@@ -316,7 +315,7 @@ export default function IndustryDetailsClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherIndustries.map((ind, i) => (
                 <FadeIn key={ind.id} delay={i * 0.08}>
-                  <Link href={`/industries/${ind.id}`}>
+                  <Link href={`/industries/${slugify((ind as any).titleEn || ind.title)}`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"

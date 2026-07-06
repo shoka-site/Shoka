@@ -2,14 +2,16 @@ import { storage } from "@/lib/storage";
 import { getServerTranslation } from "@/lib/server-i18n";
 import ServiceDetailsClient from "./ServiceDetailsClient";
 import { Metadata } from "next";
+import { slugify } from "@/lib/utils";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const service = await storage.getService(id);
+  const { slug } = await params;
+  const services = await storage.getServices(true);
+  const service = services.find((s) => slugify(s.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
   if (!service) {
@@ -38,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const SITE_URL = "https://www.sehle.site";
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
   const ogImage = OG_IMAGE;
-  const canonicalUrl = `${SITE_URL}/services/${id}/`;
+  const canonicalUrl = `${SITE_URL}/services/${slug}/`;
 
   return {
     title,
@@ -67,11 +69,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ServicePage({ params }: Props) {
-  const { id } = await params;
-  const service = await storage.getService(id);
+  const { slug } = await params;
+  const services = await storage.getServices(true);
+  const service = services.find((s) => slugify(s.titleEn) === slug);
   const { lang } = await getServerTranslation();
 
-  if (!service) return <ServiceDetailsClient params={params} />;
+  if (!service) return <ServiceDetailsClient id="" />;
 
   const title = lang === "ar" ? (service.titleAr || service.titleEn) : service.titleEn;
 
@@ -127,7 +130,7 @@ export default async function ServicePage({ params }: Props) {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.sehle.site/services/${id}`
+        "item": `https://www.sehle.site/services/${slug}`
       }
     ]
   };
@@ -142,7 +145,7 @@ export default async function ServicePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <ServiceDetailsClient params={params} />
+      <ServiceDetailsClient id={service.id} />
     </>
   );
 }

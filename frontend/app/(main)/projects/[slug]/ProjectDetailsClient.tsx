@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useProject } from "@/hooks/use-content";
 import Section from "@/components/layout/Section";
 import { SafeImage } from "@/components/ui/SafeImage";
@@ -12,9 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { InitialLoader } from "@/components/ui/InitialLoader";
 
-export default function ProjectDetailsClient() {
-    const params = useParams();
-    const id = params.id as string;
+export default function ProjectDetailsClient({ id }: { id: string }) {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.dir() === "rtl";
 
