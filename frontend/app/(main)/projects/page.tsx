@@ -14,8 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
   const title = lang === "ar"
-    ? "مشاريعنا | معرض أعمالنا وحلولنا الرقمية"
-    : "Our Projects | Portfolio & Digital Solutions";
+    ? "تصفح قصص نجاحنا ومشاريعنا"
+    : "View Our Success Stories";
 
   const description = lang === "ar"
     ? "شاهد معرض أعمال شركة سهلة والمشاريع الرقمية التي قمنا بتنفيذها بنجاح لمختلف القطاعات والشركات في العراق والمنطقة."

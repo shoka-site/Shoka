@@ -81,10 +81,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${serviceTitle} لقطاع ${industryTitle}`,
       `برمجة أنظمة ${industryTitle}`
     ],
+    alternates: {
+      canonical: `https://www.sehle.site/${slug}/`,
+    },
     openGraph: {
       title,
       description,
-      url: `https://www.sehle.site/${slug}`,
+      url: `https://www.sehle.site/${slug}/`,
     }
   };
 }

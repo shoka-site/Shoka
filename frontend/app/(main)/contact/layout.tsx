@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     "Sehle contact",
   ],
   alternates: {
-    canonical: `${SITE_URL}/contact`,
+    canonical: `${SITE_URL}/contact/`,
   },
   openGraph: {
     type: "website",
     locale: "ar_IQ",
     alternateLocale: "en_US",
-    url: `${SITE_URL}/contact`,
+    url: `${SITE_URL}/contact/`,
     title: "تواصل مع سهلة | استشارة برمجية مجانية في العراق",
     description:
       "هل لديك فكرة أو مشروع؟ تواصل مع سهلة واحصل على استشارة برمجية مجانية.",

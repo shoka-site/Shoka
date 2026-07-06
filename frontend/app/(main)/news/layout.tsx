@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     "Sehle updates",
   ],
   alternates: {
-    canonical: `${SITE_URL}/news`,
+    canonical: `${SITE_URL}/news/`,
   },
   openGraph: {
     type: "website",
     locale: "ar_IQ",
     alternateLocale: "en_US",
-    url: `${SITE_URL}/news`,
+    url: `${SITE_URL}/news/`,
     title: "أخبار سهلة وإنجازاتها | Iraq Tech News",
     description: "تابع آخر إنجازات وأخبار سهلة — شركة البرمجيات العراقية.",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "أخبار سهلة" }],

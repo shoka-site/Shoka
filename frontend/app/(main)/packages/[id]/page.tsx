@@ -18,7 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = lang === "ar" ? (pkg.titleAr || pkg.titleEn) : pkg.titleEn;
+  const baseTitle = lang === "ar" ? (pkg.titleAr || pkg.titleEn) : pkg.titleEn;
+  const title = lang === "ar" ? `احصل على ${baseTitle}` : `Get the ${baseTitle}`;
   const desc = lang === "ar"
     ? `اكتشف تفاصيل ومميزات باقة ${title} من شركة سهلة للحلول البرمجية والأنظمة الرقمية في العراق.`
     : `Discover the details and features of ${title} package from Sehle for software solutions and digital systems in Iraq.`;
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const SITE_URL = "https://www.sehle.site";
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
   const ogImage = OG_IMAGE;
-  const canonicalUrl = `${SITE_URL}/packages/${id}`;
+  const canonicalUrl = `${SITE_URL}/packages/${id}/`;
 
   return {
     title,

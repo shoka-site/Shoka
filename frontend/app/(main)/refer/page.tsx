@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: "https://www.sehle.site/refer" },
+    alternates: { canonical: "https://www.sehle.site/refer/" },
     openGraph: { title, description },
   };
 }

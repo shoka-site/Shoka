@@ -87,10 +87,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `شركة برمجة في ${cityData.nameAr}`,
       `برمجة أنظمة ${cityData.nameAr}`
     ],
+    alternates: {
+      canonical: `https://www.sehle.site/solutions-in-${city.toLowerCase()}/`,
+    },
     openGraph: {
       title,
       description,
-      url: `https://www.sehle.site/solutions-in-${city.toLowerCase()}`,
+      url: `https://www.sehle.site/solutions-in-${city.toLowerCase()}/`,
     }
   };
 }

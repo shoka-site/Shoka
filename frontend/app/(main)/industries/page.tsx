@@ -7,8 +7,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
   const title = lang === "ar"
-    ? "القطاعات | القطاعات التي نخدمها"
-    : "Industries | Industries We Serve";
+    ? "حوّل قطاعك رقمياً"
+    : "Transform Your Industry Digitally";
 
   const description = lang === "ar"
     ? "نقدم حلولاً برمجية متخصصة ومصممة لتناسب مختلف القطاعات كالتجارة، الصحة، التعليم، المقاولات وغيرها في السوق العراقي."

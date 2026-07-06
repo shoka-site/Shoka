@@ -44,13 +44,13 @@ export async function generateMetadata(): Promise<Metadata> {
       "Sehle industries",
     ],
     alternates: {
-      canonical: `${SITE_URL}/industries`,
+      canonical: `${SITE_URL}/industries/`,
     },
     openGraph: {
       type: "website",
       locale: isRtl ? "ar_IQ" : "en_US",
       alternateLocale: isRtl ? "en_US" : "ar_IQ",
-      url: `${SITE_URL}/industries`,
+      url: `${SITE_URL}/industries/`,
       title,
       description,
       images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: title }],

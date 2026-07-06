@@ -7,8 +7,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
   const title = lang === "ar"
-    ? "خدماتنا | خبراتنا وحلولنا البرمجية"
-    : "Our Services | Expertise & Software Solutions";
+    ? "استكشف خدمات البرمجيات المخصصة"
+    : "Explore Custom Software Services";
 
   const description = lang === "ar"
     ? "اكتشف خدمات شركة سهلة المتخصصة في بناء وتطوير المواقع، تطبيقات الهاتف، الأنظمة السحابية والتحول الرقمي الشامل."

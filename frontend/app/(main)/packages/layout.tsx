@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     "Sehle packages",
   ],
   alternates: {
-    canonical: `${SITE_URL}/packages`,
+    canonical: `${SITE_URL}/packages/`,
   },
   openGraph: {
     type: "website",
     locale: "ar_IQ",
     alternateLocale: "en_US",
-    url: `${SITE_URL}/packages`,
+    url: `${SITE_URL}/packages/`,
     title: "باقات سهلة البرمجية | حلول جاهزة للأعمال في العراق",
     description:
       "باقات برمجية متكاملة مصممة لاحتياجات الشركات العراقية — تجارة إلكترونية، CRM، إدارة أعمال، وأكثر.",

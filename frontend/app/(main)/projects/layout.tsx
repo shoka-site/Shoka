@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     "Sehle portfolio",
   ],
   alternates: {
-    canonical: `${SITE_URL}/projects`,
+    canonical: `${SITE_URL}/projects/`,
   },
   openGraph: {
     type: "website",
     locale: "ar_IQ",
     alternateLocale: "en_US",
-    url: `${SITE_URL}/projects`,
+    url: `${SITE_URL}/projects/`,
     title: "مشاريع سهلة | معرض أعمال برمجية في العراق",
     description:
       "شاهد كيف ساعدنا شركات من مختلف القطاعات بحلول برمجية متميزة.",

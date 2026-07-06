@@ -55,14 +55,6 @@ export async function generateMetadata(): Promise<Metadata> {
         },
         description,
         keywords,
-        alternates: {
-            canonical: SITE_URL,
-            languages: {
-                "ar": SITE_URL,
-                "en": SITE_URL,
-                "x-default": SITE_URL,
-            },
-        },
         openGraph: {
             type: "website",
             locale: isRtl ? "ar_IQ" : "en_US",

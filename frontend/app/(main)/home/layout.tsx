@@ -49,13 +49,13 @@ export async function generateMetadata(): Promise<Metadata> {
       "enterprise software Iraq",
     ],
     alternates: {
-      canonical: `${SITE_URL}/home`,
+      canonical: `${SITE_URL}/home/`,
     },
     openGraph: {
       type: "website",
       locale: isRtl ? "ar_IQ" : "en_US",
       alternateLocale: isRtl ? "en_US" : "ar_IQ",
-      url: `${SITE_URL}/home`,
+      url: `${SITE_URL}/home/`,
       title,
       description,
       images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: title }],

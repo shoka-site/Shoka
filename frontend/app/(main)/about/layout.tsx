@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     "Sehle Iraq",
   ],
   alternates: {
-    canonical: `${SITE_URL}/about`,
+    canonical: `${SITE_URL}/about/`,
   },
   openGraph: {
     type: "website",
     locale: "ar_IQ",
     alternateLocale: "en_US",
-    url: `${SITE_URL}/about`,
+    url: `${SITE_URL}/about/`,
     title: "عن سهلة | شركة برمجيات عراقية",
     description:
       "سهلة — شركة تقنية عراقية تأسست لبناء المستقبل الرقمي. تعرف على قصتنا وفريقنا وقيمنا.",

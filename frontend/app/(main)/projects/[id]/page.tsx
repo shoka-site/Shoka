@@ -18,7 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = lang === "ar" ? (project.titleAr || project.titleEn) : project.titleEn;
+  const baseTitle = lang === "ar" ? (project.titleAr || project.titleEn) : project.titleEn;
+  const title = lang === "ar" ? `دراسة حالة: ${baseTitle}` : `Case Study: ${baseTitle}`;
   const desc = lang === "ar" ? (project.descriptionAr || project.descriptionEn) : project.descriptionEn;
 
   // Retrieve keywords from the database if available, otherwise fall back to title-based keywords
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const SITE_URL = "https://www.sehle.site";
   const OG_IMAGE = `${SITE_URL}/og-image.png`;
   const ogImage = project.images?.[0] || OG_IMAGE;
-  const canonicalUrl = `${SITE_URL}/projects/${id}`;
+  const canonicalUrl = `${SITE_URL}/projects/${id}/`;
 
   return {
     title,

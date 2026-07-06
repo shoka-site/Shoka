@@ -8,8 +8,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
   const title = lang === "ar"
-    ? "تواصل معنا لمشروعك القادم"
-    : "Contact Us | Let's Discuss Your Next Project";
+    ? "احجز استشارة تقنية مجانية"
+    : "Book a Free Tech Consultation";
 
   const description = lang === "ar"
     ? "تواصل مع فريق سهلة اليوم لمناقشة مشروعك البرمجي القادم. نحن هنا لتقديم الاستشارات الفنية والحلول التقنية المبتكرة لأعمالك."
