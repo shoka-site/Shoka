@@ -1,4 +1,5 @@
 import { storage } from "@/lib/storage";
+import { slugify } from "@/lib/utils";
 
 const SITE_URL = "https://www.sehle.site";
 
@@ -7,13 +8,15 @@ export default async function ProjectDetailLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
   let projectSchema = null;
   try {
-    const project = await storage.getProject(id);
+    const projects = await storage.getProjects(true);
+    const project = projects.find(p => slugify(p.titleEn) === slug);
+    const id = project?.id;
     const title = project ? (project.titleAr || project.titleEn) : "";
     const description = project ? (project.descriptionAr || project.descriptionEn) : "";
     

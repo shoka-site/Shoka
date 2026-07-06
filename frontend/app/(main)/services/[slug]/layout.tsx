@@ -1,4 +1,5 @@
 import { storage } from "@/lib/storage";
+import { slugify } from "@/lib/utils";
 
 const SITE_URL = "https://www.sehle.site";
 
@@ -7,13 +8,15 @@ export default async function ServiceDetailLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
   let serviceSchema = null;
   try {
-    const service = await storage.getService(id);
+    const services = await storage.getServices(true);
+    const service = services.find(s => slugify(s.titleEn) === slug);
+    const id = service?.id;
     const title = service ? (service.titleAr || service.titleEn) : "";
     const description = service ? (service.descriptionAr || service.descriptionEn) : "";
 
