@@ -67,7 +67,7 @@ export default function WelcomePageClient() {
     return (
         <div
             ref={containerRef}
-            className="relative min-h-screen overflow-hidden bg-black"
+            className="relative h-screen-dvh overflow-hidden bg-black"
             style={{ "--mx": "50vw", "--my": "50vh" } as React.CSSProperties}
         >
             {/* ════════════════ BACKGROUND ════════════════ */}
@@ -201,7 +201,7 @@ export default function WelcomePageClient() {
             />
 
             {/* ════════════════ CONTENT ════════════════ */}
-            <div className="relative z-10 min-h-screen flex flex-col">
+            <div className="relative z-10 h-screen-dvh flex flex-col">
                 {/* ── TOP NAV ── */}
                 <div className="relative flex justify-between items-center px-6 sm:px-8 md:px-12 pt-6 sm:pt-8 md:pt-10">
                     <div className="flex gap-2 sm:gap-2.5 items-center">

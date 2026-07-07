@@ -88,7 +88,7 @@ export default async function Projects() {
 }
 
 async function ProjectsList({ isRtl, lang }: { isRtl: boolean; lang: "en" | "ar" }) {
-    const rawProjects = await storage.getProjects(true, true);
+    const rawProjects = await storage.getProjects(true, undefined);
     const projects = transformForLanguage(rawProjects, lang) as Project[];
 
     const { t } = await getServerTranslation(lang);

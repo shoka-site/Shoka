@@ -265,6 +265,12 @@ export function HeroUpdatesClient({ items }: { items: PlatformUpdate[]; isRtl: b
     })
   };
 
+  // Resolve Image
+  const projectImage = item.project?.images?.find(img => img && img.trim() !== "");
+  const serviceImage = item.service?.imageUrl;
+  const updateImage = item.images?.find((img: string) => img && img.trim() !== "");
+  const finalSrc = (updateImage || projectImage || serviceImage || "").trim();
+
   return (
     <section
       ref={heroRef}
@@ -273,246 +279,175 @@ export function HeroUpdatesClient({ items }: { items: PlatformUpdate[]; isRtl: b
       onMouseLeave={() => setIsPaused(false)}
       onMouseMove={handleMouseMove}
     >
-      {/* ── CINEMATIC BACKGROUND LAYERS ── */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Lattice & Grain */}
-        <div className="absolute inset-0 bg-mesopot-lattice opacity-[0.12]" />
-        <div className="absolute inset-0 bg-grain opacity-40" />
-
-        {/* Scrolling Gold Grid */}
-        <motion.div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "linear-gradient(rgba(194,164,92,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(194,164,92,0.3) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-          animate={{ backgroundPosition: ["0px 0px", "80px 80px"] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        />
-
-        {/* Floating Orbs */}
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            top: "20%", left: "15%", width: "35vw", height: "35vw",
-            background: "radial-gradient(circle, rgba(194,164,92,0.08) 0%, transparent 70%)",
-            filter: "blur(80px)",
-          }}
-          animate={{ x: [0, 40, -30, 0], y: [0, -40, 20, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            bottom: "15%", right: "10%", width: "40vw", height: "40vw",
-            background: "radial-gradient(circle, rgba(194,164,92,0.06) 0%, transparent 70%)",
-            filter: "blur(100px)",
-          }}
-          animate={{ x: [0, -50, 40, 0], y: [0, 30, -40, 0] }}
-          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
-
-        {/* Light Trails */}
-        {([
-          { left: "20%", dur: 9, delay: 0 },
-          { left: "75%", dur: 7, delay: 3 },
-          { left: "90%", dur: 11, delay: 1.5 },
-        ]).map((trail, i) => (
-          <motion.div
-            key={i}
-            className="absolute top-0 w-px h-64"
-            style={{
-              left: trail.left,
-              background: "linear-gradient(to bottom, transparent, rgba(194,164,92,0.5), transparent)",
-              filter: "blur(0.5px)",
-            }}
-            animate={{ y: [-300, 1400], opacity: [0, 1, 0] }}
-            transition={{ duration: trail.dur, repeat: Infinity, ease: "linear", delay: trail.delay }}
-          />
-        ))}
-
-        {/* Vignette */}
-        <div className="absolute inset-0 bg-radial-[circle_at_50%_50%] from-transparent via-transparent to-black/80" />
-      </div>
-
+      {/* ── FULL SCREEN IMMERSIVE BACKGROUND ── */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
-          key={item.id}
+          key={item.id + "-bg"}
           custom={direction}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.9 }}
-          className="relative w-full h-full flex flex-col lg:flex-row items-center z-10"
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0 z-0 pointer-events-none"
         >
-          {/* Content Side */}
-          <div className="w-full lg:w-1/2 h-full flex flex-col justify-center px-6 sm:px-12 md:px-20 lg:px-24 pt-24 lg:pt-0 relative z-20 order-2 lg:order-1">
-            <CornerBrackets className="lg:hidden opacity-40" />
+          {finalSrc ? (
+            <SafeImage
+              src={finalSrc}
+              alt={item.title || "Feature"}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+              fallbackType={item.type}
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-[#1e1505] via-[#000000] to-[#000000]" />
+          )}
 
-            <motion.div
-              custom={0}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex items-center gap-3 mb-8"
-            >
-              <div className="px-5 py-2 border border-accent/40 bg-accent/10 backdrop-blur-md rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(194,164,92,0.15)]">
-                <span className="text-xl animate-pulse">{style.emoji}</span>
-                <span className="text-[11px] font-black uppercase tracking-[0.25em] text-accent">
-                  {t(style.label)}
-                </span>
-              </div>
-            </motion.div>
+          {/* Cinematic Overlays to Ensure Readability */}
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+          <div className={`absolute inset-0 bg-gradient-to-r ${isArabic ? 'from-transparent via-transparent to-black/90' : 'from-black/90 via-transparent to-transparent'}`} />
+          <div className="absolute inset-0 bg-mesopot-lattice opacity-[0.08]" />
+          <div className="absolute inset-0 bg-grain opacity-30" />
+        </motion.div>
+      </AnimatePresence>
 
-            <div className="flex flex-wrap gap-x-4 mb-8">
-              {item.title?.split(" ").map((word, i) => (
-                <div key={i} className="overflow-hidden">
-                  <motion.h1
-                    custom={i}
-                    variants={wordVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] tracking-tighter"
-                    style={{
-                      background: "linear-gradient(180deg, #ffffff 45%, #c2a45c 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  >
-                    {word}
-                  </motion.h1>
+      {/* ── FOREGROUND CONTENT ── */}
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div
+          key={item.id + "-content"}
+          custom={direction}
+          initial={{ opacity: 0, x: direction > 0 ? (isArabic ? -50 : 50) : (isArabic ? 50 : -50) }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: direction > 0 ? (isArabic ? 50 : -50) : (isArabic ? -50 : 50) }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          className={`relative w-full h-full max-w-[1600px] mx-auto flex items-center px-6 sm:px-12 md:px-20 lg:px-24 z-20 ${isArabic ? 'justify-end' : 'justify-start'}`}
+        >
+          {/* Glassmorphism Content Card */}
+          <div className="w-full max-w-2xl relative">
+            <CornerBrackets className="opacity-40" />
+            <div className="relative z-10 p-8 sm:p-10 rounded-3xl bg-black/30 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+              
+              {/* Type Badge */}
+              <motion.div
+                custom={0}
+                variants={textVariants}
+                initial="hidden"
+                animate="visible"
+                className="flex items-center gap-3 mb-6 inline-flex"
+              >
+                <div className="px-5 py-2 border border-accent/40 bg-accent/10 backdrop-blur-md rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(194,164,92,0.15)]">
+                  <span className="text-xl animate-pulse">{style.emoji}</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.25em] text-accent">
+                    {t(style.label)}
+                  </span>
                 </div>
-              ))}
-            </div>
+              </motion.div>
 
-            <motion.p
-              custom={3}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              className="text-lg sm:text-xl text-white/50 max-w-xl leading-relaxed font-light mb-12"
-            >
-              {item.summary}
-            </motion.p>
-
-            <motion.div
-              custom={4}
-              variants={textVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <MagneticButton>
-                <Link href={item.projectId ? `/projects/${item.projectId}` : item.serviceId ? `/services/${item.serviceId}` : "/contact"}>
-                  <Button
-                    size="lg"
-                    className="group relative overflow-hidden rounded-full bg-accent text-black px-12 h-16 font-black text-lg transition-all duration-500 shadow-[0_0_30px_rgba(194,164,92,0.4)]"
-                  >
-                    <span className="relative z-10">{item.projectId || item.serviceId ? t("hero.updates.cta_view") : t("hero.updates.cta_talk")}</span>
-                    <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                  </Button>
-                </Link>
-              </MagneticButton>
-            </motion.div>
-          </div>
-
-          {/* Image Side */}
-          <div className="w-full lg:w-1/2 h-full relative order-1 lg:order-2 overflow-hidden lg:rounded-l-[4rem]">
-            <motion.div
-              initial={{ scale: 1.2, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-              className="w-full h-full relative"
-              style={{
-                x: isMobile ? 0 : mousePosition.x * -0.6,
-                y: isMobile ? 0 : mousePosition.y * -0.6,
-              }}
-            >
-              {(() => {
-                const projectImage = item.project?.images?.find(img => img && img.trim() !== "");
-                const serviceImage = item.service?.imageUrl;
-                const updateImage = item.images?.find((img: string) => img && img.trim() !== "");
-                const finalSrc = (updateImage || projectImage || serviceImage || "").trim();
-
-                if (finalSrc && finalSrc.trim() !== "") {
-                  return (
-                    <>
-                      <SafeImage
-                        src={finalSrc}
-                        alt={item.title || "Feature"}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
-                        priority
-                        fallbackType={item.type}
-                      />
-                      <div className="absolute inset-0 bg-mesopot-rosette opacity-[0.05] mix-blend-overlay" />
-                    </>
-                  );
-                }
-
-                return (
-                  <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-black flex items-center justify-center">
-                     <div className="absolute inset-0 opacity-20 bg-mesopot-lattice" />
-                     <Sparkles className="w-20 h-20 text-accent/20 animate-pulse" />
+              {/* Title */}
+              <div className="flex flex-wrap gap-x-3 gap-y-2 mb-6">
+                {item.title?.split(" ").map((word, i) => (
+                  <div key={i} className="overflow-hidden">
+                    <motion.h1
+                      custom={i}
+                      variants={wordVariants}
+                      initial="hidden"
+                      animate="visible"
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-white leading-[1.1] tracking-tighter drop-shadow-lg"
+                      style={{
+                        background: "linear-gradient(180deg, #ffffff 45%, #c2a45c 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      {word}
+                    </motion.h1>
                   </div>
-                );
-              })()}
-              {/* Cinematic overlays */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent hidden lg:block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent lg:hidden" />
-              <div className="absolute inset-0 bg-black/20" />
-            </motion.div>
+                ))}
+              </div>
 
-            {/* Content Frame */}
-            <CornerBrackets className="hidden lg:block opacity-60" />
+              {/* Summary */}
+              <motion.p
+                custom={3}
+                variants={textVariants}
+                initial="hidden"
+                animate="visible"
+                className="text-lg sm:text-xl text-white/80 leading-relaxed font-light mb-8 line-clamp-3 drop-shadow-md"
+              >
+                {item.summary}
+              </motion.p>
 
-            {/* Glowing separator */}
-            <div className="absolute left-0 top-[15%] bottom-[15%] w-px bg-gradient-to-b from-transparent via-accent/50 to-transparent hidden lg:block shadow-[0_0_15px_rgba(194,164,92,0.3)]" />
+              {/* CTA */}
+              <motion.div
+                custom={4}
+                variants={textVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <MagneticButton className="inline-block">
+                  <Link href={item.projectId ? `/projects/${item.projectId}` : item.serviceId ? `/services/${item.serviceId}` : "/contact"}>
+                    <Button
+                      size="lg"
+                      className="group relative overflow-hidden rounded-full bg-accent text-black px-10 h-14 font-black text-lg transition-all duration-500 shadow-[0_0_30px_rgba(194,164,92,0.4)] hover:scale-105 hover:shadow-[0_0_40px_rgba(194,164,92,0.6)]"
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        {item.projectId || item.serviceId ? t("hero.updates.cta_view") : t("hero.updates.cta_talk")}
+                        {isArabic ? <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /> : <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                      </span>
+                      <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                    </Button>
+                  </Link>
+                </MagneticButton>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>
 
       {/* ── NAVIGATION CONTROLS ── */}
+      <div className={`absolute bottom-8 lg:bottom-12 z-50 flex items-center gap-6 ${isArabic ? 'left-6 sm:left-12' : 'right-6 sm:right-12'}`}>
+        
+        {/* Control Arrows */}
+        <div className="flex gap-3">
+          <button
+            onClick={prev}
+            className="w-14 h-14 rounded-full border border-white/20 bg-black/30 backdrop-blur-2xl flex items-center justify-center text-white/70 hover:text-accent hover:border-accent/50 hover:bg-black/50 transition-all duration-300 shadow-2xl"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
+            onClick={next}
+            className="w-14 h-14 rounded-full border border-white/20 bg-black/30 backdrop-blur-2xl flex items-center justify-center text-white/70 hover:text-accent hover:border-accent/50 hover:bg-black/50 transition-all duration-300 shadow-2xl"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </div>
 
-      {/* Progress Ring (Replacing bar for "Better" look) */}
-      <div className="absolute bottom-12 right-12 w-20 h-20 z-50 flex items-center justify-center">
-        <svg className="w-full h-full -rotate-90">
-          <circle cx="40" cy="40" r="36" className="stroke-white/5 fill-none" strokeWidth="2" />
-          <motion.circle
-            key={activeIdx}
-            cx="40" cy="40" r="36"
-            className="stroke-accent fill-none"
-            strokeWidth="2"
-            strokeDasharray="226.2"
-            initial={{ strokeDashoffset: 226.2 }}
-            animate={{ strokeDashoffset: isPaused ? undefined : 0 }}
-            transition={{ duration: 9, ease: "linear" }}
-          />
-        </svg>
-        <div className="absolute flex flex-col items-center">
-          <span className="text-xl font-display font-black text-white leading-none">{(activeIdx + 1)}</span>
-          <span className="text-[10px] text-white/40 uppercase font-bold tracking-tighter">/ {localizedItems.length}</span>
+        {/* Progress Ring */}
+        <div className="w-16 h-16 relative flex items-center justify-center bg-black/20 rounded-full backdrop-blur-md border border-white/10">
+          <svg className="absolute inset-0 w-full h-full -rotate-90">
+            <circle cx="32" cy="32" r="28" className="stroke-white/10 fill-none" strokeWidth="2" />
+            <motion.circle
+              key={activeIdx}
+              cx="32" cy="32" r="28"
+              className="stroke-accent fill-none"
+              strokeWidth="2"
+              strokeDasharray="175.93"
+              initial={{ strokeDashoffset: 175.93 }}
+              animate={{ strokeDashoffset: isPaused ? undefined : 0 }}
+              transition={{ duration: 9, ease: "linear" }}
+            />
+          </svg>
+          <div className="flex flex-col items-center z-10">
+            <span className="text-lg font-display font-black text-white leading-none">{(activeIdx + 1)}</span>
+            <span className="text-[9px] text-white/60 uppercase font-bold tracking-tighter mt-0.5">/ {localizedItems.length}</span>
+          </div>
         </div>
       </div>
 
-      {/* Control Arrows */}
-      <div className="absolute bottom-12 left-12 flex gap-3 z-50">
-        <button
-          onClick={prev}
-          className="w-16 h-16 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl flex items-center justify-center text-white/40 hover:text-accent hover:border-accent/50 hover:bg-white/10 transition-all duration-500 group shadow-2xl"
-        >
-          <ChevronLeft className="w-7 h-7 group-hover:-translate-x-1.5 transition-transform" />
-        </button>
-        <button
-          onClick={next}
-          className="w-16 h-16 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl flex items-center justify-center text-white/40 hover:text-accent hover:border-accent/50 hover:bg-white/10 transition-all duration-500 group shadow-2xl"
-        >
-          <ChevronRight className="w-7 h-7 group-hover:translate-x-1.5 transition-transform" />
-        </button>
-      </div>
-
       {/* Gold horizontal accent (bottom edge) */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent z-50" />
     </section>
   );
 }

@@ -189,11 +189,14 @@ export default function AdminPlatformUpdates() {
     return (
         <AdminLayout>
             <div className="max-w-6xl">
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Platform Updates</h1>
+                <div className="flex justify-between items-start mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold">Home Hero Slides</h1>
+                        <p className="text-muted-foreground mt-1">Manage the slides that appear in the main hero section of the home page (achievements, projects, events).</p>
+                    </div>
                     <Button onClick={() => setIsEditing(!isEditing)}>
                         <Plus className="w-4 h-4 mr-2" />
-                        {isEditing ? "Cancel" : "Add New Update"}
+                        {isEditing ? "Cancel" : "Add New Slide"}
                     </Button>
                 </div>
 
@@ -447,7 +450,7 @@ export default function AdminPlatformUpdates() {
                     })}
                     {updates.length === 0 && (
                         <div className="text-center py-12 text-muted-foreground bg-muted/50 rounded-lg">
-                            No platform updates found. Click &quot;Add New Update&quot; to create one.
+                            No slides found. Click &quot;Add New Slide&quot; to create one.
                         </div>
                     )}
                 </div>

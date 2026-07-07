@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, FileText, Briefcase, MessageSquare, Target, GitBranch, LogOut, Users, Mail, Package, Menu, X, BookOpen } from "lucide-react";
+import { LayoutDashboard, FileText, Briefcase, MessageSquare, Target, Images, LogOut, Users, Mail, Package, Menu, X, BookOpen } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -14,7 +14,7 @@ const navItems = [
     { icon: FileText, label: "Projects", path: "/admin/projects" },
     { icon: Package, label: "Packages", path: "/admin/packages" },
     { icon: MessageSquare, label: "Testimonials", path: "/admin/testimonials" },
-    { icon: GitBranch, label: "Updates", path: "/admin/platform-updates" },
+    { icon: Images, label: "Home Hero Slides", path: "/admin/platform-updates" },
     { icon: Target, label: "Industries", path: "/admin/industries" },
     { icon: LayoutDashboard, label: "Use Case", path: "/admin/solutions" },
     { icon: Users, label: "Our Team", path: "/admin/team" },
