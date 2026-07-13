@@ -35,6 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(`${SITE_URL}/contact/`, now, "daily", 0.7),
     entry(`${SITE_URL}/compare/`, now, "daily", 0.8),
     entry(`${SITE_URL}/glossary/`, now, "daily", 0.8),
+    entry(`${SITE_URL}/quote-calculator/`, now, "daily", 0.9),
     entry(`${SITE_URL}/blog/`, now, "daily", 0.85),
     entry(`${SITE_URL}/refer/`, now, "daily", 0.75),
     entry(`${SITE_URL}/social-kit/`, now, "daily", 0.75),

@@ -20,21 +20,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const revalidate = 60;
 
+import { BlogListClient } from "@/components/blog/BlogListClient";
+import { slugify } from "@/lib/utils";
+
 export default async function BlogPage() {
-  const { lang } = await getServerTranslation();
-  const isRtl = lang === "ar";
+  const { lang, isRtl } = await getServerTranslation();
 
   // Reuse platform-updates as blog posts (the existing data model)
   const rawUpdates = await storage.getPlatformUpdates(true);
-  const posts = rawUpdates.map((u) => ({
-    id: u.id,
-    title: lang === "ar" ? (u.titleAr || u.titleEn) : u.titleEn,
-    excerpt: lang === "ar" ? (u.summaryAr || u.summaryEn) : u.summaryEn,
-    date: u.date ? new Date(u.date).toLocaleDateString(lang === "ar" ? "ar-IQ" : "en-US", {
-      year: "numeric", month: "long", day: "numeric"
-    }) : null,
-    category: u.type || (lang === "ar" ? "تقنية" : "Tech"),
-  }));
+  const posts = rawUpdates.map((u) => {
+    const title = lang === "ar" ? (u.titleAr || u.titleEn) : u.titleEn;
+    return {
+      id: u.id,
+      slug: slugify(u.titleEn || u.id),
+      title,
+      excerpt: lang === "ar" ? (u.summaryAr || u.summaryEn) : u.summaryEn,
+      date: u.date ? new Date(u.date).toLocaleDateString(lang === "ar" ? "ar-IQ" : "en-US", {
+        year: "numeric", month: "long", day: "numeric"
+      }) : null,
+      category: u.type || (lang === "ar" ? "تقنية" : "Tech"),
+    };
+  });
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -61,113 +67,66 @@ export default async function BlogPage() {
           <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
           <div className="container mx-auto px-6 relative z-10 text-center">
             <p className="text-primary text-xs font-bold uppercase tracking-[0.4em] mb-4">
-              {isRtl ? "◆◆◆ المدونة ◆◆◆" : "◆◆◆ BLOG ◆◆◆"}
+              {isRtl ? "◆◆◆ المدونة الرئسية ◆◆◆" : "◆◆◆ INSIGHTS & ARTICLES ◆◆◆"}
             </p>
             <h1 className="text-5xl md:text-7xl font-display font-black tracking-tight mb-6"
               style={{ background: "linear-gradient(180deg,#fff 40%,#c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              {isRtl ? "رؤى التحول الرقمي" : "Digital Insights"}
+              {isRtl ? "رؤى التحول الرقمي" : "Digital Transformation Insights"}
             </h1>
             <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
               {isRtl
-                ? "أفكار وتجارب عملية من فريق سهلة حول تقنية المعلومات والحلول البرمجية في العراق."
-                : "Practical ideas and experiences from the Sehle team on IT and software solutions in Iraq."}
+                ? "أفكار ودراسات هندسية من فريق سهلة حول تقنية المعلومات والأنظمة المؤسسية في العراق."
+                : "Practical engineering ideas and case studies from the Sehle team on IT & ERP solutions in Iraq."}
             </p>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="container mx-auto px-6 py-20">
-          {posts.length === 0 ? (
-            <div className="text-center py-32">
-              <p className="text-muted-foreground text-lg">
-                {isRtl ? "لا توجد مقالات حتى الآن. تابعنا قريباً." : "No posts yet. Check back soon."}
-              </p>
-              <Link href="/home" className="mt-8 inline-flex items-center gap-2 text-primary font-bold text-sm hover:underline">
-                {isRtl ? "العودة للرئيسية" : "Back to Home"}
-                <ArrowRight className={`w-4 h-4 ${isRtl ? "rotate-180" : ""}`} />
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
-                <article key={post.id} className="group bg-background border border-border/60 rounded-3xl overflow-hidden hover:border-primary/40 hover:shadow-xl transition-all duration-500">
-                  <div className="p-8">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {post.category}
-                      </span>
-                      {post.date && (
-                        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Calendar className="w-3 h-3" />
-                          {post.date}
-                        </span>
-                      )}
-                    </div>
-                    <h2 className="text-xl font-display font-bold mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                      {post.title}
-                    </h2>
-                    {post.excerpt && (
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-6">
-                        {post.excerpt}
-                      </p>
-                    )}
-                    <Link
-                      href="/news"
-                      className={`inline-flex items-center gap-2 text-primary text-sm font-bold hover:underline ${isRtl ? "flex-row-reverse" : ""}`}
-                    >
-                      {isRtl ? "اقرأ المزيد" : "Read more"}
-                      <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${isRtl ? "rotate-180" : ""}`} />
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
+        {/* Client Interactive Search & Filtering */}
+        <BlogListClient posts={posts} lang={lang} isRtl={isRtl} />
 
-          {/* Editorial pillars section */}
-          <div className="mt-24 pt-16 border-t border-border">
-            <div className="text-center mb-12">
-              <p className="text-primary text-xs font-bold uppercase tracking-[0.3em] mb-3">
-                {isRtl ? "محاور المحتوى" : "Content Pillars"}
-              </p>
-              <h2 className="text-3xl md:text-4xl font-display font-bold">
-                {isRtl ? "ماذا نكتب عنه" : "What We Write About"}
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  en: "Iraqi Digital Transformation",
-                  ar: "التحول الرقمي في العراق",
-                  desc: { en: "How Iraqi businesses are modernizing operations", ar: "كيف تحدث الشركات العراقية عملياتها" },
-                  icon: "🇮🇶",
-                },
-                {
-                  en: "Technical Excellence",
-                  ar: "التميز التقني",
-                  desc: { en: "Engineering best practices and architecture patterns", ar: "أفضل ممارسات الهندسة وأنماط البنية" },
-                  icon: "⚙️",
-                },
-                {
-                  en: "Industry Solutions",
-                  ar: "حلول القطاعات",
-                  desc: { en: "ERP, healthcare, logistics & retail software", ar: "برمجيات ERP والرعاية الصحية والخدمات" },
-                  icon: "🏗️",
-                },
-                {
-                  en: "Company Culture",
-                  ar: "ثقافة الشركة",
-                  desc: { en: "Behind the scenes at Sehle", ar: "من خلف الكواليس في سهلة" },
-                  icon: "🌟",
-                },
-              ].map((pillar) => (
-                <div key={pillar.en} className="bg-muted/20 border border-border/50 rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
-                  <div className="text-3xl mb-3">{pillar.icon}</div>
-                  <h3 className="font-display font-bold text-lg mb-2">{isRtl ? pillar.ar : pillar.en}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{isRtl ? pillar.desc.ar : pillar.desc.en}</p>
-                </div>
-              ))}
-            </div>
+        {/* Editorial pillars section */}
+        <div className="container mx-auto px-6 pb-24 border-t border-white/10 pt-16">
+          <div className="text-center mb-12">
+            <p className="text-primary text-xs font-bold uppercase tracking-[0.3em] mb-3">
+              {isRtl ? "محاور المحتوى" : "Content Pillars"}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white">
+              {isRtl ? "ماذا نكتب عنه" : "What We Write About"}
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                en: "Iraqi Digital Transformation",
+                ar: "التحول الرقمي في العراق",
+                desc: { en: "How Iraqi businesses are modernizing operations", ar: "كيف تحدث الشركات العراقية عملياتها" },
+                icon: "🇮🇶",
+              },
+              {
+                en: "Technical Excellence",
+                ar: "التميز التقني",
+                desc: { en: "Engineering best practices and architecture patterns", ar: "أفضل ممارسات الهندسة وأنماط البنية" },
+                icon: "⚙️",
+              },
+              {
+                en: "Industry Solutions",
+                ar: "حلول القطاعات",
+                desc: { en: "ERP, healthcare, logistics & retail software", ar: "برمجيات ERP والرعاية الصحية والخدمات" },
+                icon: "🏗️",
+              },
+              {
+                en: "Company Culture",
+                ar: "ثقافة الشركة",
+                desc: { en: "Behind the scenes at Sehle", ar: "من خلف الكواليس في سهلة" },
+                icon: "🌟",
+              },
+            ].map((pillar) => (
+              <div key={pillar.en} className="bg-zinc-950/40 border border-white/10 rounded-2xl p-6 text-center hover:border-primary/40 transition-colors">
+                <div className="text-3xl mb-3">{pillar.icon}</div>
+                <h3 className="font-display font-bold text-lg text-white mb-2">{isRtl ? pillar.ar : pillar.en}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed">{isRtl ? pillar.desc.ar : pillar.desc.en}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
