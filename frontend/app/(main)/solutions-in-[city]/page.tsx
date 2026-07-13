@@ -62,6 +62,8 @@ export async function generateStaticParams() {
   return Object.keys(CITIES).map((city) => ({ city }));
 }
 
+import { buildMetadata } from "@/lib/seo";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city } = await params;
   const cityData = CITIES[city.toLowerCase()];
@@ -70,32 +72,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!cityData) return {};
 
   const name = lang === "ar" ? cityData.nameAr : cityData.nameEn;
-  const title = lang === "ar"
-    ? `شركة برمجيات وتطوير أنظمة في ${name} | سهلة`
-    : `Software & Systems Development Company in ${name} | Sehle`;
 
-  const description = lang === "ar"
-    ? `حلول برمجية مخصصة وأنظمة ERP متكاملة للشركات والمؤسسات في ${name}، العراق. تواصل معنا لتطوير عملك رقمياً.`
-    : `Custom software engineering and ERP solutions for companies in ${name}, Iraq. Partner with Sehle to transform your operations.`;
-
-  return {
-    title,
-    description,
-    keywords: [
-      `software company in ${cityData.nameEn}`,
-      `ERP solutions ${cityData.nameEn}`,
-      `شركة برمجة في ${cityData.nameAr}`,
-      `برمجة أنظمة ${cityData.nameAr}`
-    ],
-    alternates: {
-      canonical: `https://www.sehle.site/solutions-in-${city.toLowerCase()}/`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `https://www.sehle.site/solutions-in-${city.toLowerCase()}/`,
-    }
-  };
+  return buildMetadata({
+    titleAr: `شركة برمجيات وتطوير أنظمة ERP في ${name}`,
+    titleEn: `Custom Software & ERP Development Company in ${name}`,
+    descriptionAr: `حلول برمجية مخصصة وأنظمة ERP متكاملة للشركات والمؤسسات في ${name}، العراق. تواصل معنا لتطوير عملك رقمياً.`,
+    descriptionEn: `Custom software engineering and ERP solutions for enterprise clients in ${name}, Iraq. Partner with Sehle for digital transformation.`,
+    path: `/solutions-in-${city.toLowerCase()}`,
+    keywordsAr: [`شركة برمجة في ${cityData.nameAr}`, `برمجة أنظمة ${cityData.nameAr}`, `حلول ERP ${cityData.nameAr}`],
+    keywordsEn: [`software company in ${cityData.nameEn}`, `ERP solutions ${cityData.nameEn}`, `custom software ${cityData.nameEn}`],
+    lang,
+  });
 }
 
 export default async function CityLocationPage({ params }: Props) {

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { buildMetadata } from "@/lib/seo";
 
 import { Providers } from "./providers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -27,79 +28,15 @@ const SITE_URL = "https://www.sehle.site";
 export async function generateMetadata(): Promise<Metadata> {
     const cookieStore = await cookies();
     const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
-    const isRtl = lang === "ar";
 
-    const SITE_NAME_LOC = isRtl 
-        ? "سهلة | حلول برمجية وأنظمة إدارة متكاملة" 
-        : "Sehle | Software Solutions & Management Systems";
-
-    const description = isRtl
-        ? "تقدم سهلة حلولاً برمجية مخصصة، أنظمة إدارة (ERP)، وتحولاً رقمياً لحل مشاكل الأعمال في مختلف القطاعات. نبني برمجيات الشركات التي تحتاجها."
-        : "Sehle provides cutting-edge custom software solutions, management systems (ERP), and digital transformation to solve business problems across various industries.";
-
-    const keywords = isRtl
-        ? [
-            "حلول برمجية", "حل مشاكل الأعمال", "أنظمة إدارة", "أنظمة ERP", "برمجيات للشركات", 
-            "تطوير برمجيات مخصصة", "التحول الرقمي", "شركة تقنية", "برمجة تطبيقات", "حلول تقنية للقطاعات"
-          ]
-        : [
-            "software solutions", "business problem solving", "management solutions", "ERP systems", 
-            "industry software", "custom software development", "digital transformation", "IT company", "business software"
-          ];
-
-    return {
-        metadataBase: new URL(SITE_URL),
-        title: {
-            default: SITE_NAME_LOC,
-            template: isRtl ? `%s | سهلة` : `%s | Sehle`,
-        },
-        description,
-        keywords,
-        openGraph: {
-            type: "website",
-            locale: isRtl ? "ar_IQ" : "en_US",
-            alternateLocale: isRtl ? "en_US" : "ar_IQ",
-            url: SITE_URL,
-            siteName: SITE_NAME_LOC,
-            title: SITE_NAME_LOC,
-            description,
-            images: [
-                {
-                    url: `${SITE_URL}/og-image.png`,
-                    width: 1200,
-                    height: 630,
-                    alt: isRtl ? "سهلة - حلول برمجية مبتكرة" : "Sehle - Innovative Software Solutions",
-                },
-            ],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: SITE_NAME_LOC,
-            description,
-            images: [`${SITE_URL}/og-image.png`],
-            creator: "@sehle_it",
-            site: "@sehle_it",
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                "max-video-preview": -1,
-                "max-image-preview": "large",
-                "max-snippet": -1,
-            },
-        },
-        icons: {
-            icon: "/logoo.png",
-            shortcut: "/logoo.png",
-            apple: "/logoo.png",
-        },
-        verification: {
-            google: "RLhA0Mu7GqzcdPnsd6PMxS9H_It6O9TfsSRIbeJAlWk",
-        },
-    };
+    return buildMetadata({
+        titleAr: "سهلة | حلول برمجية وأنظمة إدارة متكاملة في العراق",
+        titleEn: "Sehle | Custom Software Solutions & ERP Systems in Iraq",
+        descriptionAr: "تقدم سهلة حلولاً برمجية مخصصة، أنظمة إدارة (ERP)، وتحولاً رقمياً لحل مشاكل الأعمال في مختلف القطاعات في العراق والشرق الأوسط.",
+        descriptionEn: "Sehle provides enterprise custom software solutions, management systems (ERP), and digital transformation to solve complex business problems.",
+        path: "/",
+        lang,
+    });
 }
 
 export const viewport: Viewport = {

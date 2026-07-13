@@ -1,0 +1,24 @@
+# Sehle (سهلة) — Full Technical Architecture & Business Reference
+
+## 1. Company Summary
+Sehle (سهلة) is a specialized custom software development agency and digital transformation partner headquartered in Ankara, Turkey, with key operational focus and on-the-ground presence across Iraq (Baghdad, Erbil, Basra, Sulaymaniyah, Najaf).
+
+## 2. Technical Specializations
+- **Bespoke Enterprise Software**: Designing software systems ground-up to eliminate fragmented spreadsheets and legacy applications.
+- **Offline-First State Sync**: Local IndexedDB/SQLite persistence layer syncing with PostgreSQL/Prisma backends via websockets or REST when internet connectivity is re-established.
+- **Microservices & Cloud Architectures**: Next.js App Router, React 19, Node.js, TypeScript, Docker containers, PostgreSQL, Vercel/AWS infrastructure.
+- **Cybersecurity & Data Compliance**: Strict role-based access control (RBAC), database encryption at rest and in transit, and local compliance.
+
+## 3. Key Services
+- **Custom ERP Development**: Tailored resource planning for wholesale, retail, oil & gas, healthcare, logistics, and real estate.
+- **Mobile Application Engineering**: Cross-platform and native iOS/Android apps with Arabic-first UI/UX designs.
+- **Legacy Migration & API Integration**: Data extraction, transformation, and loading (ETL) from legacy databases to modern cloud databases.
+- **AI & Automation Systems**: Intelligent inventory forecasting, automated invoice OCR scanning, and chatbot customer support integrations.
+
+## 4. Frequently Asked Questions (FAQ)
+- **Q: Does Sehle support offline operations?**
+  A: Yes, Sehle specializes in offline-first architectures that allow field staff and multi-warehouse operators to work without uninterrupted internet.
+- **Q: Are Sehle software systems bilingual?**
+  A: Yes, all applications natively support Arabic (RTL) and English (LTR) with dynamic instant language switching.
+- **Q: How can businesses request a consultation?**
+  A: Via https://www.sehle.site/contact or direct email to global@sehle.site.

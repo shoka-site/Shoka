@@ -1,44 +1,22 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
-const SITE_URL = "https://www.sehle.site";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
 
-export const metadata: Metadata = {
-  title: "أخبار وإنجازات سهلة | شركة برمجيات عراقية | Sehle News",
-  description:
-    "تابع آخر أخبار وإنجازات سهلة — الشركة العراقية في تطوير البرمجيات. إطلاقات جديدة، شراكات، وإنجازات تقنية. Sehle news | Iraq tech news.",
-  keywords: [
-    "أخبار سهلة",
-    "إنجازات سهلة",
-    "أخبار تقنية عراق",
-    "مستجدات برمجيات عراق",
-    "شركة برمجيات عراقية أخبار",
-    "Sehle news",
-    "Iraq tech news",
-    "software company Iraq achievements",
-    "Sehle achievements",
-    "Sehle updates",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/news/`,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ar_IQ",
-    alternateLocale: "en_US",
-    url: `${SITE_URL}/news/`,
-    title: "أخبار سهلة وإنجازاتها | Iraq Tech News",
-    description: "تابع آخر إنجازات وأخبار سهلة — شركة البرمجيات العراقية.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "أخبار سهلة" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "أخبار سهلة | Sehle News",
-    description: "آخر أخبار وإنجازات سهلة البرمجية.",
-    images: [OG_IMAGE],
-    creator: "@sehle_it",
-  },
-};
+  return buildMetadata({
+    titleAr: "أخبار وإنجازات سهلة | التطورات البرمجية والتحول الرقمي",
+    titleEn: "Company News & Achievements | Tech Industry Updates",
+    descriptionAr: "تابع آخر أخبار وإنجازات سهلة: إطلاقات البرمجيات الجديدة، الشراكات التقنية، ومشاريع التحول الرقمي في العراق والمنطقة.",
+    descriptionEn: "Follow Sehle's latest company updates, platform feature releases, partnership announcements, and digital transformation milestones.",
+    path: "/news",
+    keywordsAr: ["أخبار سهلة", "إنجازات سهلة", "أخبار تقنية عراق", "مستجدات برمجيات عراق"],
+    keywordsEn: ["Sehle news", "Iraq tech announcements", "software updates Iraq", "digital transformation news"],
+    lang,
+  });
+}
 
 export default function NewsLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {

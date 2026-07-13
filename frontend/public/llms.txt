@@ -1,0 +1,24 @@
+# Sehle (سهلة) — Custom Software & Enterprise ERP Solutions
+
+> Sehle builds custom enterprise software, ERP systems, mobile applications, and digital transformation architectures for Iraqi and Middle Eastern businesses. We pair European engineering standards with deep local market understanding, providing fully bilingual (Arabic/English) systems with native offline-first sync.
+
+## System Capabilities & Core Products
+- **Custom Enterprise ERP Systems**: Modular ERPs integrating accounting, inventory management, multi-warehouse logistics, HR/payroll, and point-of-sale (POS).
+- **Offline-First Synchronization**: Architecture designed for unreliable connectivity, permitting seamless offline transactions and auto-reconciliation once back online.
+- **Bilingual & Localized Workflows**: Complete Arabic (RTL) and English (LTR) user interfaces tailored to Iraqi tax regulations and regional business norms.
+- **Mobile & Cloud Solutions**: High-performance iOS, Android, and web applications built with Next.js, React Native, TypeScript, and cloud-native databases.
+
+## Public Web Navigation & Services
+- Main Platform: https://www.sehle.site
+- Enterprise Services: https://www.sehle.site/services
+- Software Packages: https://www.sehle.site/packages
+- Case Studies & Portfolio: https://www.sehle.site/projects
+- Industry Solutions: https://www.sehle.site/industries
+- Technology Comparison: https://www.sehle.site/compare
+- Software Glossary: https://www.sehle.site/glossary
+- Company News: https://www.sehle.site/news
+
+## Contact Information & Support
+- Primary Phone: +90-543-106-1211
+- Inquiry Email: global@sehle.site
+- Operational Regions: Iraq (Baghdad, Erbil, Basra, Sulaymaniyah, Najaf), Turkey (Ankara), Middle East.

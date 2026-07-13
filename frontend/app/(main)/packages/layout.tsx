@@ -1,51 +1,22 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
-const SITE_URL = "https://www.sehle.site";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
 
-export const metadata: Metadata = {
-  title: "الباقات البرمجية | حلول جاهزة بأسعار تنافسية | سهلة العراق",
-  description:
-    "اكتشف باقات سهلة البرمجية الجاهزة للشركات في العراق. حلول متكاملة لإدارة الأعمال، التجارة الإلكترونية، وإدارة العملاء بأسعار تنافسية. Software packages Iraq | Business solutions Iraq.",
-  keywords: [
-    "باقات برمجية عراق",
-    "حلول برمجية جاهزة العراق",
-    "باقات تطوير مواقع العراق",
-    "نظام CRM العراق",
-    "نظام تجارة إلكترونية العراق",
-    "حلول أعمال العراق",
-    "برامج إدارة الشركات العراق",
-    "سهلة باقات",
-    "software packages Iraq",
-    "business software Iraq",
-    "ready-made software Iraq",
-    "CRM Iraq",
-    "e-commerce package Iraq",
-    "business management software Iraq",
-    "affordable software Iraq",
-    "Sehle packages",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/packages/`,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ar_IQ",
-    alternateLocale: "en_US",
-    url: `${SITE_URL}/packages/`,
-    title: "باقات سهلة البرمجية | حلول جاهزة للأعمال في العراق",
-    description:
-      "باقات برمجية متكاملة مصممة لاحتياجات الشركات العراقية — تجارة إلكترونية، CRM، إدارة أعمال، وأكثر.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "باقات سهلة البرمجية" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "باقات سهلة | حلول برمجية جاهزة في العراق",
-    description: "حلول برمجية جاهزة ومتكاملة للشركات العراقية.",
-    images: [OG_IMAGE],
-    creator: "@sehle_it",
-  },
-};
+  return buildMetadata({
+    titleAr: "الباقات البرمجية | حلول جاهزة بأسعار تنافسية",
+    titleEn: "Software Packages | Ready-Made Enterprise Solutions",
+    descriptionAr: "اكتشف باقات سهلة البرمجية الجاهزة للشركات في العراق. حلول متكاملة لإدارة الأعمال، التجارة الإلكترونية، وإدارة العملاء بأسعار تنافسية.",
+    descriptionEn: "Explore Sehle's software packages for enterprise management, e-commerce, and CRM built for Middle East and Iraqi businesses.",
+    path: "/packages",
+    keywordsAr: ["باقات برمجية عراق", "حلول برمجية جاهزة العراق", "باقات تطوير مواقع العراق", "نظام CRM العراق", "نظام تجارة إلكترونية العراق"],
+    keywordsEn: ["software packages Iraq", "ready-made software Iraq", "CRM package Iraq", "e-commerce software package"],
+    lang,
+  });
+}
 
 export default function PackagesLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {

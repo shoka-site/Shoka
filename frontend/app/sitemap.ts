@@ -54,23 +54,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     storage.getIndustries(true).catch(() => []),
   ]);
 
+  const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
   const servicePages = services.map((s) =>
-    entry(`${SITE_URL}/services/${s.id}/`, s.updatedAt ?? now, "daily", 0.8)
+    entry(`${SITE_URL}/services/${slugify(s.titleEn)}/`, s.updatedAt ?? now, "daily", 0.8)
   );
 
   const projectPages = projects.map((p) =>
-    entry(`${SITE_URL}/projects/${p.id}/`, p.updatedAt ?? now, "daily", 0.75)
+    entry(`${SITE_URL}/projects/${slugify(p.titleEn)}/`, p.updatedAt ?? now, "daily", 0.75)
   );
 
   const packagePages = packages.map((p) =>
-    entry(`${SITE_URL}/packages/${p.id}/`, p.updatedAt ?? now, "daily", 0.8)
+    entry(`${SITE_URL}/packages/${slugify(p.titleEn)}/`, p.updatedAt ?? now, "daily", 0.8)
   );
 
   const industryPages = industries.map((i) =>
-    entry(`${SITE_URL}/industries/${i.id}/`, i.updatedAt ?? now, "daily", 0.75)
+    entry(`${SITE_URL}/industries/${slugify(i.titleEn)}/`, i.updatedAt ?? now, "daily", 0.75)
   );
-
-  const slugify = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
   const serviceForIndustryPages = services.flatMap((s) =>
     industries.map((i) => {

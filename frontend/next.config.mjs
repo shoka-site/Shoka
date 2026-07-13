@@ -47,6 +47,8 @@ const nextConfig = {
   },
 
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 86400,
     remotePatterns: [
       {
         protocol: 'https',
@@ -63,6 +65,7 @@ const nextConfig = {
     ],
   },
 
+  compress: true,
   generateEtags: true,
   trailingSlash: true,
   output: process.env.VERCEL ? undefined : 'standalone',

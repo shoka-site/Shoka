@@ -3,27 +3,21 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, X, ShieldAlert, Award, Star } from "lucide-react";
 
+import { buildMetadata } from "@/lib/seo";
+
 export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
-  const title = lang === "ar"
-    ? "مقارنة الحلول البرمجية | لماذا تختار سهلة؟"
-    : "Compare Solutions | Why Choose Sehle?";
-
-  const description = lang === "ar"
-    ? "مقارنة تفصيلية بين خدمات سهلة البرمجية والعمل مع المستقلين أو الشركات الخارجية. اكتشف مزايا الدعم المحلي والملكية الكاملة للأكواد."
-    : "A detailed comparison between Sehle custom software development and hiring freelancers or offshore agencies. Discover the benefits of local support and complete code ownership.";
-
-  return {
-    title,
-    description,
-    keywords: ["why choose Sehle", "custom software comparison Iraq", "مستقلين برمجيات العراق", "أفضل شركة برمجيات بغداد"],
-    openGraph: {
-      title,
-      description,
-      url: "https://www.sehle.site/compare",
-    }
-  };
+  return buildMetadata({
+    titleAr: "مقارنة الحلول البرمجية | لماذا تختار سهلة مقارنة بالحلول الأخرى؟",
+    titleEn: "Compare Software Options | Why Partner With Sehle?",
+    descriptionAr: "مقارنة تفصيلية بين خدمات سهلة البرمجية والعمل مع المستقلين أو الشركات الخارجية. اكتشف مزايا الدعم المحلي والملكية الكاملة للأكواد والمزامنة دون إنترنت.",
+    descriptionEn: "A detailed comparison between Sehle custom software engineering versus freelancers or offshore agencies. Discover the power of local support and 100% code ownership.",
+    path: "/compare",
+    keywordsAr: ["لماذا تختار سهلة", "مقارنة شركات البرمجة بالعراق", "مستقلين برمجيات العراق", "أفضل شركة برمجيات بغداد"],
+    keywordsEn: ["why choose Sehle", "custom software comparison Iraq", "freelancer vs software agency Iraq"],
+    lang,
+  });
 }
 
 export default async function ComparePage() {

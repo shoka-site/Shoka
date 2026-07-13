@@ -1,46 +1,22 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
-const SITE_URL = "https://www.sehle.site";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
 
-export const metadata: Metadata = {
-  title: "مشاريعنا | معرض أعمال سهلة البرمجية | Sehle Portfolio Iraq",
-  description:
-    "استعرض مشاريع سهلة البرمجية في العراق والمنطقة. مواقع، تطبيقات، وأنظمة رقمية أثّرت في أعمال عملائنا. Software portfolio Iraq | Sehle projects | Iraq tech portfolio.",
-  keywords: [
-    "مشاريع برمجية عراق",
-    "معرض أعمال سهلة",
-    "مشاريع تطوير مواقع عراق",
-    "مشاريع تطبيقات عراق",
-    "أعمال شركة برمجيات عراقية",
-    "software portfolio Iraq",
-    "Sehle projects",
-    "Iraq web projects",
-    "tech projects Iraq",
-    "case studies Iraq software",
-    "Sehle portfolio",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/projects/`,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ar_IQ",
-    alternateLocale: "en_US",
-    url: `${SITE_URL}/projects/`,
-    title: "مشاريع سهلة | معرض أعمال برمجية في العراق",
-    description:
-      "شاهد كيف ساعدنا شركات من مختلف القطاعات بحلول برمجية متميزة.",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "مشاريع سهلة البرمجية" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "مشاريع سهلة | Portfolio",
-    description: "استعرض أعمالنا البرمجية في العراق والمنطقة.",
-    images: [OG_IMAGE],
-    creator: "@sehle_it",
-  },
-};
+  return buildMetadata({
+    titleAr: "مشاريعنا | معرض أعمال سهلة البرمجية وحالات النجاح",
+    titleEn: "Our Portfolio | Client Case Studies & Software Projects",
+    descriptionAr: "استعرض مشاريع سهلة البرمجية في العراق والمنطقة: أنظمة شركات، تطبيقات هاتف، ومواقع إلكترونية أثّرت بحجم أعمال عملائنا.",
+    descriptionEn: "Explore Sehle's software development portfolio and case studies across enterprise ERP, mobile apps, and digital transformation.",
+    path: "/projects",
+    keywordsAr: ["مشاريع برمجية عراق", "معرض أعمال سهلة", "مشاريع تطوير مواقع عراق", "مشاريع تطبيقات عراق", "حالات نجاح تقنية"],
+    keywordsEn: ["software portfolio Iraq", "Sehle case studies", "Iraq web projects", "enterprise software showcase"],
+    lang,
+  });
+}
 
 export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {

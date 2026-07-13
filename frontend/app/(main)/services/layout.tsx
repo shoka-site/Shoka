@@ -1,65 +1,21 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-
-const SITE_URL = "https://www.sehle.site";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = await cookies();
   const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
-  const isRtl = lang === "ar";
 
-  const title = isRtl 
-    ? "خدماتنا | حلول برمجية وأنظمة إدارة ERP" 
-    : "Our Services | Software & Management Solutions";
-
-  const description = isRtl
-    ? "تقدم سهلة خدمات تطوير برمجيات متكاملة لحل مشاكل الأعمال في مختلف القطاعات: تطوير مواقع، تطبيقات، أنظمة إدارة (ERP)، حلول الذكاء الاصطناعي، والتحول الرقمي."
-    : "Sehle provides full-spectrum software development services to solve business problems across industries: web and mobile apps, ERP systems, AI solutions, and digital transformation.";
-
-  return {
-    title,
-    description,
-    keywords: [
-      // Arabic
-      "خدمات برمجية",
-      "حل مشاكل الأعمال",
-      "تطوير مواقع",
-      "تطوير تطبيقات الجوال",
-      "نظام ERP",
-      "ذكاء اصطناعي",
-      "برمجة مخصصة",
-      "حلول سحابية",
-      // English
-      "software services",
-      "business problem solving",
-      "web development",
-      "mobile app development",
-      "ERP system",
-      "AI solutions",
-      "custom software development",
-      "management solutions",
-    ],
-    alternates: {
-      canonical: `${SITE_URL}/services/`,
-    },
-    openGraph: {
-      type: "website",
-      locale: isRtl ? "ar_IQ" : "en_US",
-      alternateLocale: isRtl ? "en_US" : "ar_IQ",
-      url: `${SITE_URL}/services/`,
-      title,
-      description,
-      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [OG_IMAGE],
-      creator: "@sehle_it",
-    },
-  };
+  return buildMetadata({
+    titleAr: "خدماتنا | حلول برمجية وأنظمة إدارة ERP",
+    titleEn: "Our Services | Custom Software & ERP Systems",
+    descriptionAr: "تقدم سهلة خدمات تطوير برمجيات متكاملة لحل مشاكل الأعمال في مختلف القطاعات: تطوير مواقع، تطبيقات، أنظمة إدارة (ERP)، حلول الذكاء الاصطناعي، والتحول الرقمي.",
+    descriptionEn: "Sehle provides full-spectrum software development services to solve business problems: web and mobile apps, ERP systems, AI solutions, and digital transformation.",
+    path: "/services",
+    keywordsAr: ["خدمات برمجية", "حل مشاكل الأعمال", "تطوير مواقع", "تطوير تطبيقات الجوال", "نظام ERP", "ذكاء اصطناعي", "برمجة مخصصة", "حلول سحابية"],
+    keywordsEn: ["software services", "business problem solving", "web development", "mobile app development", "ERP system", "AI solutions", "custom software development", "management solutions"],
+    lang,
+  });
 }
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {

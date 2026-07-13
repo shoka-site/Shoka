@@ -1,27 +1,22 @@
 import { getServerTranslation } from "@/lib/server-i18n";
 import { Metadata } from "next";
 
+import { buildMetadata } from "@/lib/seo";
+import { generateGlossarySchema } from "@/lib/schema-generator";
+
 export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
 
-  const title = lang === "ar"
-    ? "قاموس المصطلحات البرمجية والتقنية"
-    : "Software & Technology Glossary";
-
-  const description = lang === "ar"
-    ? "قاموس المصطلحات التقنية والبرمجية من سهلة - شرح مبسط لمصطلحات الأعمال مثل أنظمة ERP و CRM والتحول الرقمي وتطوير البرمجيات في العراق."
-    : "The Sehle technology and software glossary. Learn and understand enterprise terminology like ERP, CRM, custom software development, and digital transformation.";
-
-  return {
-    title,
-    description,
-    keywords: ["software glossary", "tech glossary Iraq", "ما هو ERP", "التحول الرقمي العراق", "معنى CRM"],
-    openGraph: {
-      title,
-      description,
-      url: "https://www.sehle.site/glossary",
-    }
-  };
+  return buildMetadata({
+    titleAr: "قاموس المصطلحات البرمجية والتقنية",
+    titleEn: "Software & Technology Glossary",
+    descriptionAr: "قاموس المصطلحات التقنية والبرمجية من سهلة — شرح مبسط لمصطلحات الأعمال مثل أنظمة ERP و CRM والتحول الرقمي وتطوير البرمجيات.",
+    descriptionEn: "The Sehle technology and software glossary. Learn and understand enterprise terminology like ERP, CRM, custom software development, and digital transformation.",
+    path: "/glossary",
+    keywordsAr: ["قاموس المصطلحات التقنية", "ما هو ERP", "التحول الرقمي العراق", "معنى CRM", "مصطلحات البرمجة"],
+    keywordsEn: ["software glossary", "tech terms Iraq", "what is ERP", "CRM meaning", "digital transformation terms"],
+    lang,
+  });
 }
 
 const GLOSSARY_ITEMS = [
@@ -65,9 +60,19 @@ const GLOSSARY_ITEMS = [
 
 export default async function GlossaryPage() {
   const { lang } = await getServerTranslation();
+  const glossarySchema = generateGlossarySchema(
+    GLOSSARY_ITEMS.map((item) => ({
+      term: lang === "ar" ? item.termAr : item.termEn,
+      definition: lang === "ar" ? item.defAr : item.defEn,
+    }))
+  );
 
   return (
     <div className="bg-background min-h-screen text-foreground py-24 selection:bg-primary/30 selection:text-primary">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(glossarySchema) }}
+      />
       <div className="container mx-auto px-6 max-w-4xl">
         <header className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
