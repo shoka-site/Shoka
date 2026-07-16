@@ -85,6 +85,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+import { generateLocalBusinessCitySchema, generateBreadcrumbSchema } from "@/lib/schema-generator";
+import { SITE_URL } from "@/lib/seo";
+
 export default async function CityLocationPage({ params }: Props) {
   const { city } = await params;
   const cityData = CITIES[city.toLowerCase()];
@@ -96,8 +99,32 @@ export default async function CityLocationPage({ params }: Props) {
   const focusTitle = lang === "ar" ? "التركيز التقني التشغيلي" : "Key Tech Operational Focus";
   const focusDesc = lang === "ar" ? cityData.focusAr : cityData.focusEn;
 
+  const citySchema = generateLocalBusinessCitySchema(
+    {
+      nameAr: cityData.nameAr,
+      nameEn: cityData.nameEn,
+      descAr: cityData.descAr,
+      descEn: cityData.descEn,
+      url: `${SITE_URL}/solutions-in-${city.toLowerCase()}/`,
+    },
+    lang
+  );
+
+  const breadcrumbs = generateBreadcrumbSchema([
+    { name: lang === "ar" ? "الرئيسية" : "Home", item: "/" },
+    { name: lang === "ar" ? `حلولنا في ${cityName}` : `Solutions in ${cityName}`, item: `/solutions-in-${city.toLowerCase()}/` },
+  ]);
+
   return (
     <div className="bg-background min-h-screen text-foreground py-24 selection:bg-primary/30 selection:text-primary relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(citySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
       {/* Background gradients */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
@@ -183,7 +210,7 @@ export default async function CityLocationPage({ params }: Props) {
           </p>
 
           <Link 
-            href={`/contact?project=Software%20solutions%20in%20${cityData.nameEn}`}
+            href={`/contact/?project=Software%20solutions%20in%20${cityData.nameEn}`}
             className="inline-flex items-center gap-3 bg-primary text-black font-black uppercase tracking-widest text-xs h-14 px-8 rounded-xl hover:bg-white transition-all shadow-[0_4px_20px_rgba(194,164,92,0.25)]"
           >
             <span>{lang === "ar" ? "اطلب استشارة مجانية الآن" : "Book Free Consultation"}</span>

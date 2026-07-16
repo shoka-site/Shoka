@@ -1,24 +1,65 @@
-# Sehle (سهلة) — Full Technical Architecture & Business Reference
+# Detailed Technical Architecture & Business Reference - Sehle (سهلة) | التوثيق التقني والمرجع الهندسي الكامل منصة سهلة
 
-## 1. Company Summary
-Sehle (سهلة) is a specialized custom software development agency and digital transformation partner headquartered in Ankara, Turkey, with key operational focus and on-the-ground presence across Iraq (Baghdad, Erbil, Basra, Sulaymaniyah, Najaf).
+> Complete bilingual technical catalog of custom software engineering, ERP solutions, modular packages, target industries, and case studies developed by Sehle.
+> دليل تقني وهندسي شامل ومزدوج اللغة (عربي - إنجليزي) لخدمات البرمجة المخصصة، أنظمة ERP، باقات الحلول والقطاعات المستهدفة في سهلة.
 
-## 2. Technical Specializations
-- **Bespoke Enterprise Software**: Designing software systems ground-up to eliminate fragmented spreadsheets and legacy applications.
-- **Offline-First State Sync**: Local IndexedDB/SQLite persistence layer syncing with PostgreSQL/Prisma backends via websockets or REST when internet connectivity is re-established.
-- **Microservices & Cloud Architectures**: Next.js App Router, React 19, Node.js, TypeScript, Docker containers, PostgreSQL, Vercel/AWS infrastructure.
-- **Cybersecurity & Data Compliance**: Strict role-based access control (RBAC), database encryption at rest and in transit, and local compliance.
+---
 
-## 3. Key Services
-- **Custom ERP Development**: Tailored resource planning for wholesale, retail, oil & gas, healthcare, logistics, and real estate.
-- **Mobile Application Engineering**: Cross-platform and native iOS/Android apps with Arabic-first UI/UX designs.
-- **Legacy Migration & API Integration**: Data extraction, transformation, and loading (ETL) from legacy databases to modern cloud databases.
-- **AI & Automation Systems**: Intelligent inventory forecasting, automated invoice OCR scanning, and chatbot customer support integrations.
+## 1. Company Profile & Engineering Philosophy | نبذة عن الشركة والفلسفة الهندسية
+Sehle (سهلة) is a custom software development company and digital transformation partner headquartered in Ankara, Turkey, serving enterprise clients across Iraq and the Middle East. Sehle builds high-availability enterprise systems designed for offline operations, strict data privacy, and bilingual operations (Arabic RTL & English LTR).
+شركة "سهلة" هي شركة متخصصة في تطوير البرمجيات والأنظمة المخصصة والتحول الرقمي للمؤسسات في العراق والشرق الأوسط، مع التركيز على الأنظمة عالية الأمان والعمل بدون اتصال بالإنترنت والدعم الكامل للغتين العربية والإنجليزية.
 
-## 4. Frequently Asked Questions (FAQ)
-- **Q: Does Sehle support offline operations?**
-  A: Yes, Sehle specializes in offline-first architectures that allow field staff and multi-warehouse operators to work without uninterrupted internet.
-- **Q: Are Sehle software systems bilingual?**
-  A: Yes, all applications natively support Arabic (RTL) and English (LTR) with dynamic instant language switching.
-- **Q: How can businesses request a consultation?**
-  A: Via https://www.sehle.site/contact or direct email to global@sehle.site.
+---
+
+## 2. Platform Technology Architecture & Stack | البنية التكنولوجية وحزمة التقنيات
+- **Frontend Framework | الواجهات الأمامية**: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion animations.
+- **Backend Architecture | البنية الخلفية**: Node.js microservices, Next.js API endpoints, Server-Sent Events, REST & WebSockets.
+- **Database & Persistence | قواعد البيانات**: PostgreSQL with Prisma ORM, offline-first IndexedDB / SQLite client caching with automatic delta synchronization (مزامنة تلقائية لقواعد البيانات).
+- **Localization | التدويل واللغات**: Native bilingual design support (`NEXT_LOCALE` cookie), RTL layout engine, Cairo font typography (دعم نمط الاتجاه من اليمين لليسار لخط القاهرة).
+- **Structured Data | البيانات المنظمة**: Unified Schema.org `@graph` JSON-LD (`Organization`, `WebSite`, `ProfessionalService`, `Service`, `Product`, `FAQPage`, `BreadcrumbList`).
+
+---
+
+## 3. Core Software Services | الخدمات البرمجية الأساسية
+- **Custom Enterprise ERP Systems | أنظمة إدارة الشركات (ERP)**: End-to-end management systems tailored to supply chain, inventory, accounting, and multi-branch operations. أنظمة إدارة متكاملة للمستودعات والمحاسبة والمبيعات.
+- **Mobile Application Development | تطوير تطبيقات الجوال**: iOS and Android mobile solutions featuring native performance, push notifications, and offline data caching. تطبيقات آيفون وأندرويد سريعة وآمنة.
+- **Data Engineering & Legacy Migration | ترحيل البيانات وتحديث الأنظمة القديمة**: Automated extraction, transformation, and loading (ETL) to transition legacy desktop and spreadsheet workflows to cloud databases. نقل البيانات بأمان من الملفات والبرامج القديمة.
+- **Automated Workflow Systems | أتمتة العمليات الإدارية**: Automated invoicing, OCR document parsing, role-based access management (RBAC), and audit logging. أتمتة الفواتير والعمليات اليومية وتحديد الصلاحيات.
+
+---
+
+## 4. Platform Solution Packages | باقات البرمجيات والأنظمة
+- **Starter Package | الباقة الأساسية**: Tailored MVP solution for small businesses and growing startups. حل برلمجي أساسي للشركات الناشئة والمشاريع الصاعدة.
+- **Professional Package | الباقة الاحترافية**: Comprehensive software suite with advanced integrations and automated reporting. باقة متكاملة للشركات المتوسطة مع تقارير متقدمة.
+- **Enterprise Package | باقة المؤسسات**: Unlimited scaling, dedicated infrastructure, priority SLA, on-site team training, and custom feature engineering. أنظمة مخصصة بالكامل للمؤسسات الكبرى مع دعم ميداني وتدريب للكوادر.
+
+---
+
+## 5. High-Intent Comparison Architecture | مقارنة الخيارات البرمجية (`/compare/`)
+- **Sehle vs Freelancers | سهلة مقابل المستقلين**: Highlights guaranteed legal code ownership (100%), SLAs, on-ground support, and enterprise contracts versus freelancer turnover risks. تضمن سهلة ملكية الكود 100% والعقود القانونية والدعم المستمر.
+- **Sehle vs Offshore Agencies | سهلة مقابل الشركات الخارجية**: Highlights physical presence, local operational understanding, zero language/time-zone delays, and direct technical consultations versus remote outsourcing friction. تواجد ميداني وفهم دقيق لمتطلبات وتحديات بيئة العمل المحلية.
+
+---
+
+## 6. Full Route Directory & Canonical Links | دليل الصفحات والروابط الرسمية
+- Home Page | الصفحة الرئيسية: https://www.sehle.site/
+- Services Overview | جميع الخدمات البرمجية: https://www.sehle.site/services/
+- Packages Pricing | باقات الأسعار: https://www.sehle.site/packages/
+- Featured Portfolio Projects | معرض المشاريع: https://www.sehle.site/projects/
+- Targeted Industry Verticals | القطاعات المستهدفة: https://www.sehle.site/industries/
+- Architecture Comparison Hub | مركز مقارنة الخيارات: https://www.sehle.site/compare/
+- Comparison Sub-Route (Freelancers) | مقارنة المستقلين: https://www.sehle.site/compare/sehle-vs-freelancers/
+- Comparison Sub-Route (Offshore) | مقارنة الشركات الخارجية: https://www.sehle.site/compare/sehle-vs-offshore-agencies/
+- Interactive Cost Calculator | حاسبة التكلفة: https://www.sehle.site/quote-calculator/
+- Technical Glossary | قاموس المصطلحات البرمجية: https://www.sehle.site/glossary/
+- Engineering Blog | المدونة التقنية: https://www.sehle.site/blog/
+- Referral Partner Program | برنامج الإحالة الشريك: https://www.sehle.site/refer/
+- Media & Social Kit | حقيبة الإعلام: https://www.sehle.site/social-kit/
+- Schedule Free Consultation | طلب استشارة مجانية: https://www.sehle.site/contact/
+
+---
+
+## 7. Contact Information | معلومات التواصل والدعم
+- Inquiry Email | البريد الإلكتروني: sehle.iq@gmail.com
+- Phone / Hotline | الهاتف المباشر: +90-543-106-1211
+- Office Location | مقر العمليات: Kızılay, Ankara, Turkey | Regional Operations: Iraq & Middle East (تركيا، العراق والشرق الأوسط)

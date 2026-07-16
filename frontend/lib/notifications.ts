@@ -102,7 +102,7 @@ function buildConfirmationHtml(data: Pick<ConsultationPayload, 'name'>): string 
     </div>
     <div style="padding:20px 32px;border-top:1px solid rgba(255,255,255,0.06);text-align:center">
       <p style="color:#555;font-size:11px;margin:0">Sehle · Digital Systems &amp; Software Solutions · Iraq</p>
-      <p style="color:#555;font-size:11px;margin:4px 0 0"><a href="mailto:global@sehle.site" style="color:#c2a45c">global@sehle.site</a></p>
+      <p style="color:#555;font-size:11px;margin:4px 0 0"><a href="mailto:sehle.iq@gmail.com" style="color:#c2a45c">sehle.iq@gmail.com</a></p>
     </div>
   </div>
 </body>

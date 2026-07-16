@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: "https://www.sehle.site/about",
+      url: "https://www.sehle.site/about/",
     }
   };
 }
@@ -62,7 +62,7 @@ export default async function AboutPage() {
     "description": lang === "ar"
       ? "تعرف على شركة سهلة، قصتنا، فريق عملنا من المهندسين والخبراء، ورسالتنا لتمكين الشركات العراقية من خلال الابتكار والحلول البرمجية المتطورة."
       : "Learn about Sehle, our story, our team of experts and engineers, and our mission to empower Iraqi businesses through innovation and cutting-edge software.",
-    "url": `${SITE_URL}/about`,
+    "url": `${SITE_URL}/about/`,
     "publisher": {
       "@type": "Organization",
       "name": "سهلة | Sehle",

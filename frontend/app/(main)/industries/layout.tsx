@@ -24,12 +24,12 @@ export default function IndustriesLayout({ children }: { children: React.ReactNo
     "@type": "WebPage",
     name: "المجالات التي تخدمها سهلة | Sehle Industries",
     description: "حلول برمجية مخصصة لكل قطاع أعمال في العراق.",
-    url: `${SITE_URL}/industries`,
+    url: `${SITE_URL}/industries/`,
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "المجالات", item: `${SITE_URL}/industries` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "المجالات", item: `${SITE_URL}/industries/` },
       ],
     },
   };

@@ -48,6 +48,8 @@ export const viewport: Viewport = {
 };
 
 
+import { generateRootGraphSchema } from "@/lib/schema-generator";
+
 export default async function RootLayout({
     children,
 }: Readonly<{
@@ -57,83 +59,7 @@ export default async function RootLayout({
     const lang = (cookieStore.get("NEXT_LOCALE")?.value as "ar" | "en") || "ar";
     const isRtl = lang === "ar";
 
-    // JSON-LD structured data for Organization
-    const organizationSchema = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": isRtl ? "سهلة - منصة الأنظمة الرقمية العراقية" : "Sehle - Iraqi Digital Systems Platform",
-        "alternateName": ["Sehle", "سهلة"],
-        "url": SITE_URL,
-        "logo": `${SITE_URL}/logoo.png`,
-        "description": isRtl
-            ? "المنصة العراقية الرائدة للأنظمة الرقمية الذكية وتطوير البرمجيات والتحول الرقمي."
-            : "The leading Iraqi platform for intelligent digital systems, software development, and digital transformation.",
-        "foundingDate": "2024",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Ankara",
-            "addressCountry": "Turkey",
-        },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "customer service",
-            "availableLanguage": ["Arabic", "English", "Turkish"],
-        },
-        "sameAs": [
-            "https://www.linkedin.com/company/sehle/",
-            "https://x.com/sehle_it",
-            "https://www.instagram.com/sehle.it/",
-            "https://www.tiktok.com/@sehle.it",
-            "https://www.facebook.com/profile.php?id=61575488387547",
-        ],
-    };
-
-    // JSON-LD for WebSite with search capability
-    const websiteSchema = {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": isRtl ? SITE_NAME : "Sehle | Software & Tech Development in Iraq",
-        "url": SITE_URL,
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": `${SITE_URL}/search?q={search_term_string}`,
-            },
-            "query-input": "required name=search_term_string",
-        },
-    };
-
-    // JSON-LD for LocalBusiness
-    const localBusinessSchema = {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "sehle - سهلة",
-        "image": `${SITE_URL}/logoo.png`,
-        "url": SITE_URL,
-        "telephone": "+90-543-106-1211",
-        "email": "global@sehle.site",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Kızılay",
-            "addressLocality": "Ankara",
-            "addressCountry": "TR",
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 39.9208,
-            "longitude": 32.8541,
-        },
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "opens": "09:00",
-            "closes": "18:00",
-        },
-        "priceRange": "$$",
-        "areaServed": ["Iraq", "Turkey", "Middle East"],
-        "knowsLanguage": ["Arabic", "English", "Turkish"],
-    };
+    const rootGraphSchema = generateRootGraphSchema(lang);
 
     return (
         <html lang={lang} dir={isRtl ? "rtl" : "ltr"} className={`${cairo.variable}`} suppressHydrationWarning>
@@ -145,15 +71,7 @@ export default async function RootLayout({
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-                />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-                />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(rootGraphSchema) }}
                 />
             </head>
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">

@@ -26,7 +26,7 @@ export default async function ServiceDetailLayout({
         "@type": "Service",
         name: title,
         description: description,
-        url: `${SITE_URL}/services/${id}`,
+        url: `${SITE_URL}/services/${slug}/`,
         provider: {
           "@type": "Organization",
           name: "سهلة | Sehle",
@@ -37,9 +37,9 @@ export default async function ServiceDetailLayout({
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-            { "@type": "ListItem", position: 2, name: "الخدمات", item: `${SITE_URL}/services` },
-            { "@type": "ListItem", position: 3, name: title, item: `${SITE_URL}/services/${id}` },
+            { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+            { "@type": "ListItem", position: 2, name: "الخدمات", item: `${SITE_URL}/services/` },
+            { "@type": "ListItem", position: 3, name: title, item: `${SITE_URL}/services/${slug}/` },
           ],
         },
       };

@@ -92,6 +92,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/schema-generator";
+import { SITE_URL } from "@/lib/seo";
+
 export default async function ServiceForIndustryPage({ params }: Props) {
   const { slug } = await params;
   const match = await findMatch(slug);
@@ -110,6 +113,23 @@ export default async function ServiceForIndustryPage({ params }: Props) {
   const breadcrumbCurrent = lang === "ar" 
     ? `${serviceTitle} لقطاع ${industryTitle}` 
     : `${serviceTitle} for ${industryTitle}`;
+
+  const serviceSchema = generateServiceSchema(
+    {
+      nameAr: `${serviceTitle} لقطاع ${industryTitle}`,
+      nameEn: `${serviceTitle} for ${industryTitle}`,
+      descriptionAr: serviceDesc,
+      descriptionEn: serviceDesc,
+      url: `${SITE_URL}/${slug}/`,
+    },
+    lang
+  );
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: breadcrumbHome, item: "/" },
+    { name: serviceTitle, item: `/services/${service.id}/` },
+    { name: breadcrumbCurrent, item: `/${slug}/` },
+  ]);
 
   // Localized copy
   const sectionTitle = lang === "ar"
@@ -136,6 +156,14 @@ export default async function ServiceForIndustryPage({ params }: Props) {
 
   return (
     <div className="bg-background min-h-screen text-foreground py-24 relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Background accents */}
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -195,6 +223,29 @@ export default async function ServiceForIndustryPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Spoke-to-Hub Related Navigation */}
+        <section className="mb-16 bg-white/5 border border-white/10 rounded-2xl p-6">
+          <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4">
+            {lang === "ar" ? "استكشف الأقسام الرئيسية المتعلقة" : "Explore Related Core Pillars"}
+          </h3>
+          <div className="flex flex-wrap gap-4 text-xs">
+            <Link 
+              href={`/services/${service.id}/`}
+              className="px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-xl text-white/80 hover:text-white hover:border-primary/50 transition-all flex items-center gap-2"
+            >
+              <span>{lang === "ar" ? `جميع خدمات ${serviceTitle}` : `All ${serviceTitle} Services`}</span>
+              <ArrowRight className="w-3.5 h-3.5 text-primary" />
+            </Link>
+            <Link 
+              href={`/industries/${industry.id}/`}
+              className="px-4 py-2.5 bg-zinc-900 border border-white/10 rounded-xl text-white/80 hover:text-white hover:border-primary/50 transition-all flex items-center gap-2"
+            >
+              <span>{lang === "ar" ? `حلول قطاع ${industryTitle}` : `${industryTitle} Industry Overview`}</span>
+              <ArrowRight className="w-3.5 h-3.5 text-primary" />
+            </Link>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="bg-zinc-900/60 border border-primary/20 rounded-3xl p-8 md:p-12 text-center max-w-3xl mx-auto shadow-xl">
           <Building className="w-12 h-12 text-primary mx-auto mb-4" />
@@ -206,7 +257,7 @@ export default async function ServiceForIndustryPage({ params }: Props) {
           </p>
 
           <Link
-            href={`/contact?project=${encodeURIComponent(breadcrumbCurrent)}`}
+            href={`/contact/?project=${encodeURIComponent(breadcrumbCurrent)}`}
             className="inline-flex items-center gap-3 bg-primary text-black font-black uppercase tracking-widest text-xs h-14 px-8 rounded-xl hover:bg-white transition-all shadow-[0_4px_20px_rgba(194,164,92,0.25)]"
           >
             <span>{lang === "ar" ? "اطلب استشارة مجانية الآن" : "Schedule Consultation"}</span>

@@ -32,7 +32,7 @@ SEHLE (سهلة) - DIGITAL TRANSFORMATION CHECKLIST
 6. Access Controls: Design role-based authentication for employees.
 7. Localized Training: Conduct training in Arabic & English.
 
-Partner with Sehle to transform your business operations: global@sehle.site
+Partner with Sehle to transform your business operations: sehle.iq@gmail.com
       `;
       const blob = new Blob([checklistContent.trim()], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);

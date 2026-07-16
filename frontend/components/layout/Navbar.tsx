@@ -109,7 +109,7 @@ export default function Navbar({ lang }: NavbarProps) {
         <div className="container mx-auto px-4 sm:px-8 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <div className="flex flex-1 items-center justify-start">
-            <Link href="/home" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
+            <Link href="/home/" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
               <motion.div
                 className="relative w-24 h-8 xl:w-32 xl:h-10 flex items-center justify-center"
                 whileHover={{ scale: 1.05 }}
@@ -169,7 +169,7 @@ export default function Navbar({ lang }: NavbarProps) {
             >
               <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
             </button>
-            <Link href="/contact" onClick={closeMenu}>
+            <Link href="/contact/" onClick={closeMenu}>
               <span className="bg-primary text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/80 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
                 {t("navbar.book_consultation")}
               </span>

@@ -103,19 +103,19 @@ export default async function ProjectPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": lang === "ar" ? "الرئيسية" : "Home",
-        "item": "https://www.sehle.site/home"
+        "item": "https://www.sehle.site/home/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": lang === "ar" ? "المشاريع" : "Projects",
-        "item": "https://www.sehle.site/projects"
+        "item": "https://www.sehle.site/projects/"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `${SITE_URL}/projects/${slug}`
+        "item": `${SITE_URL}/projects/${slug}/`
       }
     ]
   };

@@ -24,7 +24,7 @@ export default function PackagesLayout({ children }: { children: React.ReactNode
     "@type": "OfferCatalog",
     name: "باقات سهلة البرمجية",
     description: "حلول برمجية جاهزة ومتكاملة للشركات العراقية.",
-    url: `${SITE_URL}/packages`,
+    url: `${SITE_URL}/packages/`,
     provider: {
       "@type": "Organization",
       name: "سهلة | Sehle",
@@ -33,8 +33,8 @@ export default function PackagesLayout({ children }: { children: React.ReactNode
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "الباقات", item: `${SITE_URL}/packages` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "الباقات", item: `${SITE_URL}/packages/` },
       ],
     },
   };

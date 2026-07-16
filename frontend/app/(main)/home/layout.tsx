@@ -79,11 +79,11 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
     name: "سهلة — شركة برمجيات عراقية",
     description:
       "الصفحة الرئيسية لسهلة، الشركة العراقية المتخصصة في تطوير البرمجيات والأنظمة الرقمية.",
-    url: `${SITE_URL}/home`,
+    url: `${SITE_URL}/home/`,
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
       ],
     },
   };

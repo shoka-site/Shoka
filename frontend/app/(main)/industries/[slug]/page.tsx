@@ -86,19 +86,19 @@ export default async function IndustryPage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": lang === "ar" ? "الرئيسية" : "Home",
-        "item": "https://www.sehle.site/home"
+        "item": "https://www.sehle.site/home/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": lang === "ar" ? "القطاعات" : "Industries",
-        "item": "https://www.sehle.site/industries"
+        "item": "https://www.sehle.site/industries/"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `${SITE_URL}/industries/${slug}`
+        "item": `${SITE_URL}/industries/${slug}/`
       }
     ]
   };

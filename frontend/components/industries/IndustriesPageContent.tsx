@@ -45,7 +45,7 @@ export function IndustriesPageContent({ industries }: Props) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="pointer-events-auto"
             >
-              <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+              <Link href="/home/" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? "rotate-180" : ""}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
@@ -104,7 +104,7 @@ export function IndustriesPageContent({ industries }: Props) {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                 >
-                  <Link href={`/industries/${slugify(industry.titleEn)}`} className="block h-full group">
+                  <Link href={`/industries/${slugify(industry.titleEn)}/`} className="block h-full group">
                     <Card className="h-full border-border/40 group-hover:border-primary/30 transition-all duration-700 flex flex-col overflow-hidden bg-background/50 backdrop-blur-xl relative rounded-[2.5rem] shadow-sm hover:shadow-2xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       <div className="h-1.5 w-full bg-gradient-to-r from-primary/60 via-primary/20 to-transparent rounded-t-[2.5rem] group-hover:from-primary group-hover:via-primary/40 transition-all duration-700" />
@@ -152,7 +152,7 @@ export function IndustriesPageContent({ industries }: Props) {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
               {t("industries.cta.description")}
             </p>
-            <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? "flex-row-reverse" : ""}`}>
+            <Link href="/contact/" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? "flex-row-reverse" : ""}`}>
               {t("industries.cta.button")}
               <ArrowRight className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`} />
             </Link>

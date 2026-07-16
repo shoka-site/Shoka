@@ -73,7 +73,7 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
             <h1 className="text-7xl md:text-9xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 tracking-tighter mb-6">404</h1>
             <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-6">{t("services.not_found", "Service not found")}</h2>
             <p className="text-white/50 text-base md:text-xl max-w-md mx-auto mb-12 font-light leading-relaxed">{t("services.not_found_desc", "The service you are looking for does not exist or has been removed.")}</p>
-            <Link href="/services">
+            <Link href="/services/">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <button className="bg-primary text-black hover:bg-white font-black tracking-widest uppercase transition-all shadow-xl flex gap-3 items-center rounded-full h-14 px-10 mx-auto">
                   <ArrowLeft className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`} />
@@ -126,7 +126,7 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
               className="pointer-events-auto"
             >
               <Link
-                href="/services"
+                href="/services/"
                 className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold"
               >
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? "rotate-180" : ""}`}>
@@ -158,9 +158,17 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
             </h1>
 
             {descriptionParagraphs.length > 0 && (
-              <p className="text-lg sm:text-xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto line-clamp-2">
-                {descriptionParagraphs[0]}
-              </p>
+              <div className="mt-4 max-w-2xl mx-auto">
+                <p className="text-lg sm:text-xl text-white/70 leading-relaxed font-normal max-w-2xl mx-auto">
+                  {descriptionParagraphs[0]}
+                </p>
+                {formattedDate && (
+                  <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-white/50">
+                    <Calendar className="w-3.5 h-3.5 text-primary" />
+                    <span>{isRtl ? `آخر تحديث: ${formattedDate}` : `Last Updated: ${formattedDate}`}</span>
+                  </div>
+                )}
+              </div>
             )}
           </motion.div>
         </div>
@@ -232,7 +240,7 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
                     </div>
 
                     <Link
-                      href="/contact"
+                      href="/contact/"
                       className={`w-full group inline-flex items-center justify-center gap-3 px-6 py-4 bg-primary text-primary-foreground font-bold uppercase tracking-widest rounded-xl hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 ${isRtl ? "flex-row-reverse" : ""}`}
                     >
                       {t("services.cta.button", "Get in Touch")}
@@ -240,7 +248,7 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
                     </Link>
 
                     <Link
-                      href="/services"
+                      href="/services/"
                       className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm text-muted-foreground hover:text-foreground border border-border/50 hover:border-border rounded-xl transition-all duration-300"
                     >
                       {t("services.view_all", "View All Services")}
@@ -317,7 +325,7 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherServices.map((s, i) => (
                 <FadeIn key={s.id} delay={i * 0.08}>
-                  <Link href={`/services/${slugify((s as any).titleEn || s.title)}`}>
+                  <Link href={`/services/${slugify((s as any).titleEn || s.title)}/`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"
@@ -360,13 +368,13 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
                 </p>
                 <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRtl ? "sm:flex-row-reverse" : ""}`}>
                   <Link
-                    href="/contact"
+                    href="/contact/"
                     className="w-full sm:w-auto px-9 py-4 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 hover:shadow-xl transition-all"
                   >
                     {t("services.cta.contact", "Contact Us")}
                   </Link>
                   <Link
-                    href="/services"
+                    href="/services/"
                     className="w-full sm:w-auto px-9 py-4 bg-transparent border border-border text-foreground font-black uppercase tracking-widest rounded-full hover:bg-muted/50 transition-all"
                   >
                     {t("navbar.services", "All Services")}

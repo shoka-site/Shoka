@@ -118,19 +118,19 @@ export default async function ServicePage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": lang === "ar" ? "الرئيسية" : "Home",
-        "item": "https://www.sehle.site/home"
+        "item": "https://www.sehle.site/home/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": lang === "ar" ? "الخدمات" : "Services",
-        "item": "https://www.sehle.site/services"
+        "item": "https://www.sehle.site/services/"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.sehle.site/services/${slug}`
+        "item": `https://www.sehle.site/services/${slug}/`
       }
     ]
   };

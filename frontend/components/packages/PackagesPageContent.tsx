@@ -56,7 +56,7 @@ export function PackagesPageContent({ packages }: Props) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="pointer-events-auto"
             >
-              <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+              <Link href="/home/" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? "rotate-180" : ""}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
@@ -157,7 +157,7 @@ export function PackagesPageContent({ packages }: Props) {
                               {t("home.packages.no_description", "A tailored bundle of services designed to help you succeed.")}
                             </p>
                           )}
-                          <Link href={`/packages/${slugify(pkg.titleEn)}`} className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline border-t border-border/50 pt-6">
+                          <Link href={`/packages/${slugify(pkg.titleEn)}/`} className="mt-8 inline-flex items-center text-primary text-sm font-semibold hover:underline border-t border-border/50 pt-6">
                             {t("common.view_details", "View Details")}
                             <ArrowRight className={`w-4 h-4 ${isRtl ? "mr-2 rotate-180" : "ml-2"} group-hover:translate-x-1 transition-transform duration-300`} />
                           </Link>
@@ -306,7 +306,7 @@ export function PackagesPageContent({ packages }: Props) {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
               {t("packages.cta.description", "Contact us to learn more about our packages and how we can help your business.")}
             </p>
-            <Link href="/contact" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? "flex-row-reverse" : ""}`}>
+            <Link href="/contact/" className={`inline-flex items-center gap-3 px-8 md:px-10 py-4 md:py-5 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all shadow-xl hover:shadow-primary/20 ${isRtl ? "flex-row-reverse" : ""}`}>
               {t("packages.cta.button", "Get in Touch")}
               <ArrowRight className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`} />
             </Link>

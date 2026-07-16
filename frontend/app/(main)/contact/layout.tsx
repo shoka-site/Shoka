@@ -24,14 +24,14 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
     "@type": "ContactPage",
     name: "تواصل مع سهلة | Contact Sehle",
     description: "صفحة التواصل مع سهلة للحصول على استشارة برمجية مجانية.",
-    url: `${SITE_URL}/contact`,
+    url: `${SITE_URL}/contact/`,
     contactOption: "TollFree",
     availableLanguage: ["Arabic", "English"],
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "تواصل معنا", item: `${SITE_URL}/contact` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "تواصل معنا", item: `${SITE_URL}/contact/` },
       ],
     },
   };

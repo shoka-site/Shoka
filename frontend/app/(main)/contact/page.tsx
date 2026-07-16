@@ -72,8 +72,7 @@ export default async function Contact() {
                     </div>
                     <div>
                       <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">{t('contact.email_us')}</h4>
-                      <p className="text-foreground font-medium text-lg">global@sehle.site</p>
-                      <p className="text-foreground font-medium text-lg">support@sehle.site</p>
+                      <p className="text-foreground font-medium text-lg">sehle.iq@gmail.com</p>
                     </div>
                   </div>
 

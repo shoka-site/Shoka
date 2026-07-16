@@ -26,7 +26,7 @@ export default async function ProjectDetailLayout({
         "@type": "CreativeWork",
         name: title,
         description: description,
-        url: `${SITE_URL}/projects/${id}`,
+        url: `${SITE_URL}/projects/${slug}/`,
         ...(project.images && (project.images as string[]).length > 0 && { image: project.images }),
         ...(project.createdAt && { dateCreated: project.createdAt }),
         creator: {
@@ -37,9 +37,9 @@ export default async function ProjectDetailLayout({
         breadcrumb: {
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-            { "@type": "ListItem", position: 2, name: "المشاريع", item: `${SITE_URL}/projects` },
-            { "@type": "ListItem", position: 3, name: title, item: `${SITE_URL}/projects/${id}` },
+            { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+            { "@type": "ListItem", position: 2, name: "المشاريع", item: `${SITE_URL}/projects/` },
+            { "@type": "ListItem", position: 3, name: title, item: `${SITE_URL}/projects/${slug}/` },
           ],
         },
       };

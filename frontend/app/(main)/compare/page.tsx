@@ -20,6 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/schema-generator";
+import { SITE_URL } from "@/lib/seo";
+
 export default async function ComparePage() {
   const { lang, isRtl } = await getServerTranslation();
 
@@ -29,6 +32,40 @@ export default async function ComparePage() {
     freelancers: lang === "ar" ? "المستقلون (Freelancers)" : "Freelancers",
     offshore: lang === "ar" ? "الشركات الخارجية (Offshore)" : "Offshore Agencies",
   };
+
+  const faqs = lang === "ar" ? [
+    {
+      question: "لماذا تُفضل الشركات في العراق الاستعانة بسهلة بدلاً من المستقلين؟",
+      answer: "توفر سهلة عقوداً قانونية ملزمة، دعماً فنياً ميدانياً مستمراً في العراق، ملكية تامة 100% للكود المصدري، وبنية تحتية تدعم مزامنة البيانات بدون إنترنت."
+    },
+    {
+      question: "هل أحصل على الملكية الكاملة للأكواد المكتوبة لمشروعي؟",
+      answer: "نعم، يتم نقل الملكية الفكرية والقانونية للأكواد المعتمدة وقواعد البيانات بالكامل لشركتك دون أي رسوم ترخيص مخفية."
+    },
+    {
+      question: "كيف تتم عملية نقل البيانات من أنظمتنا القديمة إلى نظام سهلة؟",
+      answer: "نقوم بفحص قواعد البيانات القديمة، وتنظيفها، ثم إعادة هيكلتها ونقلها بأمان تام مع إجراء اختبارات تطابق لضمان استمرارية العمليات."
+    }
+  ] : [
+    {
+      question: "Why do enterprises in Iraq choose Sehle over freelancers?",
+      answer: "Sehle provides legally binding contracts, continuous physical on-ground support in Iraq, 100% full source code ownership, and robust offline-first software architectures."
+    },
+    {
+      question: "Do I retain complete source code ownership for my project?",
+      answer: "Yes, 100% legal and technical ownership of source code, configurations, and database schemas is transferred directly to your organization."
+    },
+    {
+      question: "How does Sehle migrate existing legacy data?",
+      answer: "We perform full structural audits, data cleaning, automated migration scripts, and integrity validation without operational downtime."
+    }
+  ];
+
+  const faqSchema = generateFAQSchema(faqs);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: lang === "ar" ? "الرئيسية" : "Home", item: "/" },
+    { name: lang === "ar" ? "مقارنة الخيارات" : "Compare Options", item: "/compare/" }
+  ]);
 
   const comparisonRows = [
     {
@@ -80,11 +117,20 @@ export default async function ComparePage() {
 
   return (
     <div className="bg-background min-h-screen text-foreground py-24 selection:bg-primary/30 selection:text-primary relative overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       {/* Background radial effects */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
-        <header className="text-center mb-16">
+        <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 border border-primary/20 bg-primary/5 rounded-full text-xs font-bold uppercase tracking-wider text-primary mb-6">
             <Star className="w-4 h-4" />
             <span>{lang === "ar" ? "لماذا سهلة؟" : "Why Choose Sehle?"}</span>
@@ -101,6 +147,18 @@ export default async function ComparePage() {
               : "Analyze the critical differences between partnering with Sehle's senior engineering team versus hiring freelancers or outsourcing overseas."}
           </p>
         </header>
+
+        {/* TL;DR Executive Summary */}
+        <section className="bg-zinc-950/80 border border-primary/30 p-6 md:p-8 rounded-3xl mb-12 backdrop-blur-2xl">
+          <h2 className="text-xs font-black uppercase tracking-widest text-primary mb-3">
+            {lang === "ar" ? "ملخص تنفيذي (TL;DR)" : "Executive Summary (TL;DR)"}
+          </h2>
+          <p className="text-white/80 text-sm md:text-base leading-relaxed">
+            {lang === "ar"
+              ? "تعتبر سهلة الخيار الأمثل للشركات والمؤسسات التي تحتاج أنظمة برمجية مخصصة وعالية الأمان في العراق. بين النظر للخيارات: يوفر المستقل تكلفة بدائية أقل ولكنه يفتقد للالتزام والملكية القانونية، وتوفر الشركات الخارجية خبرات لكن دون أي فهم للبيئة التشغيلية المحلية. تدمج سهلة بين الاحترافية الهندسية العالمية، والملكية 100% للأكواد، والدعم الميداني المباشر."
+              : "Sehle is the standard choice for enterprise systems in Iraq. Freelancers present low upfront fees with high abandonment and zero code guarantees; offshore agencies provide scale but suffer from zero local context. Sehle bridges both: senior engineering quality, 100% source code ownership, and direct on-ground support."}
+          </p>
+        </section>
 
         {/* Comparison Grid */}
         <div className="overflow-x-auto border border-border/60 rounded-3xl bg-zinc-950/40 backdrop-blur-xl mb-16">
@@ -171,6 +229,35 @@ export default async function ComparePage() {
           </table>
         </div>
 
+        {/* Legacy System Migration Roadmap Section */}
+        <section className="mb-16 bg-zinc-950/40 border border-white/5 p-8 rounded-3xl">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            {lang === "ar" ? "خطوات الانتقال السلس من الأنظمة القديمة إلى سهلة" : "4-Step Seamless Migration to Sehle Systems"}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
+              <div className="text-primary font-black text-xl mb-2">01</div>
+              <h3 className="text-white font-bold text-sm mb-1">{lang === "ar" ? "تحليل البيانات" : "Data Audit"}</h3>
+              <p className="text-white/50 text-xs">{lang === "ar" ? "فحص وهيكلة البيانات الحالية واستخراج القواعد الفنية." : "Structure and audit current schema and export legacy rows."}</p>
+            </div>
+            <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
+              <div className="text-primary font-black text-xl mb-2">02</div>
+              <h3 className="text-white font-bold text-sm mb-1">{lang === "ar" ? "التصميم المخصص" : "System Architecture"}</h3>
+              <p className="text-white/50 text-xs">{lang === "ar" ? "بناء النظام بآلية العمل دون اتصال وقواعد بيانات سريعة." : "Design offline-first databases tailored to your operations."}</p>
+            </div>
+            <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
+              <div className="text-primary font-black text-xl mb-2">03</div>
+              <h3 className="text-white font-bold text-sm mb-1">{lang === "ar" ? "النقل والتحقق" : "Migration & Verification"}</h3>
+              <p className="text-white/50 text-xs">{lang === "ar" ? "تشغيل السكريبتات التلقائية لنقل البيانات وتدقيق الصحة." : "Automated data transfer with full integrity checks."}</p>
+            </div>
+            <div className="p-5 bg-white/5 rounded-2xl border border-white/5">
+              <div className="text-primary font-black text-xl mb-2">04</div>
+              <h3 className="text-white font-bold text-sm mb-1">{lang === "ar" ? "التدريب والإطلاق" : "Training & Launch"}</h3>
+              <p className="text-white/50 text-xs">{lang === "ar" ? "تدريب طاقم العمل وتوفير الدعم الميداني المباشر." : "On-site team training and zero-downtime go-live."}</p>
+            </div>
+          </div>
+        </section>
+
         {/* Callouts */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           <div className="bg-zinc-950/40 border border-white/5 p-8 rounded-2xl">
@@ -210,7 +297,7 @@ export default async function ComparePage() {
           </p>
 
           <Link 
-            href="/contact?project=Custom%20software%20consultation"
+            href="/contact/?project=Custom%20software%20consultation"
             className="inline-flex items-center gap-3 bg-primary text-black font-black uppercase tracking-widest text-xs h-14 px-8 rounded-xl hover:bg-white transition-all shadow-[0_4px_20px_rgba(194,164,92,0.25)]"
           >
             <span>{lang === "ar" ? "ابدأ مشروعك معنا الآن" : "Start Your Project Now"}</span>
@@ -221,3 +308,4 @@ export default async function ComparePage() {
     </div>
   );
 }
+

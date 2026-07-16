@@ -24,7 +24,7 @@ export default function NewsLayout({ children }: { children: React.ReactNode }) 
     "@type": "Blog",
     name: "أخبار سهلة وإنجازاتها | Sehle News",
     description: "أخبار، إنجازات، وفعاليات سهلة للأنظمة الرقمية.",
-    url: `${SITE_URL}/news`,
+    url: `${SITE_URL}/news/`,
     publisher: {
       "@type": "Organization",
       name: "سهلة | Sehle",
@@ -37,8 +37,8 @@ export default function NewsLayout({ children }: { children: React.ReactNode }) 
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "الأخبار", item: `${SITE_URL}/news` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "الأخبار", item: `${SITE_URL}/news/` },
       ],
     },
   };

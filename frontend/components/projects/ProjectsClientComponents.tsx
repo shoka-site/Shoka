@@ -33,7 +33,7 @@ export function ProjectsHero({ isRtl }: { isRtl: boolean }) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="pointer-events-auto"
           >
-            <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+            <Link href="/home/" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
               <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                 <ArrowLeft className="w-4 h-4" />
               </div>
@@ -94,7 +94,7 @@ export function ProjectsHero({ isRtl }: { isRtl: boolean }) {
 export function ProjectCard({ project, index, isRtl }: { project: Record<string, unknown>; index: number; isRtl: boolean }) {
   const { t } = useTranslation();
   return (
-    <Link href={`/projects/${slugify((project.titleEn as string) || (project.title as string))}`}>
+    <Link href={`/projects/${slugify((project.titleEn as string) || (project.title as string))}/`}>
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

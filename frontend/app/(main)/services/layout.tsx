@@ -34,12 +34,12 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
     ],
     description:
       "خدمات تطوير البرمجيات الشاملة بما تشمل: مواقع إلكترونية، تطبيقات جوال، أنظمة ERP، وحلول ذكاء اصطناعي.",
-    url: `${SITE_URL}/services`,
+    url: `${SITE_URL}/services/`,
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "الخدمات", item: `${SITE_URL}/services` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "الخدمات", item: `${SITE_URL}/services/` },
       ],
     },
   };

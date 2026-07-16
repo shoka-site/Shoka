@@ -50,7 +50,7 @@ export default function ProjectDetailsClient({ id }: { id: string }) {
                         <h1 className="text-7xl md:text-9xl font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 tracking-tighter mb-6">404</h1>
                         <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-6">{t("portfolio.projects.not_found", "Project not found")}</h2>
                         <p className="text-white/50 text-base md:text-xl max-w-md mx-auto mb-12 font-light leading-relaxed">{t("portfolio.projects.not_found_desc", "The project you are looking for does not exist or has been removed.")}</p>
-                        <Link href="/projects">
+                        <Link href="/projects/">
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                 <button className="bg-primary text-black hover:bg-white font-black tracking-widest uppercase transition-all shadow-xl flex gap-3 items-center rounded-full h-14 px-10 mx-auto">
                                     <ArrowLeft className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
@@ -112,7 +112,7 @@ export default function ProjectDetailsClient({ id }: { id: string }) {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             className="pointer-events-auto"
                         >
-                            <Link href="/projects" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                            <Link href="/projects/" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
                                 <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                                     <ArrowLeft className="w-4 h-4" />
                                 </div>
@@ -388,7 +388,7 @@ export default function ProjectDetailsClient({ id }: { id: string }) {
                                     </div>
 
                                     <div className="mt-12">
-                                        <Link href={`/contact?project=${encodeURIComponent(project.title)}`}>
+                                        <Link href={`/contact/?project=${encodeURIComponent(project.title)}`}>
                                             <button className="w-full py-5 rounded-full bg-foreground text-background font-black uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-primary/20 flex items-center justify-center gap-3">
                                                 {t("portfolio.projects.inquire", "Initiate Inquiry")}
                                                 <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />

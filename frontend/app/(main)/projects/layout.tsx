@@ -24,12 +24,12 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
     "@type": "CollectionPage",
     name: "مشاريع سهلة البرمجية",
     description: "معرض مشاريع سهلة من مواقع وتطبيقات وأنظمة رقمية في العراق والمنطقة.",
-    url: `${SITE_URL}/projects`,
+    url: `${SITE_URL}/projects/`,
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "المشاريع", item: `${SITE_URL}/projects` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "المشاريع", item: `${SITE_URL}/projects/` },
       ],
     },
   };

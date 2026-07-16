@@ -61,7 +61,11 @@ export function buildMetadata({
   );
 
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  const canonicalUrl = `${SITE_URL}${cleanPath === "/" ? "" : cleanPath}`;
+  const normalizedPath =
+    cleanPath === "/" || cleanPath.endsWith("/") || cleanPath.includes(".")
+      ? cleanPath
+      : `${cleanPath}/`;
+  const canonicalUrl = `${SITE_URL}${normalizedPath}`;
 
   return {
     metadataBase: new URL(SITE_URL),

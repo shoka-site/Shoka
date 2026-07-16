@@ -24,12 +24,12 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
     "@type": "AboutPage",
     name: "عن سهلة | About Sehle",
     description: "صفحة التعريف بشركة سهلة للأنظمة الرقمية والبرمجيات.",
-    url: `${SITE_URL}/about`,
+    url: `${SITE_URL}/about/`,
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home` },
-        { "@type": "ListItem", position: 2, name: "عن سهلة", item: `${SITE_URL}/about` },
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/home/` },
+        { "@type": "ListItem", position: 2, name: "عن سهلة", item: `${SITE_URL}/about/` },
       ],
     },
     mainEntity: {

@@ -409,7 +409,7 @@
       "success_title": "Message Received",
       "success_desc": "We've got your message and we'll reply within 24 hours. Check your email for a confirmation.",
       "error_title": "Something went wrong",
-      "error_desc": "Please try again or email us directly at global@sehle.site",
+      "error_desc": "Please try again or email us directly at sehle.iq@gmail.com",
       "validation": {
         "name": "Please enter your name",
         "email": "Please enter a valid email address",

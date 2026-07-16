@@ -90,7 +90,7 @@ export default async function PackagePage({ params }: Props) {
     "image": `${SITE_URL}/og-image.png`,
     "offers": {
       "@type": "Offer",
-      "url": `${SITE_URL}/packages/${slug}`,
+      "url": `${SITE_URL}/packages/${slug}/`,
       "priceCurrency": "USD",
       "price": pkg.order === 1 ? "1500" : pkg.order === 2 ? "3500" : "7500", // Representative base pricing
       "priceValidUntil": "2026-12-31",
@@ -142,19 +142,19 @@ export default async function PackagePage({ params }: Props) {
         "@type": "ListItem",
         "position": 1,
         "name": lang === "ar" ? "الرئيسية" : "Home",
-        "item": "https://www.sehle.site/home"
+        "item": "https://www.sehle.site/home/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": lang === "ar" ? "الباقات" : "Packages",
-        "item": "https://www.sehle.site/packages"
+        "item": "https://www.sehle.site/packages/"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": `https://www.sehle.site/packages/${slug}`
+        "item": `https://www.sehle.site/packages/${slug}/`
       }
     ]
   };
