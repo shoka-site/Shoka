@@ -8,6 +8,8 @@ import { getUtmData } from "@/lib/utm-tracker";
 import { X, FileText, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { generateGuidePdf } from "@/lib/generateGuidePdf";
+
 export default function LeadMagnetModal() {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
@@ -17,34 +19,11 @@ export default function LeadMagnetModal() {
   const [name, setName] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const triggerDownload = () => {
+  const triggerDownload = async () => {
     try {
-      const checklistContent = `
-=========================================
-SEHLE (سهلة) - DIGITAL TRANSFORMATION CHECKLIST
-=========================================
-
-1. Operational Audit: Map all current manual workflows and excel sheets.
-2. Define Goals: Highlight critical bottlenecks (e.g. inventory leakage, delayed invoicing).
-3. Cloud vs On-Premise: Analyze internet stability and choose a hybrid/offline-first synchronization setup.
-4. Database Integration: Build centralized databases to avoid duplicate data entry.
-5. Automated Reporting: Enforce real-time accounting and sales analytics.
-6. Access Controls: Design role-based authentication for employees.
-7. Localized Training: Conduct training in Arabic & English.
-
-Partner with Sehle to transform your business operations: sehle.iq@gmail.com
-      `;
-      const blob = new Blob([checklistContent.trim()], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "sehle-digital-transformation-checklist.txt";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      await generateGuidePdf({ name: name || "Valued Partner", email: email || "partner@sehle.iq", isRtl });
     } catch (e) {
-      console.error("Download failed", e);
+      console.error("PDF Download failed", e);
     }
   };
 
@@ -66,22 +45,26 @@ Partner with Sehle to transform your business operations: sehle.iq@gmail.com
           name,
           email,
           company: "Lead Magnet Download",
-          message: `Requested Digital Transformation Checklist.${utmString}`,
+          message: `Requested Digital Transformation Checklist (PDF).${utmString}`,
         }),
       });
 
       if (res.ok) {
-        trackEvent("lead_magnet_download", { asset: "digital_transformation_checklist" });
+        trackEvent("lead_magnet_download", { asset: "digital_transformation_checklist_pdf" });
         toast({
           title: t("lead_magnet.success_title", "Success!"),
-          description: t("lead_magnet.success_desc", "Your download is starting now."),
+          description: t("lead_magnet.success_desc", "Your PDF guide is downloading now."),
         });
-        triggerDownload();
+        await triggerDownload();
+        setOpen(false);
+      } else {
+        await triggerDownload();
         setOpen(false);
       }
     } catch {
       // fallback to trigger download even if server call fails
-      triggerDownload();
+      await triggerDownload();
+      setOpen(false);
     } finally {
       setSubmitting(false);
     }

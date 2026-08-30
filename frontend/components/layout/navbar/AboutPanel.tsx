@@ -14,6 +14,7 @@ const aboutCategories = [
       { name: "navbar.menu.about.story", href: "/about" },
       { name: "navbar.menu.about.team", href: "/about" },
       { name: "navbar.menu.about.careers", href: "/about" },
+      { name: "navbar.menu.about.compare", href: "/compare" },
     ]
   },
   {
