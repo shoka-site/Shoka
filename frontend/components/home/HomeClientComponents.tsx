@@ -7,6 +7,7 @@ import Link from "next/link";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { slugify } from "@/lib/utils";
 
 type UpdateType = "news" | "achievement" | "event" | "new" | "project" | "service";
 
@@ -180,7 +181,17 @@ export function MagneticButton({ children, className = "" }: { children: React.R
   );
 }
 
-export function HeroUpdatesClient({ items }: { items: PlatformUpdate[]; isRtl: boolean }) {
+export function HeroUpdatesClient({
+  items,
+  projects = [],
+  services = [],
+  isRtl,
+}: {
+  items: PlatformUpdate[];
+  projects?: Record<string, unknown>[];
+  services?: Record<string, unknown>[];
+  isRtl: boolean;
+}) {
   const { t, i18n } = useTranslation();
 
   // Localize items reactively based on current language
@@ -385,20 +396,33 @@ export function HeroUpdatesClient({ items }: { items: PlatformUpdate[]; isRtl: b
                 initial="hidden"
                 animate="visible"
               >
-                <MagneticButton className="inline-block">
-                  <Link href={item.projectId ? `/projects/${item.projectId}` : item.serviceId ? `/services/${item.serviceId}` : "/contact"}>
-                    <Button
-                      size="lg"
-                      className="group relative overflow-hidden rounded-full bg-accent text-black px-10 h-14 font-black text-lg transition-all duration-500 shadow-[0_0_30px_rgba(194,164,92,0.4)] hover:scale-105 hover:shadow-[0_0_40px_rgba(194,164,92,0.6)]"
-                    >
-                      <span className="relative z-10 flex items-center gap-2">
-                        {item.projectId || item.serviceId ? t("hero.updates.cta_view") : t("hero.updates.cta_talk")}
-                        {isArabic ? <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /> : <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
-                      </span>
-                      <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                    </Button>
-                  </Link>
-                </MagneticButton>
+                {(() => {
+                  const linkedProject = item.project || (projects as any[])?.find((p) => p.id === item.projectId);
+                  const projTitle = (linkedProject?.titleEn as string) || (linkedProject?.titleAr as string) || ((linkedProject as any)?.title as string) || item.titleEn || item.titleAr || item.title;
+                  const projSlug = projTitle ? slugify(projTitle) : item.projectId;
+
+                  const linkedService = item.service || (services as any[])?.find((s) => s.id === item.serviceId);
+                  const servTitle = (linkedService?.titleEn as string) || (linkedService?.titleAr as string) || ((linkedService as any)?.title as string) || item.titleEn || item.titleAr || item.title;
+                  const servSlug = servTitle ? slugify(servTitle) : item.serviceId;
+
+                  const targetHref = item.projectId ? `/projects/${projSlug}` : item.serviceId ? `/services/${servSlug}` : "/contact";
+                  return (
+                    <MagneticButton className="inline-block">
+                      <Link href={targetHref}>
+                        <Button
+                          size="lg"
+                          className="group relative overflow-hidden rounded-full bg-accent text-black px-10 h-14 font-black text-lg transition-all duration-500 shadow-[0_0_30px_rgba(194,164,92,0.4)] hover:scale-105 hover:shadow-[0_0_40px_rgba(194,164,92,0.6)]"
+                        >
+                          <span className="relative z-10 flex items-center gap-2">
+                            {item.projectId || item.serviceId ? t("hero.updates.cta_view") : t("hero.updates.cta_talk")}
+                            {isArabic ? <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /> : <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                          </span>
+                          <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                        </Button>
+                      </Link>
+                    </MagneticButton>
+                  );
+                })()}
               </motion.div>
             </div>
           </div>

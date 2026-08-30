@@ -11,7 +11,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const projects = await storage.getProjects(true);
-  const project = projects.find(p => slugify(p.titleEn) === slug);
+  const project = projects.find(p => slugify(p.titleEn) === slug || p.id === slug || slugify(p.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!project) {
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const projects = await storage.getProjects(true);
-  const project = projects.find(p => slugify(p.titleEn) === slug);
+  const project = projects.find(p => slugify(p.titleEn) === slug || p.id === slug || slugify(p.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!project) return <ProjectDetailsClient id="" />;

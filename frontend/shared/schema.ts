@@ -31,6 +31,15 @@ export const serviceSchema = z.object({
 });
 export type Service = z.infer<typeof serviceSchema>;
 
+export const projectMetricSchema = z.object({
+    value: z.string(),
+    labelEn: z.string(),
+    labelAr: z.string(),
+    descEn: z.string().optional().nullable(),
+    descAr: z.string().optional().nullable(),
+});
+export type ProjectMetric = z.infer<typeof projectMetricSchema>;
+
 // Project schema
 export const projectSchema = z.object({
     id: z.string().uuid(),
@@ -48,6 +57,11 @@ export const projectSchema = z.object({
     liveUrl: z.string().optional().nullable(),
     keywordsEn: z.string().optional().nullable(),
     keywordsAr: z.string().optional().nullable(),
+    beforeEn: z.array(z.string()).default([]),
+    beforeAr: z.array(z.string()).default([]),
+    afterEn: z.array(z.string()).default([]),
+    afterAr: z.array(z.string()).default([]),
+    metrics: z.array(projectMetricSchema).optional().nullable().default([]),
     createdAt: z.date(),
     updatedAt: z.date(),
 });

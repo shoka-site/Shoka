@@ -78,7 +78,8 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     pathname === '/admin/login' ||
     pathname === '/admin/login/' ||
     pathname.startsWith('/api/admin/login') ||
-    pathname.startsWith('/api/admin/logout');
+    pathname.startsWith('/api/admin/logout') ||
+    (request.method === 'POST' && pathname.startsWith('/api/admin/consultations'));
 
   const isAdminPage = pathname.startsWith('/admin');
   const isAdminApi = pathname.startsWith('/api/admin');

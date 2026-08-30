@@ -210,85 +210,102 @@ export default function ProjectDetailsClient({ id }: { id: string }) {
                                 ))}
                             </div>
 
-                            {/* Quantitative ROI Metrics Grid */}
-                            <div className="mt-16 pt-12 border-t border-border/60">
-                                <div className="flex items-center gap-3 mb-8">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/10 px-4 py-1.5 rounded-full">
-                                        {isRtl ? "نتائج وقياسات الأداء" : "Quantitative Impact & ROI"}
-                                    </span>
-                                </div>
+                            {/* Quantitative ROI Metrics Grid - strictly data driven */}
+                            {(() => {
+                                const metrics = project.metrics as Array<{
+                                    value: string;
+                                    label?: string;
+                                    labelEn?: string;
+                                    labelAr?: string;
+                                    desc?: string;
+                                    descEn?: string;
+                                    descAr?: string;
+                                }> | undefined;
 
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                                    <div className="bg-muted/30 border border-border/60 rounded-3xl p-6 relative overflow-hidden group hover:border-primary/40 transition-colors">
-                                        <div className="text-4xl font-display font-black text-primary mb-2 font-mono">+45%</div>
-                                        <div className="text-sm font-bold text-foreground mb-1">{isRtl ? "زيادة الكفاءة التشغيلية" : "Operational Efficiency"}</div>
-                                        <div className="text-xs text-muted-foreground">{isRtl ? "أتمتة خطوط الإدخال وتقليل الأخطاء البشرية" : "Automated data pipelines and reduced human error."}</div>
-                                    </div>
+                                if (!metrics || metrics.length === 0) return null;
 
-                                    <div className="bg-muted/30 border border-border/60 rounded-3xl p-6 relative overflow-hidden group hover:border-primary/40 transition-colors">
-                                        <div className="text-4xl font-display font-black text-primary mb-2 font-mono">99.9%</div>
-                                        <div className="text-xs text-muted-foreground">{isRtl ? "استمرارية العمل دون انقطاع عبر الشبكات المحلية" : "Uninterrupted operation across offline Iraqi networks."}</div>
-                                        <div className="text-sm font-bold text-foreground mb-1 mt-2">{isRtl ? "استقرار المزامنة 오فلاين" : "Offline Uptime & Sync"}</div>
-                                    </div>
-
-                                    <div className="bg-muted/30 border border-border/60 rounded-3xl p-6 relative overflow-hidden group hover:border-primary/40 transition-colors">
-                                        <div className="text-4xl font-display font-black text-primary mb-2 font-mono">&lt; 3 sec</div>
-                                        <div className="text-sm font-bold text-foreground mb-1">{isRtl ? "سرعة توليد التقارير المالية" : "Real-Time Query Speed"}</div>
-                                        <div className="text-xs text-muted-foreground">{isRtl ? "معالجة بيانات المخازن والحسابات فورياً" : "Instant multi-warehouse and accounting reconciliation."}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Before vs After Operational Transformation */}
-                            <div className="mt-16 pt-12 border-t border-border/60">
-                                <h3 className="text-2xl font-display font-bold text-foreground mb-8">
-                                    {isRtl ? "التحول التشغيلي: قبل وبعد التطوير" : "Operational Transformation: Before & After"}
-                                </h3>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Before */}
-                                    <div className="bg-red-500/5 border border-red-500/20 rounded-3xl p-6">
-                                        <div className="inline-flex items-center gap-2 text-xs font-bold text-red-400 uppercase tracking-wider mb-4">
-                                            <span>{isRtl ? "🔴 قبل النظام المخصص" : "🔴 Before Custom Architecture"}</span>
+                                return (
+                                    <div className="mt-16 pt-12 border-t border-border/60">
+                                        <div className="flex items-center gap-3 mb-8">
+                                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/10 px-4 py-1.5 rounded-full">
+                                                {isRtl ? "نتائج وقياسات الأداء" : "Quantitative Impact & ROI"}
+                                            </span>
                                         </div>
-                                        <ul className="space-y-3 text-sm text-muted-foreground">
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-red-400 font-bold">✕</span>
-                                                <span>{isRtl ? "سجلات ورقية وتضارب في حسابات الفروع والمخازن" : "Manual ledgers & discrepancies between multi-warehouse stock."}</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-red-400 font-bold">✕</span>
-                                                <span>{isRtl ? "توقف العمليات عند انقطاع الإنترنت أو التيار" : "Halted point-of-sale transactions during internet outages."}</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-red-400 font-bold">✕</span>
-                                                <span>{isRtl ? "تأخر التقارير الإدارية والمالية لعدة أيام" : "Multi-day delays generating executive financial reports."}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
 
-                                    {/* After */}
-                                    <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-3xl p-6">
-                                        <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-4">
-                                            <span>{isRtl ? "🟢 بعد تطبيق نظام سهلة" : "🟢 After Sehle System Deployment"}</span>
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                            {metrics.map((m, idx) => {
+                                                const label = m.label || (isRtl ? m.labelAr : m.labelEn) || "";
+                                                const desc = m.desc || (isRtl ? m.descAr : m.descEn) || "";
+                                                return (
+                                                    <div key={idx} className="bg-muted/30 border border-border/60 rounded-3xl p-6 relative overflow-hidden group hover:border-primary/40 transition-colors flex flex-col justify-between">
+                                                        <div>
+                                                            <div className="text-4xl font-display font-black text-primary mb-2 font-mono">{m.value}</div>
+                                                            {label && <div className="text-sm font-bold text-foreground mb-1">{label}</div>}
+                                                        </div>
+                                                        {desc && <div className="text-xs text-muted-foreground mt-2">{desc}</div>}
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
-                                        <ul className="space-y-3 text-sm text-muted-foreground">
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-emerald-400 font-bold">✓</span>
-                                                <span>{isRtl ? "مزامنة تلقائية فورية دون تدخل بشري" : "Automated zero-touch inventory & multi-currency sync."}</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-emerald-400 font-bold">✓</span>
-                                                <span>{isRtl ? "عمليات بيع ومخازن مستمرة 100% دون نت (Offline-First)" : "100% continuous sales flow during connectivity loss."}</span>
-                                            </li>
-                                            <li className="flex items-start gap-2">
-                                                <span className="text-emerald-400 font-bold">✓</span>
-                                                <span>{isRtl ? "لوحة تحكم باللغة العربية والإنجليزية لحظية لجميع الفروع" : "Real-time bilingual analytics dashboards accessible anywhere."}</span>
-                                            </li>
-                                        </ul>
                                     </div>
-                                </div>
-                            </div>
+                                );
+                            })()}
+
+                            {/* Before vs After Operational Transformation - strictly data driven */}
+                            {(() => {
+                                const rawProject = project as unknown as Record<string, unknown>;
+                                const beforeItems = (project.before || (isRtl ? rawProject.beforeAr : rawProject.beforeEn) || rawProject.before) as string[] | undefined;
+                                const afterItems = (project.after || (isRtl ? rawProject.afterAr : rawProject.afterEn) || rawProject.after) as string[] | undefined;
+
+                                const hasBefore = beforeItems && beforeItems.length > 0;
+                                const hasAfter = afterItems && afterItems.length > 0;
+
+                                if (!hasBefore && !hasAfter) return null;
+
+                                return (
+                                    <div className="mt-16 pt-12 border-t border-border/60">
+                                        <h3 className="text-2xl font-display font-bold text-foreground mb-8">
+                                            {isRtl ? "التحول التشغيلي: قبل وبعد التطوير" : "Operational Transformation: Before & After"}
+                                        </h3>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Before */}
+                                            {hasBefore && (
+                                                <div className="bg-red-500/5 border border-red-500/20 rounded-3xl p-6">
+                                                    <div className="inline-flex items-center gap-2 text-xs font-bold text-red-400 uppercase tracking-wider mb-4">
+                                                        <span>{isRtl ? "🔴 قبل النظام المخصص" : "🔴 Before Custom Architecture"}</span>
+                                                    </div>
+                                                    <ul className="space-y-3 text-sm text-muted-foreground">
+                                                        {beforeItems!.map((item, idx) => (
+                                                            <li key={idx} className="flex items-start gap-2">
+                                                                <span className="text-red-400 font-bold">✕</span>
+                                                                <span>{item}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+
+                                            {/* After */}
+                                            {hasAfter && (
+                                                <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-3xl p-6">
+                                                    <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-4">
+                                                        <span>{isRtl ? "🟢 بعد تطبيق نظام سهلة" : "🟢 After Sehle System Deployment"}</span>
+                                                    </div>
+                                                    <ul className="space-y-3 text-sm text-muted-foreground">
+                                                        {afterItems!.map((item, idx) => (
+                                                            <li key={idx} className="flex items-start gap-2">
+                                                                <span className="text-emerald-400 font-bold">✓</span>
+                                                                <span>{item}</span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })()}
                         </motion.div>
 
                         {/* Image Gallery */}

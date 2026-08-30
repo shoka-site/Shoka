@@ -15,7 +15,7 @@ export default async function ProjectDetailLayout({
   let projectSchema = null;
   try {
     const projects = await storage.getProjects(true);
-    const project = projects.find(p => slugify(p.titleEn) === slug);
+    const project = projects.find(p => slugify(p.titleEn) === slug || p.id === slug || slugify(p.titleAr) === slug);
     const id = project?.id;
     const title = project ? (project.titleAr || project.titleEn) : "";
     const description = project ? (project.descriptionAr || project.descriptionEn) : "";

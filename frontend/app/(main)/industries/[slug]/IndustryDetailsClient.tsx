@@ -147,7 +147,7 @@ export default function IndustryDetailsClient({ id }: { id: string }) {
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="mb-8">
               <Badge variant="outline" className="text-accent border-accent/40 bg-accent/10 px-5 py-2 text-xs backdrop-blur-md flex items-center justify-center gap-2 font-bold uppercase tracking-widest">
                 <TrendingUp className="w-3.5 h-3.5" />
-                {t("navbar.industries", "Industry")} · {String(industry.order).padStart(2, "0")}
+                {t("home.industries.industry", "Industry")} · {String(industry.order).padStart(2, "0")}
               </Badge>
             </motion.div>
 
@@ -342,39 +342,6 @@ export default function IndustryDetailsClient({ id }: { id: string }) {
         </Section>
       )}
 
-      {/* ── BOTTOM CTA ──────────────────────────────────── */}
-      <Section background="default" className="py-24 border-t border-border">
-        <div className="container mx-auto px-6 text-center">
-          <FadeIn>
-            <div className="max-w-3xl mx-auto p-10 md:p-14 rounded-[2.5rem] bg-muted/20 border border-border relative overflow-hidden">
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-5 tracking-tight">
-                  {t("services.cta.title", "Looking for tailored solutions?")}
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
-                  {t("services.cta.description", "Check out our pre-built packages or contact us for a custom approach.")}
-                </p>
-                <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRtl ? "sm:flex-row-reverse" : ""}`}>
-                  <Link
-                    href="/contact/"
-                    className="w-full sm:w-auto px-9 py-4 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 hover:shadow-xl transition-all"
-                  >
-                    {t("services.cta.contact", "Contact Us")}
-                  </Link>
-                  <Link
-                    href="/industries/"
-                    className="w-full sm:w-auto px-9 py-4 bg-transparent border border-border text-foreground font-black uppercase tracking-widest rounded-full hover:bg-muted/50 transition-all"
-                  >
-                    {t("navbar.industries", "All Industries")}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </Section>
     </div>
   );
 }

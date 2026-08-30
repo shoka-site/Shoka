@@ -67,7 +67,8 @@ export default async function Home() {
   // Fetch raw data on the server — client components handle picking the right language field
   const rawUpdates = await storage.getPlatformUpdates(true);
   const rawServices = await storage.getServices(true);
-  const rawProjects = await storage.getProjects(true, true);
+  const allProjects = await storage.getProjects(true);
+  const rawProjects = allProjects.filter((p) => p.featured);
   const rawPackages = await storage.getPackages(true);
   const rawTestimonials = await storage.getTestimonials(true);
 
@@ -76,7 +77,7 @@ export default async function Home() {
       <ScrollProgressBar />
 
       {/* Hero Section — client component, localizes data reactively */}
-      <HeroUpdatesClient items={rawUpdates} isRtl={isRtl} />
+      <HeroUpdatesClient items={rawUpdates} projects={allProjects} services={rawServices} isRtl={isRtl} />
 
       {/* Why Us Banner — client component, receives server-resolved isRtl to prevent hydration mismatch */}
       <WhyUsBanner isRtl={isRtl} />

@@ -153,13 +153,13 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
               </Badge>
             </motion.div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight text-white">
               {service.title || ((service as unknown as Record<string, unknown>).titleEn as string)}
             </h1>
 
             {descriptionParagraphs.length > 0 && (
               <div className="mt-4 max-w-2xl mx-auto">
-                <p className="text-lg sm:text-xl text-white/70 leading-relaxed font-normal max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base md:text-lg text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
                   {descriptionParagraphs[0]}
                 </p>
                 {formattedDate && (
@@ -351,40 +351,6 @@ export default function ServiceDetailsClient({ id }: { id: string }) {
           </div>
         </Section>
       )}
-
-      {/* ── BOTTOM CTA ──────────────────────────────────── */}
-      <Section background="default" className="py-24 border-t border-border">
-        <div className="container mx-auto px-6 text-center">
-          <FadeIn>
-            <div className="max-w-3xl mx-auto p-10 md:p-14 rounded-[2.5rem] bg-muted/20 border border-border relative overflow-hidden">
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-5 tracking-tight">
-                  {t("services.cta.title", "Looking for tailored solutions?")}
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
-                  {t("services.cta.description", "Check out our pre-built packages or contact us for a custom approach.")}
-                </p>
-                <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRtl ? "sm:flex-row-reverse" : ""}`}>
-                  <Link
-                    href="/contact/"
-                    className="w-full sm:w-auto px-9 py-4 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 hover:shadow-xl transition-all"
-                  >
-                    {t("services.cta.contact", "Contact Us")}
-                  </Link>
-                  <Link
-                    href="/services/"
-                    className="w-full sm:w-auto px-9 py-4 bg-transparent border border-border text-foreground font-black uppercase tracking-widest rounded-full hover:bg-muted/50 transition-all"
-                  >
-                    {t("navbar.services", "All Services")}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </Section>
 
       {/* ── SCROLL-TRIGGER POPUP ─────────────────────────── */}
       <ScrollTriggerPopup

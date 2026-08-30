@@ -1,9 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 
-export function Heading({ title }: { title: string }) {
+export function Heading({ title, className }: { title: string; className?: string }) {
   return (
-    <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-center">
+    <h1 className="flex flex-wrap justify-center gap-x-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-center">
       {title.split(" ").map((word, i) => (
         <div key={i} style={{ overflow: "hidden", display: "inline-block" }}>
           <motion.span
@@ -14,7 +14,7 @@ export function Heading({ title }: { title: string }) {
               delay: 1.75 + i * 0.13,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="inline-block text-lg md:text-xl lg:text-2xl font-light text-white/80 tracking-wide leading-relaxed"
+            className={`inline-block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight ${className || ""}`}
           >
             {word}
           </motion.span>

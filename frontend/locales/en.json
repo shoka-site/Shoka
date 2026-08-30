@@ -96,7 +96,17 @@
       "industry": "Industry",
       "not_found": "Industry not found",
       "not_found_desc": "The industry you are looking for does not exist or has been removed.",
-      "back_to_industries": "Back to Industries"
+      "back": "Back to Industries",
+      "back_to_industries": "Back to Industries",
+      "order": "Industry Number",
+      "added": "Added",
+      "view_all": "View All Industries",
+      "other_industries": "Other Industries We Serve",
+      "other_industries_desc": "Discover how we support different business verticals.",
+      "cta_sidebar": {
+        "title": "Tailored for your Industry?",
+        "desc": "Get customized digital solutions designed specifically for your industry vertical."
+      }
     },
     "solutions": {
       "title": "Strategic Solutions",
@@ -252,7 +262,35 @@
     "added": "Added",
     "other_packages": "Other Packages",
     "other_packages_desc": "Compare other packages and find the best fit for your needs.",
-    "view_all": "View All Packages"
+    "view_all": "View All Packages",
+    "compare": {
+      "title": "Compare Plan Features",
+      "subtitle": "Find the perfect level of support and features for your business growth.",
+      "feature": "Features",
+      "tier1": "Startup Basic",
+      "tier2": "Business Growth",
+      "tier3": "Enterprise Bespoke",
+      "dev_hours": "Development Hours",
+      "hours_t1": "Up to 40 Hours",
+      "hours_t2": "Up to 120 Hours",
+      "hours_t3": "Unlimited & Dedicated",
+      "support": "Support & Maintenance",
+      "sup_t1": "Email Support",
+      "sup_t2": "24/7 Slack & Phone",
+      "sup_t3": "Dedicated SLA Support",
+      "infra": "Infrastructure & Setup",
+      "infra_t1": "Shared Cloud Hosting",
+      "infra_t2": "Dedicated VPC Hosting",
+      "infra_t3": "Multi-region Failover",
+      "ownership": "Code Ownership",
+      "own_t1": "Shared License",
+      "own_t2": "Full Ownership",
+      "own_t3": "Full Ownership + Local Sync",
+      "integrations": "Custom API Integrations",
+      "int_t1": "Up to 2 APIs",
+      "int_t2": "Up to 5 APIs",
+      "int_t3": "Unlimited Integrations"
+    }
   },
   "services": {
     "title": "Our Services",
@@ -480,11 +518,13 @@
     "explore_content": "Explore Content",
     "loading_content": "Loading...",
     "loading_projects": "Loading projects...",
-    "loading_testimonials": "Loading testimonials..."
+    "loading_testimonials": "Loading testimonials...",
+    "inquire": "Inquire Now"
   },
   "industries": {
     "cta": {
       "title": "We've worked in your industry. Let's solve your specific problem.",
+      "description": "Tell us about your industry challenges, and we'll help you build the right system for your business.",
       "button": "Book a Free Call"
     }
   },

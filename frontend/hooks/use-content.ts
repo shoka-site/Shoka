@@ -44,6 +44,16 @@ export function useService(id: string) {
     });
 }
 
+export interface ProjectMetric {
+    value: string;
+    label?: string;
+    labelEn?: string;
+    labelAr?: string;
+    desc?: string;
+    descEn?: string;
+    descAr?: string;
+}
+
 export interface Project {
     id: string;
     order: number;
@@ -56,6 +66,13 @@ export interface Project {
     published: boolean;
     status: string;
     liveUrl?: string;
+    before?: string[];
+    after?: string[];
+    beforeEn?: string[];
+    beforeAr?: string[];
+    afterEn?: string[];
+    afterAr?: string[];
+    metrics?: ProjectMetric[];
     createdAt?: string | Date;
 }
 

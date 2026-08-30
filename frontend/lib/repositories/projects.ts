@@ -45,7 +45,7 @@ export const projectRepository = {
   },
 
   async createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
-    const result = await prisma.project.create({ data: project });
+    const result = await prisma.project.create({ data: project as any });
     revalidateTag("projects", "max");
     return result as Project;
   },
@@ -54,7 +54,7 @@ export const projectRepository = {
     try {
       const result = await prisma.project.update({
         where: { id, deletedAt: null },
-        data: updates,
+        data: updates as any,
       });
       revalidateTag("projects", "max");
       return result as Project;

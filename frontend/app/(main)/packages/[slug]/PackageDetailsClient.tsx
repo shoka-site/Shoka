@@ -354,39 +354,6 @@ export default function PackageDetailsClient({ id }: { id: string }) {
         </Section>
       )}
 
-      {/* ── BOTTOM CTA ──────────────────────────────────── */}
-      <Section background="default" className="py-24 border-t border-border">
-        <div className="container mx-auto px-6 text-center">
-          <FadeIn>
-            <div className="max-w-3xl mx-auto p-10 md:p-14 rounded-[2.5rem] bg-muted/20 border border-border relative overflow-hidden">
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mb-5 tracking-tight">
-                  {t("services.cta.title", "Looking for tailored solutions?")}
-                </h2>
-                <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light">
-                  {t("services.cta.description", "Check out our pre-built packages or contact us for a custom approach.")}
-                </p>
-                <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRtl ? "sm:flex-row-reverse" : ""}`}>
-                  <Link
-                    href="/contact/"
-                    className="w-full sm:w-auto px-9 py-4 bg-foreground text-background font-black uppercase tracking-widest rounded-full hover:scale-105 hover:shadow-xl transition-all"
-                  >
-                    {t("services.cta.contact", "Contact Us")}
-                  </Link>
-                  <Link
-                    href="/packages/"
-                    className="w-full sm:w-auto px-9 py-4 bg-transparent border border-border text-foreground font-black uppercase tracking-widest rounded-full hover:bg-muted/50 transition-all"
-                  >
-                    {t("navbar.packages", "All Packages")}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </Section>
     </div>
   );
 }

@@ -11,7 +11,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const packages = await storage.getPackages(true);
-  const pkg = packages.find(p => slugify(p.titleEn) === slug);
+  const pkg = packages.find(p => slugify(p.titleEn) === slug || p.id === slug || slugify(p.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!pkg) {
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PackagePage({ params }: Props) {
   const { slug } = await params;
   const packages = await storage.getPackages(true);
-  const pkg = packages.find(p => slugify(p.titleEn) === slug);
+  const pkg = packages.find(p => slugify(p.titleEn) === slug || p.id === slug || slugify(p.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!pkg) return <PackageDetailsClient id="" />;

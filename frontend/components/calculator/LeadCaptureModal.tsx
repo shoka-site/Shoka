@@ -43,16 +43,19 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
     const scopeNotes = `Scope: ${estimateSummary.solutionTitle} (${estimateSummary.scaleLabel}). Modules: ${estimateSummary.modulesCount}. Est: ${estimateSummary.estimatedUsd} / ${estimateSummary.estimatedIqd}`;
 
     try {
+      const cleanEmail = email.trim();
+      const validEmail = cleanEmail && cleanEmail.includes("@")
+        ? cleanEmail
+        : `phone.${phone.replace(/\D/g, "") || Date.now()}@sehle-lead.iq`;
+
       const res = await fetch("/api/admin/consultations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName: fullName.trim(),
-          phone: fullPhone,
-          email: email.trim() || undefined,
+          name: fullName.trim(),
+          email: validEmail,
           company: company.trim() || undefined,
-          notes: scopeNotes,
-          serviceType: estimateSummary.solutionTitle,
+          message: `[QUOTE CALCULATOR - ${estimateSummary.solutionTitle}] Phone: ${fullPhone}\n${scopeNotes}`,
         }),
       });
 

@@ -66,26 +66,38 @@ export default async function Contact() {
                 </h3>
 
                 <div className="space-y-8 relative z-10">
-                  <div className="flex items-start gap-5 group">
-                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-black transition-colors text-xs">
+                  <a
+                    href="mailto:sehle.iq@gmail.com"
+                    className="flex items-start gap-5 group transition-transform duration-300 hover:translate-x-1 rtl:hover:-translate-x-1"
+                  >
+                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-black transition-colors text-xs shrink-0">
                       <Mail className="w-6 h-6" />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">{t('contact.email_us')}</h4>
-                      <p className="text-foreground font-medium text-lg">sehle.iq@gmail.com</p>
+                      <p className="text-foreground font-medium text-lg group-hover:text-primary transition-colors">
+                        sehle.iq@gmail.com
+                      </p>
                     </div>
-                  </div>
+                  </a>
 
-                  <div className="flex items-start gap-5 group">
-                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-black transition-colors text-xs">
+                  <a
+                    href="https://wa.me/9647858925817"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-5 group transition-transform duration-300 hover:translate-x-1 rtl:hover:-translate-x-1"
+                  >
+                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-black transition-colors text-xs shrink-0">
                       <Phone className="w-6 h-6" />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">{t('contact.call_us')}</h4>
-                      <p className="text-foreground font-medium text-lg">+90 543 106 1211</p>
+                      <p className="text-foreground font-medium text-lg group-hover:text-primary transition-colors" dir="ltr">
+                        +964 785 892 5817
+                      </p>
                       <p className="text-sm text-muted-foreground mt-1">{t('contact.mon_fri')}</p>
                     </div>
-                  </div>
+                  </a>
 
                   <div className="flex items-start gap-5 group">
                     <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-black transition-colors text-xs">

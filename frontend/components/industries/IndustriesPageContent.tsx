@@ -71,7 +71,7 @@ export function IndustriesPageContent({ industries }: Props) {
               </motion.div>
             </div>
             <Heading title={t("home.industries.title")} />
-            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
               {t("home.industries.description")}
             </p>
           </motion.div>

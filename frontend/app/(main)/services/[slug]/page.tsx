@@ -11,7 +11,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const services = await storage.getServices(true);
-  const service = services.find((s) => slugify(s.titleEn) === slug);
+  const service = services.find((s) => slugify(s.titleEn) === slug || s.id === slug || slugify(s.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!service) {
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
   const services = await storage.getServices(true);
-  const service = services.find((s) => slugify(s.titleEn) === slug);
+  const service = services.find((s) => slugify(s.titleEn) === slug || s.id === slug || slugify(s.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!service) return <ServiceDetailsClient id="" />;

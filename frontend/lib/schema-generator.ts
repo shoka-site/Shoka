@@ -35,8 +35,8 @@ export function generateOrganizationSchema(lang: "ar" | "en" = "ar") {
     sameAs: [
       "https://www.linkedin.com/company/sehle/",
       "https://x.com/sehle_it",
-      "https://www.instagram.com/sehle.it/",
-      "https://www.tiktok.com/@sehle.it",
+      "https://www.instagram.com/sehle_iq/",
+      "https://www.tiktok.com/@sehle_iq",
       "https://www.facebook.com/profile.php?id=61575488387547",
     ],
   };
@@ -241,8 +241,8 @@ export function generateRootGraphSchema(lang: "ar" | "en" = "ar") {
         sameAs: [
           "https://www.linkedin.com/company/sehle/",
           "https://x.com/sehle_it",
-          "https://www.instagram.com/sehle.it/",
-          "https://www.tiktok.com/@sehle.it",
+          "https://www.instagram.com/sehle_iq/",
+          "https://www.tiktok.com/@sehle_iq",
           "https://www.facebook.com/profile.php?id=61575488387547",
         ],
       },

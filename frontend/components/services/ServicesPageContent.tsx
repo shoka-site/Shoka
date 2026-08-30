@@ -76,10 +76,10 @@ export function ServicesPageContent({ services }: Props) {
                 </Badge>
               </motion.div>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight text-white">
               {t("services.title", "Our Services")}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
               {t("services.description", "Explore our comprehensive expertise designed specifically to elevate your business.")}
             </p>
           </motion.div>

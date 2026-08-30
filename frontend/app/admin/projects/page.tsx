@@ -26,6 +26,11 @@ export default function AdminProjects() {
         liveUrl: "",
         keywordsEn: "",
         keywordsAr: "",
+        beforeEn: [] as string[],
+        beforeAr: [] as string[],
+        afterEn: [] as string[],
+        afterAr: [] as string[],
+        metrics: [] as Array<{ value: string; labelEn: string; labelAr: string; descEn?: string; descAr?: string }>,
         featured: false,
         order: 1,
         published: true,
@@ -94,6 +99,11 @@ export default function AdminProjects() {
             liveUrl: "",
             keywordsEn: "",
             keywordsAr: "",
+            beforeEn: [],
+            beforeAr: [],
+            afterEn: [],
+            afterAr: [],
+            metrics: [],
             featured: false,
             order: 1,
             published: true,
@@ -157,6 +167,11 @@ export default function AdminProjects() {
             liveUrl: (project.liveUrl ?? "") as string,
             keywordsEn: (raw.keywordsEn ?? "") as string,
             keywordsAr: (raw.keywordsAr ?? "") as string,
+            beforeEn: (raw.beforeEn as string[] | undefined) ?? [],
+            beforeAr: (raw.beforeAr as string[] | undefined) ?? [],
+            afterEn: (raw.afterEn as string[] | undefined) ?? [],
+            afterAr: (raw.afterAr as string[] | undefined) ?? [],
+            metrics: (raw.metrics as Array<{ value: string; labelEn: string; labelAr: string; descEn?: string; descAr?: string }> | undefined) ?? [],
             featured: project.featured,
             order: project.order,
             published: project.published,
@@ -289,6 +304,147 @@ export default function AdminProjects() {
                                 value={formData.keywordsAr}
                                 onChange={(e) => setFormData({ ...formData, keywordsAr: e.target.value })}
                             />
+                        </div>
+
+                        <div className="border border-border/80 rounded-lg p-4 space-y-4 bg-background/50">
+                            <h4 className="font-semibold text-sm text-foreground">Operational Transformation Points (Before vs After)</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-xs font-medium text-muted-foreground">Before Points (English - 1 item per line)</label>
+                                    <Textarea
+                                        rows={3}
+                                        placeholder={"Manual ledgers & stock discrepancies\nInternet outage delays\nReport delays"}
+                                        value={formData.beforeEn.join("\n")}
+                                        onChange={(e) => setFormData({ ...formData, beforeEn: e.target.value.split("\n") })}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs font-medium text-muted-foreground">Before Points (Arabic - 1 item per line)</label>
+                                    <Textarea
+                                        rows={3}
+                                        dir="rtl"
+                                        placeholder={"سجلات ورقية وتضارب في حسابات الفروع\nتوقف العمليات عند انقطاع الإنترنت\nتأخر التقارير المالية"}
+                                        value={formData.beforeAr.join("\n")}
+                                        onChange={(e) => setFormData({ ...formData, beforeAr: e.target.value.split("\n") })}
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-xs font-medium text-muted-foreground">After Points (English - 1 item per line)</label>
+                                    <Textarea
+                                        rows={3}
+                                        placeholder={"Automated zero-touch sync\n100% continuous sales flow\nReal-time analytics"}
+                                        value={formData.afterEn.join("\n")}
+                                        onChange={(e) => setFormData({ ...formData, afterEn: e.target.value.split("\n") })}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs font-medium text-muted-foreground">After Points (Arabic - 1 item per line)</label>
+                                    <Textarea
+                                        rows={3}
+                                        dir="rtl"
+                                        placeholder={"مزامنة تلقائية فورية دون تدخل بشري\nعمليات بيع ومخازن مستمرة 100%\nلوحة تحكم لحظية لجميع الفروع"}
+                                        value={formData.afterAr.join("\n")}
+                                        onChange={(e) => setFormData({ ...formData, afterAr: e.target.value.split("\n") })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="border border-border/80 rounded-lg p-4 space-y-4 bg-background/50">
+                            <div className="flex items-center justify-between">
+                                <h4 className="font-semibold text-sm text-foreground">Quantitative Impact & ROI Metrics</h4>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setFormData({
+                                        ...formData,
+                                        metrics: [...formData.metrics, { value: "", labelEn: "", labelAr: "", descEn: "", descAr: "" }]
+                                    })}
+                                >
+                                    <Plus className="w-3.5 h-3.5 mr-1" />
+                                    Add Metric
+                                </Button>
+                            </div>
+
+                            {formData.metrics.length === 0 ? (
+                                <p className="text-xs text-muted-foreground italic">No ROI metrics added for this project yet.</p>
+                            ) : (
+                                <div className="space-y-4">
+                                    {formData.metrics.map((metric, idx) => (
+                                        <div key={idx} className="p-3 border border-border rounded-md bg-background relative space-y-3">
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-xs font-semibold text-primary">Metric #{idx + 1}</span>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0 text-destructive"
+                                                    onClick={() => setFormData({
+                                                        ...formData,
+                                                        metrics: formData.metrics.filter((_, i) => i !== idx)
+                                                    })}
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5" />
+                                                </Button>
+                                            </div>
+                                            <div className="grid grid-cols-3 gap-3">
+                                                <Input
+                                                    placeholder="Value (e.g. +45%, 99.9%)"
+                                                    value={metric.value}
+                                                    onChange={(e) => {
+                                                        const updated = [...formData.metrics];
+                                                        updated[idx].value = e.target.value;
+                                                        setFormData({ ...formData, metrics: updated });
+                                                    }}
+                                                />
+                                                <Input
+                                                    placeholder="Label (English)"
+                                                    value={metric.labelEn}
+                                                    onChange={(e) => {
+                                                        const updated = [...formData.metrics];
+                                                        updated[idx].labelEn = e.target.value;
+                                                        setFormData({ ...formData, metrics: updated });
+                                                    }}
+                                                />
+                                                <Input
+                                                    placeholder="Label (Arabic)"
+                                                    dir="rtl"
+                                                    value={metric.labelAr}
+                                                    onChange={(e) => {
+                                                        const updated = [...formData.metrics];
+                                                        updated[idx].labelAr = e.target.value;
+                                                        setFormData({ ...formData, metrics: updated });
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <Input
+                                                    placeholder="Description (English)"
+                                                    value={metric.descEn ?? ""}
+                                                    onChange={(e) => {
+                                                        const updated = [...formData.metrics];
+                                                        updated[idx].descEn = e.target.value;
+                                                        setFormData({ ...formData, metrics: updated });
+                                                    }}
+                                                />
+                                                <Input
+                                                    placeholder="Description (Arabic)"
+                                                    dir="rtl"
+                                                    value={metric.descAr ?? ""}
+                                                    onChange={(e) => {
+                                                        const updated = [...formData.metrics];
+                                                        updated[idx].descAr = e.target.value;
+                                                        setFormData({ ...formData, metrics: updated });
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-2">

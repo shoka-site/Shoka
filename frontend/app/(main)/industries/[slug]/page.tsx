@@ -11,7 +11,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const industries = await storage.getIndustries(true);
-  const industry = industries.find(i => slugify(i.titleEn) === slug);
+  const industry = industries.find(i => slugify(i.titleEn) === slug || i.id === slug || slugify(i.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!industry) {
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IndustryPage({ params }: Props) {
   const { slug } = await params;
   const industries = await storage.getIndustries(true);
-  const industry = industries.find(i => slugify(i.titleEn) === slug);
+  const industry = industries.find(i => slugify(i.titleEn) === slug || i.id === slug || slugify(i.titleAr) === slug);
   const { lang } = await getServerTranslation();
 
   if (!industry) return <IndustryDetailsClient id="" />;
