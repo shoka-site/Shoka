@@ -62,18 +62,18 @@ export default async function BlogPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }} />
       <div className="bg-background min-h-screen" dir={isRtl ? "rtl" : "ltr"}>
         {/* Hero */}
-        <div className="relative bg-black text-white pt-32 pb-20 overflow-hidden">
+        <div className="relative bg-background text-foreground border-b border-border/40 pt-32 pb-20 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(194,164,92,0.12)_0%,transparent_60%)] pointer-events-none" />
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(var(--foreground) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
           <div className="container mx-auto px-6 relative z-10 text-center">
             <p className="text-primary text-xs font-bold uppercase tracking-[0.4em] mb-4">
               {isRtl ? "◆◆◆ المدونة الرئسية ◆◆◆" : "◆◆◆ INSIGHTS & ARTICLES ◆◆◆"}
             </p>
             <h1 className="text-5xl md:text-7xl font-display font-black tracking-tight mb-6"
-              style={{ background: "linear-gradient(180deg,#fff 40%,#c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              style={{ background: "linear-gradient(180deg,var(--foreground) 40%,var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               {isRtl ? "رؤى التحول الرقمي" : "Digital Transformation Insights"}
             </h1>
-            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
+            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
               {isRtl
                 ? "أفكار ودراسات هندسية من فريق سهلة حول تقنية المعلومات والأنظمة المؤسسية في العراق."
                 : "Practical engineering ideas and case studies from the Sehle team on IT & ERP solutions in Iraq."}
@@ -85,12 +85,12 @@ export default async function BlogPage() {
         <BlogListClient posts={posts} lang={lang} isRtl={isRtl} />
 
         {/* Editorial pillars section */}
-        <div className="container mx-auto px-6 pb-24 border-t border-white/10 pt-16">
+        <div className="container mx-auto px-6 pb-24 border-t border-border pt-16">
           <div className="text-center mb-12">
             <p className="text-primary text-xs font-bold uppercase tracking-[0.3em] mb-3">
               {isRtl ? "محاور المحتوى" : "Content Pillars"}
             </p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
               {isRtl ? "ماذا نكتب عنه" : "What We Write About"}
             </h2>
           </div>
@@ -121,9 +121,9 @@ export default async function BlogPage() {
                 icon: "🌟",
               },
             ].map((pillar) => (
-              <div key={pillar.en} className="bg-zinc-950/40 border border-white/10 rounded-2xl p-6 text-center hover:border-primary/40 transition-colors">
+              <div key={pillar.en} className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary/40 transition-colors">
                 <div className="text-3xl mb-3">{pillar.icon}</div>
-                <h3 className="font-display font-bold text-lg text-white mb-2">{isRtl ? pillar.ar : pillar.en}</h3>
+                <h3 className="font-display font-bold text-lg text-foreground mb-2">{isRtl ? pillar.ar : pillar.en}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{isRtl ? pillar.desc.ar : pillar.desc.en}</p>
               </div>
             ))}

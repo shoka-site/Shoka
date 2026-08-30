@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, FileText, Briefcase, MessageSquare, Target, Images, LogOut, Users, Mail, Package, Menu, X, BookOpen } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 
@@ -35,10 +36,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         <ProtectedRoute>
-            <div className="min-h-screen bg-background" dir="ltr" lang="en">
+            <div className="min-h-screen bg-background text-foreground" dir="ltr" lang="en">
                 {/* Mobile Top Header */}
                 <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-muted border-b border-border flex items-center justify-between px-6 z-40">
-                    <span className="font-display font-bold text-lg">Sehle Admin</span>
+                    <div className="flex items-center gap-3">
+                        <span className="font-display font-bold text-lg">Sehle Admin</span>
+                        <ThemeToggle />
+                    </div>
                     <Button variant="ghost" size="icon" onClick={() => setMobileOpen(!mobileOpen)}>
                         {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </Button>
@@ -86,9 +90,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 {/* Desktop Sidebar */}
                 <div className="hidden md:block fixed left-0 top-0 bottom-0 w-64 bg-muted border-r border-border p-6 overflow-y-auto">
-                    <div className="mb-8">
-                        <h1 className="text-2xl font-display font-bold">Sehle Admin</h1>
-                        <p className="text-sm text-muted-foreground">Content Management</p>
+                    <div className="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 className="text-2xl font-display font-bold">Sehle Admin</h1>
+                            <p className="text-sm text-muted-foreground">Content Management</p>
+                        </div>
+                        <ThemeToggle />
                     </div>
 
                     <nav className="space-y-2">

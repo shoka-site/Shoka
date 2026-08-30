@@ -91,7 +91,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
 
   return (
     <div className="w-full relative my-16" dir={isRtl ? "rtl" : "ltr"}>
-      <div className="bg-zinc-950/70 border border-white/10 rounded-3xl p-8 md:p-12 relative overflow-hidden backdrop-blur-xl shadow-2xl">
+      <div className="bg-card border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden backdrop-blur-xl shadow-2xl">
         {/* Background Decorative Accent */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <Quote className="w-24 h-24 text-primary/10 absolute -bottom-4 -left-4 pointer-events-none" />
@@ -111,25 +111,25 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
           </div>
 
           {/* Testimonial Quote */}
-          <p className="text-xl md:text-2xl font-display font-medium text-white leading-relaxed mb-8 italic">
+          <p className="text-xl md:text-2xl font-display font-medium text-foreground leading-relaxed mb-8 italic">
             "{isRtl ? activeTestimonial.textAr : activeTestimonial.textEn}"
           </p>
 
           {/* Author Meta */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-start pt-6 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-start pt-6 border-t border-border">
             <div className="w-12 h-12 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-bold font-display text-lg">
               {(isRtl ? activeTestimonial.nameAr : activeTestimonial.nameEn).charAt(0)}
             </div>
 
             <div>
-              <div className="font-bold text-white text-base">
+              <div className="font-bold text-foreground text-base">
                 {isRtl ? activeTestimonial.nameAr : activeTestimonial.nameEn}
               </div>
               <div className="text-xs text-muted-foreground flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-0.5">
                 <span>{isRtl ? activeTestimonial.roleAr : activeTestimonial.roleEn}</span>
                 <span>•</span>
                 <span className="text-primary font-bold">{isRtl ? activeTestimonial.companyAr : activeTestimonial.companyEn}</span>
-                <span className="flex items-center gap-1 text-white/50 text-[11px]">
+                <span className="flex items-center gap-1 text-muted-foreground text-[11px]">
                   <MapPin className="w-3 h-3" />
                   {isRtl ? activeTestimonial.cityAr : activeTestimonial.cityEn}
                 </span>
@@ -137,7 +137,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
             </div>
 
             {/* Metric Badge */}
-            <div className="sm:ms-auto px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-primary text-xs font-mono font-bold">
+            <div className="sm:ms-auto px-4 py-1.5 rounded-full bg-muted border border-border text-primary text-xs font-mono font-bold">
               {isRtl ? activeTestimonial.metricBadgeAr : activeTestimonial.metricBadgeEn}
             </div>
           </div>
@@ -147,7 +147,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
         <div className="flex items-center justify-between mt-8 pt-4">
           <button
             onClick={prev}
-            className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+            className="p-3 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all focus:outline-none"
             aria-label="Previous Testimonial"
           >
             <ChevronLeft className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`} />
@@ -160,7 +160,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`h-2 rounded-full transition-all ${
-                  currentIndex === idx ? "w-8 bg-primary" : "w-2 bg-white/20 hover:bg-white/40"
+                  currentIndex === idx ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
                 }`}
               />
             ))}
@@ -168,7 +168,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
 
           <button
             onClick={next}
-            className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+            className="p-3 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all focus:outline-none"
             aria-label="Next Testimonial"
           >
             <ChevronRight className={`w-5 h-5 ${isRtl ? "rotate-180" : ""}`} />

@@ -173,7 +173,7 @@ export default function ScrollTriggerPopup({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 280, damping: 26 }}
-            className="relative w-full max-w-md bg-black border border-primary/30 rounded-3xl p-8 shadow-[0_24px_80px_rgba(194,164,92,0.22)]"
+            className="relative w-full max-w-md bg-background border border-border rounded-3xl p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Glow */}
@@ -182,17 +182,17 @@ export default function ScrollTriggerPopup({
             {/* Close */}
             <button
               onClick={dismiss}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-white/40 hover:text-white hover:bg-white/10 transition-all"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
               aria-label="Close"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className={isRtl ? "text-right" : "text-left"}>
-              <h2 className="text-xl font-display font-black text-white mb-2">
+              <h2 className="text-xl font-display font-black text-foreground mb-2">
                 {pick(title.en, title.ar)}
               </h2>
-              <p className="text-white/50 text-sm mb-6 leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                 {pick(description.en, description.ar)}
               </p>
 
@@ -202,7 +202,7 @@ export default function ScrollTriggerPopup({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={isRtl ? "اسمك الكريم" : "Your name"}
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                   required
                 />
                 <input
@@ -210,7 +210,7 @@ export default function ScrollTriggerPopup({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={isRtl ? "بريدك الإلكتروني" : "your@email.com"}
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                   required
                 />
                 <button
@@ -227,7 +227,7 @@ export default function ScrollTriggerPopup({
 
               <button
                 onClick={dismiss}
-                className="mt-3 text-xs text-white/30 hover:text-white/50 transition-colors w-full text-center"
+                className="mt-3 text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors w-full text-center"
               >
                 {dismissLabel
                   ? pick(dismissLabel.en, dismissLabel.ar)

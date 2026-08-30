@@ -367,7 +367,7 @@ export function HeroUpdatesClient({
                       animate="visible"
                       className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black text-white leading-[1.1] tracking-tighter drop-shadow-lg"
                       style={{
-                        background: "linear-gradient(180deg, #ffffff 45%, #c2a45c 100%)",
+                        background: "linear-gradient(180deg, var(--foreground) 45%, var(--primary) 100%)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                       }}
@@ -498,12 +498,7 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-          className="relative p-5 sm:p-8 md:p-12 rounded-2xl overflow-hidden"
-          style={{
-            background: "linear-gradient(135deg, rgba(194,164,92,0.06) 0%, rgba(0,0,0,0) 60%)",
-            border: "1px solid rgba(194,164,92,0.2)",
-            boxShadow: "0 4px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(194,164,92,0.1)",
-          }}
+          className="relative p-5 sm:p-8 md:p-12 rounded-2xl overflow-hidden bg-card/60 backdrop-blur-xl border border-primary/20 shadow-xl"
         >
           {testimonials[currentTestimonial] && (
             <>
@@ -520,7 +515,7 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
                   <Star key={i} className="w-4 h-4 text-accent fill-accent" />
                 ))}
               </div>
-              <p className="text-lg md:text-xl text-white/75 mb-8 leading-relaxed text-center">
+              <p className="text-lg md:text-xl text-foreground/80 mb-8 leading-relaxed text-center">
                 {testimonials[currentTestimonial].quote}
               </p>
               {/* Author separator */}
@@ -530,7 +525,7 @@ export function TestimonialCarousel({ testimonials, initialTestimonial }: { test
                 <div className="h-px w-12" style={{ background: "linear-gradient(to left, transparent, rgba(194,164,92,0.4))" }} />
               </div>
               <div className="text-center">
-                <div className="font-bold text-white">{testimonials[currentTestimonial].author}</div>
+                <div className="font-bold text-foreground">{testimonials[currentTestimonial].author}</div>
                 <div className="text-sm text-accent/70 mt-1">{testimonials[currentTestimonial].role}</div>
               </div>
             </>

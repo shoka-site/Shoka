@@ -118,13 +118,13 @@ export default function ExitIntentPopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-md bg-black border border-primary/30 rounded-3xl p-8 shadow-[0_20px_60px_rgba(194,164,92,0.2)]"
+            className="relative w-full max-w-md bg-background border border-border rounded-3xl p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={dismiss}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-white/40 hover:text-white hover:bg-white/10 transition-all"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
               aria-label="Close"
             >
               <X className="w-4 h-4" />
@@ -140,10 +140,10 @@ export default function ExitIntentPopup() {
                 </div>
               </div>
 
-              <h2 className="text-2xl font-display font-black text-white mb-2">
+              <h2 className="text-2xl font-display font-black text-foreground mb-2">
                 {t("exit_popup.title", "Wait — before you go!")}
               </h2>
-              <p className="text-white/50 text-sm mb-6 leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                 {t("exit_popup.description", "Book a free consultation and let us help you build your digital future.")}
               </p>
 
@@ -153,7 +153,7 @@ export default function ExitIntentPopup() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t("exit_popup.name_placeholder", "Your name")}
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                   required
                 />
                 <input
@@ -161,7 +161,7 @@ export default function ExitIntentPopup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("exit_popup.email_placeholder", "your@email.com")}
-                  className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                  className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                   required
                 />
                 <button
@@ -177,7 +177,7 @@ export default function ExitIntentPopup() {
 
               <button
                 onClick={dismiss}
-                className="mt-3 text-xs text-white/30 hover:text-white/50 transition-colors"
+                className="mt-3 text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors"
               >
                 {t("exit_popup.dismiss", "No thanks, I'm just browsing")}
               </button>

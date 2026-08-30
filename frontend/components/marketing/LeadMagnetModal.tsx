@@ -99,12 +99,12 @@ export default function LeadMagnetModal() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-md bg-black border border-primary/30 rounded-3xl p-8 shadow-2xl"
+              className="relative w-full max-w-md bg-background border border-border rounded-3xl p-8 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setOpen(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
@@ -117,10 +117,10 @@ export default function LeadMagnetModal() {
                   </div>
                 </div>
 
-                <h2 className="text-2xl font-display font-black text-white mb-2">
+                <h2 className="text-2xl font-display font-black text-foreground mb-2">
                   {langOption(isRtl, "احصل على دليل التحول الرقمي مجاناً", "Get Free Digital Transformation Checklist")}
                 </h2>
-                <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                   {langOption(isRtl, "أدخل معلوماتك لتحميل قائمة الخطوات الأساسية لتحديث وتطوير أنظمة شركتك رقمياً.", "Download the checklist on how to transition your manual operations into integrated custom software.")}
                 </p>
 
@@ -130,7 +130,7 @@ export default function LeadMagnetModal() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={langOption(isRtl, "الاسم الكريم", "Your name")}
-                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                    className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                     required
                   />
                   <input
@@ -138,7 +138,7 @@ export default function LeadMagnetModal() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={langOption(isRtl, "بريدك الإلكتروني", "your@email.com")}
-                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                    className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                     required
                   />
                   <button

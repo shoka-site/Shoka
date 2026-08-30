@@ -59,10 +59,10 @@ export function NewsPageContent({ updates }: Props) {
         </p>
       )}
       {/* Hero */}
-      <div className="relative h-[55vh] min-h-[450px] flex flex-col justify-center overflow-hidden bg-black text-white pt-24">
+      <div className="relative h-[55vh] min-h-[450px] flex flex-col justify-center overflow-hidden bg-background text-foreground pt-24 border-b border-border/40">
         <motion.div
           style={{ y, opacity }}
-          className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-black via-zinc-900 to-black"
+          className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-background via-muted/40 to-background"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,164,92,0.12)_0%,transparent_50%)] mix-blend-screen" />
         </motion.div>
@@ -75,8 +75,8 @@ export function NewsPageContent({ updates }: Props) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="pointer-events-auto"
             >
-              <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? "rotate-180" : ""}`}>
+              <Link href="/home" className="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                <div className={`p-2 rounded-full bg-muted/60 border border-border group-hover:bg-muted transition-colors ${isRtl ? "rotate-180" : ""}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
                 {isRtl ? "العودة إلى الصفحة الرئيسية" : "Back to the home page"}
@@ -100,17 +100,17 @@ export function NewsPageContent({ updates }: Props) {
                 </Badge>
               </motion.div>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-foreground">
               {t("news.title")}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
               {t("news.description")}
             </p>
           </motion.div>
         </div>
 
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}

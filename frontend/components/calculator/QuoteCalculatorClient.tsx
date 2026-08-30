@@ -171,23 +171,23 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
             </div>
 
             {/* Currency Selector Toggle */}
-            <div className="inline-flex items-center bg-black/60 border border-white/10 rounded-full p-1 text-xs font-bold">
+            <div className="inline-flex items-center bg-muted/60 border border-border rounded-full p-1 text-xs font-bold">
               <button
                 onClick={() => setCurrency("USD")}
-                className={`px-3 py-1 rounded-full transition-all ${currency === "USD" ? "bg-primary text-black font-extrabold" : "text-white/60 hover:text-white"}`}
+                className={`px-3 py-1 rounded-full transition-all ${currency === "USD" ? "bg-primary text-black font-extrabold" : "text-muted-foreground hover:text-foreground"}`}
               >
                 USD ($)
               </button>
               <button
                 onClick={() => setCurrency("IQD")}
-                className={`px-3 py-1 rounded-full transition-all ${currency === "IQD" ? "bg-primary text-black font-extrabold" : "text-white/60 hover:text-white"}`}
+                className={`px-3 py-1 rounded-full transition-all ${currency === "IQD" ? "bg-primary text-black font-extrabold" : "text-muted-foreground hover:text-foreground"}`}
               >
                 IQD (د.ع)
               </button>
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-display font-black text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-display font-black text-foreground mb-6">
             {isRtl ? "احسب تكلفة نظامك الرقمي مجاناً" : "Estimate Your Custom Software Cost"}
           </h1>
 
@@ -200,7 +200,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
 
         {/* Wizard Progress Bar */}
         <div className="flex items-center justify-between max-w-2xl mx-auto mb-12 relative">
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/10 -translate-y-1/2 z-0" />
+          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-border -translate-y-1/2 z-0" />
           {[
             { stepNum: 1, label: isRtl ? "نوع النظام" : "Solution" },
             { stepNum: 2, label: isRtl ? "حجم العمليات" : "Scale" },
@@ -221,7 +221,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
                       ? "bg-primary text-black scale-110 ring-4 ring-primary/20"
                       : isActive
                       ? "bg-primary/20 border border-primary text-primary"
-                      : "bg-zinc-900 border border-white/10 text-white/40"
+                      : "bg-muted border border-border text-muted-foreground"
                   }`}
                 >
                   {s.stepNum}
@@ -235,11 +235,11 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
         </div>
 
         {/* Card Body */}
-        <div className="bg-zinc-950/60 border border-white/10 rounded-3xl p-6 md:p-10 backdrop-blur-xl shadow-2xl mb-12">
+        <div className="bg-card/60 border border-border rounded-3xl p-6 md:p-10 backdrop-blur-xl shadow-2xl mb-12">
           {/* Step 1: Solution Type */}
           {step === 1 && (
             <div>
-              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Layers className="w-5 h-5 text-primary" />
                 <span>{isRtl ? "1. اختر نوع الحل البرمجي المطلوب:" : "1. Select Required Solution Type:"}</span>
               </h2>
@@ -255,15 +255,15 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
                       className={`p-6 rounded-2xl border cursor-pointer transition-all ${
                         isSelected
                           ? "bg-primary/10 border-primary shadow-[0_0_30px_rgba(194,164,92,0.15)] ring-1 ring-primary"
-                          : "bg-zinc-900/40 border-white/5 hover:border-white/20 hover:bg-zinc-900/80"
+                          : "bg-muted/40 border-border/50 hover:border-primary/40 hover:bg-muted"
                       }`}
                     >
                       <div className="flex items-start gap-4">
-                        <div className={`p-3 rounded-xl ${isSelected ? "bg-primary text-black" : "bg-white/5 text-primary"}`}>
+                        <div className={`p-3 rounded-xl ${isSelected ? "bg-primary text-black" : "bg-muted text-primary"}`}>
                           <Icon className="w-6 h-6" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-white text-lg mb-1">{isRtl ? sol.titleAr : sol.titleEn}</h3>
+                          <h3 className="font-bold text-foreground text-lg mb-1">{isRtl ? sol.titleAr : sol.titleEn}</h3>
                           <p className="text-xs text-muted-foreground leading-relaxed">{isRtl ? sol.descAr : sol.descEn}</p>
                         </div>
                       </div>
@@ -277,7 +277,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
           {/* Step 2: Scale & Active Users */}
           {step === 2 && (
             <div>
-              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
                 <span>{isRtl ? "2. حدد عدد مستخدمي النظام وحجم العمليات:" : "2. Select Operation Scale & Active Users:"}</span>
               </h2>
@@ -292,13 +292,13 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
                       className={`p-6 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                         isSelected
                           ? "bg-primary/10 border-primary ring-1 ring-primary"
-                          : "bg-zinc-900/40 border-white/5 hover:border-white/20"
+                          : "bg-muted/40 border-border/50 hover:border-primary/40"
                       }`}
                     >
-                      <div className="font-bold text-white text-base">
+                      <div className="font-bold text-foreground text-base">
                         {isRtl ? scale.labelAr : scale.labelEn}
                       </div>
-                      <div className={`w-6 h-6 rounded-full border flex items-center justify-center ${isSelected ? "border-primary bg-primary text-black" : "border-white/20"}`}>
+                      <div className={`w-6 h-6 rounded-full border flex items-center justify-center ${isSelected ? "border-primary bg-primary text-black" : "border-border"}`}>
                         {isSelected && <Check className="w-4 h-4" />}
                       </div>
                     </div>
@@ -311,7 +311,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
           {/* Step 3: Modules & Features */}
           {step === 3 && (
             <div>
-              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                 <Sliders className="w-5 h-5 text-primary" />
                 <span>{isRtl ? "3. حدد الوحدات البرمجية المتقدمة:" : "3. Choose Advanced Operational Modules:"}</span>
               </h2>
@@ -326,15 +326,15 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
                       className={`p-5 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                         isChecked
                           ? "bg-primary/10 border-primary"
-                          : "bg-zinc-900/40 border-white/5 hover:border-white/20"
+                          : "bg-muted/40 border-border/50 hover:border-primary/40"
                       }`}
                     >
                       <div>
-                        <div className="font-bold text-white text-sm mb-0.5">{isRtl ? mod.titleAr : mod.titleEn}</div>
+                        <div className="font-bold text-foreground text-sm mb-0.5">{isRtl ? mod.titleAr : mod.titleEn}</div>
                         <div className="text-xs text-primary font-mono">+${mod.priceUsd} USD</div>
                       </div>
 
-                      <div className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-colors ${isChecked ? "bg-primary border-primary text-black" : "border-white/20 bg-black/40"}`}>
+                      <div className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-colors ${isChecked ? "bg-primary border-primary text-black" : "border-border bg-muted/60"}`}>
                         {isChecked && <Check className="w-4 h-4" />}
                       </div>
                     </div>
@@ -347,13 +347,13 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
           {/* Step 4: Final Output Estimate */}
           {step === 4 && (
             <div className="space-y-8">
-              <div className="text-center pb-6 border-b border-white/10">
+              <div className="text-center pb-6 border-b border-border">
                 <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full mb-4">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>{isRtl ? "التقدير المستهدف المبدئي" : "Estimated Development Budget"}</span>
                 </div>
 
-                <div className="text-4xl md:text-5xl font-black text-white font-mono mb-2">
+                <div className="text-4xl md:text-5xl font-black text-foreground font-mono mb-2">
                   {currency === "USD" ? (
                     `$${minPriceUsd.toLocaleString()} – $${maxPriceUsd.toLocaleString()} USD`
                   ) : (
@@ -368,23 +368,23 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
 
               {/* Summary details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-zinc-900/60 border border-white/5 p-5 rounded-2xl flex items-center gap-4">
+                <div className="bg-muted/50 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
                   <div className="p-3 bg-primary/10 rounded-xl text-primary">
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground uppercase font-bold tracking-wider">{isRtl ? "المدة الزمنية المتوقعة" : "Estimated Timeline"}</div>
-                    <div className="text-lg font-bold text-white">{totalWeeksMin} – {totalWeeksMax} {isRtl ? "أسابيع" : "Weeks"}</div>
+                    <div className="text-lg font-bold text-foreground">{totalWeeksMin} – {totalWeeksMax} {isRtl ? "أسابيع" : "Weeks"}</div>
                   </div>
                 </div>
 
-                <div className="bg-zinc-900/60 border border-white/5 p-5 rounded-2xl flex items-center gap-4">
+                <div className="bg-muted/50 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
                   <div className="p-3 bg-primary/10 rounded-xl text-primary">
                     <ShieldCheck className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground uppercase font-bold tracking-wider">{isRtl ? "ضمان التسليم والملكية" : "Delivery Standard"}</div>
-                    <div className="text-sm font-bold text-white">{isRtl ? "ملكية 100% ودعم محلي" : "100% Code Ownership & Local Support"}</div>
+                    <div className="text-sm font-bold text-foreground">{isRtl ? "ملكية 100% ودعم محلي" : "100% Code Ownership & Local Support"}</div>
                   </div>
                 </div>
               </div>
@@ -393,7 +393,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-primary text-black font-black uppercase tracking-widest text-xs h-14 px-8 rounded-xl hover:bg-white transition-all shadow-[0_4px_25px_rgba(194,164,92,0.3)]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-primary text-black font-black uppercase tracking-widest text-xs h-14 px-8 rounded-xl hover:bg-primary/80 transition-all shadow-[0_4px_25px_rgba(194,164,92,0.3)]"
                 >
                   <Sparkles className="w-4 h-4 text-black" />
                   <span>{isRtl ? "احصل على المواصفات الرسمية مجاناً" : "Request Official Proposal Spec"}</span>
@@ -401,7 +401,7 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
 
                 <Link
                   href={`/contact?scope=${contactScope}`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 border border-white/20 bg-white/5 text-white font-bold text-xs uppercase tracking-wider h-14 px-8 rounded-xl hover:bg-white/10 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 border border-border bg-muted/50 text-foreground font-bold text-xs uppercase tracking-wider h-14 px-8 rounded-xl hover:bg-muted transition-all"
                 >
                   <span>{isRtl ? "حجز استشارة هاتفية" : "Book Phone Consultation"}</span>
                   <ArrowRight className={`w-4 h-4 ${isRtl ? "rotate-180" : ""}`} />

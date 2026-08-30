@@ -75,7 +75,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" dir={isRtl ? "rtl" : "ltr"}>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg bg-zinc-950 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-foreground"
+        className="relative w-full max-w-lg bg-background border border-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-foreground"
       >
         {/* Background Radial Glow */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
@@ -83,7 +83,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 left-5 p-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-colors z-10"
+          className="absolute top-5 left-5 p-2 rounded-full bg-muted/50 border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -93,7 +93,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
             <div className="w-16 h-16 bg-primary/10 border border-primary/30 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
               <CheckCircle className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">
+            <h3 className="text-2xl font-bold text-foreground mb-2">
               {isRtl ? "تم إرسال طلب التقدير بنجاح!" : "Proposal Request Received!"}
             </h3>
             <p className="text-muted-foreground text-sm max-w-sm mx-auto mb-6 leading-relaxed">
@@ -103,7 +103,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
             </p>
             <button
               onClick={onClose}
-              className="bg-primary text-black font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl hover:bg-white transition-all shadow-lg"
+              className="bg-primary text-black font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl hover:bg-primary/80 transition-all shadow-lg"
             >
               {isRtl ? "إغلاق النافذة" : "Done"}
             </button>
@@ -115,7 +115,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
               <span>{isRtl ? "عرض فني ودراسة جدوى مجانية" : "Free Audit & Official Proposal"}</span>
             </div>
 
-            <h3 className="text-2xl font-display font-bold text-white mb-2">
+            <h3 className="text-2xl font-display font-bold text-foreground mb-2">
               {isRtl ? "احصل على العرض الرسمي والمواصفات" : "Request Detailed Proposal"}
             </h3>
 
@@ -126,8 +126,8 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
             </p>
 
             {/* Scope Summary Preview Box */}
-            <div className="bg-zinc-900/80 border border-white/5 p-4 rounded-2xl mb-6 text-xs space-y-1">
-              <div className="flex items-center justify-between text-white font-bold">
+            <div className="bg-muted/40 border border-border/50 p-4 rounded-2xl mb-6 text-xs space-y-1">
+              <div className="flex items-center justify-between text-foreground font-bold">
                 <span>{estimateSummary.solutionTitle}</span>
                 <span className="text-primary font-mono">{estimateSummary.estimatedUsd}</span>
               </div>
@@ -142,7 +142,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
               )}
 
               <div>
-                <label className="block text-xs font-bold text-white/80 mb-1.5">
+                <label className="block text-xs font-bold text-foreground/80 mb-1.5">
                   {isRtl ? "الاسم الكامل *" : "Full Name *"}
                 </label>
                 <div className="relative">
@@ -152,21 +152,21 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder={isRtl ? "مثال: د. علي الحسيني" : "e.g., Ali Al-Hassani"}
-                    className="w-full bg-black/60 border border-white/10 rounded-xl py-2.5 px-3.5 pr-10 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-muted/50 border border-border rounded-xl py-2.5 px-3.5 pr-10 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors"
                   />
-                  <User className={`w-4 h-4 text-white/40 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3" : "right-3"}`} />
+                  <User className={`w-4 h-4 text-muted-foreground/50 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3" : "right-3"}`} />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-white/80 mb-1.5">
+                <label className="block text-xs font-bold text-foreground/80 mb-1.5">
                   {isRtl ? "رقم الهاتف / الواتساب *" : "Phone Number / WhatsApp *"}
                 </label>
                 <div className="flex gap-2">
                   <select
                     value={countryCode}
                     onChange={(e) => setCountryCode(e.target.value)}
-                    className="bg-black/60 border border-white/10 rounded-xl px-2 text-xs text-primary font-bold font-mono focus:outline-none"
+                    className="bg-muted/50 border border-border rounded-xl px-2 text-xs text-primary font-bold font-mono focus:outline-none"
                   >
                     <option value="+964">🇮🇶 +964 (العراق)</option>
                     <option value="+90">🇹🇷 +90 (تركيا)</option>
@@ -180,14 +180,14 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="770 123 4567"
-                      className="w-full bg-black/60 border border-white/10 rounded-xl py-2.5 px-3.5 text-xs text-white font-mono placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors"
+                      className="w-full bg-muted/50 border border-border rounded-xl py-2.5 px-3.5 text-xs text-foreground font-mono placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-white/80 mb-1.5">
+                <label className="block text-xs font-bold text-foreground/80 mb-1.5">
                   {isRtl ? "اسم الشركة / المؤسسة (اختياري)" : "Company / Enterprise Name (Optional)"}
                 </label>
                 <div className="relative">
@@ -196,9 +196,9 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     placeholder={isRtl ? "مثال: مجموعة بابل للتجارة" : "e.g., Babel Logistics Ltd."}
-                    className="w-full bg-black/60 border border-white/10 rounded-xl py-2.5 px-3.5 pr-10 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors"
+                    className="w-full bg-muted/50 border border-border rounded-xl py-2.5 px-3.5 pr-10 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors"
                   />
-                  <Building2 className={`w-4 h-4 text-white/40 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3" : "right-3"}`} />
+                  <Building2 className={`w-4 h-4 text-muted-foreground/50 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3" : "right-3"}`} />
                 </div>
               </div>
 

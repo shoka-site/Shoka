@@ -72,7 +72,7 @@ export function SocialKitClient({ isRtl }: { isRtl: boolean }) {
             {pick("Social Media Content Kit", "حقيبة المحتوى الاجتماعي")}
           </div>
           <h1 className="text-4xl md:text-5xl font-display font-black mb-6"
-            style={{ background: "linear-gradient(180deg,#fff 40%,#c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            style={{ background: "linear-gradient(180deg,var(--foreground) 40%,var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             {pick("Grow Your Social Presence", "ابنِ حضورك الرقمي")}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
@@ -86,40 +86,40 @@ export function SocialKitClient({ isRtl }: { isRtl: boolean }) {
         {/* Cadence & Strategy */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {/* Cadence */}
-          <div className="bg-zinc-950/80 border border-white/10 rounded-3xl p-8">
-            <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-2">
+          <div className="bg-card border border-border rounded-3xl p-8">
+            <h2 className="text-xl font-display font-bold text-foreground mb-6 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-primary" />
               {pick("Weekly Posting Schedule", "جدول النشر الأسبوعي")}
             </h2>
             <div className="space-y-4">
               {SCHEDULE.map((s, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-muted/40 border border-border/50">
                   <div className="bg-primary/15 border border-primary/30 text-primary text-xs font-black px-3 py-1 rounded-md min-w-[90px] text-center">
                     {s.day}
                   </div>
-                  <p className="text-sm text-white/80 leading-normal">{pick(s.en, s.ar)}</p>
+                  <p className="text-sm text-muted-foreground leading-normal">{pick(s.en, s.ar)}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Strategy */}
-          <div className="bg-zinc-950/80 border border-white/10 rounded-3xl p-8">
-            <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-2">
+          <div className="bg-card border border-border rounded-3xl p-8">
+            <h2 className="text-xl font-display font-bold text-foreground mb-6 flex items-center gap-2">
               <Award className="w-5 h-5 text-primary" />
               {pick("Editorial Strategy", "الاستراتيجية التحريرية")}
             </h2>
-            <div className="space-y-4 text-sm text-white/70">
+            <div className="space-y-4 text-sm text-muted-foreground">
               <p>
-                <strong>1. {pick("Focus on Outcomes", "التركيز على النتائج:")}</strong>{" "}
+                <strong className="text-foreground">1. {pick("Focus on Outcomes", "التركيز على النتائج:")}</strong>{" "}
                 {pick("Never list raw tech stack without explaining the business metric (e.g. 62% cost reduction).", "تجنب ذكر لغات البرمجة مجردة دون إرفاق النتيجة العائدة على الشركة (مثل خفض التكاليف بنسبة 62%).")}
               </p>
               <p>
-                <strong>2. {pick("Iraqi Context", "السياق المحلي:")}</strong>{" "}
+                <strong className="text-foreground">2. {pick("Iraqi Context", "السياق المحلي:")}</strong>{" "}
                 {pick("Highlight solutions to local challenges like slow internet, manual spreadsheet operations, and cash handling.", "سلط الضوء على حلول التحديات المحلية كضعف سرعة الاتصال بالإنترنت، والعمليات الحسابية اليدوية، وتدفقات النقد.")}
               </p>
               <p>
-                <strong>3. {pick("Educate First", "التعليم أولاً:")}</strong>{" "}
+                <strong className="text-foreground">3. {pick("Educate First", "التعليم أولاً:")}</strong>{" "}
                 {pick("Provide free guidelines, audit frameworks, and industry lessons to build maximum trust before asking for consultations.", "قدم إرشادات تدقيق مجانية ونصائح للمهتمين لبناء جسر متين من الثقة قبل طلب عقد استشارة.")}
               </p>
             </div>
@@ -128,7 +128,7 @@ export function SocialKitClient({ isRtl }: { isRtl: boolean }) {
 
         {/* Content Templates */}
         <div>
-          <h2 className="text-2xl font-display font-bold text-white mb-8 flex items-center gap-2">
+          <h2 className="text-2xl font-display font-bold text-foreground mb-8 flex items-center gap-2">
             <Users className="w-6 h-6 text-primary" />
             {pick("Copy-Paste Content Templates", "قوالب منشورات جاهزة للنسخ")}
           </h2>
@@ -137,17 +137,17 @@ export function SocialKitClient({ isRtl }: { isRtl: boolean }) {
               const bodyText = isRtl ? tmpl.ar.body : tmpl.en.body;
               const titleText = isRtl ? tmpl.ar.title : tmpl.en.title;
               return (
-                <div key={idx} className="bg-zinc-950/80 border border-white/10 rounded-3xl p-6 md:p-8">
+                <div key={idx} className="bg-card border border-border rounded-3xl p-6 md:p-8">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                       <span className="text-xs font-bold uppercase tracking-widest text-primary">
                         {tmpl.category}
                       </span>
-                      <h3 className="text-lg font-bold text-white mt-1">{titleText}</h3>
+                      <h3 className="text-lg font-bold text-foreground mt-1">{titleText}</h3>
                     </div>
                     <button
                       onClick={() => copyToClipboard(bodyText, idx)}
-                      className="self-start sm:self-center inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-primary/20 text-white hover:text-primary border border-white/10 transition-colors text-xs font-bold"
+                      className="self-start sm:self-center inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted hover:bg-primary/20 text-foreground hover:text-primary border border-border transition-colors text-xs font-bold"
                     >
                       {copiedId === idx ? (
                         <>
@@ -162,7 +162,7 @@ export function SocialKitClient({ isRtl }: { isRtl: boolean }) {
                       )}
                     </button>
                   </div>
-                  <div className="bg-black/60 border border-white/5 rounded-2xl p-6 text-sm text-white/80 leading-relaxed font-mono whitespace-pre-wrap">
+                  <div className="bg-muted/50 border border-border rounded-2xl p-6 text-sm text-foreground leading-relaxed font-mono whitespace-pre-wrap">
                     {bodyText}
                   </div>
                 </div>

@@ -36,17 +36,45 @@
 :root {
   /*
   ══════════════════════════════════════════════
-  MESOPOTAMIAN LUXURY — "The Darkness of Babylon"
-  Inspired by: obsidian stone of Nineveh,
-  golden artifacts of the Royal Tombs of Ur,
-  and cuneiform script carved into clay tablets.
-
-  #000000 — Obsidian Black    60% (dominant ground)
-  #c2a45c — Ur Gold          30% (accent, divine light)
-  #ffffff — Cuneiform White   10% (text, clarity)
+  MESOPOTAMIAN LUXURY — "The Light of Ur" (Light Theme)
+  Inspired by: alabaster stone of Nineveh,
+  golden artifacts of Ur, and warm sunlit tablets.
   ══════════════════════════════════════════════
   */
 
+  --background: hsl(40 20% 97.5%);       /* Warm Alabaster Ivory #fcfbf8 */
+  --foreground: hsl(0 0% 12%);           /* Obsidian Black #1e1e1e */
+
+  --card: hsl(0 0% 100%);               /* Pure Ivory Card */
+  --card-foreground: hsl(0 0% 12%);
+
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 12%);
+
+  --primary: hsl(42 65% 38%);           /* Ur Gold — Rich Bronze Gold for light contrast */
+  --primary-foreground: hsl(0 0% 100%);
+
+  --secondary: hsl(40 18% 91%);         /* Soft Sand Alabaster */
+  --secondary-foreground: hsl(0 0% 15%);
+
+  --muted: hsl(40 16% 93.5%);
+  --muted-foreground: hsl(30 8% 38%);    /* Readable slate-brown */
+
+  --accent: hsl(42 65% 38%);            /* Ur Gold */
+  --accent-foreground: hsl(0 0% 100%);
+
+  --destructive: hsl(0 72% 45%);
+  --destructive-foreground: hsl(0 0% 98%);
+
+  --border: hsl(42 40% 50% / 0.22);     /* Warm gilded border */
+  --input: hsl(0 0% 0% / 0.06);
+  --ring: hsl(42 65% 38%);
+
+  --radius: 0.5rem;
+}
+
+/* Mesopotamian Luxury — "The Darkness of Babylon" (Dark Theme) */
+.dark {
   --background: hsl(0 0% 0%);           /* #000000 — Obsidian Black */
   --foreground: hsl(0 0% 100%);         /* #ffffff — Cuneiform White */
 
@@ -63,39 +91,14 @@
   --secondary-foreground: hsl(0 0% 80%);
 
   --muted: hsl(0 0% 8%);                /* #141414 — Muted dark */
-  --muted-foreground: hsl(0 0% 52%);    /* readable mid-tone */
-
-  --accent: hsl(42 43% 56%);            /* #c2a45c — Ur Gold (same as primary) */
-  --accent-foreground: hsl(0 0% 0%);
-
-  --destructive: hsl(0 72% 51%);
-  --destructive-foreground: hsl(0 0% 98%);
-
-  --border: hsl(42 43% 56% / 0.15);     /* Gold at 15% — subtle gilded border */
-  --input: hsl(0 0% 100% / 0.06);
-  --ring: hsl(42 43% 56%);              /* Gold focus ring */
-
-  --radius: 0.5rem;
-}
-
-/* Dark mode = same as root; this is a dark-first design */
-.dark {
-  --background: hsl(0 0% 0%);
-  --foreground: hsl(0 0% 100%);
-  --card: hsl(0 0% 5%);
-  --card-foreground: hsl(0 0% 95%);
-  --popover: hsl(0 0% 7%);
-  --popover-foreground: hsl(0 0% 95%);
-  --primary: hsl(42 43% 56%);
-  --primary-foreground: hsl(0 0% 0%);
-  --secondary: hsl(0 0% 10%);
-  --secondary-foreground: hsl(0 0% 80%);
-  --muted: hsl(0 0% 8%);
   --muted-foreground: hsl(0 0% 52%);
+
   --accent: hsl(42 43% 56%);
   --accent-foreground: hsl(0 0% 0%);
+
   --destructive: hsl(0 72% 51%);
   --destructive-foreground: hsl(0 0% 98%);
+
   --border: hsl(42 43% 56% / 0.15);
   --input: hsl(0 0% 100% / 0.06);
   --ring: hsl(42 43% 56%);
@@ -241,9 +244,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #c2a45c;
+    color: var(--primary);
     font-size: 9px;
-    background: #000;
+    background: var(--background);
     padding: 0 10px;
     opacity: 0.7;
   }

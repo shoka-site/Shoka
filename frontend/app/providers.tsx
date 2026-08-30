@@ -10,6 +10,8 @@ import { initUtmTracker } from "@/lib/utm-tracker";
 import { initAutoTracking } from "@/lib/analytics";
 import "@/lib/i18n";
 
+import { ThemeProvider } from "next-themes";
+
 export function Providers({ children }: { children: React.ReactNode }) {
     const { i18n } = useTranslation();
     const router = useRouter();
@@ -57,9 +59,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }, [router]);
 
     return (
-        <QueryClientProvider client={queryClient}>
-            {children}
-            <Toaster />
-        </QueryClientProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <QueryClientProvider client={queryClient}>
+                {children}
+                <Toaster />
+            </QueryClientProvider>
+        </ThemeProvider>
     );
 }

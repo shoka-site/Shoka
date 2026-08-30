@@ -64,7 +64,7 @@ export function ServicesSectionClient({ services }: { services: Record<string, u
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
         <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.services.title")}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
@@ -131,7 +131,7 @@ export function ProjectsSectionClient({ projects }: { projects: Record<string, u
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
         <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.projects.title")}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
@@ -218,7 +218,7 @@ export function PackagesSectionClient({ packages }: { packages: Record<string, u
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
         <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-black mt-2 tracking-tight leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.packages.title")}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base mt-3 md:mt-4 max-w-xl mx-auto font-light leading-relaxed">
@@ -282,7 +282,7 @@ export function TestimonialsSectionClient({ testimonials }: { testimonials: Reco
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
         <h2 className="text-3xl md:text-4xl font-display font-black mb-2 leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.trust.title")}
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-10 md:mb-12 max-w-xl mx-auto">

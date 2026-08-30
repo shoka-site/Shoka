@@ -12,13 +12,13 @@ export function ContactHero({ isRtl }: { isRtl: boolean }) {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   return (
-    <div className="relative h-[60vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-black text-white pt-24 border-b border-border/10">
+    <div className="relative h-[60vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-background text-foreground pt-24 border-b border-border/40">
       <motion.div
         style={{ y, opacity }}
-        className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-black via-zinc-900 to-black"
+        className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-background via-muted/40 to-background"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,164,92,0.12)_0%,transparent_50%)] mix-blend-screen" />
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(var(--foreground) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       </motion.div>
 
       <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
@@ -29,8 +29,8 @@ export function ContactHero({ isRtl }: { isRtl: boolean }) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="pointer-events-auto"
           >
-            <Link href="/home" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-              <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? 'rotate-180' : ''}`}>
+            <Link href="/home" className="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+              <div className={`p-2 rounded-full bg-muted/60 border border-border group-hover:bg-muted transition-colors ${isRtl ? 'rotate-180' : ''}`}>
                 <ArrowLeft className="w-4 h-4" />
               </div>
               {t("common.back_to_home")}
@@ -56,7 +56,7 @@ export function ContactHero({ isRtl }: { isRtl: boolean }) {
               {t('contact.subtitle', 'Get in Touch')}
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-foreground">
             {t('contact.title', 'Let\'s create something extraordinary together.')}
           </h1>
 

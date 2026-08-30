@@ -22,14 +22,14 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className={`w-screen bg-black/90 backdrop-blur-2xl border-y border-primary/10 shadow-[0_50px_100px_rgba(0,0,0,0.8),0_0_50px_rgba(194,164,92,0.05)] overflow-hidden ${isRtl ? 'rtl' : 'ltr'}`}
+      className={`w-screen bg-background/95 text-foreground backdrop-blur-2xl border-y border-border shadow-2xl overflow-hidden ${isRtl ? 'rtl' : 'ltr'}`}
     >
       {/* Static gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
 
       <div className={`container mx-auto px-6 md:px-12 flex items-stretch relative z-10 ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
         {/* Sidebar / Featured */}
-        <div className={`w-1/3 bg-gradient-to-b from-white/[0.03] to-transparent p-12 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-white/5`}>
+        <div className={`w-1/3 bg-muted/40 p-12 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-border/40`}>
           {/* Noise texture for sidebar */}
           <div className="absolute inset-0 bg-grain opacity-[0.04] pointer-events-none" />
 
@@ -50,7 +50,7 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
               initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 25 }}
-              className={`text-4xl font-display font-black text-white mb-4 tracking-tighter ${isRtl ? 'text-right' : 'text-left'}`}
+              className={`text-4xl font-display font-black text-foreground mb-4 tracking-tighter ${isRtl ? 'text-right' : 'text-left'}`}
             >
               {title}
             </motion.h3>
@@ -58,7 +58,7 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
-              className={`text-lg text-white/50 leading-relaxed font-light mb-12 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}
+              className={`text-lg text-muted-foreground leading-relaxed font-light mb-12 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}
             >
               {description}
             </motion.p>
@@ -67,7 +67,7 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, type: "spring", stiffness: 300, damping: 25 }}
             >
-              <Link href={href} className={`inline-flex items-center px-8 py-4 bg-gradient-to-r from-white/10 to-white/5 border border-white/10 rounded-full text-white text-xs font-black uppercase tracking-[0.2em] hover:from-primary hover:to-primary/80 hover:text-black hover:border-primary/50 hover:scale-105 active:scale-95 transition-all group w-fit shadow-[0_10px_30px_rgba(0,0,0,0.3)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse' : ''}`}>
+              <Link href={href} className={`inline-flex items-center px-8 py-4 bg-muted border border-border rounded-full text-foreground text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground hover:border-primary/50 hover:scale-105 active:scale-95 transition-all group w-fit shadow-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse' : ''}`}>
                 {t("common.explore_all")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-3 rotate-180 group-hover:-translate-x-1' : 'ml-3 group-hover:translate-x-1'}`} />
               </Link>
             </motion.div>
@@ -75,7 +75,7 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
         </div>
 
         {/* Content Area */}
-        <div className="w-2/3 p-12 bg-gradient-to-br from-transparent via-white/[0.01] to-white/[0.02] relative">
+        <div className="w-2/3 p-12 bg-gradient-to-br from-transparent via-muted/[0.1] to-transparent relative">
           {/* Static radial gold spotlight */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-primary/[0.02] rounded-full blur-[120px] pointer-events-none" />
           <div className="relative z-10">

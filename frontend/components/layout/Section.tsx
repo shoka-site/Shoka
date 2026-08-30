@@ -16,7 +16,7 @@ export default function Section({
 }: SectionProps) {
     const bgStyles = {
         default: "bg-background",
-        muted: "bg-[#080808]",
+        muted: "bg-muted",
         accent: "bg-[rgba(194,164,92,0.04)]",
         none: "",
     };

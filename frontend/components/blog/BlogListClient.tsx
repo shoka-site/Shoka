@@ -47,7 +47,7 @@ export function BlogListClient({ posts, lang, isRtl }: Props) {
   return (
     <div className="container mx-auto px-6 py-12" dir={isRtl ? "rtl" : "ltr"}>
       {/* Search & Category Filter Header */}
-      <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-6 bg-zinc-950/40 border border-white/10 p-6 rounded-3xl backdrop-blur-xl">
+      <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-6 bg-card/60 border border-border p-6 rounded-3xl backdrop-blur-xl">
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           {CATEGORIES.map((cat) => {
@@ -59,7 +59,7 @@ export function BlogListClient({ posts, lang, isRtl }: Props) {
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                   isActive
                     ? "bg-primary text-black shadow-[0_0_20px_rgba(194,164,92,0.3)]"
-                    : "bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10"
+                    : "bg-muted/50 border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
               >
                 {isRtl ? cat.labelAr : cat.labelEn}
@@ -75,15 +75,15 @@ export function BlogListClient({ posts, lang, isRtl }: Props) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={isRtl ? "ابحث عن مقال أو تقنية..." : "Search articles or topics..."}
-            className="w-full bg-black/50 border border-white/10 rounded-full py-2.5 px-4 pr-10 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-muted/50 border border-border rounded-full py-2.5 px-4 pr-10 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors"
           />
-          <Search className={`w-4 h-4 text-white/40 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3.5" : "right-3.5"}`} />
+          <Search className={`w-4 h-4 text-muted-foreground/50 absolute top-1/2 -translate-y-1/2 ${isRtl ? "left-3.5" : "right-3.5"}`} />
         </div>
       </div>
 
       {/* Articles Grid */}
       {filteredPosts.length === 0 ? (
-        <div className="text-center py-24 bg-zinc-950/20 border border-white/5 rounded-3xl">
+        <div className="text-center py-24 bg-card/40 border border-border/50 rounded-3xl">
           <BookOpen className="w-12 h-12 text-primary/40 mx-auto mb-4" />
           <p className="text-muted-foreground text-base">
             {isRtl ? "لم نجد مقالات تطابق خيارات البحث الحالية." : "No articles found matching your search options."}
@@ -103,7 +103,7 @@ export function BlogListClient({ posts, lang, isRtl }: Props) {
           {filteredPosts.map((post) => (
             <article
               key={post.id}
-              className="group bg-zinc-950/60 border border-white/10 rounded-3xl overflow-hidden hover:border-primary/50 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between"
+              className="group bg-card/60 border border-border rounded-3xl overflow-hidden hover:border-primary/50 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between"
             >
               <div className="p-8">
                 <div className="flex items-center justify-between gap-3 mb-4">
@@ -118,7 +118,7 @@ export function BlogListClient({ posts, lang, isRtl }: Props) {
                   )}
                 </div>
 
-                <h2 className="text-xl font-display font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                <h2 className="text-xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                   {post.title}
                 </h2>
 

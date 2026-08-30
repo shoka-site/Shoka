@@ -28,13 +28,13 @@ export default function ProjectsPanel({ isRtl }: { isRtl: boolean }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1, type: "spring", stiffness: 300, damping: 25 }}
           >
-            <Link href={item.href} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+            <Link href={item.href} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-muted border border-transparent hover:border-border transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
               <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
                 <item.icon className="w-6 h-6" />
               </div>
               <div>
-                <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
-                <div className="text-xs text-white/50 mt-1 leading-relaxed">{t(item.desc_key)}</div>
+                <div className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{t(item.title_key)}</div>
+                <div className="text-xs text-muted-foreground mt-1 leading-relaxed">{t(item.desc_key)}</div>
               </div>
             </Link>
           </motion.div>
@@ -50,7 +50,7 @@ export default function ProjectsPanel({ isRtl }: { isRtl: boolean }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: (idx + 3) * 0.1, type: "spring", stiffness: 300, damping: 25 }}
             >
-              <Link href={`/projects/${slugify(project.titleEn)}`} className={`group flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
+              <Link href={`/projects/${slugify(project.titleEn)}`} className={`group flex items-start gap-4 p-4 rounded-2xl hover:bg-muted border border-transparent hover:border-border transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden relative group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
                   {project.images?.[0] ? (
                     <SafeImage src={project.images[0]} alt={project.title} fill sizes="48px" className="object-cover" fallbackType="project" />
@@ -59,8 +59,8 @@ export default function ProjectsPanel({ isRtl }: { isRtl: boolean }) {
                   )}
                 </div>
                 <div>
-                  <div className="text-sm font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-1">{project.title}</div>
-                  <div className="text-xs text-white/50 mt-1 leading-relaxed line-clamp-2">{project.description}</div>
+                  <div className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-1">{project.title}</div>
+                  <div className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">{project.description}</div>
                 </div>
               </Link>
             </motion.div>

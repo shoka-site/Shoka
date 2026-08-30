@@ -70,19 +70,19 @@ export function ReferralPageClient({ isRtl }: { isRtl: boolean }) {
   return (
     <div className="bg-background min-h-screen" dir={isRtl ? "rtl" : "ltr"}>
       {/* Hero */}
-      <div className="relative bg-black text-white pt-32 pb-24 overflow-hidden">
+      <div className="relative bg-background text-foreground border-b border-border/40 pt-32 pb-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(194,164,92,0.14)_0%,transparent_65%)] pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "radial-gradient(#c2a45c 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "radial-gradient(var(--foreground) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         <div className="container mx-auto px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-6">
             <Gift className="w-3.5 h-3.5" />
             {pick("Referral Program", "برنامج الإحالة")}
           </div>
           <h1 className="text-5xl md:text-7xl font-display font-black tracking-tight mb-6"
-            style={{ background: "linear-gradient(180deg,#fff 40%,#c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            style={{ background: "linear-gradient(180deg,var(--foreground) 40%,var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             {pick("Grow Together", "نكبر معاً")}
           </h1>
-          <p className="text-white/55 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
             {pick(
               "Know a business that needs digital transformation? Refer them and both of you win.",
               "هل تعرف شركة تحتاج إلى تحول رقمي؟ أحلها إلينا وكلاكما يكسب."
@@ -142,10 +142,10 @@ export function ReferralPageClient({ isRtl }: { isRtl: boolean }) {
               </Link>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-zinc-950/80 border border-white/10 rounded-3xl p-8 md:p-12 space-y-8">
+            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-3xl p-8 md:p-12 space-y-8">
               <div>
-                <h2 className="text-xl font-display font-bold text-white mb-1">{pick("Your Information", "معلوماتك")}</h2>
-                <p className="text-white/40 text-sm">{pick("Who is making the referral?", "من يقدم الإحالة؟")}</p>
+                <h2 className="text-xl font-display font-bold text-foreground mb-1">{pick("Your Information", "معلوماتك")}</h2>
+                <p className="text-muted-foreground text-sm">{pick("Who is making the referral?", "من يقدم الإحالة؟")}</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
@@ -153,21 +153,21 @@ export function ReferralPageClient({ isRtl }: { isRtl: boolean }) {
                   { id: "yourEmail", label: { en: "Your Email", ar: "بريدك الإلكتروني" }, type: "email", required: true },
                 ].map(({ id, label, type = "text", required }) => (
                   <div key={id}>
-                    <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">{pick(label.en, label.ar)}</label>
+                    <label className="block text-muted-foreground text-xs font-bold uppercase tracking-widest mb-2">{pick(label.en, label.ar)}</label>
                     <input
                       type={type}
                       required={required}
                       value={(form as Record<string, string>)[id]}
                       onChange={(e) => setForm((f) => ({ ...f, [id]: e.target.value }))}
-                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                      className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                     />
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-white/5 pt-8">
-                <h3 className="text-lg font-bold text-white mb-1">{pick("Their Information", "معلومات من تحيله")}</h3>
-                <p className="text-white/40 text-sm mb-5">{pick("Who are you referring?", "من تحيل إلينا؟")}</p>
+              <div className="border-t border-border pt-8">
+                <h3 className="text-lg font-bold text-foreground mb-1">{pick("Their Information", "معلومات من تحيله")}</h3>
+                <p className="text-muted-foreground text-sm mb-5">{pick("Who are you referring?", "من تحيل إلينا؟")}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {[
                     { id: "referralName", label: { en: "Their Name", ar: "اسمه/اسمها" }, required: true },
@@ -175,25 +175,25 @@ export function ReferralPageClient({ isRtl }: { isRtl: boolean }) {
                     { id: "referralCompany", label: { en: "Their Company", ar: "شركتهم" }, required: false },
                   ].map(({ id, label, type = "text", required }) => (
                     <div key={id} className={id === "referralCompany" ? "md:col-span-2" : ""}>
-                      <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">{pick(label.en, label.ar)}</label>
+                      <label className="block text-muted-foreground text-xs font-bold uppercase tracking-widest mb-2">{pick(label.en, label.ar)}</label>
                       <input
                         type={type}
                         required={required}
                         value={(form as Record<string, string>)[id]}
                         onChange={(e) => setForm((f) => ({ ...f, [id]: e.target.value }))}
-                        className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                        className="w-full h-12 px-4 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors"
                       />
                     </div>
                   ))}
                 </div>
                 <div className="mt-5">
-                  <label className="block text-white/60 text-xs font-bold uppercase tracking-widest mb-2">{pick("Add a note (optional)", "أضف ملاحظة (اختياري)")}</label>
+                  <label className="block text-muted-foreground text-xs font-bold uppercase tracking-widest mb-2">{pick("Add a note (optional)", "أضف ملاحظة (اختياري)")}</label>
                   <textarea
                     value={form.note}
                     onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))}
                     rows={3}
                     placeholder={pick("Tell us anything helpful about this referral...", "أخبرنا بأي معلومات مفيدة عن هذه الإحالة...")}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground/50 text-sm focus:outline-none focus:border-primary transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -206,7 +206,7 @@ export function ReferralPageClient({ isRtl }: { isRtl: boolean }) {
                 {submitting ? pick("Submitting...", "جارٍ الإرسال...") : pick("Submit Referral", "تقديم الإحالة")}
                 {!submitting && <ArrowRight className={`w-4 h-4 ${isRtl ? "rotate-180" : ""}`} />}
               </button>
-              <p className="text-center text-white/25 text-xs">{pick("Your referral info is kept private and only used to make contact.", "معلومات إحالتك خاصة وتُستخدم فقط للتواصل معهم.")}</p>
+              <p className="text-center text-muted-foreground/60 text-xs">{pick("Your referral info is kept private and only used to make contact.", "معلومات إحالتك خاصة وتُستخدم فقط للتواصل معهم.")}</p>
             </form>
           )}
         </FadeIn>

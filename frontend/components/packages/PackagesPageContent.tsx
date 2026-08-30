@@ -39,13 +39,13 @@ export function PackagesPageContent({ packages }: Props) {
   return (
     <div className="bg-background min-h-screen selection:bg-primary/30 selection:text-primary">
       {/* Hero */}
-      <div className="relative h-[65vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-black text-white pt-24">
+      <div className="relative h-[65vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-background text-foreground pt-24 border-b border-border/40">
         <motion.div
           style={{ y, opacity }}
-          className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-black via-zinc-900 to-black"
+          className="absolute inset-0 z-0 origin-top bg-gradient-to-br from-background via-muted/40 to-background"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(194,164,92,0.12)_0%,transparent_50%)] mix-blend-screen" />
-          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(var(--foreground) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         </motion.div>
 
         <div className="absolute top-32 left-0 w-full z-20 pointer-events-none">
@@ -56,8 +56,8 @@ export function PackagesPageContent({ packages }: Props) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="pointer-events-auto"
             >
-              <Link href="/home/" className="group inline-flex items-center gap-3 text-white/60 hover:text-white transition-colors text-xs uppercase tracking-[0.2em] font-bold">
-                <div className={`p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/20 transition-colors ${isRtl ? "rotate-180" : ""}`}>
+              <Link href="/home/" className="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors text-xs uppercase tracking-[0.2em] font-bold">
+                <div className={`p-2 rounded-full bg-muted/60 border border-border group-hover:bg-muted transition-colors ${isRtl ? "rotate-180" : ""}`}>
                   <ArrowLeft className="w-4 h-4" />
                 </div>
                 {t("common.back_to_home")}
@@ -81,17 +81,17 @@ export function PackagesPageContent({ packages }: Props) {
                 </Badge>
               </motion.div>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black mb-6 md:mb-8 leading-[1.05] tracking-tight text-foreground">
               {t("packages.title", "Our Packages")}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/60 leading-relaxed font-light max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground leading-relaxed font-light max-w-2xl mx-auto">
               {t("packages.description", "Comprehensive solutions tailored to meet your business needs.")}
             </p>
           </motion.div>
         </div>
 
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -189,17 +189,17 @@ export function PackagesPageContent({ packages }: Props) {
             </p>
           </motion.div>
 
-          <div className="overflow-x-auto border border-border/60 rounded-3xl bg-zinc-950/40 backdrop-blur-xl">
-            <table className="w-full text-left border-collapse min-w-[700px] text-white">
+          <div className="overflow-x-auto border border-border/60 rounded-3xl bg-card backdrop-blur-xl">
+            <table className="w-full text-left border-collapse min-w-[700px] text-foreground">
               <thead>
-                <tr className="border-b border-border/60 bg-white/5">
+                <tr className="border-b border-border/60 bg-muted/50">
                   <th className={`p-6 text-sm font-bold uppercase tracking-wider text-muted-foreground ${isRtl ? "text-right" : "text-left"}`}>{t("packages.compare.feature", "Features")}</th>
                   <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier1", "Startup Basic")}</th>
                   <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier2", "Business Growth")}</th>
                   <th className="p-6 text-sm font-bold uppercase tracking-wider text-center text-primary">{t("packages.compare.tier3", "Enterprise Bespoke")}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-border">
                 {[
                   {
                     name: t("packages.compare.dev_hours", "Development Hours"),
@@ -232,11 +232,11 @@ export function PackagesPageContent({ packages }: Props) {
                     t3: t("packages.compare.int_t3", "Unlimited Integrations"),
                   }
                 ].map((row, idx) => (
-                  <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <tr key={idx} className="hover:bg-muted/50 transition-colors">
                     <td className={`p-6 font-medium ${isRtl ? "text-right" : "text-left"}`}>{row.name}</td>
-                    <td className="p-6 text-center text-white/70">{row.t1}</td>
-                    <td className="p-6 text-center text-white/70">{row.t2}</td>
-                    <td className="p-6 text-center text-white/70 font-semibold">{row.t3}</td>
+                    <td className="p-6 text-center text-muted-foreground">{row.t1}</td>
+                    <td className="p-6 text-center text-muted-foreground">{row.t2}</td>
+                    <td className="p-6 text-center text-muted-foreground font-semibold">{row.t3}</td>
                   </tr>
                 ))}
               </tbody>

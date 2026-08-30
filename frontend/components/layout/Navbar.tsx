@@ -19,6 +19,8 @@ import {
 import MegaMenuSection from "./navbar/MegaMenuSection";
 import { NAV_CATEGORIES } from "./navbar/nav-data";
 
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
 interface NavbarProps {
   // Server-detected locale, passed from the server layout so both SSR and
   // client hydration use the same language. Without this, i18next-browser-
@@ -86,7 +88,7 @@ export default function Navbar({ lang }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [menuValue]);
 
-  const triggerClassName = "group relative bg-transparent text-white/70 hover:text-white focus:text-white data-[state=open]:bg-primary/20 data-[state=open]:text-white h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-white/10 rounded-full uppercase tracking-widest overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
+  const triggerClassName = "group relative bg-transparent text-foreground/80 hover:text-foreground focus:text-foreground data-[state=open]:bg-primary/20 data-[state=open]:text-foreground h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-muted/50 rounded-full uppercase tracking-widest overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
 
   return (
     <>
@@ -94,7 +96,7 @@ export default function Navbar({ lang }: NavbarProps) {
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
           scrolled
-            ? "bg-black backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
+            ? "bg-background/90 backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
             : "bg-transparent py-5"
         )}
       >
@@ -121,7 +123,7 @@ export default function Navbar({ lang }: NavbarProps) {
                   alt="Sehle"
                   fill
                   sizes="(min-width: 1280px) 144px, 112px"
-                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200"
+                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200 dark:invert-0"
                   priority
                 />
               </motion.div>
@@ -161,26 +163,28 @@ export default function Navbar({ lang }: NavbarProps) {
           </div>
 
           {/* Desktop Right Actions */}
-          <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-4">
+          <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-3">
+            <ThemeToggle />
             <button
               onClick={() => { toggleLanguage(); closeMenu(); }}
-              className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent hover:border-white/10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
+              className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-muted/80 rounded-full transition-all border border-border/40 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
               aria-label="Toggle Language"
             >
               <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
             </button>
             <Link href="/contact/" onClick={closeMenu}>
-              <span className="bg-primary text-black px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/80 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+              <span className="bg-primary text-primary-foreground px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
                 {t("navbar.book_consultation")}
               </span>
             </Link>
           </div>
 
           {/* Mobile Right Actions */}
-          <div className="flex lg:hidden flex-1 items-center justify-end">
+          <div className="flex lg:hidden flex-1 items-center justify-end gap-2">
+            <ThemeToggle />
             <button
               onClick={() => { toggleLanguage(); }}
-              className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all border border-transparent active:scale-90"
+              className="w-10 h-10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-muted rounded-full transition-all border border-border/40 active:scale-90"
               aria-label="Toggle Language"
             >
               <Globe className="w-5 h-5" />

@@ -38,7 +38,7 @@ export function WhyUsBanner({ isRtl }: { isRtl: boolean }) {
               fontSize: "clamp(1.75rem, 7vw, 6rem)",
               lineHeight: isRtl ? 1.7 : 1.2,
               paddingBottom: isRtl ? "0.5em" : undefined,
-              background: "linear-gradient(180deg, #ffffff 40%, #c2a45c 100%)",
+              background: "linear-gradient(180deg, var(--foreground) 40%, var(--primary) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -77,8 +77,8 @@ export function PhilosophySection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.philosophy.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-4xl font-display font-black leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <h2 className="text-2xl md:text-4xl font-display font-black leading-relaxed text-foreground"
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.philosophy.title")}
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mt-3 md:mt-4 max-w-xl mx-auto">
@@ -95,7 +95,7 @@ export function PhilosophySection() {
                   style={{ background: "radial-gradient(circle, rgba(194,164,92,0.12) 0%, transparent 70%)", border: "1px solid rgba(194,164,92,0.25)", boxShadow: "0 0 0 6px rgba(194,164,92,0.04), inset 0 1px 0 rgba(194,164,92,0.1)" }}>
                   <Icon className="w-7 h-7 text-accent" />
                 </div>
-                <h3 className="text-xl font-display font-bold mb-3">{point.title}</h3>
+                <h3 className="text-xl font-display font-bold mb-3 text-foreground">{point.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{point.description}</p>
               </FadeInSection>
             </div>
@@ -126,8 +126,8 @@ export function ProcessSection() {
           <span className="text-accent text-[10px] md:text-xs font-bold uppercase tracking-[0.05em]">{t("home.process.badge")}</span>
           <span className="text-accent/40 text-[8px]">◆◆◆</span>
         </div>
-        <h2 className="text-2xl md:text-5xl font-display font-black tracking-tight leading-relaxed"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        <h2 className="text-2xl md:text-5xl font-display font-black tracking-tight leading-relaxed text-foreground"
+          style={{ background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
           {t("home.process.title")}
         </h2>
         <p className="text-muted-foreground text-sm md:text-base mt-4 max-w-xl mx-auto font-light leading-relaxed">
@@ -145,11 +145,11 @@ export function ProcessSection() {
                 <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ border: "1px solid rgba(194,164,92,0.3)", boxShadow: "0 0 20px rgba(194,164,92,0.15)" }} />
                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full text-primary-foreground flex items-center justify-center text-xl md:text-2xl font-display font-bold relative z-10 mx-auto transition-all duration-500"
-                  style={{ background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)", boxShadow: "0 4px 20px rgba(194,164,92,0.25), inset 0 1px 0 rgba(255,255,255,0.2)" }}>
+                  style={{ background: "linear-gradient(135deg, var(--primary) 0%, #8a6d2d 100%)", boxShadow: "0 4px 20px rgba(194,164,92,0.25), inset 0 1px 0 rgba(255,255,255,0.2)" }}>
                   {step.stepNumber}
                 </div>
               </div>
-              <h3 className="text-lg md:text-xl font-display font-bold mb-3 group-hover:text-accent transition-colors duration-300">{step.title}</h3>
+              <h3 className="text-lg md:text-xl font-display font-bold mb-3 text-foreground group-hover:text-accent transition-colors duration-300">{step.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed font-light">{step.description}</p>
             </FadeInSection>
           ))}
@@ -175,9 +175,9 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
   ];
 
   return (
-    <section className="relative py-14 md:py-32 bg-[#060606] text-white overflow-hidden">
+    <section className="relative py-14 md:py-32 bg-background text-foreground overflow-hidden border-t border-border/40">
       <div className="absolute inset-0 opacity-100 bg-mesopot-lattice" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#060606] via-transparent to-[#060606]/90 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/90 z-0" />
       <div className="container mx-auto px-6 relative z-10">
         <FadeInSection>
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -187,12 +187,12 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
           </div>
         </FadeInSection>
         <FadeInSection delay={0.1}>
-          <h2 className="text-center font-display font-black mb-6 tracking-tight"
+          <h2 className="text-center font-display font-black mb-6 tracking-tight text-foreground"
             style={{
               fontSize: "clamp(1.75rem, 7vw, 5rem)",
               lineHeight: isRtl ? 1.6 : 1.0,
               paddingBottom: isRtl ? "0.5em" : undefined,
-              background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
+              background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}>
@@ -200,32 +200,32 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
           </h2>
         </FadeInSection>
         <FadeInSection delay={0.2}>
-          <p className="text-center text-lg md:text-xl max-w-3xl mx-auto mb-10 md:mb-20 leading-relaxed text-white/60 font-light">
+          <p className="text-center text-lg md:text-xl max-w-3xl mx-auto mb-10 md:mb-20 leading-relaxed text-muted-foreground font-light">
             {t("home.results.description")}
           </p>
         </FadeInSection>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
           {results.map((result, i) => (
             <FadeInSection key={i} delay={i * 0.1}>
-              <div className="mesopot-metric-card group relative flex flex-col justify-between p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] overflow-hidden">
+              <div className="mesopot-metric-card group relative flex flex-col justify-between p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] overflow-hidden bg-card text-card-foreground border border-border shadow-sm">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="mb-6 flex items-baseline gap-1">
                   {result.prefix && <span className="text-2xl md:text-3xl font-display font-medium text-accent/80">{result.prefix}</span>}
-                  <div className="font-display font-black leading-none text-white tracking-tighter" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
+                  <div className="font-display font-black leading-none text-foreground tracking-tighter" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
                     <CountUp end={parseFloat(result.value)} />
                   </div>
                   {result.suffix && <span className="text-2xl md:text-3xl font-display font-medium text-accent">{result.suffix}</span>}
                 </div>
                 <div>
-                  <div className="text-white font-bold text-lg leading-snug mb-2 tracking-wide group-hover:text-accent transition-colors duration-300">{result.label}</div>
-                  <div className="text-sm text-white/50 leading-relaxed font-light">{result.sub}</div>
+                  <div className="text-foreground font-bold text-lg leading-snug mb-2 tracking-wide group-hover:text-accent transition-colors duration-300">{result.label}</div>
+                  <div className="text-sm text-muted-foreground leading-relaxed font-light">{result.sub}</div>
                 </div>
               </div>
             </FadeInSection>
           ))}
         </div>
         <FadeInSection delay={0.4}>
-          <p className="text-center text-sm mt-16 text-white/40 tracking-wide">{t("home.results.footnote")}</p>
+          <p className="text-center text-sm mt-16 text-muted-foreground/80 tracking-wide">{t("home.results.footnote")}</p>
         </FadeInSection>
       </div>
     </section>
@@ -236,7 +236,7 @@ export function ResultsSection({ isRtl }: { isRtl: boolean }) {
 export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
   const { t } = useTranslation();
   return (
-    <section className="relative py-14 md:py-32 bg-[#060606] text-white overflow-hidden">
+    <section className="relative py-14 md:py-32 bg-background text-foreground overflow-hidden border-t border-border/40">
       <div className="absolute inset-0 bg-mesopot-rosette opacity-100" />
       <div className="container relative z-10 mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -258,11 +258,11 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-display font-black mb-6"
+            <h2 className="text-4xl md:text-6xl font-display font-black mb-6 text-foreground"
               style={{
                 lineHeight: isRtl ? 1.6 : 1.25,
                 paddingBottom: isRtl ? "0.4em" : undefined,
-                background: "linear-gradient(180deg, #ffffff 30%, #c2a45c 100%)",
+                background: "linear-gradient(180deg, var(--foreground) 30%, var(--primary) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}>
@@ -270,7 +270,7 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
             </h2>
 
             {/* Benefit-led sub-copy — Copywriting §9 */}
-            <p className="text-white/55 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light mb-10 md:mb-12">
+            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light mb-10 md:mb-12">
               {isRtl
                 ? "حوّل عملياتك اليدوية إلى أنظمة رقمية ذكية. الاستشارة الأولى مجانية — بدون أي التزام."
                 : "Turn your manual operations into intelligent digital systems. Your first consultation is free — no commitment required."}
@@ -280,19 +280,17 @@ export function OutcomesSection({ isRtl }: { isRtl: boolean }) {
             <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center`}>
               <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
                 <Link href="/contact" className="w-full sm:w-auto">
-                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, #c2a45c 0%, #8a6d2d 100%)", color: "#000", boxShadow: "0 8px 30px rgba(194,164,92,0.3)" }}>
+                  <Button size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg hover:scale-105 transition-all duration-300 bg-primary text-primary-foreground shadow-[0_8px_30px_rgba(194,164,92,0.3)]">
                     {t("home.cta.primary")}
                   </Button>
                 </Link>
                 {/* CTA microcopy — Page CRO §8 */}
-                <p className="text-white/35 text-xs tracking-wide">
+                <p className="text-muted-foreground/70 text-xs tracking-wide">
                   {isRtl ? "⚡ رد خلال 24 ساعة · بدون التزام" : "⚡ Response within 24h · No commitment"}
                 </p>
               </div>
               <Link href="/projects" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg text-white transition-all duration-300 hover:border-accent/60 hover:bg-accent/10"
-                  style={{ borderColor: "rgba(194,164,92,0.3)", background: "rgba(194,164,92,0.05)" }}>
+                <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 sm:h-16 px-8 sm:px-12 rounded-full font-bold text-base sm:text-lg text-foreground border-accent/40 bg-accent/5 transition-all duration-300 hover:border-accent hover:bg-accent/15">
                   {t("view_all_projects")}
                 </Button>
               </Link>
