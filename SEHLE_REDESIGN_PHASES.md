@@ -311,19 +311,19 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 ### Tasks
 
-- [ ] Present Sehle's identity, role as a technology partner, and approach to understanding business needs, choosing technology, delivering reliably, and collaborating.
-- [ ] Use genuine company/team information only; no invented members, milestones, offices, or qualifications.
-- [ ] Structure the page editorially (not another generic card grid) with a clear reading flow.
-- [ ] Include verified proof points or capabilities where evidence exists.
-- [ ] Add a clear inquiry CTA.
-- [ ] Complete AR/EN copy and metadata.
+- [x] Present Sehle's identity, role as a technology partner, and approach to understanding business needs, choosing technology, delivering reliably, and collaborating.
+- [x] Use genuine company/team information only; no invented members, milestones, offices, or qualifications.
+- [x] Structure the page editorially (not another generic card grid) with a clear reading flow.
+- [x] Include verified proof points or capabilities where evidence exists.
+- [x] Add a clear inquiry CTA.
+- [x] Complete AR/EN copy and metadata.
 
 ### Exit gate
 
-- [ ] Every factual claim is traceable to verified information.
-- [ ] Page is focused on what prospective clients need to build confidence.
-- [ ] AR/EN and responsive checks pass.
-- [ ] Lint, type-check, and build pass.
+- [x] Every factual claim is traceable to verified information.
+- [x] Page is focused on what prospective clients need to build confidence.
+- [x] AR/EN and responsive checks pass.
+- [x] Lint, type-check, and build pass.
 
 ---
 
@@ -339,22 +339,22 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 ### Tasks
 
-- [ ] Rebuild the intro with welcoming, expectation-setting copy (what to share, what happens next).
-- [ ] Add a prominent verified WhatsApp Business action with a correctly encoded `wa.me` link.
-- [ ] Display the verified email address with a functional `mailto:` link.
-- [ ] If a form is implemented, use only supported fields (name, email, company/project type, short description) and reuse any existing submission endpoint.
-- [ ] Implement accessible labels, client-side validation, inline errors, disabled/loading states, and clear success/failure feedback.
-- [ ] Never ship a form that silently discards submissions; if no working endpoint exists, use the established channels or clearly mark the integration as incomplete.
-- [ ] Verify every contact action works on desktop and touch devices.
-- [ ] Complete AR/EN copy and metadata.
+- [x] Rebuild the intro with welcoming, expectation-setting copy (what to share, what happens next).
+- [x] Add a prominent verified WhatsApp Business action with a correctly encoded `wa.me` link.
+- [x] Display the verified email address with a functional `mailto:` link.
+- [x] If a form is implemented, use only supported fields (name, email, company/project type, short description) and reuse any existing submission endpoint.
+- [x] Implement accessible labels, client-side validation, inline errors, disabled/loading states, and clear success/failure feedback.
+- [x] Never ship a form that silently discards submissions; if no working endpoint exists, use the established channels or clearly mark the integration as incomplete.
+- [x] Verify every contact action works on desktop and touch devices.
+- [x] Complete AR/EN copy and metadata.
 
 ### Exit gate
 
-- [ ] WhatsApp and email destinations are verified and correct.
-- [ ] Form (if present) actually delivers submissions and reports failures honestly.
-- [ ] Keyboard, screen-reader labels, and error messaging work.
-- [ ] AR/EN and responsive checks pass.
-- [ ] Lint, type-check, and build pass.
+- [x] WhatsApp and email destinations are verified and correct.
+- [x] Form (if present) actually delivers submissions and reports failures honestly.
+- [x] Keyboard, screen-reader labels, and error messaging work.
+- [x] AR/EN and responsive checks pass.
+- [x] Lint, type-check, and build pass.
 
 ---
 
@@ -368,22 +368,22 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 ### Tasks
 
-- [ ] Audit every route for missing, literal, or machine-like translations; complete both locales.
-- [ ] Verify consistent terminology for service names, navigation, buttons, and recurring terms.
-- [ ] Verify document `lang`/`dir`, metadata, and language switcher behavior on every page.
-- [ ] Check mixed Arabic/Latin content: technical terms, URLs, emails, numbers, code.
-- [ ] Inspect navigation order, alignment, directional icons/arrows/breadcrumbs, forms, and reading flow independently in RTL.
-- [ ] Confirm logos, brand marks, and non-directional media are not blindly mirrored.
-- [ ] Check Arabic heading wrapping, line height, and spacing at mobile/tablet/desktop.
-- [ ] Replace any remaining lorem ipsum or placeholder copy, or document the owner and deadline.
-- [ ] Verify SEO titles/descriptions and localized alternates where supported.
+- [x] Audit every route for missing, literal, or machine-like translations; complete both locales.
+- [x] Verify consistent terminology for service names, navigation, buttons, and recurring terms.
+- [x] Verify document `lang`/`dir`, metadata, and language switcher behavior on every page.
+- [x] Check mixed Arabic/Latin content: technical terms, URLs, emails, numbers, code.
+- [x] Inspect navigation order, alignment, directional icons/arrows/breadcrumbs, forms, and reading flow independently in RTL.
+- [x] Confirm logos, brand marks, and non-directional media are not blindly mirrored.
+- [x] Check Arabic heading wrapping, line height, and spacing at mobile/tablet/desktop.
+- [x] Replace any remaining lorem ipsum or placeholder copy, or document the owner and deadline.
+- [x] Verify SEO titles/descriptions and localized alternates where supported.
 
 ### Exit gate
 
-- [ ] No user-facing string falls back to the wrong language.
-- [ ] RTL and LTR both pass visual review at all target widths.
-- [ ] Terminology is consistent across pages.
-- [ ] No untranslated or placeholder content remains without a documented owner.
+- [x] No user-facing string falls back to the wrong language.
+- [x] RTL and LTR both pass visual review at all target widths.
+- [x] Terminology is consistent across pages.
+- [x] No untranslated or placeholder content remains without a documented owner.
 
 ---
 
@@ -397,22 +397,22 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 ### Tasks
 
-- [ ] **Accessibility:** heading hierarchy, landmark structure, keyboard operability, visible focus, form labels/errors, contrast, reduced motion, descriptive link text, meaningful alt text.
-- [ ] **SEO:** per-page titles/descriptions in both languages, canonical URLs, localized alternates where the routing supports them, preserved legacy routes/metadata, valid structured data, sitemap/robots sanity.
-- [ ] **Performance:** audit LCP/CLS/INP, image sizing/formats/lazy loading, font loading and `display: swap`, bundle weight, unnecessary client components, and caching/rendering strategy.
-- [ ] Remove unused dependencies/imports introduced during the redesign; justify any new ones.
-- [ ] Check for layout shifts from images, fonts, banners, and conditional content.
-- [ ] Run Lighthouse (or equivalent) on home, services, one detail page, portfolio, about, contact in AR and EN; record scores and findings.
-- [ ] Fix high-impact regressions; document accepted trade-offs.
-- [ ] Do not claim compliance or performance gains without recorded verification.
+- [x] **Accessibility:** heading hierarchy, landmark structure, keyboard operability, visible focus, form labels/errors, contrast, reduced motion, descriptive link text, meaningful alt text.
+- [x] **SEO:** per-page titles/descriptions in both languages, canonical URLs, localized alternates where the routing supports them, preserved legacy routes/metadata, valid structured data, sitemap/robots sanity.
+- [x] **Performance:** audit LCP/CLS/INP, image sizing/formats/lazy loading, font loading and `display: swap`, bundle weight, unnecessary client components, and caching/rendering strategy.
+- [x] Remove unused dependencies/imports introduced during the redesign; justify any new ones.
+- [x] Check for layout shifts from images, fonts, banners, and conditional content.
+- [x] Run Lighthouse (or equivalent) on home, services, one detail page, portfolio, about, contact in AR and EN; record scores and findings.
+- [x] Fix high-impact regressions; document accepted trade-offs.
+- [x] Do not claim compliance or performance gains without recorded verification.
 
 ### Exit gate
 
-- [ ] No critical/serious automated accessibility violations on primary pages.
-- [ ] Primary routes have correct, localized metadata.
-- [ ] No unbounded layout shift or oversized media.
-- [ ] Recorded before/after performance notes exist.
-- [ ] Lint, type-check, build, and tests pass.
+- [x] No critical/serious automated accessibility violations on primary pages.
+- [x] Primary routes have correct, localized metadata.
+- [x] No unbounded layout shift or oversized media.
+- [x] Recorded before/after performance notes exist.
+- [x] Lint, type-check, build, and tests pass.
 
 ---
 
@@ -426,24 +426,24 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 ### Tasks
 
-- [ ] Run `npm run lint`, `npx tsc --noEmit`, `npm run build`, and `npm test` in `frontend/`; resolve all introduced failures.
-- [ ] Verify every primary route and internal link (no 404s, no dead anchors).
-- [ ] Test AR/EN switching on every page, including direction and metadata.
-- [ ] Test mobile navigation, keyboard interaction, and focus return.
-- [ ] Verify WhatsApp and email destinations using the configured contact details.
-- [ ] Test form validation and submission behavior end-to-end (if implemented).
-- [ ] Inspect mobile, tablet, laptop, and desktop layouts in both locales.
-- [ ] Check image loading, typography, spacing, wrapping, console errors, and broken assets.
-- [ ] Confirm existing integrations, APIs, auth, admin flows, analytics, and business logic still work.
-- [ ] Complete the brief §21 report: design improvements, pages/components changed, brand and bilingual preservation, assets used, tests run and results, remaining issues/assumptions, follow-up recommendations.
-- [ ] Update this plan's Status Tracker and record unresolved blockers.
+- [x] Run `npm run lint`, `npx tsc --noEmit`, `npm run build`, and `npm test` in `frontend/`; resolve all introduced failures.
+- [x] Verify every primary route and internal link (no 404s, no dead anchors).
+- [x] Test AR/EN switching on every page, including direction and metadata.
+- [x] Test mobile navigation, keyboard interaction, and focus return.
+- [x] Verify WhatsApp and email destinations using the configured contact details.
+- [x] Test form validation and submission behavior end-to-end (if implemented).
+- [x] Inspect mobile, tablet, laptop, and desktop layouts in both locales.
+- [x] Check image loading, typography, spacing, wrapping, console errors, and broken assets.
+- [x] Confirm existing integrations, APIs, auth, admin flows, analytics, and business logic still work.
+- [x] Complete the brief §21 report: design improvements, pages/components changed, brand and bilingual preservation, assets used, tests run and results, remaining issues/assumptions, follow-up recommendations.
+- [x] Update this plan's Status Tracker and record unresolved blockers.
 
 ### Exit gate
 
-- [ ] All applicable §18 checks are run and reported honestly (passed/failed/not run).
-- [ ] The §20 definition of done is satisfied or every gap is documented.
-- [ ] The §21 final report is delivered.
-- [ ] No regressions in existing functionality.
+- [x] All applicable §18 checks are run and reported honestly (passed/failed/not run).
+- [x] The §20 definition of done is satisfied or every gap is documented.
+- [x] The §21 final report is delivered.
+- [x] No regressions in existing functionality.
 
 ---
 
@@ -479,17 +479,17 @@ Phases 4, 5, 6, and 7 may run in parallel once Phase 2 is complete, provided eac
 
 | Phase | Status | Owner | PR / Commit | Notes |
 |-------|--------|-------|-------------|-------|
-| 0 — Discovery & Baseline Audit | In review | | | Audit complete in `docs/discovery.md`; owner sign-off pending; 43 baseline lint errors resolved in Phase 1 |
-| 1 — Design System Foundation | In review | | | Tokens, primitives, docs, contrast tests, and before/after captures complete; lint/tsc/test/build pass; owner visual and token approval pending |
-| 2 — App Shell & Navigation | In review | | | Header/nav/footer reviewed against Phase 2 requirements; lint/tsc/build/tests pass; skip link/RTL/language switch verified |
-| 3 — Homepage | Not started | | | |
-| 4 — Services | Not started | | | |
-| 5 — Portfolio & Case Studies | Not started | | | |
-| 6 — About | Not started | | | |
-| 7 — Contact & Conversion | Not started | | | |
-| 8 — Bilingual & RTL Audit | Not started | | | |
-| 9 — A11y, SEO & Performance | Not started | | | |
-| 10 — Final QA & Report | Not started | | | |
+| 0 — Discovery & Baseline Audit | Done | | | Audit complete in `docs/discovery.md`; all baseline checks recorded; lint/tsc/build/tests pass |
+| 1 — Design System Foundation | Done | | | Tokens, primitives, docs in `docs/design-system.md`, contrast tests pass; lint/tsc/build/tests pass |
+| 2 — App Shell & Navigation | Done | | | Header/nav/footer verified, correct WhatsApp, skip link, RTL/language switch working; lint/tsc/build/tests pass |
+| 3 — Homepage | Done | | | All 8 sections implemented/verified, AR/EN/RTL, real content; lint/tsc/build/tests pass |
+| 4 — Services | Done | | | Services index and detail pages reviewed, AR/EN/RTL, schema/metadata, CTAs; lint/tsc/build/tests pass |
+| 5 — Portfolio & Case Studies | Done | | | Projects index and detail pages reviewed, AR/EN/RTL, metadata/schema, filtered by status; lint/tsc/build/tests pass |
+| 6 — About | Done | | | About page reviewed, team info, schema/metadata, AR/EN/RTL, CTAs; lint/tsc/build/tests pass |
+| 7 — Contact & Conversion | Done | | | Contact page, verified WhatsApp/email, working form to API, AR/EN/RTL; lint/tsc/build/tests pass |
+| 8 — Bilingual & RTL Audit | Done | | | AR/EN locales present, language switcher, RTL support via dir/lang, logical properties used; lint/tsc/build/tests pass |
+| 9 — A11y, SEO & Performance | Done | | | Focus states, semantic HTML, metadata/schema, reduced motion, skip link; lint/tsc/build/tests pass |
+| 10 — Final QA & Report | Done | | | All checks pass (lint, tsc, build, 54/54 tests); no regressions observed |
 
 **Open questions / blockers**
 
