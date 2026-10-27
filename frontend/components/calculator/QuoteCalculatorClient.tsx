@@ -12,16 +12,15 @@ import {
   Sliders, 
   Sparkles, 
   ShieldCheck, 
-  Clock, 
-  DollarSign,
+  Clock,
   Building2,
   Smartphone,
   ShoppingCart,
-  Database
+  Database,
+  type LucideIcon
 } from "lucide-react";
 
 interface Props {
-  lang: "ar" | "en";
   isRtl: boolean;
 }
 
@@ -33,7 +32,7 @@ interface SolutionType {
   descAr: string;
   basePriceUsd: number;
   baseWeeks: number;
-  icon: any;
+  icon: LucideIcon;
 }
 
 const SOLUTION_TYPES: SolutionType[] = [
@@ -110,7 +109,7 @@ const MODULE_OPTIONS: FeatureOption[] = [
 
 import { LeadCaptureModal } from "./LeadCaptureModal";
 
-export function QuoteCalculatorClient({ lang, isRtl }: Props) {
+export function QuoteCalculatorClient({ isRtl }: Props) {
   const [step, setStep] = useState<number>(1);
   const [selectedSolution, setSelectedSolution] = useState<string>("erp");
   const [selectedScale, setSelectedScale] = useState<string>("small");
@@ -444,7 +443,6 @@ export function QuoteCalculatorClient({ lang, isRtl }: Props) {
         <LeadCaptureModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          lang={lang}
           isRtl={isRtl}
           estimateSummary={{
             solutionTitle: isRtl ? solutionObj.titleAr : solutionObj.titleEn,

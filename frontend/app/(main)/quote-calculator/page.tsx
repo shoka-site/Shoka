@@ -21,13 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
 import { TestimonialCarouselClient } from "@/components/testimonials/TestimonialCarouselClient";
 
 export default async function QuoteCalculatorPage() {
-  const { lang, isRtl } = await getServerTranslation();
+  const { isRtl } = await getServerTranslation();
 
   return (
     <div>
-      <QuoteCalculatorClient lang={lang} isRtl={isRtl} />
+      <QuoteCalculatorClient isRtl={isRtl} />
       <div className="container mx-auto px-6 max-w-5xl pb-16">
-        <TestimonialCarouselClient lang={lang} isRtl={isRtl} />
+        <TestimonialCarouselClient isRtl={isRtl} />
       </div>
     </div>
   );

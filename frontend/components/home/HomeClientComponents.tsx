@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useScroll, useSpring, Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { ChevronRight, ChevronLeft, Star, Sparkles } from "lucide-react";
+import { ChevronRight, ChevronLeft, Star } from "lucide-react";
 import Link from "next/link";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,13 @@ import { useTranslation } from "react-i18next";
 import { slugify } from "@/lib/utils";
 
 type UpdateType = "news" | "achievement" | "event" | "new" | "project" | "service";
+
+interface LinkedContent {
+  id?: string;
+  title?: string;
+  titleEn?: string;
+  titleAr?: string;
+}
 
 export interface PlatformUpdate {
   id: string;
@@ -23,14 +30,8 @@ export interface PlatformUpdate {
   images?: string[];
   projectId?: string | null;
   serviceId?: string | null;
-  project?: {
-    images?: string[];
-    [key: string]: unknown;
-  } | null;
-  service?: {
-    imageUrl?: string | null;
-    [key: string]: unknown;
-  } | null;
+  project?: (LinkedContent & { images?: string[] }) | null;
+  service?: (LinkedContent & { imageUrl?: string | null }) | null;
 }
 
 export interface Testimonial {
@@ -185,12 +186,10 @@ export function HeroUpdatesClient({
   items,
   projects = [],
   services = [],
-  isRtl,
 }: {
   items: PlatformUpdate[];
-  projects?: Record<string, unknown>[];
-  services?: Record<string, unknown>[];
-  isRtl: boolean;
+  projects?: LinkedContent[];
+  services?: LinkedContent[];
 }) {
   const { t, i18n } = useTranslation();
 
@@ -206,18 +205,6 @@ export function HeroUpdatesClient({
   const [activeIdx, setActiveIdx] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
-  const lastMouseMoveTs = useRef(0);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024 || 'ontouchstart' in window);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     if (isPaused || items.length <= 1) return;
@@ -241,19 +228,6 @@ export function HeroUpdatesClient({
   const goTo = (i: number) => { setDirection(i > activeIdx ? 1 : -1); setActiveIdx(i); };
   const prev = () => goTo((activeIdx - 1 + localizedItems.length) % localizedItems.length);
   const next = () => goTo((activeIdx + 1) % localizedItems.length);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile) return;
-    const now = Date.now();
-    if (now - lastMouseMoveTs.current < 40) return;
-    lastMouseMoveTs.current = now;
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    setMousePosition({
-      x: (clientX / innerWidth - 0.5) * 40,
-      y: (clientY / innerHeight - 0.5) * 40
-    });
-  };
 
   const item = localizedItems[activeIdx];
   const style = (updateStyle as Record<string, typeof updateStyle.news>)[item?.type] ?? updateStyle.news;
@@ -288,7 +262,6 @@ export function HeroUpdatesClient({
       className="relative h-screen-dvh flex items-center justify-center overflow-hidden bg-black"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      onMouseMove={handleMouseMove}
     >
       {/* ── FULL SCREEN IMMERSIVE BACKGROUND ── */}
       <AnimatePresence mode="wait" custom={direction}>
@@ -397,12 +370,12 @@ export function HeroUpdatesClient({
                 animate="visible"
               >
                 {(() => {
-                  const linkedProject = item.project || (projects as any[])?.find((p) => p.id === item.projectId);
-                  const projTitle = (linkedProject?.titleEn as string) || (linkedProject?.titleAr as string) || ((linkedProject as any)?.title as string) || item.titleEn || item.titleAr || item.title;
+                  const linkedProject = item.project || projects.find((p) => p.id === item.projectId);
+                  const projTitle = linkedProject?.titleEn || linkedProject?.titleAr || linkedProject?.title || item.titleEn || item.titleAr || item.title;
                   const projSlug = projTitle ? slugify(projTitle) : item.projectId;
 
-                  const linkedService = item.service || (services as any[])?.find((s) => s.id === item.serviceId);
-                  const servTitle = (linkedService?.titleEn as string) || (linkedService?.titleAr as string) || ((linkedService as any)?.title as string) || item.titleEn || item.titleAr || item.title;
+                  const linkedService = item.service || services.find((s) => s.id === item.serviceId);
+                  const servTitle = linkedService?.titleEn || linkedService?.titleAr || linkedService?.title || item.titleEn || item.titleAr || item.title;
                   const servSlug = servTitle ? slugify(servTitle) : item.serviceId;
 
                   const targetHref = item.projectId ? `/projects/${projSlug}` : item.serviceId ? `/services/${servSlug}` : "/contact";

@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, Check, X, ShieldCheck, Cpu } from "lucide-react";
-import { buildMetadata, SITE_URL } from "@/lib/seo";
+import { buildMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/schema-generator";
 
 interface Props {

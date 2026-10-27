@@ -36,22 +36,22 @@ export default function ServicesPanel({ isRtl }: { isRtl: boolean }) {
       {services.slice(0, 6).map((service, idx) => {
         const ServiceIcon = getServiceIcon(service.type);
         return (
-          <motion.div
+          <motion.li
             key={service.id}
             initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.05, type: "spring", stiffness: 300, damping: 25 }}
           >
-            <Link href={`/services/${slugify(service.titleEn)}`} className={`group flex items-start gap-5 p-5 rounded-2xl hover:bg-muted border border-transparent hover:border-border transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(var(--primary),0.1)]">
-                <ServiceIcon className="w-6 h-6" />
+            <Link href={`/services/${slugify(service.titleEn)}/`} className="focus-ring transition-ui group flex items-start gap-5 rounded-lg border border-transparent p-5 text-start hover:border-border hover:bg-muted">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                <ServiceIcon aria-hidden="true" className="size-6" />
               </div>
               <div>
                 <div className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{service.title}</div>
                 <div className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">{service.description}</div>
               </div>
             </Link>
-          </motion.div>
+          </motion.li>
         );
       })}
     </ul>

@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface ThemeToggleProps {
   className?: string;
@@ -11,6 +12,7 @@ interface ThemeToggleProps {
 
 export function ThemeToggle({ className = "" }: ThemeToggleProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
   if (!mounted) {
     return (
       <div
-        className={`w-8 h-8 xl:w-10 xl:h-10 rounded-full border border-transparent bg-muted/40 animate-pulse ${className}`}
+        className={`h-11 w-11 rounded-full border border-transparent bg-muted/40 animate-pulse ${className}`}
       />
     );
   }
@@ -30,9 +32,9 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={`relative w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center rounded-full transition-all border border-border/40 hover:border-primary/50 bg-background/50 hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90 shadow-sm ${className}`}
-      aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+      className={`focus-ring transition-ui relative flex h-11 w-11 items-center justify-center rounded-full border border-border/40 bg-background/50 shadow-sm hover:border-primary/50 hover:bg-muted active:scale-90 ${className}`}
+      aria-label={isDark ? t("theme.switch_light") : t("theme.switch_dark")}
+      title={isDark ? t("theme.switch_light") : t("theme.switch_dark")}
     >
       <AnimatePresence mode="wait" initial={false}>
         {isDark ? (
@@ -43,7 +45,7 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
             exit={{ scale: 0.5, rotate: 90, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Sun className="w-4 h-4 xl:w-5 xl:h-5 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
+            <Sun className="size-4 text-primary" />
           </motion.div>
         ) : (
           <motion.div
@@ -53,7 +55,7 @@ export function ThemeToggle({ className = "" }: ThemeToggleProps) {
             exit={{ scale: 0.5, rotate: -90, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Moon className="w-4 h-4 xl:w-5 xl:h-5 text-amber-700 dark:text-primary drop-shadow-[0_0_8px_rgba(181,140,43,0.3)]" />
+            <Moon className="size-4 text-primary" />
           </motion.div>
         )}
       </AnimatePresence>

@@ -6,7 +6,7 @@
     "language": "Language",
     "english": "English",
     "arabic": "Arabic",
-    "book_consultation": "Book Free Call",
+    "book_consultation": "Discuss Your Project",
     "recent_work": "Use Cases",
     "packages": "Packages",
     "projects": "Projects",
@@ -29,7 +29,25 @@
         "news": "News",
         "compare": "Compare Options"
       }
-    }
+    },
+    "home": "Home",
+    "contact": "Contact",
+    "quote_calculator": "Quote Calculator",
+    "blog": "Blog",
+    "compare": "Compare Options",
+    "glossary": "Glossary",
+    "refer": "Referral Program",
+    "social_kit": "Social Kit",
+    "news": "News",
+    "menu_title": "Main menu",
+    "menu_description": "Primary navigation and contact options",
+    "more_links": "More links",
+    "primary_nav": "Primary navigation",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu",
+    "switch_to_arabic": "Switch language to Arabic",
+    "switch_to_english": "Switch language to English",
+    "whatsapp": "Chat on WhatsApp"
   },
   "welcome": {
     "badge": "Iraq's Premier Digital Platform",
@@ -490,7 +508,16 @@
       "services": "Services",
       "portfolio": "Portfolio",
       "contact": "Contact"
-    }
+    },
+    "groups": {
+      "company": "Company",
+      "solutions": "Solutions",
+      "resources": "Resources"
+    },
+    "email_label": "Email us",
+    "whatsapp_label": "WhatsApp",
+    "follow": "Follow",
+    "copyright": "© {{year}} Sehle. All rights reserved."
   },
   "not_found": {
     "title": "404 — Page Not Found",
@@ -538,5 +565,9 @@
     "dismiss": "I'll figure it out myself",
     "success_title": "Perfect — we'll be in touch.",
     "success_desc": "Expect an email from us within 24 hours with specific suggestions."
+  },
+  "theme": {
+    "switch_light": "Switch to light mode",
+    "switch_dark": "Switch to dark mode"
   }
 }

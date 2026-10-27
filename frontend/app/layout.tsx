@@ -14,16 +14,12 @@ import "./globals.css";
 
 const cairo = Cairo({
     subsets: ["arabic", "latin"],
-    // 4 weights cover all UI states (light body, regular, semibold UI, bold headings).
-    // Dropping 500 and 900 removes 2 font files (~60KB) from the critical path.
-    weight: ["300", "400", "600", "700"],
+    // Cairo is a variable font (wght 200-1000). Loading the variable file
+    // avoids synthetic weights while covering every weight the UI uses.
     variable: "--font-cairo",
     display: "swap",
     preload: true,
 });
-
-const SITE_NAME = "سهلة | شركة برمجيات وتطوير تقني في العراق";
-const SITE_URL = "https://www.sehle.site";
 
 export async function generateMetadata(): Promise<Metadata> {
     const cookieStore = await cookies();
@@ -44,7 +40,11 @@ export const viewport: Viewport = {
     initialScale: 1,
     maximumScale: 5,
     userScalable: true,
-    themeColor: '#000000',
+    colorScheme: 'light dark',
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: '#faf9f7' },
+        { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    ],
 };
 
 
@@ -77,7 +77,7 @@ export default async function RootLayout({
             <body className="min-h-screen bg-background text-foreground relative font-sans antialiased overflow-x-hidden">
                 <a
                     href="#main-content"
-                    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:right-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-[9999] text-center"
+                    className="type-nav sr-only z-[300] rounded-md bg-primary px-4 py-2 text-center text-primary-foreground focus:not-sr-only focus:absolute focus:end-4 focus:top-4 focus:start-4"
                 >
                     {isRtl ? "تخطي إلى المحتوى الرئيسي" : "Skip to main content"}
                 </a>

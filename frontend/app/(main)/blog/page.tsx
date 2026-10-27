@@ -1,8 +1,6 @@
 import { storage } from "@/lib/storage";
 import { getServerTranslation } from "@/lib/server-i18n";
-import Link from "next/link";
 import { Metadata } from "next";
-import { Calendar, ArrowRight } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
@@ -82,7 +80,7 @@ export default async function BlogPage() {
         </div>
 
         {/* Client Interactive Search & Filtering */}
-        <BlogListClient posts={posts} lang={lang} isRtl={isRtl} />
+        <BlogListClient posts={posts} isRtl={isRtl} />
 
         {/* Editorial pillars section */}
         <div className="container mx-auto px-6 pb-24 border-t border-border pt-16">

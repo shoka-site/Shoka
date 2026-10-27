@@ -8,15 +8,15 @@ import { ExitIntentPopupClient } from "@/components/marketing/ExitIntentPopupCli
 
 function NavbarFallback() {
     return (
-        <header className="fixed top-0 left-0 right-0 z-[100] bg-transparent py-5">
-            <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-                <div className="w-14 h-14 rounded-full bg-white/5 animate-pulse" />
-                <div className="hidden lg:flex gap-4">
+        <header className="fixed inset-x-0 top-0 z-[100] bg-transparent py-4">
+            <div className="container-page flex items-center justify-between gap-3">
+                <div className="h-11 w-28 animate-pulse rounded-md bg-muted/60" />
+                <div className="hidden gap-4 xl:flex">
                     {Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="h-10 w-24 rounded-full bg-white/5 animate-pulse" />
+                        <div key={i} className="h-10 w-20 animate-pulse rounded-pill bg-muted/60" />
                     ))}
                 </div>
-                <div className="h-10 w-40 rounded-full bg-white/5 animate-pulse" />
+                <div className="h-11 w-40 animate-pulse rounded-pill bg-muted/60" />
             </div>
         </header>
     );
@@ -40,10 +40,10 @@ export default async function MainLayout({
             <Suspense fallback={<NavbarFallback />}>
                 <Navbar lang={lang} />
             </Suspense>
-            <main id="main-content" tabIndex={-1} className="relative z-10 w-full pb-20 lg:pb-0 outline-none">
+            <main id="main-content" tabIndex={-1} className="relative z-10 w-full outline-none">
                 {children}
             </main>
-            <BottomNav />
+            <BottomNav lang={lang} />
             <Footer lang={lang} />
             <ExitIntentPopupClient />
         </>

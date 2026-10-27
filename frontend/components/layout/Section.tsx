@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Container } from "@/components/ui/container";
 import { ReactNode } from "react";
 
 interface SectionProps {
@@ -16,8 +17,8 @@ export default function Section({
 }: SectionProps) {
     const bgStyles = {
         default: "bg-background",
-        muted: "bg-muted",
-        accent: "bg-[rgba(194,164,92,0.04)]",
+        muted: "bg-surface",
+        accent: "bg-primary-subtle",
         none: "",
     };
 
@@ -25,14 +26,14 @@ export default function Section({
         <section
             id={id}
             className={cn(
-                "py-10 sm:py-16 md:py-24 relative overflow-hidden",
+                "section-space relative overflow-hidden",
                 bgStyles[background],
                 className
             )}
         >
-            <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+            <Container className="relative z-10">
                 {children}
-            </div>
+            </Container>
         </section>
     );
 }

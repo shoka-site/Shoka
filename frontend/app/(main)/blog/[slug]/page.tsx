@@ -3,7 +3,7 @@ import { getServerTranslation } from "@/lib/server-i18n";
 import { Metadata } from "next";
 import { slugify } from "@/lib/utils";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Tag, ArrowRight, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, ArrowRight } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 
 interface Props {

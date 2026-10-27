@@ -1,6 +1,11 @@
 import { LayoutGrid, Package, Globe, type LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import PanelSkeleton from "./PanelSkeleton";
+import {
+  PRIMARY_NAV,
+  type PrimaryNavId,
+  type PrimaryNavLink,
+} from "@/lib/site-navigation";
 
 const IndustriesPanel = dynamic(() => import("./IndustriesPanel"), {
   loading: () => <PanelSkeleton />,
@@ -18,62 +23,44 @@ const AboutPanel = dynamic(() => import("./AboutPanel"), {
   loading: () => <PanelSkeleton />,
 });
 
-export interface NavCategory {
-  id: string;
-  titleKey: string;
-  defaultTitle?: string;
-  descriptionKey: string;
-  href: string;
+export interface NavCategory extends PrimaryNavLink {
   icon: LucideIcon;
   layout: "list" | "grid" | "columns";
   Panel: React.ComponentType<{ isRtl: boolean }>;
 }
 
-export const NAV_CATEGORIES: NavCategory[] = [
-  {
-    id: "industries",
-    titleKey: "navbar.industries",
-    descriptionKey: "home.industries.description",
-    href: "/industries/",
+const CATEGORY_META: Record<
+  PrimaryNavId,
+  Pick<NavCategory, "icon" | "layout" | "Panel">
+> = {
+  industries: {
     icon: LayoutGrid,
     layout: "list",
     Panel: IndustriesPanel,
   },
-  {
-    id: "services",
-    titleKey: "navbar.services",
-    defaultTitle: "Services",
-    descriptionKey: "navbar.menu.services.description",
-    href: "/services/",
+  services: {
     icon: LayoutGrid,
     layout: "list",
     Panel: ServicesPanel,
   },
-  {
-    id: "packages",
-    titleKey: "navbar.packages",
-    descriptionKey: "navbar.menu.packages.description",
-    href: "/packages/",
+  packages: {
     icon: Package,
     layout: "grid",
     Panel: PackagesPanel,
   },
-  {
-    id: "projects",
-    titleKey: "navbar.projects",
-    descriptionKey: "portfolio.projects.description",
-    href: "/projects/",
+  projects: {
     icon: LayoutGrid,
     layout: "list",
     Panel: ProjectsPanel,
   },
-  {
-    id: "about",
-    titleKey: "navbar.about",
-    descriptionKey: "footer.desc",
-    href: "/about/",
+  about: {
     icon: Globe,
     layout: "columns",
     Panel: AboutPanel,
   },
-];
+};
+
+export const NAV_CATEGORIES: NavCategory[] = PRIMARY_NAV.map((category) => ({
+  ...category,
+  ...CATEGORY_META[category.id],
+}));
