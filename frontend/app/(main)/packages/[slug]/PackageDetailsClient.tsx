@@ -327,7 +327,7 @@ export default function PackageDetailsClient({ id }: { id: string }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherPackages.map((p, i) => (
                 <FadeIn key={p.id} delay={i * 0.08}>
-                  <Link href={`/packages/${slugify((p as any).titleEn || p.title)}/`}>
+                  <Link href={`/packages/${slugify(p.titleEn || p.title)}/`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"

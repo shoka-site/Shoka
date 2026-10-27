@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { type Project } from "@shared/schema";
 import { prisma } from "../prisma";
 import { unstable_cache, revalidateTag } from "next/cache";
@@ -45,16 +46,28 @@ export const projectRepository = {
   },
 
   async createProject(project: Omit<Project, "id" | "createdAt" | "updatedAt">): Promise<Project> {
-    const result = await prisma.project.create({ data: project as any });
+    const { metrics, ...fields } = project;
+    const data: Prisma.ProjectUncheckedCreateInput = {
+      ...fields,
+      metrics: metrics ? (metrics as unknown as Prisma.InputJsonValue) : [],
+    };
+    const result = await prisma.project.create({ data });
     revalidateTag("projects", "max");
     return result as Project;
   },
 
   async updateProject(id: string, updates: Partial<Omit<Project, "id" | "createdAt" | "updatedAt">>): Promise<Project | undefined> {
     try {
+      const { metrics, ...fields } = updates;
+      const data: Prisma.ProjectUpdateInput = {
+        ...fields,
+        ...(metrics !== undefined
+          ? { metrics: metrics as unknown as Prisma.InputJsonValue }
+          : {}),
+      };
       const result = await prisma.project.update({
         where: { id, deletedAt: null },
-        data: updates as any,
+        data,
       });
       revalidateTag("projects", "max");
       return result as Project;

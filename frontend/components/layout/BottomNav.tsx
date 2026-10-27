@@ -2,58 +2,70 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Home, LayoutGrid, Info, Phone, Briefcase } from "lucide-react";
+import { Briefcase, Home, Info, LayoutGrid, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { SITE_LINKS, isActivePath } from "@/lib/site-navigation";
 
-export default function BottomNav() {
+interface BottomNavProps {
+  lang: "en" | "ar";
+}
+
+export default function BottomNav({ lang }: BottomNavProps) {
   const pathname = usePathname();
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+  const t = i18n.getFixedT(lang);
 
   const navItems = [
-    { name: t("navbar.home", "Home"), href: "/home", icon: Home },
-    { name: t("navbar.services", "Services"), href: "/services", icon: Briefcase },
-    { name: t("navbar.projects", "Projects"), href: "/projects", icon: LayoutGrid },
-    { name: t("navbar.about", "About"), href: "/about", icon: Info },
-    { name: t("navbar.contact", "Contact"), href: "/contact", icon: Phone },
+    { link: SITE_LINKS.home, icon: Home },
+    { link: SITE_LINKS.services, icon: Briefcase },
+    { link: SITE_LINKS.projects, icon: LayoutGrid },
+    { link: SITE_LINKS.about, icon: Info },
+    { link: SITE_LINKS.contact, icon: Phone },
   ];
 
   return (
-    <motion.nav
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] bg-background/90 backdrop-blur-xl border-t border-border pb-[env(safe-area-inset-bottom)] shadow-lg"
+    <nav
+      aria-label={t("navbar.primary_nav")}
+      className="fixed inset-x-0 bottom-0 z-[100] border-t border-border bg-background/95 pb-[env(safe-area-inset-bottom)] shadow-lg backdrop-blur-xl xl:hidden"
     >
-      <div className="flex items-center justify-around h-16 px-2">
+      <div className="flex h-16 items-center justify-around px-2">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || (item.href !== "/home" && pathname.startsWith(item.href));
+          const active = isActivePath(pathname, item.link.href);
           const Icon = item.icon;
 
           return (
             <Link
-              key={item.href}
-              href={item.href}
+              key={item.link.href}
+              href={item.link.href}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors relative",
-                isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                "focus-ring transition-ui relative flex h-full flex-1 flex-col items-center justify-center gap-1 rounded-md",
+                active
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {isActive && (
-                <motion.div
-                  layoutId="bottomNavAccent"
-                  className="absolute -top-[1px] left-1/4 right-1/4 h-[2px] bg-primary shadow-[0_0_10px_rgba(194,164,92,0.5)]"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              {active && (
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-5 top-0 h-0.5 rounded-pill bg-primary"
                 />
               )}
-              <Icon className={cn("w-5 h-5 transition-transform", isActive && "scale-110")} />
-              <span className="text-[9px] font-bold uppercase tracking-wider truncate px-1">
-                {item.name}
+              <Icon
+                aria-hidden="true"
+                className={cn(
+                  "size-5 transition-transform",
+                  active && "scale-110"
+                )}
+              />
+              <span className="max-w-full truncate px-1 text-[0.6875rem] font-semibold leading-none">
+                {t(item.link.titleKey, item.link.defaultTitle)}
               </span>
             </Link>
           );
         })}
       </div>
-    </motion.nav>
+    </nav>
   );
 }

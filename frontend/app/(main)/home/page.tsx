@@ -77,7 +77,7 @@ export default async function Home() {
       <ScrollProgressBar />
 
       {/* Hero Section — client component, localizes data reactively */}
-      <HeroUpdatesClient items={rawUpdates} projects={allProjects} services={rawServices} isRtl={isRtl} />
+      <HeroUpdatesClient items={rawUpdates} projects={allProjects} services={rawServices} />
 
       {/* Why Us Banner — client component, receives server-resolved isRtl to prevent hydration mismatch */}
       <WhyUsBanner isRtl={isRtl} />

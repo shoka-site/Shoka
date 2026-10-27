@@ -4,9 +4,16 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
-export default function MegaMenuSection({ title, description, icon: Icon, href, children }: {
+export default function MegaMenuSection({
+  title,
+  description,
+  icon: Icon,
+  href,
+  children,
+}: {
   title: string;
   description: string;
   icon: React.ElementType;
@@ -15,72 +22,74 @@ export default function MegaMenuSection({ title, description, icon: Icon, href, 
   layout?: "columns" | "grid" | "list";
 }) {
   const { i18n, t } = useTranslation();
-  const isRtl = i18n.dir() === 'rtl';
+  const reducedMotion = useReducedMotion();
+  const isRtl = i18n.dir() === "rtl";
+  const transition = reducedMotion
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 400, damping: 30 };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={reducedMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className={`w-screen bg-background/95 text-foreground backdrop-blur-2xl border-y border-border shadow-2xl overflow-hidden ${isRtl ? 'rtl' : 'ltr'}`}
+      transition={transition}
+      className="relative w-screen overflow-hidden border-y border-border bg-background/95 text-foreground shadow-xl backdrop-blur-2xl"
+      dir={isRtl ? "rtl" : "ltr"}
     >
-      {/* Static gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
 
-      <div className={`container mx-auto px-6 md:px-12 flex items-stretch relative z-10 ${isRtl ? 'flex-row-reverse' : 'flex-row'}`}>
-        {/* Sidebar / Featured */}
-        <div className={`w-1/3 bg-muted/40 p-12 flex flex-col relative overflow-hidden ${isRtl ? 'border-l' : 'border-r'} border-border/40`}>
-          {/* Noise texture for sidebar */}
-          <div className="absolute inset-0 bg-grain opacity-[0.04] pointer-events-none" />
+      <div className="container-page relative z-10 flex items-stretch">
+        <div className="relative flex w-1/3 flex-col overflow-hidden border-e border-border/60 bg-muted/40 p-10">
+          <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.04]" />
+          <div className="pointer-events-none absolute -start-32 -top-32 size-80 rounded-full bg-primary/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -bottom-12 -end-12 size-48 rounded-full bg-primary/10 blur-[80px]" />
 
-          {/* Static gold orbs */}
-          <div className="absolute -top-32 -left-32 w-80 h-80 bg-primary/15 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-0 right-0 w-48 h-48 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col h-full">
+          <div className="relative z-10 flex h-full flex-col">
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={reducedMotion ? false : { scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.1, type: "spring", stiffness: 300, damping: 25 }}
-              className={`w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-primary/20 to-primary/5 text-primary flex items-center justify-center mb-8 shadow-[0_0_40px_rgba(194,164,92,0.2)] border border-primary/20`}
+              transition={reducedMotion ? { duration: 0 } : { ...transition, delay: 0.1 }}
+              className="mb-6 flex size-14 items-center justify-center rounded-panel border border-primary/20 bg-primary/10 text-primary shadow-sm"
             >
-              <Icon className="w-8 h-8" />
+              <Icon aria-hidden="true" className="size-7" />
             </motion.div>
+
             <motion.h3
-              initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+              initial={reducedMotion ? false : { opacity: 0, x: isRtl ? 16 : -16 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 25 }}
-              className={`text-4xl font-display font-black text-foreground mb-4 tracking-tighter ${isRtl ? 'text-right' : 'text-left'}`}
+              transition={reducedMotion ? { duration: 0 } : { ...transition, delay: 0.15 }}
+              className="type-section-title mb-3 text-start"
             >
               {title}
             </motion.h3>
+
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={reducedMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 300, damping: 25 }}
-              className={`text-lg text-muted-foreground leading-relaxed font-light mb-12 flex-grow ${isRtl ? 'text-right' : 'text-left'}`}
+              transition={reducedMotion ? { duration: 0 } : { ...transition, delay: 0.2 }}
+              className="type-support mb-8 flex-grow text-start text-muted-foreground"
             >
               {description}
             </motion.p>
+
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={reducedMotion ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, type: "spring", stiffness: 300, damping: 25 }}
+              transition={reducedMotion ? { duration: 0 } : { ...transition, delay: 0.25 }}
             >
-              <Link href={href} className={`inline-flex items-center px-8 py-4 bg-muted border border-border rounded-full text-foreground text-xs font-black uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground hover:border-primary/50 hover:scale-105 active:scale-95 transition-all group w-fit shadow-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse' : ''}`}>
-                {t("common.explore_all")} <ArrowRight className={`w-4 h-4 transition-transform ${isRtl ? 'mr-3 rotate-180 group-hover:-translate-x-1' : 'ml-3 group-hover:translate-x-1'}`} />
-              </Link>
+              <Button asChild variant="outline" size="lg" className="rounded-pill">
+                <Link href={href}>
+                  <span className="type-label">{t("common.explore_all")}</span>
+                  <ArrowRight aria-hidden="true" className="rtl:rotate-180" />
+                </Link>
+              </Button>
             </motion.div>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="w-2/3 p-12 bg-gradient-to-br from-transparent via-muted/[0.1] to-transparent relative">
-          {/* Static radial gold spotlight */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-primary/[0.02] rounded-full blur-[120px] pointer-events-none" />
-          <div className="relative z-10">
-            {children}
-          </div>
+        <div className="relative w-2/3 bg-gradient-to-br from-transparent via-muted/20 to-transparent p-10">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 size-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.02] blur-[120px]" />
+          <div className="relative z-10">{children}</div>
         </div>
       </div>
     </motion.div>

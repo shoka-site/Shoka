@@ -15,15 +15,15 @@ export default function PackagesPanel({ isRtl }: { isRtl: boolean }) {
     <>
       <ul className="grid grid-cols-2 gap-4">
         {packages.slice(0, 4).map((pkg, idx) => (
-          <motion.div
+          <motion.li
             key={pkg.id}
             initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1, type: "spring", stiffness: 300, damping: 25 }}
           >
-            <Link href={`/packages/${slugify(pkg.titleEn)}`} className={`group flex items-start gap-4 p-5 rounded-2xl hover:bg-muted border border-transparent hover:border-border transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse text-right' : ''}`}>
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                <Package className="w-6 h-6" />
+            <Link href={`/packages/${slugify(pkg.titleEn)}/`} className="focus-ring transition-ui group flex items-start gap-4 rounded-lg border border-transparent p-5 text-start hover:border-border hover:bg-muted">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                <Package aria-hidden="true" className="size-6" />
               </div>
               <div>
                 <div className="text-sm font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-tight">{pkg.title}</div>
@@ -32,14 +32,14 @@ export default function PackagesPanel({ isRtl }: { isRtl: boolean }) {
                 )}
               </div>
             </Link>
-          </motion.div>
+          </motion.li>
         ))}
       </ul>
       {packages.length > 4 && (
         <div className="mt-6 pt-6 border-t border-border">
-          <Link href="/packages" className={`inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${isRtl ? 'flex-row-reverse' : ''}`}>
+          <Link href="/packages/" className="focus-ring transition-ui inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-primary">
             {t("navbar.menu.packages.view_all", { count: packages.length })}
-            <ArrowRight className={`w-4 h-4 ${isRtl ? 'mr-2 rotate-180' : 'ml-2'}`} />
+            <ArrowRight aria-hidden="true" className="ms-2 size-4 rtl:rotate-180" />
           </Link>
         </div>
       )}

@@ -16,7 +16,6 @@ export default async function ServiceDetailLayout({
   try {
     const services = await storage.getServices(true);
     const service = services.find(s => slugify(s.titleEn) === slug || s.id === slug || slugify(s.titleAr) === slug);
-    const id = service?.id;
     const title = service ? (service.titleAr || service.titleEn) : "";
     const description = service ? (service.descriptionAr || service.descriptionEn) : "";
 

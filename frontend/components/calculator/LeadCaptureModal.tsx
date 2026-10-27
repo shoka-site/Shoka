@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { X, CheckCircle, Send, Building2, User, Phone, Mail, Sparkles, Loader2 } from "lucide-react";
+import { X, CheckCircle, Send, Building2, User, Sparkles, Loader2 } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  lang: "ar" | "en";
   isRtl: boolean;
   estimateSummary: {
     solutionTitle: string;
@@ -17,12 +16,11 @@ interface Props {
   };
 }
 
-export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary }: Props) {
+export function LeadCaptureModal({ isOpen, onClose, isRtl, estimateSummary }: Props) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+964");
   const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -43,10 +41,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
     const scopeNotes = `Scope: ${estimateSummary.solutionTitle} (${estimateSummary.scaleLabel}). Modules: ${estimateSummary.modulesCount}. Est: ${estimateSummary.estimatedUsd} / ${estimateSummary.estimatedIqd}`;
 
     try {
-      const cleanEmail = email.trim();
-      const validEmail = cleanEmail && cleanEmail.includes("@")
-        ? cleanEmail
-        : `phone.${phone.replace(/\D/g, "") || Date.now()}@sehle-lead.iq`;
+      const validEmail = `phone.${phone.replace(/\D/g, "") || Date.now()}@sehle-lead.iq`;
 
       const res = await fetch("/api/admin/consultations", {
         method: "POST",
@@ -64,7 +59,7 @@ export function LeadCaptureModal({ isOpen, onClose, lang, isRtl, estimateSummary
       }
 
       setIsSubmitted(true);
-    } catch (err) {
+    } catch {
       setErrorMsg(isRtl ? "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً." : "Submission failed, please try again.");
     } finally {
       setIsSubmitting(false);

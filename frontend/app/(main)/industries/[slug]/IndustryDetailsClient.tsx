@@ -315,7 +315,7 @@ export default function IndustryDetailsClient({ id }: { id: string }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {otherIndustries.map((ind, i) => (
                 <FadeIn key={ind.id} delay={i * 0.08}>
-                  <Link href={`/industries/${slugify((ind as any).titleEn || ind.title)}/`}>
+                  <Link href={`/industries/${slugify(ind.titleEn || ind.title)}/`}>
                     <motion.div
                       whileHover={{ y: -6, transition: { duration: 0.2 } }}
                       className="group h-full flex flex-col bg-background border border-border/60 rounded-3xl p-7 hover:border-primary/40 hover:shadow-xl transition-all duration-500 cursor-pointer"

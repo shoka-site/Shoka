@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Star, ChevronLeft, ChevronRight, Quote, Building2, MapPin, CheckCircle2 } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Quote, MapPin, CheckCircle2 } from "lucide-react";
 
 interface Testimonial {
   id: string;
@@ -72,11 +72,10 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 interface Props {
-  lang: "ar" | "en";
   isRtl: boolean;
 }
 
-export function TestimonialCarouselClient({ lang, isRtl }: Props) {
+export function TestimonialCarouselClient({ isRtl }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prev = () => {
@@ -112,7 +111,7 @@ export function TestimonialCarouselClient({ lang, isRtl }: Props) {
 
           {/* Testimonial Quote */}
           <p className="text-xl md:text-2xl font-display font-medium text-foreground leading-relaxed mb-8 italic">
-            "{isRtl ? activeTestimonial.textAr : activeTestimonial.textEn}"
+            &ldquo;{isRtl ? activeTestimonial.textAr : activeTestimonial.textEn}&rdquo;
           </p>
 
           {/* Author Meta */}

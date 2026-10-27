@@ -5,6 +5,19 @@ import { packageRepository } from "@/lib/repositories/packages";
 import { industryRepository } from "@/lib/repositories/industries";
 import { projectRepository } from "@/lib/repositories/projects";
 
+type JsonRecord = Record<string, unknown>;
+
+const asText = (value: unknown): string | undefined =>
+  typeof value === "string" && value.trim() ? value : undefined;
+
+const asNumber = (value: unknown): number | undefined =>
+  typeof value === "number" && Number.isFinite(value) ? value : undefined;
+
+const asList = (value: unknown): string[] =>
+  Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
+
 export async function GET() {
   const [services, packages, industries, projects] = await Promise.all([
     serviceRepository.getServices(true).catch(() => []),
@@ -24,17 +37,19 @@ export async function GET() {
 `;
 
   services.forEach((s) => {
-    const item = s as Record<string, any>;
-    markdown += `### ${item.titleEn} (${item.titleAr})\n`;
-    markdown += `- Description: ${item.descriptionEn}\n`;
-    if (item.fullDescriptionEn) {
-      markdown += `- Overview: ${String(item.fullDescriptionEn).replace(/\n+/g, " ")}\n`;
+    const item = s as unknown as JsonRecord;
+    const features = asList(item.featuresEn);
+    const category = asText(item.type) || asText(item.category);
+    markdown += `### ${asText(item.titleEn) ?? ""} (${asText(item.titleAr) ?? ""})\n`;
+    markdown += `- Description: ${asText(item.descriptionEn) ?? ""}\n`;
+    if (asText(item.fullDescriptionEn)) {
+      markdown += `- Overview: ${asText(item.fullDescriptionEn)?.replace(/\n+/g, " ")}\n`;
     }
-    if (Array.isArray(item.featuresEn) && item.featuresEn.length > 0) {
-      markdown += `- Features: ${item.featuresEn.join(", ")}\n`;
+    if (features.length > 0) {
+      markdown += `- Features: ${features.join(", ")}\n`;
     }
-    if (item.type || item.category) {
-      markdown += `- Category: ${item.type || item.category}\n\n`;
+    if (category) {
+      markdown += `- Category: ${category}\n\n`;
     }
   });
 
@@ -45,13 +60,17 @@ export async function GET() {
 `;
 
   packages.forEach((pkg) => {
-    const item = pkg as Record<string, any>;
-    markdown += `### ${item.nameEn || item.titleEn} (${item.nameAr || item.titleAr})\n`;
-    if (item.slug) markdown += `- Tier / Slug: ${item.slug}\n`;
-    if (item.priceUsd) markdown += `- Price: $${item.priceUsd} USD / ${(item.priceIqd || 0).toLocaleString()} IQD\n`;
-    markdown += `- Summary: ${item.descriptionEn}\n`;
-    if (Array.isArray(item.featuresEn) && item.featuresEn.length > 0) {
-      markdown += `- Includes: ${item.featuresEn.join(", ")}\n`;
+    const item = pkg as unknown as JsonRecord;
+    const features = asList(item.featuresEn);
+    const priceUsd = asNumber(item.priceUsd);
+    const priceIqd = asNumber(item.priceIqd) ?? 0;
+    const slug = asText(item.slug);
+    markdown += `### ${asText(item.nameEn) || asText(item.titleEn) || ""} (${asText(item.nameAr) || asText(item.titleAr) || ""})\n`;
+    if (slug) markdown += `- Tier / Slug: ${slug}\n`;
+    if (priceUsd) markdown += `- Price: $${priceUsd} USD / ${priceIqd.toLocaleString()} IQD\n`;
+    markdown += `- Summary: ${asText(item.descriptionEn) ?? ""}\n`;
+    if (features.length > 0) {
+      markdown += `- Includes: ${features.join(", ")}\n`;
     }
     markdown += `\n`;
   });
@@ -63,11 +82,12 @@ export async function GET() {
 `;
 
   industries.forEach((ind) => {
-    const item = ind as Record<string, any>;
-    markdown += `### ${item.titleEn} (${item.titleAr})\n`;
-    markdown += `- Overview: ${item.descriptionEn}\n`;
-    if (Array.isArray(item.solutionsEn) && item.solutionsEn.length > 0) {
-      markdown += `- Custom Solutions: ${item.solutionsEn.join(", ")}\n`;
+    const item = ind as unknown as JsonRecord;
+    const solutions = asList(item.solutionsEn);
+    markdown += `### ${asText(item.titleEn) ?? ""} (${asText(item.titleAr) ?? ""})\n`;
+    markdown += `- Overview: ${asText(item.descriptionEn) ?? ""}\n`;
+    if (solutions.length > 0) {
+      markdown += `- Custom Solutions: ${solutions.join(", ")}\n`;
     }
     markdown += `\n`;
   });
@@ -79,15 +99,18 @@ export async function GET() {
 `;
 
   projects.forEach((proj) => {
-    const item = proj as Record<string, any>;
-    markdown += `### ${item.titleEn} (${item.titleAr})\n`;
-    if (item.clientEn) markdown += `- Client/Domain: ${item.clientEn}\n`;
-    markdown += `- Solution Summary: ${item.descriptionEn}\n`;
-    if (Array.isArray(item.techStack) && item.techStack.length > 0) {
-      markdown += `- Technology Stack: ${item.techStack.join(", ")}\n`;
+    const item = proj as unknown as JsonRecord;
+    const techStack = asList(item.techStack);
+    const results = asList(item.resultsEn);
+    const client = asText(item.clientEn);
+    markdown += `### ${asText(item.titleEn) ?? ""} (${asText(item.titleAr) ?? ""})\n`;
+    if (client) markdown += `- Client/Domain: ${client}\n`;
+    markdown += `- Solution Summary: ${asText(item.descriptionEn) ?? ""}\n`;
+    if (techStack.length > 0) {
+      markdown += `- Technology Stack: ${techStack.join(", ")}\n`;
     }
-    if (Array.isArray(item.resultsEn) && item.resultsEn.length > 0) {
-      markdown += `- Key Results & Metrics: ${item.resultsEn.join(", ")}\n`;
+    if (results.length > 0) {
+      markdown += `- Key Results & Metrics: ${results.join(", ")}\n`;
     }
     markdown += `\n`;
   });

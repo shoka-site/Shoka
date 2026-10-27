@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, Calendar, Tag, ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import { Search, Calendar, ArrowRight, BookOpen } from "lucide-react";
 
 interface PostItem {
   id: string;
@@ -16,7 +16,6 @@ interface PostItem {
 
 interface Props {
   posts: PostItem[];
-  lang: "ar" | "en";
   isRtl: boolean;
 }
 
@@ -27,7 +26,7 @@ const CATEGORIES = [
   { id: "Technical Architecture", labelEn: "Tech Architecture", labelAr: "الهندسة التقنية" },
 ];
 
-export function BlogListClient({ posts, lang, isRtl }: Props) {
+export function BlogListClient({ posts, isRtl }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
 

@@ -3,6 +3,7 @@ import { getServerTranslation } from "@/lib/server-i18n";
 import { ContactHero, InfoCard } from "@/components/contact/ContactClientComponents";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Metadata } from "next";
+import { CONTACT } from "@/lib/site-navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { lang } = await getServerTranslation();
@@ -82,7 +83,7 @@ export default async function Contact() {
                   </a>
 
                   <a
-                    href="https://wa.me/9647858925817"
+                    href={CONTACT.whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-start gap-5 group transition-transform duration-300 hover:translate-x-1 rtl:hover:-translate-x-1"
@@ -93,7 +94,7 @@ export default async function Contact() {
                     <div>
                       <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-1">{t('contact.call_us')}</h4>
                       <p className="text-foreground font-medium text-lg group-hover:text-primary transition-colors" dir="ltr">
-                        +964 785 892 5817
+                        {CONTACT.whatsappDisplay}
                       </p>
                       <p className="text-sm text-muted-foreground mt-1">{t('contact.mon_fri')}</p>
                     </div>

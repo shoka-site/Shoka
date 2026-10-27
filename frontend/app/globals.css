@@ -3,105 +3,254 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Sehle design system
+  -------------------
+  One semantic token layer for both themes. Components must consume these
+  tokens (or Tailwind utilities generated from them) rather than hex/rgba
+  literals. The gold/ivory/obsidian identity is preserved; the light-mode
+  gold is darker so it clears WCAG AA for normal text on ivory (5.03:1 on
+  white, 4.78:1 on the page background).
+*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-strong: var(--surface-strong);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-subtle-foreground: var(--primary-subtle-foreground);
+  --color-primary-border: var(--primary-border);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-border: var(--secondary-border);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-content-secondary: var(--content-secondary);
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-border: var(--destructive-border);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --font-sans: var(--font-cairo, Arial, sans-serif);
-  --font-display: var(--font-cairo, Arial, sans-serif);
-  --font-arabic: var(--font-cairo, Arial, sans-serif);
+  --font-sans: var(--font-cairo), ui-sans-serif, sans-serif;
+  --font-display: var(--font-cairo), ui-sans-serif, sans-serif;
+  --font-arabic: var(--font-cairo), ui-sans-serif, sans-serif;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+  --radius-pill: 9999px;
+
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+  --shadow-xl: var(--elevation-xl);
+  --shadow-focus: var(--elevation-focus);
+
+  --ease-standard: var(--motion-ease-standard);
+  --ease-emphasized: var(--motion-ease-emphasized);
+  --ease-exit: var(--motion-ease-exit);
 }
 
 :root {
-  /*
-  ══════════════════════════════════════════════
-  MESOPOTAMIAN LUXURY — "The Light of Ur" (Light Theme)
-  Inspired by: alabaster stone of Nineveh,
-  golden artifacts of Ur, and warm sunlit tablets.
-  ══════════════════════════════════════════════
-  */
+  color-scheme: light;
 
-  --background: hsl(40 20% 97.5%);       /* Warm Alabaster Ivory #fcfbf8 */
-  --foreground: hsl(0 0% 12%);           /* Obsidian Black #1e1e1e */
-
-  --card: hsl(0 0% 100%);               /* Pure Ivory Card */
-  --card-foreground: hsl(0 0% 12%);
-
+  /* ── Color: light (warm alabaster + deep Ur gold) ─────────────── */
+  --background: hsl(40 24% 97.5%);
+  --foreground: hsl(30 8% 11%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(30 8% 11%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(0 0% 12%);
+  --popover-foreground: hsl(30 8% 11%);
 
-  --primary: hsl(42 65% 38%);           /* Ur Gold — Rich Bronze Gold for light contrast */
+  --surface: hsl(40 20% 95.5%);
+  --surface-raised: hsl(0 0% 100%);
+  --surface-strong: hsl(40 18% 91%);
+
+  --primary: hsl(42 65% 33%);
   --primary-foreground: hsl(0 0% 100%);
+  --primary-hover: hsl(42 68% 27%);
+  --primary-active: hsl(42 68% 24%);
+  --primary-subtle: hsl(42 70% 94%);
+  --primary-subtle-foreground: hsl(42 65% 24%);
+  --primary-border: hsl(42 55% 33% / 0.28);
 
-  --secondary: hsl(40 18% 91%);         /* Soft Sand Alabaster */
-  --secondary-foreground: hsl(0 0% 15%);
+  --secondary: hsl(40 18% 91%);
+  --secondary-foreground: hsl(30 10% 18%);
+  --secondary-border: hsl(40 20% 52% / 0.22);
+
+  --accent: hsl(40 30% 92%);
+  --accent-foreground: hsl(42 65% 24%);
+  --gold: hsl(42 43% 56%);
+  --gold-soft: hsl(42 50% 88%);
+  --gold-rgb: 194 164 92;
 
   --muted: hsl(40 16% 93.5%);
-  --muted-foreground: hsl(30 8% 38%);    /* Readable slate-brown */
+  --muted-foreground: hsl(30 8% 34%);
+  --content-secondary: hsl(30 8% 28%);
 
-  --accent: hsl(42 65% 38%);            /* Ur Gold */
-  --accent-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 70% 38%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --destructive-border: hsl(0 70% 38% / 0.3);
+  --success: hsl(152 55% 28%);
+  --success-foreground: hsl(0 0% 100%);
+  --warning: hsl(32 80% 28%);
+  --warning-foreground: hsl(0 0% 100%);
+  --error: var(--destructive);
+  --error-foreground: var(--destructive-foreground);
+  --info: hsl(205 65% 30%);
+  --info-foreground: hsl(0 0% 100%);
 
-  --destructive: hsl(0 72% 45%);
-  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(42 30% 40% / 0.2);
+  --border-strong: hsl(42 20% 45% / 0.38);
+  --input: hsl(40 12% 52%);
+  --ring: hsl(42 65% 30%);
+  --ring-soft: hsl(42 65% 33% / 0.22);
 
-  --border: hsl(42 40% 50% / 0.22);     /* Warm gilded border */
-  --input: hsl(0 0% 0% / 0.06);
-  --ring: hsl(42 65% 38%);
-
+  /* ── Layout and rhythm ─────────────────────────────────────────── */
   --radius: 0.5rem;
+  --container-content: 80rem;
+  --page-gutter: clamp(1rem, 4vw, 3rem);
+  --section-space: clamp(3.5rem, 6vw, 7rem);
+  --section-space-compact: clamp(2.5rem, 4.5vw, 4.5rem);
+  --measure-prose: 68ch;
+  --measure-heading: 28ch;
+
+  /* ── Motion ────────────────────────────────────────────────────── */
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 240ms;
+  --motion-duration-slow: 400ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ── Elevation ─────────────────────────────────────────────────── */
+  --elevation-xs: 0 1px 2px 0 rgb(28 24 16 / 0.05);
+  --elevation-sm:
+    0 1px 3px 0 rgb(28 24 16 / 0.08),
+    0 1px 2px -1px rgb(28 24 16 / 0.08);
+  --elevation-md:
+    0 12px 32px -16px rgb(28 24 16 / 0.18),
+    0 2px 8px -4px rgb(28 24 16 / 0.1);
+  --elevation-lg:
+    0 24px 64px -32px rgb(28 24 16 / 0.24),
+    0 8px 24px -16px rgb(28 24 16 / 0.12);
+  --elevation-xl:
+    0 40px 96px -40px rgb(28 24 16 / 0.3),
+    0 12px 32px -20px rgb(28 24 16 / 0.16);
+  --elevation-focus: 0 0 0 5px var(--ring-soft);
+
+  --body-glow: rgb(var(--gold-rgb) / 0.05);
 }
 
-/* Mesopotamian Luxury — "The Darkness of Babylon" (Dark Theme) */
 .dark {
-  --background: hsl(0 0% 0%);           /* #000000 — Obsidian Black */
-  --foreground: hsl(0 0% 100%);         /* #ffffff — Cuneiform White */
+  color-scheme: dark;
 
-  --card: hsl(0 0% 5%);                 /* #0d0d0d — Elevated dark panel */
+  --background: hsl(0 0% 0%);
+  --foreground: hsl(0 0% 100%);
+  --card: hsl(0 0% 5%);
   --card-foreground: hsl(0 0% 95%);
-
   --popover: hsl(0 0% 7%);
   --popover-foreground: hsl(0 0% 95%);
 
-  --primary: hsl(42 43% 56%);           /* #c2a45c — Ur Gold */
+  --surface: hsl(0 0% 4%);
+  --surface-raised: hsl(0 0% 6%);
+  --surface-strong: hsl(0 0% 10%);
+
+  --primary: hsl(42 43% 56%);
   --primary-foreground: hsl(0 0% 0%);
+  --primary-hover: hsl(42 43% 62%);
+  --primary-active: hsl(42 43% 66%);
+  --primary-subtle: hsl(42 30% 12%);
+  --primary-subtle-foreground: hsl(42 43% 70%);
+  --primary-border: hsl(42 43% 56% / 0.3);
 
-  --secondary: hsl(0 0% 10%);           /* #1a1a1a — Deep Onyx */
+  --secondary: hsl(0 0% 10%);
   --secondary-foreground: hsl(0 0% 80%);
+  --secondary-border: hsl(0 0% 100% / 0.12);
 
-  --muted: hsl(0 0% 8%);                /* #141414 — Muted dark */
+  --accent: hsl(42 20% 14%);
+  --accent-foreground: hsl(42 43% 70%);
+  --gold: hsl(42 43% 56%);
+  --gold-soft: hsl(42 30% 18%);
+
+  --muted: hsl(0 0% 8%);
   --muted-foreground: hsl(0 0% 52%);
+  --content-secondary: hsl(0 0% 68%);
 
-  --accent: hsl(42 43% 56%);
-  --accent-foreground: hsl(0 0% 0%);
-
-  --destructive: hsl(0 72% 51%);
+  --destructive: hsl(0 70% 51%);
   --destructive-foreground: hsl(0 0% 98%);
+  --destructive-border: hsl(0 70% 51% / 0.35);
+  --success: hsl(152 45% 60%);
+  --success-foreground: hsl(0 0% 0%);
+  --warning: hsl(38 80% 64%);
+  --warning-foreground: hsl(0 0% 0%);
+  --error: hsl(0 70% 66%);
+  --error-foreground: hsl(0 0% 0%);
+  --info: hsl(205 65% 66%);
+  --info-foreground: hsl(0 0% 0%);
 
   --border: hsl(42 43% 56% / 0.15);
-  --input: hsl(0 0% 100% / 0.06);
+  --border-strong: hsl(42 43% 56% / 0.28);
+  --input: hsl(42 10% 45%);
   --ring: hsl(42 43% 56%);
+  --ring-soft: hsl(42 43% 56% / 0.28);
+
+  --elevation-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --elevation-sm:
+    0 1px 3px 0 rgb(0 0 0 / 0.5),
+    0 1px 2px -1px rgb(0 0 0 / 0.5);
+  --elevation-md:
+    0 12px 32px -16px rgb(0 0 0 / 0.65),
+    0 2px 8px -4px rgb(0 0 0 / 0.5);
+  --elevation-lg:
+    0 24px 64px -32px rgb(0 0 0 / 0.75),
+    0 8px 24px -16px rgb(0 0 0 / 0.55);
+  --elevation-xl:
+    0 40px 96px -40px rgb(0 0 0 / 0.85),
+    0 12px 32px -20px rgb(0 0 0 / 0.65);
+  --elevation-focus: 0 0 0 5px var(--ring-soft);
+
+  --body-glow: rgb(var(--gold-rgb) / 0.08);
 }
 
 @layer base {
@@ -110,11 +259,12 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground leading-[1.7];
-    /* Subtle golden radial bloom from the top — like a divine light from Babylon */
+    @apply font-sans antialiased bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.7;
     background-image: radial-gradient(
       ellipse 120% 40% at 50% -5%,
-      rgba(194, 164, 92, 0.06) 0%,
+      var(--body-glow) 0%,
       transparent 70%
     );
   }
@@ -125,21 +275,37 @@
   h4,
   h5,
   h6 {
-    @apply font-display tracking-tight;
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--primary-subtle);
+    color: var(--primary-subtle-foreground);
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  /* Legacy components often pair `focus-visible:outline-none` with a ring
+     utility that does not render. Keep a visible fallback for controls that
+     do not opt into the tokenized `.focus-ring` utility. */
+  :where(a, button, summary, [role="button"], [tabindex], input[type="checkbox"], input[type="radio"]):not(.focus-ring):focus-visible {
+    outline-width: 2px !important;
+    outline-style: solid !important;
+    outline-color: var(--ring) !important;
+    outline-offset: 3px !important;
   }
 
   /* ══════════════════════════════════════════════════════════
      RTL / Arabic — root-level direction + rendering baseline
-     ══════════════════════════════════════════════════════════
-
-     DIRECTION
-     The HTML dir attribute drives browser text direction, but
-     declaring it explicitly in CSS ensures it survives any
-     Tailwind preflight or third-party reset.
-     `text-align: start` resolves to right in RTL, left in LTR —
-     making every block element right-aligned in Arabic without
-     per-component changes. */
-
+     ══════════════════════════════════════════════════════════ */
   html[dir="rtl"] {
     direction: rtl;
     unicode-bidi: isolate;
@@ -147,97 +313,171 @@
 
   html[dir="rtl"] body {
     text-align: start;
-    /* overflow-x:clip creates a clipping context without making body a
-       scroll container — prevents Arabic glyphs from being sliced at
-       the viewport edge, unlike overflow-x:hidden which causes cutoff. */
+    /* Clip instead of creating a scroll container; prevents Arabic glyphs
+       from being sliced at the viewport edge. */
     overflow-x: clip !important;
   }
 
-  /* ── LETTER-SPACING — kill every tracking-* utility globally ──────────
-     Arabic is a connected cursive script. Every letter physically connects
-     to its neighbours via shaped joins. Any non-zero letter-spacing breaks
-     those joins: positive spacing leaves visible gaps inside words; negative
-     spacing compresses glyphs into each other. Both look like "cut" text.
-
-     The Tailwind classes tracking-tight / tracking-tighter / tracking-wide /
-     tracking-wider / tracking-widest / tracking-[…] are used on 40+ elements
-     across buttons, badges, labels, and headings throughout this codebase.
-     This single rule zeroes all of them in one place. */
+  /* Arabic is a connected script: any letter-spacing breaks joins. */
   html[dir="rtl"] * {
     letter-spacing: 0 !important;
   }
+}
 
-  /* ── LINE-HEIGHT — prevent glyph clipping on headings ─────────────────
-     Arabic ascenders and descenders extend further than Latin at the same
-     font-size. Headings in this codebase use leading-[1.05] and leading-[1.1]
-     which clip the tops and bottoms of Arabic letters.
-     1.6 gives Arabic enough vertical room at all display sizes. */
-  html[dir="rtl"] h1,
-  html[dir="rtl"] h2,
-  html[dir="rtl"] h3,
-  html[dir="rtl"] h4,
-  html[dir="rtl"] h5,
-  html[dir="rtl"] h6 {
-    line-height: 1.6 !important;
-    /* Extra bottom padding compensates for WebkitBackgroundClip:text clipping.
-       Gradient text clips to the element's layout box — Arabic descenders that
-       extend below the box get sliced. padding-bottom enlarges the box so the
-       full glyph is visible. */
-    padding-bottom: 0.4em;
+@layer components {
+  /* ── Layout primitives ───────────────────────────────────────── */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+  }
+
+  .section-space {
+    padding-block: var(--section-space);
+  }
+
+  .section-space-compact {
+    padding-block: var(--section-space-compact);
+  }
+
+  /* ── Type scale ──────────────────────────────────────────────── */
+  .type-hero {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 1.8rem + 3.4vw, 4.75rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .type-page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .type-section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.625rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .type-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1rem + 0.3vw, 1.375rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+
+  .type-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.75;
+  }
+
+  .type-support {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .type-nav {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .type-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .type-meta {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  html[dir="rtl"] .type-label {
+    letter-spacing: 0;
+    text-transform: none;
   }
 }
 
 @layer utilities {
-  /* ── Grain texture overlay ─────────────────────────── */
-  .bg-grain {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-    background-repeat: repeat;
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+  }
+
+  .focus-ring:focus-visible {
+    outline-color: var(--ring);
+    box-shadow: var(--elevation-focus);
+  }
+
+  .transition-ui {
+    transition-property:
+      color, background-color, border-color, outline-color, box-shadow,
+      opacity, transform;
+    transition-duration: var(--motion-duration-fast);
+    transition-timing-function: var(--motion-ease-standard);
   }
 
   .text-balance {
     text-wrap: balance;
   }
 
-  .perspective-1000 {
-    perspective: 1000px;
+  /* ── Grain texture overlay ─────────────────────────────────── */
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    background-repeat: repeat;
   }
 
-  /* ── Mesopotamian Diamond Lattice ──────────────────────
-     Inspired by Assyrian & Babylonian lozenge mosaic tilework.
-     Use as a background overlay on dark sections. */
+  /* ── Mesopotamian Diamond Lattice ─────────────────────────────
+     The SVG payload cannot read CSS custom properties, so the gold is
+     encoded once and must stay in sync with --gold-rgb (194, 164, 92). */
   .bg-mesopot-lattice {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M24 3L45 24L24 45L3 24Z' fill='none' stroke='%23c2a45c' stroke-width='0.6' opacity='0.12'/%3E%3C/svg%3E");
     background-size: 48px 48px;
   }
 
-  /* ── Assyrian Chevron Zigzag ───────────────────────────
-     Recurring motif in Assyrian palace reliefs & pottery. */
+  /* ── Assyrian Chevron Zigzag ───────────────────────────────── */
   .bg-mesopot-chevron {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12'%3E%3Cpolyline points='0,12 12,0 24,12' fill='none' stroke='%23c2a45c' stroke-width='0.7' opacity='0.15'/%3E%3C/svg%3E");
     background-size: 24px 12px;
     background-repeat: repeat-x;
   }
 
-  /* ── Cuneiform Wedge Rosette ───────────────────────────
-     8-point star / sun-disc from Shamash worship. */
+  /* ── Cuneiform Wedge Rosette ───────────────────────────────── */
   .bg-mesopot-rosette {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='%23c2a45c' stroke-width='0.4' opacity='0.07'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='%23c2a45c' stroke-width='0.4' opacity='0.07'/%3E%3C/svg%3E");
     background-size: 60px 60px;
   }
 
-  /* ── Mesopotamian Section Divider ─────────────────────
-     Gold gradient rule with central diamond glyph. */
+  /* ── Mesopotamian section divider ──────────────────────────── */
   .mesopot-divider {
     position: relative;
     height: 1px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(194, 164, 92, 0.5) 25%,
-      rgba(194, 164, 92, 0.5) 75%,
+      rgb(var(--gold-rgb) / 0.5) 25%,
+      rgb(var(--gold-rgb) / 0.5) 75%,
       transparent 100%
     );
   }
+
   .mesopot-divider::before {
     content: "◆";
     position: absolute;
@@ -251,111 +491,79 @@
     opacity: 0.7;
   }
 
-  /* ── Ancient Seal Card ─────────────────────────────────
-     Inspired by Mesopotamian cylinder seal impressions. */
-  .card-seal {
-    border: 1px solid rgba(194, 164, 92, 0.15);
-    box-shadow:
-      inset 0 1px 0 rgba(194, 164, 92, 0.08),
-      0 1px 3px rgba(0, 0, 0, 0.8),
-      0 0 0 1px rgba(0, 0, 0, 0.4);
-    transition: border-color 0.4s ease, box-shadow 0.4s ease;
-  }
-  .card-seal:hover {
-    border-color: rgba(194, 164, 92, 0.4);
-    box-shadow:
-      inset 0 1px 0 rgba(194, 164, 92, 0.15),
-      0 8px 30px rgba(194, 164, 92, 0.1),
-      0 0 0 1px rgba(194, 164, 92, 0.1);
-  }
-
-  /* ── Ur Gold Glow Text ─────────────────────────────── */
-  .text-ur-glow {
-    text-shadow: 0 0 80px rgba(194, 164, 92, 0.35), 0 0 20px rgba(194, 164, 92, 0.15);
-  }
-
-  /* ── Ziggurat Gradient — stepped dark elevation ───── */
-  .bg-ziggurat {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 0%) 0%,
-      hsl(0 0% 3%) 40%,
-      hsl(0 0% 5%) 100%
-    );
-  }
-
-  /* ── Metrics / Results card — pure CSS hover (safe for Server Components) ─ */
+  /* ── Metrics / results card: CSS-only hover, safe in Server Components ── */
   .mesopot-metric-card {
-    background: rgba(194, 164, 92, 0.04);
-    border: 1px solid rgba(194, 164, 92, 0.15);
-    box-shadow: inset 0 1px 0 rgba(194, 164, 92, 0.08);
-    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    background: var(--primary-subtle);
+    border: 1px solid var(--primary-border);
+    box-shadow: inset 0 1px 0 rgb(var(--gold-rgb) / 0.08);
+    transition:
+      border-color var(--motion-duration-slow) var(--motion-ease-standard),
+      background var(--motion-duration-slow) var(--motion-ease-standard),
+      box-shadow var(--motion-duration-slow) var(--motion-ease-standard);
   }
+
   .mesopot-metric-card:hover {
-    background: rgba(194, 164, 92, 0.08);
-    border-color: rgba(194, 164, 92, 0.45);
-    box-shadow: 0 8px 40px rgba(194, 164, 92, 0.15), inset 0 1px 0 rgba(194, 164, 92, 0.15);
+    background: var(--gold-soft);
+    border-color: var(--primary);
+    box-shadow: var(--elevation-md), inset 0 1px 0 rgb(var(--gold-rgb) / 0.15);
   }
 
-  /* ── Full-screen height — cross-browser safe ──────────────────
-     `100dvh` (dynamic viewport height) correctly tracks the visible
-     area as mobile browser chrome appears/disappears.  Browsers that
-     predate the dvh unit (pre-2022) fall back to `100vh`.  The two
-     declarations must appear in this order so the capable browser
-     picks the second one while the older browser ignores it. */
+  /* ── Full-screen height — cross-browser safe ───────────────── */
   .h-screen-dvh {
-    height: 100vh;   /* fallback */
-    height: 100dvh;  /* progressive enhancement */
+    height: 100vh;
+    height: 100dvh;
   }
 
-  /* ── Scroll lock — prevents CLS from scrollbar disappearing ──
-     Apply to <html> (not <body>) to avoid position:fixed CLS.
-     --scrollbar-width is set via inline script in layout.tsx. */
+  /* ── Scroll lock — prevents CLS from scrollbar disappearing ── */
   .overflow-locked {
     overflow: hidden;
     padding-right: var(--scrollbar-width, 0px);
   }
 
-  /* ── RTL headings — duplicated in utilities layer so specificity wins ──────
-     Tailwind pairs line-height:1 with text-5xl/6xl/7xl/8xl. Arabic connected
-     cursive extends above/below Latin metrics; with WebkitBackgroundClip:text
-     the gradient only paints inside the element's box, so glyph ink that falls
-     outside the box appears transparent — visually "cut".
-     Placing this rule here (utilities layer) gives it specificity [0,1,1]
-     (attribute + element) vs Tailwind's [0,1,0] (class) — wins in the same
-     layer without relying on cross-layer !important reversal.
-     padding-bottom expands the box so Arabic descenders get gradient paint. */
-  html[dir="rtl"] h1,
-  html[dir="rtl"] h2,
-  html[dir="rtl"] h3,
-  html[dir="rtl"] h4,
-  html[dir="rtl"] h5,
-  html[dir="rtl"] h6 {
-    line-height: 1.6 !important;
-    padding-bottom: 0.4em !important;
-  }
-
-  /* ── View-all Ghost Button — gold underline treatment ── */
+  /* ── View-all ghost link ───────────────────────────────────── */
   .btn-view-all {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: 700;
     font-size: 0.875rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(194, 164, 92, 0.3);
-    transition: color 0.3s ease, border-color 0.3s ease;
+    color: var(--content-secondary);
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--border-strong);
+    transition:
+      color var(--motion-duration-base) var(--motion-ease-standard),
+      border-color var(--motion-duration-base) var(--motion-ease-standard);
   }
-  /* Arabic: remove letter-spacing so glyph joins are preserved */
+
   html[dir="rtl"] .btn-view-all {
     letter-spacing: 0;
     text-transform: none;
   }
+
   .btn-view-all:hover {
-    color: #c2a45c;
-    border-color: rgba(194, 164, 92, 0.8);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  /* ── Arabic heading rhythm ─────────────────────────────────────
+     This rule lives in the utilities layer so it can override Tailwind
+     leading utilities without leaving a second heading system. */
+  html[dir="rtl"] :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.35 !important;
+    padding-bottom: 0.12em !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -21,7 +21,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { generateFAQSchema, generateBreadcrumbSchema } from "@/lib/schema-generator";
-import { SITE_URL } from "@/lib/seo";
 
 export default async function ComparePage() {
   const { lang, isRtl } = await getServerTranslation();

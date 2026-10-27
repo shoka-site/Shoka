@@ -1,7 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight, Mail, MessageCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import {
+  CONTACT,
+  FOOTER_NAV_GROUPS,
+  SOCIAL_LINKS,
+} from "@/lib/site-navigation";
 
 interface FooterProps {
   lang: "en" | "ar";
@@ -10,58 +18,115 @@ interface FooterProps {
 export default function Footer({ lang }: FooterProps) {
   const { i18n } = useTranslation();
   const t = i18n.getFixedT(lang);
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-card text-card-foreground py-12 pb-32 md:py-16 md:pb-16 border-t border-border">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-          {/* Col 1: Brand & Contact Info */}
-          <div>
-            <h2 className="text-xl font-display font-bold mb-4 text-foreground">Sehle | سهلة</h2>
-            <p className="text-muted-foreground leading-relaxed text-xs md:text-sm mb-4">
-              {t('footer.desc')}
+    <footer className="relative z-10 border-t border-border bg-card pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-card-foreground xl:pb-0">
+      <div className="container-page py-12 md:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_2fr] lg:gap-16">
+          <div className="max-w-md">
+            <Link
+              href="/home/"
+              className="focus-ring inline-flex h-11 items-center rounded-md"
+              aria-label={t("navbar.brand")}
+            >
+              <Image
+                src="/logoo.png"
+                alt={t("navbar.brand")}
+                width={112}
+                height={40}
+                sizes="112px"
+                className="h-9 w-auto object-contain"
+              />
+            </Link>
+
+            <p className="type-support mt-4 text-muted-foreground">
+              {t("footer.desc")}
             </p>
-            <div className="text-xs text-muted-foreground/80 space-y-1">
-              <p>{lang === "ar" ? "البريد الإلكتروني:" : "Email:"} <a href="mailto:sehle.iq@gmail.com" className="text-primary hover:underline">sehle.iq@gmail.com</a></p>
-              <p>{lang === "ar" ? "المقر الرئيسي:" : "Headquarters:"} Kızılay, Ankara, TR | Operations: Iraq</p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              <a
+                href={`mailto:${CONTACT.email}`}
+                className="focus-ring transition-ui flex min-h-11 items-center gap-2 rounded-pill border border-border bg-background px-4 text-sm font-semibold text-foreground hover:border-primary/50 hover:text-primary"
+              >
+                <Mail aria-hidden="true" className="size-4 text-primary" />
+                <span>{t("footer.email_label")}</span>
+              </a>
+              <a
+                href={CONTACT.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus-ring transition-ui flex min-h-11 items-center gap-2 rounded-pill border border-border bg-background px-4 text-sm font-semibold text-foreground hover:border-primary/50 hover:text-primary"
+              >
+                <MessageCircle
+                  aria-hidden="true"
+                  className="size-4 text-primary"
+                />
+                <span>{t("footer.whatsapp_label")}</span>
+              </a>
             </div>
-          </div>
 
-          {/* Col 2: Core Solutions & Packages */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-4">{lang === "ar" ? "الأنظمة والحلول" : "Solutions & Products"}</h3>
-            <ul className="space-y-2.5 text-xs md:text-sm">
-              <li><Link href="/services/" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.links.services')}</Link></li>
-              <li><Link href="/packages/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "باقات الحلول" : "Packages"}</Link></li>
-              <li><Link href="/industries/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "القطاعات المستهدفة" : "Industries"}</Link></li>
-              <li><Link href="/projects/" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.links.portfolio')}</Link></li>
-              <li><Link href="/quote-calculator/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "حاسبة تكلفة المشروع" : "Quote Calculator"}</Link></li>
+            <p className="type-meta mt-3 text-muted-foreground" dir="ltr">
+              {CONTACT.email} · {CONTACT.whatsappDisplay}
+            </p>
+
+            <p className="type-label mt-6 text-muted-foreground">
+              {t("footer.follow")}
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+              {SOCIAL_LINKS.map((social) => (
+                <li key={social.href}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring transition-ui group inline-flex min-h-11 items-center gap-1 rounded-sm text-sm font-semibold text-muted-foreground hover:text-primary"
+                  >
+                    {t(social.labelKey)}
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-3.5 transition-transform group-hover:-translate-y-0.5 rtl:-scale-x-100"
+                    />
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Col 3: Comparison & Resources */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-4">{lang === "ar" ? "المقارنات والريادة" : "Compare & Learn"}</h3>
-            <ul className="space-y-2.5 text-xs md:text-sm">
-              <li><Link href="/compare/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "مقارنة الخيارات البرمجية" : "Compare Options"}</Link></li>
-              <li><Link href="/glossary/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "قاموس المصطلحات" : "Technical Glossary"}</Link></li>
-              <li><Link href="/blog/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "المدونة التقنية" : "Engineering Blog"}</Link></li>
-              <li><Link href="/social-kit/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "حقيبة النشر والإعلام" : "Social Kit"}</Link></li>
-              <li><Link href="/refer/" className="text-muted-foreground hover:text-foreground transition-colors">{lang === "ar" ? "برنامج الشراكة والإحالة" : "Referral Program"}</Link></li>
-            </ul>
-          </div>
+          <nav aria-label={t("footer.sitemap")}>
+            <div className="grid gap-8 sm:grid-cols-3">
+              {FOOTER_NAV_GROUPS.map((group) => (
+                <div key={group.titleKey}>
+                  <h3 className="type-label text-primary">
+                    {t(group.titleKey)}
+                  </h3>
+                  <ul className="mt-3">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="focus-ring transition-ui flex min-h-11 items-center rounded-sm text-sm font-medium text-muted-foreground hover:text-foreground md:min-h-0 md:py-1.5"
+                        >
+                          {t(link.titleKey, link.defaultTitle)}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </nav>
+        </div>
 
-          {/* Col 4: Social Platforms & Channels */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-4">{lang === "ar" ? "وسائل التواصل الاجتماعي" : "Follow & Connect"}</h3>
-            <ul className="space-y-2.5 text-xs md:text-sm">
-              <li><a href="https://www.linkedin.com/company/sehle/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.social.linkedin')}</a></li>
-              <li><a href="https://x.com/sehle_it" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.social.twitter')}</a></li>
-              <li><a href="https://www.instagram.com/sehle_iq/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.social.instagram')}</a></li>
-              <li><a href="https://www.tiktok.com/@sehle_iq" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.social.tiktok')}</a></li>
-              <li><a href="https://www.facebook.com/profile.php?id=61575488387547" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">{t('footer.social.facebook')}</a></li>
-            </ul>
-          </div>
+        <div className="mt-10 flex flex-col gap-4 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
+          <p className="type-meta text-muted-foreground">
+            {t("footer.copyright", { year })}
+          </p>
+          <LanguageSwitcher
+            lang={lang}
+            variant="full"
+            className="w-full sm:w-auto"
+          />
         </div>
       </div>
     </footer>

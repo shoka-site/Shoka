@@ -11,6 +11,7 @@ import { initAutoTracking } from "@/lib/analytics";
 import "@/lib/i18n";
 
 import { ThemeProvider } from "next-themes";
+import { MotionConfig } from "framer-motion";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const { i18n } = useTranslation();
@@ -60,10 +61,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <QueryClientProvider client={queryClient}>
-                {children}
-                <Toaster />
-            </QueryClientProvider>
+            <MotionConfig reducedMotion="user">
+                <QueryClientProvider client={queryClient}>
+                    {children}
+                    <Toaster />
+                </QueryClientProvider>
+            </MotionConfig>
         </ThemeProvider>
     );
 }

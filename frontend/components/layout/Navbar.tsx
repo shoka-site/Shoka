@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Globe } from "lucide-react";
+import { Menu, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import {
   NavigationMenu,
@@ -16,184 +15,176 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { MobileMenu } from "@/components/layout/MobileMenu";
 import MegaMenuSection from "./navbar/MegaMenuSection";
 import { NAV_CATEGORIES } from "./navbar/nav-data";
-
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { isActivePath } from "@/lib/site-navigation";
 
 interface NavbarProps {
-  // Server-detected locale, passed from the server layout so both SSR and
-  // client hydration use the same language. Without this, i18next-browser-
-  // languagedetector fails to read cookies in Node.js and falls back to Arabic,
-  // while the client correctly detects English — causing a hydration mismatch.
   lang: "en" | "ar";
 }
 
 export default function Navbar({ lang }: NavbarProps) {
   const { i18n } = useTranslation();
-  // getFixedT returns a `t` function bound to the server-provided language.
-  // This guarantees SSR and hydration both render the same text regardless of
-  // what language the i18next singleton happens to have initialized with.
   const t = i18n.getFixedT(lang);
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuValue, setMenuValue] = useState("");
-  const pathname = usePathname();
-  const isRtl = lang === 'ar';
-
-  const closeMenu = () => {
-    setMenuValue("");
-  };
-
-  const toggleLanguage = () => {
-    const newLang = i18n.language.startsWith('ar') ? 'en' : 'ar';
-    const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
-
-    // 1. Persist the choice — cookie (server) + localStorage (i18next detector)
-    document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000`;
-
-    // 2. Update document direction immediately so the visual flip is instant
-    //    rather than waiting for the i18next change + useEffect cycle.
-    document.documentElement.dir  = newDir;
-    document.documentElement.lang = newLang;
-
-    // 3. Change i18next language (loads English bundle lazily if needed)
-    i18n.changeLanguage(newLang);
-
-    // 4. Track the language switch before reloading
-    trackEvent("language_toggle", { to: newLang, from: newLang === "ar" ? "en" : "ar" });
-
-    // 5. Hard-reload so Server Components re-render with the new cookie.
-    //    Without this, server-rendered isRtl props (flex-row-reverse, conditional
-    //    padding, etc.) stay stale until the next navigation.
-    window.location.reload();
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    closeMenu();
+    setMenuValue("");
+    setMobileOpen(false);
   }, [pathname]);
-
-
 
   useEffect(() => {
     const handleScroll = () => {
-      // Only close the desktop dropdown on scroll — never the mobile overlay.
-      // Mobile browsers fire scroll events from momentum / tap gestures, which
-      // would immediately close the menu right after the user opens it.
-      if (menuValue) {
+      if (!mobileOpen && menuValue) {
         setMenuValue("");
       }
       setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [menuValue]);
+  }, [menuValue, mobileOpen]);
 
-  const triggerClassName = "group relative bg-transparent text-foreground/80 hover:text-foreground focus:text-foreground data-[state=open]:bg-primary/20 data-[state=open]:text-foreground h-10 px-4 xl:px-6 text-xs xl:text-sm font-bold transition-all hover:bg-muted/50 rounded-full uppercase tracking-widest overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
+  const triggerClassName =
+    "group relative h-10 overflow-hidden rounded-pill bg-transparent px-3 text-foreground/80 transition-ui hover:bg-muted/60 hover:text-foreground focus-visible:text-foreground data-[state=open]:bg-primary/15 data-[state=open]:text-foreground xl:px-4";
 
   return (
     <>
+      {/*
+        Sticky header decision: fixed/sticky header chosen for persistent navigation
+        and primary CTA access. Viewport cost is mitigated by transparent background
+        at top, backdrop-blur only when scrolled, and no heavy re-renders on scroll.
+      */}
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
+          "fixed inset-x-0 top-0 z-[100] transition-[padding,background-color,border-color,box-shadow] [transition-duration:var(--motion-duration-base)] [transition-timing-function:var(--motion-ease-standard)]",
           scrolled
-            ? "bg-background/90 backdrop-blur-3xl border-b border-primary/30 py-3 shadow-2xl"
-            : "bg-transparent py-5"
+            ? "border-b border-border bg-background/90 py-2 shadow-md backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent py-3 lg:py-4"
         )}
       >
-        {/* Subtle gradient line at bottom */}
-        <div className={cn(
-          "absolute bottom-0 left-0 right-0 h-[1px] transition-all duration-500",
-          scrolled
-            ? "bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-100"
-            : "bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-0"
-        )} />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/35 to-transparent transition-opacity duration-300" />
 
-        <div className="container mx-auto px-4 sm:px-8 md:px-12 flex items-center justify-between">
-          {/* Logo */}
+        <div className="container-page flex items-center justify-between gap-3">
           <div className="flex flex-1 items-center justify-start">
-            <Link href="/home/" className="group relative z-10 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-lg">
-              <motion.div
-                className="relative w-24 h-8 xl:w-32 xl:h-10 flex items-center justify-center"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <Image
-                  src="/logoo.png"
-                  alt="Sehle"
-                  fill
-                  sizes="(min-width: 1280px) 144px, 112px"
-                  className="object-contain relative z-10 drop-shadow-[0_0_15px_rgba(194,164,92,0.5)] group-hover:opacity-80 transition-opacity duration-200 dark:invert-0"
-                  priority
-                />
-              </motion.div>
+            <Link
+              href="/home/"
+              onClick={() => setMenuValue("")}
+              className="focus-ring group flex h-11 shrink-0 items-center rounded-md"
+              aria-label={t("navbar.brand")}
+            >
+              <Image
+                src="/logoo.png"
+                alt={t("navbar.brand")}
+                width={112}
+                height={40}
+                sizes="112px"
+                className="h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] xl:h-9"
+                priority
+              />
             </Link>
           </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex flex-none items-center justify-center">
-            <NavigationMenu value={menuValue} onValueChange={setMenuValue} className="static">
-              <NavigationMenuList className="gap-1 xl:gap-2">
-
+          <nav
+            aria-label={t("navbar.primary_nav")}
+            className="hidden flex-none items-center justify-center xl:flex"
+          >
+            <NavigationMenu
+              value={menuValue}
+              onValueChange={setMenuValue}
+              className="static"
+            >
+              <NavigationMenuList className="gap-0.5 xl:gap-1">
                 {NAV_CATEGORIES.map((category) => {
                   const Panel = category.Panel;
+                  const active = isActivePath(pathname, category.href);
+                  const title = t(category.titleKey, category.defaultTitle);
+
                   return (
                     <NavigationMenuItem key={category.id}>
-                      <NavigationMenuTrigger className={triggerClassName}>
-                        <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                        {category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey)}
+                      <NavigationMenuTrigger
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          triggerClassName,
+                          "type-label",
+                          active && "bg-primary/10 text-foreground"
+                        )}
+                      >
+                        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                        <span className="relative">{title}</span>
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <MegaMenuSection
-                          title={category.defaultTitle ? t(category.titleKey, category.defaultTitle) : t(category.titleKey)}
+                          title={title}
                           description={t(category.descriptionKey)}
                           icon={category.icon}
                           href={category.href}
                           layout={category.layout}
                         >
-                          <Panel isRtl={isRtl} />
+                          <Panel isRtl={lang === "ar"} />
                         </MegaMenuSection>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
                   );
                 })}
-
               </NavigationMenuList>
             </NavigationMenu>
+          </nav>
+
+          <div className="hidden flex-1 items-center justify-end gap-2 xl:flex xl:gap-3">
+            <ThemeToggle />
+            <LanguageSwitcher lang={lang} />
+            <Button asChild size="lg" className="rounded-pill px-5">
+              <Link
+                href="/contact/"
+                onClick={() => {
+                  setMenuValue("");
+                  trackEvent("nav_cta_click", { destination: "contact" });
+                }}
+              >
+                <span className="type-label">
+                  {t("navbar.book_consultation")}
+                </span>
+                <ArrowRight aria-hidden="true" className="rtl:rotate-180" />
+              </Link>
+            </Button>
           </div>
 
-          {/* Desktop Right Actions */}
-          <div className="hidden lg:flex flex-1 items-center justify-end gap-2 xl:gap-3">
+          <div className="flex flex-1 items-center justify-end gap-1.5 xl:hidden">
             <ThemeToggle />
-            <button
-              onClick={() => { toggleLanguage(); closeMenu(); }}
-              className="w-8 h-8 xl:w-10 xl:h-10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-muted/80 rounded-full transition-all border border-border/40 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-90"
-              aria-label="Toggle Language"
+            <LanguageSwitcher lang={lang} />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              ref={mobileMenuTriggerRef}
+              onClick={() => setMobileOpen(true)}
+              aria-label={t("navbar.open_menu")}
+              aria-haspopup="dialog"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              className="h-11 w-11 rounded-pill border border-border/40 bg-background/50"
             >
-              <Globe className="w-4 h-4 xl:w-5 xl:h-5" />
-            </button>
-            <Link href="/contact/" onClick={closeMenu}>
-              <span className="bg-primary text-primary-foreground px-4 xl:px-6 py-2.5 xl:py-3 rounded-full text-[10px] xl:text-xs font-black uppercase tracking-[0.2em] hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_10px_30px_rgba(194,164,92,0.25)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
-                {t("navbar.book_consultation")}
-              </span>
-            </Link>
-          </div>
-
-          {/* Mobile Right Actions */}
-          <div className="flex lg:hidden flex-1 items-center justify-end gap-2">
-            <ThemeToggle />
-            <button
-              onClick={() => { toggleLanguage(); }}
-              className="w-10 h-10 flex items-center justify-center text-foreground/60 hover:text-foreground hover:bg-muted rounded-full transition-all border border-border/40 active:scale-90"
-              aria-label="Toggle Language"
-            >
-              <Globe className="w-5 h-5" />
-            </button>
+              <Menu aria-hidden="true" />
+            </Button>
           </div>
         </div>
       </header>
 
+      <MobileMenu
+        lang={lang}
+        open={mobileOpen}
+        onOpenChange={setMobileOpen}
+        triggerRef={mobileMenuTriggerRef}
+      />
     </>
   );
 }
-
